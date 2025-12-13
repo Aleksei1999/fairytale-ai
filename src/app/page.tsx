@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
   const [childName, setChildName] = useState("");
@@ -8,6 +8,62 @@ export default function Home() {
   const [selectedVoice, setSelectedVoice] = useState<"mom" | "narrator">("mom");
   const [showModal, setShowModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioProgress, setAudioProgress] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const audioSources = {
+    mom: "/audio/mom.MP3",
+    narrator: "/audio/dictor.MP3",
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+      setAudioProgress(0);
+    }
+  }, [selectedVoice]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const updateProgress = () => setAudioProgress(audio.currentTime);
+    const updateDuration = () => setAudioDuration(audio.duration);
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setAudioProgress(0);
+    };
+
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("loadedmetadata", updateDuration);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("loadedmetadata", updateDuration);
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [selectedVoice]);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   return (
     <div className="min-h-screen overflow-hidden">
@@ -385,6 +441,9 @@ export default function Home() {
 
                 {/* Audio player */}
                 <div className="glass-card p-4 sm:p-6 mb-4 sm:mb-6">
+                  {/* Hidden audio element */}
+                  <audio ref={audioRef} src={audioSources[selectedVoice]} preload="metadata" />
+
                   {/* Voice selector */}
                   <div className="flex gap-2 mb-3 sm:mb-4">
                     <button
@@ -409,29 +468,33 @@ export default function Home() {
                     </button>
                   </div>
 
-                  {/* Play button and waveform */}
+                  {/* Play button and progress */}
                   <div className="flex items-center gap-3 sm:gap-4">
-                    <button className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform flex-shrink-0">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
+                    <button
+                      onClick={togglePlay}
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform flex-shrink-0"
+                    >
+                      {isPlaying ? (
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      )}
                     </button>
                     <div className="flex-1 min-w-0">
-                      {/* Fake waveform */}
-                      <div className="flex items-center gap-0.5 sm:gap-1 h-8 sm:h-10">
-                        {[...Array(20)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="flex-1 bg-sky-300 rounded-full"
-                            style={{
-                              height: `${16 + Math.sin(i * 0.5) * 12 + Math.random() * 8}px`,
-                            }}
-                          />
-                        ))}
+                      {/* Progress bar */}
+                      <div className="h-2 bg-sky-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-sky-400 to-blue-600 transition-all"
+                          style={{ width: audioDuration ? `${(audioProgress / audioDuration) * 100}%` : "0%" }}
+                        />
                       </div>
                       <div className="flex justify-between text-xs text-gray-400 mt-1">
-                        <span>0:00</span>
-                        <span>3:45</span>
+                        <span>{formatTime(audioProgress)}</span>
+                        <span>{formatTime(audioDuration || 0)}</span>
                       </div>
                     </div>
                   </div>
