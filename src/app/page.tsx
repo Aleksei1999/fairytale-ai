@@ -1,15 +1,16 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { AuthModal } from "@/components/AuthModal";
 
 export default function Home() {
+  const router = useRouter();
   const { user, loading: authLoading, signOut } = useAuth();
   const [childName, setChildName] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<"mom" | "narrator">("mom");
-  const [showModal, setShowModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -76,10 +77,22 @@ export default function Home() {
   };
 
   const openPaymentModal = (plan: "monthly" | "yearly") => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
     setSelectedPlan(plan);
-    setPaymentEmail("");
+    setPaymentEmail(user.email || "");
     setPaymentError("");
     setShowPaymentModal(true);
+  };
+
+  const handleCreateStory = () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    router.push("/create");
   };
 
   const handlePayment = async () => {
@@ -273,7 +286,7 @@ export default function Home() {
                 className="flex-1 px-5 sm:px-6 py-3 sm:py-4 rounded-full border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80 backdrop-blur text-base"
               />
               <button
-                onClick={() => setShowModal(true)}
+                onClick={handleCreateStory}
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 <span>Create for free</span>
@@ -750,7 +763,7 @@ export default function Home() {
             </ul>
 
             <button
-              onClick={() => setShowModal(true)}
+              onClick={handleCreateStory}
               className="block w-full btn-secondary py-3 sm:py-4 text-center font-semibold text-gray-700 text-sm sm:text-base"
             >
               Create first story
@@ -765,8 +778,8 @@ export default function Home() {
 
             <div className="text-center mb-4 sm:mb-6 mt-2 sm:mt-0">
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Super Parent</h3>
-              <div className="text-3xl sm:text-4xl font-bold gradient-text">$4.99<span className="text-base sm:text-lg text-gray-500 font-normal">/mo</span></div>
-              <p className="text-gray-500 text-xs sm:text-sm">or $49.99/year (2 months free)</p>
+              <div className="text-3xl sm:text-4xl font-bold gradient-text">$7.99<span className="text-base sm:text-lg text-gray-500 font-normal">/mo</span></div>
+              <p className="text-gray-500 text-xs sm:text-sm">or $79.99/year (2 months free)</p>
             </div>
 
             <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
@@ -802,7 +815,7 @@ export default function Home() {
               onClick={() => openPaymentModal("yearly")}
               className="block w-full mt-2 py-2 text-center text-sm text-blue-600 hover:text-blue-700 font-medium"
             >
-              or $49.99/year (2 months free)
+              or $79.99/year (2 months free)
             </button>
             <p className="text-center text-xs text-gray-400 mt-2">
               Cancel anytime
@@ -892,7 +905,7 @@ export default function Home() {
                 className="flex-1 px-5 sm:px-6 py-3 sm:py-4 rounded-full border-2 border-white/30 focus:border-white focus:outline-none text-gray-700 bg-white/90 backdrop-blur text-base"
               />
               <button
-                onClick={() => setShowModal(true)}
+                onClick={handleCreateStory}
                 className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 whitespace-nowrap"
               >
                 Create story
@@ -923,64 +936,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
-      {/* Coming Soon Modal */}
-      {showModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4"
-          onClick={() => setShowModal(false)}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-
-          {/* Modal */}
-          <div
-            className="relative glass-card-strong p-6 sm:p-8 md:p-12 max-w-md w-full text-center mx-2"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Decorative elements */}
-            <div className="absolute -top-5 sm:-top-6 left-1/2 -translate-x-1/2">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
-                <span className="text-2xl sm:text-3xl">🚀</span>
-              </div>
-            </div>
-
-            <div className="mt-4 sm:mt-6">
-              <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Coming <span className="gradient-text">soon!</span>
-              </h3>
-
-              <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-                We're finishing work on FairyTaleAI. Very soon you'll be able to create magical personalized stories for your children.
-              </p>
-
-              <div className="glass-card p-3 sm:p-4 mb-4 sm:mb-6">
-                <div className="flex items-center justify-center gap-2 text-blue-600 text-sm sm:text-base">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                  <span className="font-medium">Stay tuned for updates</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setShowModal(false)}
-                className="btn-glow px-6 sm:px-8 py-2.5 sm:py-3 text-white font-semibold w-full text-sm sm:text-base"
-              >
-                Got it, can't wait!
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Payment Modal */}
       {showPaymentModal && (
@@ -1017,13 +972,13 @@ export default function Home() {
                 {selectedPlan === "yearly" ? "Yearly subscription" : "Monthly subscription"}
               </h3>
               <div className="text-2xl sm:text-3xl font-bold gradient-text">
-                {selectedPlan === "yearly" ? "$49.99" : "$4.99"}
+                {selectedPlan === "yearly" ? "$79.99" : "$7.99"}
                 <span className="text-base sm:text-lg text-gray-500 font-normal">
                   /{selectedPlan === "yearly" ? "year" : "mo"}
                 </span>
               </div>
               {selectedPlan === "yearly" && (
-                <p className="text-green-600 text-sm mt-1">Save $10 (2 months free)</p>
+                <p className="text-green-600 text-sm mt-1">Save $16 (2 months free)</p>
               )}
             </div>
 
@@ -1103,7 +1058,7 @@ export default function Home() {
                   Processing...
                 </span>
               ) : (
-                `Pay ${selectedPlan === "yearly" ? "$49.99" : "$4.99"}`
+                `Pay ${selectedPlan === "yearly" ? "$79.99" : "$7.99"}`
               )}
             </button>
 
