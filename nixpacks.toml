@@ -8,4 +8,4 @@ cmds = ["npm install --legacy-peer-deps", "npm install lightningcss-linux-x64-gn
 cmds = ["npm run build"]
 
 [start]
-cmd = "npm start"
+cmd = "PORT=3001 npm start"
