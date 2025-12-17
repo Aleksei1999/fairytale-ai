@@ -29,22 +29,52 @@ interface WebhookPayload {
   };
 }
 
-// Количество кредитов за каждый пакет (настрой под свои цены)
-const CREDITS_BY_AMOUNT: Record<number, number> = {
-  2: 1,      // $1.99 → 1 кредит
-  4: 3,      // $3.99 → 3 кредита
-  9: 5,      // $8.99 → 5 кредитов
-  10: 10,    // $9.99 → 10 кредитов
-  17: 10,    // $16.99 → 10 кредитов
-  18: 10,    // $17.99 → 10 кредитов
-  8: 10,     // $7.99 monthly → 10 кредитов
-  80: 120,   // $79.99 yearly → 120 кредитов
+// Количество кредитов за подписку
+const SUBSCRIPTION_CREDITS: Record<number, number> = {
+  29: 30,     // $29 monthly → 30 кредитов на сказки
+  249: 360,   // $249 yearly → 360 кредитов на сказки (30 * 12)
 };
 
-function getCreditsForAmount(amount: number): number {
-  // Округляем до целого для поиска
+// Количество кредитов на мультики
+const CARTOON_CREDITS: Record<number, number> = {
+  10: 1,      // $9.90 → 1 мультик
+  30: 4,      // $29.90 → 4 мультика
+  80: 12,     // $79.90 → 12 мультиков
+};
+
+interface CreditResult {
+  storyCredits: number;
+  cartoonCredits: number;
+  type: "subscription" | "cartoon";
+}
+
+function getCreditsForAmount(amount: number): CreditResult {
   const roundedAmount = Math.round(amount);
-  return CREDITS_BY_AMOUNT[roundedAmount] || Math.ceil(amount / 2); // fallback: 1 кредит за $2
+
+  // Проверяем подписку
+  if (SUBSCRIPTION_CREDITS[roundedAmount]) {
+    return {
+      storyCredits: SUBSCRIPTION_CREDITS[roundedAmount],
+      cartoonCredits: 1, // Бонусный мультик с подпиской
+      type: "subscription"
+    };
+  }
+
+  // Проверяем покупку мультиков
+  if (CARTOON_CREDITS[roundedAmount]) {
+    return {
+      storyCredits: 0,
+      cartoonCredits: CARTOON_CREDITS[roundedAmount],
+      type: "cartoon"
+    };
+  }
+
+  // Fallback для старых платежей
+  return {
+    storyCredits: Math.ceil(amount / 2),
+    cartoonCredits: 0,
+    type: "subscription"
+  };
 }
 
 export async function POST(request: NextRequest) {
@@ -113,7 +143,9 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
   });
 
   // Вычисляем количество кредитов
-  const creditsToAdd = getCreditsForAmount(amount);
+  const credits = getCreditsForAmount(amount);
+
+  console.log(`Credits to add:`, credits);
 
   // Проверяем, не обработан ли уже этот платёж
   const { data: existingPayment } = await supabase
@@ -127,10 +159,10 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
     return;
   }
 
-  // Находим или создаём профиль пользователя по email
+  // Находим профиль пользователя по email
   let { data: profile } = await supabase
     .from("profiles")
-    .select("id, credits")
+    .select("id, credits, cartoon_credits")
     .eq("email", buyer.email)
     .single();
 
@@ -140,18 +172,30 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
     userId = profile.id;
 
     // Добавляем кредиты
+    const updateData: Record<string, unknown> = {
+      updated_at: new Date().toISOString()
+    };
+
+    if (credits.storyCredits > 0) {
+      updateData.credits = (profile.credits || 0) + credits.storyCredits;
+    }
+    if (credits.cartoonCredits > 0) {
+      updateData.cartoon_credits = (profile.cartoon_credits || 0) + credits.cartoonCredits;
+      // Устанавливаем срок действия 90 дней от сегодня
+      const expireAt = new Date();
+      expireAt.setDate(expireAt.getDate() + 90);
+      updateData.cartoon_credits_expire_at = expireAt.toISOString();
+    }
+
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({
-        credits: profile.credits + creditsToAdd,
-        updated_at: new Date().toISOString()
-      })
+      .update(updateData)
       .eq("id", profile.id);
 
     if (updateError) {
       console.error("Error updating credits:", updateError);
     } else {
-      console.log(`Added ${creditsToAdd} credits to ${buyer.email}, new total: ${profile.credits + creditsToAdd}`);
+      console.log(`Added to ${buyer.email}: ${credits.storyCredits} story credits, ${credits.cartoonCredits} cartoon credits`);
     }
   } else {
     // Пользователь не зарегистрирован - сохраним платёж, кредиты добавятся при регистрации
@@ -167,7 +211,9 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       contract_id: contractId,
       amount,
       currency,
-      credits_added: creditsToAdd,
+      credits_added: credits.storyCredits,
+      cartoon_credits_added: credits.cartoonCredits,
+      payment_type: credits.type,
       status: "success",
       event_type: eventType,
     });

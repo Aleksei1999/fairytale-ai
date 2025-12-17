@@ -17,20 +17,21 @@ export async function GET(request: NextRequest) {
 
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("credits")
+      .select("credits, cartoon_credits")
       .eq("email", email)
       .single();
 
     if (error || !profile) {
       return NextResponse.json(
-        { success: false, error: "Profile not found", credits: 0 },
+        { success: false, error: "Profile not found", credits: 0, cartoonCredits: 0 },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      credits: profile.credits,
+      credits: profile.credits || 0,
+      cartoonCredits: profile.cartoon_credits || 0,
     });
   } catch (error) {
     console.error("Error fetching credits:", error);

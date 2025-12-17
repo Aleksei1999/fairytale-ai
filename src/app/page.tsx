@@ -794,8 +794,8 @@ export default function Home() {
 
             <div className="text-center mb-4 sm:mb-6 mt-2 sm:mt-0">
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Super Parent</h3>
-              <div className="text-3xl sm:text-4xl font-bold gradient-text">$7.99<span className="text-base sm:text-lg text-gray-500 font-normal">/mo</span></div>
-              <p className="text-gray-500 text-xs sm:text-sm">or $79.99/year (2 months free)</p>
+              <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base sm:text-lg text-gray-500 font-normal">/mo</span></div>
+              <p className="text-gray-500 text-xs sm:text-sm">or $249/year (save $99)</p>
             </div>
 
             <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
@@ -831,7 +831,7 @@ export default function Home() {
               onClick={() => openPaymentModal("yearly")}
               className="block w-full mt-2 py-2 text-center text-sm text-blue-600 hover:text-blue-700 font-medium"
             >
-              or $79.99/year (2 months free)
+              or $249/year (save $99)
             </button>
             <p className="text-center text-xs text-gray-400 mt-2">
               Cancel anytime
@@ -988,13 +988,13 @@ export default function Home() {
                 {selectedPlan === "yearly" ? "Yearly subscription" : "Monthly subscription"}
               </h3>
               <div className="text-2xl sm:text-3xl font-bold gradient-text">
-                {selectedPlan === "yearly" ? "$79.99" : "$7.99"}
+                {selectedPlan === "yearly" ? "$249" : "$29"}
                 <span className="text-base sm:text-lg text-gray-500 font-normal">
                   /{selectedPlan === "yearly" ? "year" : "mo"}
                 </span>
               </div>
               {selectedPlan === "yearly" && (
-                <p className="text-green-600 text-sm mt-1">Save $16 (2 months free)</p>
+                <p className="text-green-600 text-sm mt-1">Save $99 (3+ months free)</p>
               )}
             </div>
 
@@ -1018,7 +1018,7 @@ export default function Home() {
                     : "bg-white/50 text-gray-600 hover:bg-white"
                 }`}
               >
-                Yearly (-17%)
+                Yearly (-28%)
               </button>
             </div>
 
@@ -1074,7 +1074,7 @@ export default function Home() {
                   Processing...
                 </span>
               ) : (
-                `Pay ${selectedPlan === "yearly" ? "$79.99" : "$7.99"}`
+                `Pay ${selectedPlan === "yearly" ? "$249" : "$29"}`
               )}
             </button>
 

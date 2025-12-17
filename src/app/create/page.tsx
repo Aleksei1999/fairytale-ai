@@ -22,6 +22,7 @@ interface StorySettings {
 }
 
 interface GeneratedStory {
+  id: string | null;
   title: string;
   text: string;
   wordCount: number;
@@ -79,6 +80,9 @@ function CreatePageContent() {
   const [backgroundMusicUrl, setBackgroundMusicUrl] = useState<string | null>(null);
   const [isGeneratingMusic, setIsGeneratingMusic] = useState(false);
   const [musicEnabled, setMusicEnabled] = useState(true);
+  const [cartoonCredits, setCartoonCredits] = useState<number | null>(null);
+  const [cartoonRequested, setCartoonRequested] = useState(false);
+  const [cartoonLoading, setCartoonLoading] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -90,6 +94,25 @@ function CreatePageContent() {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // Fetch cartoon credits
+  useEffect(() => {
+    async function fetchCredits() {
+      if (!user?.email) return;
+      try {
+        const response = await fetch(`/api/user/credits?email=${encodeURIComponent(user.email)}`);
+        const data = await response.json();
+        if (data.success) {
+          setCartoonCredits(data.cartoonCredits || 0);
+        }
+      } catch (error) {
+        console.error("Error fetching credits:", error);
+      }
+    }
+    if (user?.email) {
+      fetchCredits();
+    }
+  }, [user?.email]);
 
   const [childInfo, setChildInfo] = useState<ChildInfo>({
     name: searchParams.get("name") || "",
@@ -357,11 +380,13 @@ function CreatePageContent() {
       }
 
       const story = {
+        id: data.story.id,
         title: data.story.title,
         text: data.story.text,
         wordCount: data.story.wordCount,
       };
       setGeneratedStory(story);
+      setCartoonRequested(false); // Reset cartoon request status for new story
       setGenerationProgress(70);
 
       // Шаг 3: Генерируем озвучку (если есть клонированный голос)
@@ -384,6 +409,43 @@ function CreatePageContent() {
     } catch (err) {
       setError("Не удалось создать сказку. Попробуйте ещё раз.");
       setIsGenerating(false);
+    }
+  };
+
+  // Заказ мультика
+  const requestCartoon = async () => {
+    if (!generatedStory?.id || !user?.email) return;
+
+    setCartoonLoading(true);
+    try {
+      const response = await fetch("/api/request-cartoon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          storyId: generatedStory.id,
+          userEmail: user.email,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setCartoonRequested(true);
+        setCartoonCredits((prev) => (prev !== null ? prev - 1 : null));
+        alert("Отлично! Мультик будет готов через 10-15 минут. Мы пришлём уведомление!");
+      } else {
+        if (response.status === 402) {
+          // Не хватает кредитов - редирект на покупку
+          router.push("/buy-cartoons");
+        } else {
+          alert(data.error || "Ошибка при заказе мультика");
+        }
+      }
+    } catch (err) {
+      console.error("Cartoon request error:", err);
+      alert("Ошибка соединения");
+    } finally {
+      setCartoonLoading(false);
     }
   };
 
@@ -1020,6 +1082,73 @@ function CreatePageContent() {
                   </svg>
                   <span>Поделиться</span>
                 </button>
+              </div>
+
+              {/* Make Cartoon Button */}
+              <div className="mt-6 p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">🎬</span>
+                    <div>
+                      <h3 className="font-bold text-gray-900">Хотите мультик?</h3>
+                      <p className="text-xs text-gray-500">Превратите сказку в анимацию</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-purple-600 font-medium">
+                      {cartoonCredits !== null ? `${cartoonCredits} кредитов` : "..."}
+                    </p>
+                  </div>
+                </div>
+
+                {cartoonRequested ? (
+                  <div className="flex items-center gap-2 py-3 px-4 bg-green-100 rounded-xl text-green-700">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium">Мультик заказан! Будет готов через 10-15 минут</span>
+                  </div>
+                ) : generatedStory?.id ? (
+                  <button
+                    onClick={requestCartoon}
+                    disabled={cartoonLoading || (cartoonCredits !== null && cartoonCredits < 1)}
+                    className={`w-full py-3 rounded-xl font-semibold transition-all inline-flex items-center justify-center gap-2 ${
+                      cartoonCredits !== null && cartoonCredits >= 1
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90"
+                        : "bg-gray-200 text-gray-500"
+                    } disabled:opacity-50`}
+                  >
+                    {cartoonLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Заказываем...</span>
+                      </>
+                    ) : cartoonCredits !== null && cartoonCredits >= 1 ? (
+                      <>
+                        <span>🎬</span>
+                        <span>Сделать мультик (1 кредит)</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>🎬</span>
+                        <span>Купить кредиты</span>
+                      </>
+                    )}
+                  </button>
+                ) : (
+                  <p className="text-sm text-gray-500 text-center py-2">
+                    Сначала создайте сказку
+                  </p>
+                )}
+
+                {cartoonCredits !== null && cartoonCredits < 1 && !cartoonRequested && (
+                  <Link
+                    href="/buy-cartoons"
+                    className="block mt-2 text-center text-sm text-purple-600 hover:underline"
+                  >
+                    Купить кредиты на мультики →
+                  </Link>
+                )}
               </div>
             </div>
 

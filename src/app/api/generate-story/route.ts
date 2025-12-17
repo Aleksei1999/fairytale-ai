@@ -219,9 +219,36 @@ ${childInterests ? `Интересы: ${childInterests}` : ""}
       console.log(`Deducted 1 credit from ${userEmail}, remaining: ${profile.credits - 1}`);
     }
 
+    // Сохраняем сказку в БД для истории и n8n
+    const { data: savedStory, error: storyError } = await supabase
+      .from("stories")
+      .insert({
+        user_id: profile.id,
+        child_name: childName,
+        child_age: childAge,
+        child_gender: childGender,
+        child_interests: childInterests || null,
+        topic,
+        custom_topic: customTopic || null,
+        character,
+        duration,
+        title: storyTitle.trim(),
+        story_text: storyText.trim(),
+        word_count: storyText.split(/\s+/).length,
+      })
+      .select("id")
+      .single();
+
+    if (storyError) {
+      console.error("Error saving story:", storyError);
+    } else {
+      console.log(`Story saved with ID: ${savedStory?.id}`);
+    }
+
     return NextResponse.json({
       success: true,
       story: {
+        id: savedStory?.id || null,
         title: storyTitle.trim(),
         text: storyText.trim(),
         childName,

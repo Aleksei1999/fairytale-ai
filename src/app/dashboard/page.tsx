@@ -9,6 +9,7 @@ export default function Dashboard() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [credits, setCredits] = useState<number | null>(null);
+  const [cartoonCredits, setCartoonCredits] = useState<number | null>(null);
   const [loadingCredits, setLoadingCredits] = useState(true);
 
   useEffect(() => {
@@ -27,12 +28,15 @@ export default function Dashboard() {
         const data = await response.json();
         if (data.success) {
           setCredits(data.credits);
+          setCartoonCredits(data.cartoonCredits);
         } else {
           setCredits(0);
+          setCartoonCredits(0);
         }
       } catch (error) {
         console.error("Error fetching credits:", error);
         setCredits(0);
+        setCartoonCredits(0);
       } finally {
         setLoadingCredits(false);
       }
@@ -85,21 +89,32 @@ export default function Dashboard() {
                   Manage your stories and account here.
                 </p>
               </div>
-              {/* Credits Badge */}
-              <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 border border-amber-200">
-                <span className="text-2xl">💎</span>
-                <div>
-                  <p className="text-xs text-amber-700 font-medium">Your Credits</p>
-                  <p className="text-2xl font-bold text-amber-900">
-                    {loadingCredits ? "..." : credits ?? 0}
-                  </p>
+              {/* Credits Badges */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 border border-amber-200">
+                  <span className="text-2xl">📖</span>
+                  <div>
+                    <p className="text-xs text-amber-700 font-medium">Story Credits</p>
+                    <p className="text-2xl font-bold text-amber-900">
+                      {loadingCredits ? "..." : credits ?? 0}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 border border-purple-200">
+                  <span className="text-2xl">🎬</span>
+                  <div>
+                    <p className="text-xs text-purple-700 font-medium">Cartoon Credits</p>
+                    <p className="text-2xl font-bold text-purple-900">
+                      {loadingCredits ? "..." : cartoonCredits ?? 0}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {/* Create Story */}
             <Link
               href="/create"
@@ -116,18 +131,34 @@ export default function Dashboard() {
               </div>
             </Link>
 
-            {/* Buy Credits */}
+            {/* Buy Story Credits */}
             <Link
               href="/#pricing"
               className="glass-card p-6 hover:shadow-lg transition-shadow group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  💎
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                  📖
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-gray-900">Get Credits</h3>
-                  <p className="text-gray-600 text-sm">Purchase more credits for stories</p>
+                  <h3 className="font-bold text-lg text-gray-900">Get Story Credits</h3>
+                  <p className="text-gray-600 text-sm">Subscribe for more stories</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Buy Cartoon Credits */}
+            <Link
+              href="/buy-cartoons"
+              className="glass-card p-6 hover:shadow-lg transition-shadow group border-2 border-purple-200"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                  🎬
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">Buy Cartoons</h3>
+                  <p className="text-gray-600 text-sm">Turn stories into animated videos</p>
                 </div>
               </div>
             </Link>
@@ -142,9 +173,15 @@ export default function Dashboard() {
                 <span className="text-gray-900 font-medium">{user.email}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Credits</span>
+                <span className="text-gray-600">Story Credits</span>
                 <span className="text-gray-900 font-medium">
                   {loadingCredits ? "Loading..." : `${credits ?? 0} credits`}
+                </span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Cartoon Credits</span>
+                <span className="text-gray-900 font-medium">
+                  {loadingCredits ? "Loading..." : `${cartoonCredits ?? 0} credits`}
                 </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
