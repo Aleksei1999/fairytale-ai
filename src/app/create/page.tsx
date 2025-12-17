@@ -121,9 +121,13 @@ function CreatePageContent() {
     interests: "",
   });
 
+  // Check if coming from development map with a topic
+  const developmentTopic = searchParams.get("topic");
+  const developmentMonth = searchParams.get("month");
+
   const [storySettings, setStorySettings] = useState<StorySettings>({
-    topic: "",
-    customTopic: "",
+    topic: developmentTopic ? "custom" : "",
+    customTopic: developmentTopic || "",
     character: "",
     duration: "medium",
   });
@@ -625,12 +629,35 @@ function CreatePageContent() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">🎯</div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
-                Выберите тему сказки
+                {developmentTopic ? "Тема из карты развития" : "Выберите тему сказки"}
               </h1>
               <p className="text-gray-600">
-                Какую ситуацию хотите проработать с {childInfo.name}?
+                {developmentTopic
+                  ? `Месяц ${developmentMonth}: ${developmentTopic}`
+                  : `Какую ситуацию хотите проработать с ${childInfo.name}?`
+                }
               </p>
             </div>
+
+            {/* Development Map Topic Badge */}
+            {developmentTopic && (
+              <div className="glass-card p-4 mb-6 flex items-center gap-3 bg-violet-50 border border-violet-200">
+                <span className="text-2xl">🗺️</span>
+                <div className="flex-1">
+                  <p className="font-medium text-violet-900">Тема из карты развития</p>
+                  <p className="text-sm text-violet-600">{developmentTopic}</p>
+                </div>
+                <button
+                  onClick={() => {
+                    setStorySettings({ ...storySettings, topic: "", customTopic: "" });
+                    window.history.replaceState(null, "", "/create");
+                  }}
+                  className="text-xs text-violet-500 hover:text-violet-700"
+                >
+                  Изменить тему
+                </button>
+              </div>
+            )}
 
             <div className="glass-card-strong p-8 space-y-6">
               {/* Topics */}

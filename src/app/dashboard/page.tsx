@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
+import { DevelopmentMap } from "@/components/DevelopmentMap";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -195,6 +196,11 @@ export default function Dashboard() {
                 </div>
               </div>
             </Link>
+          </div>
+
+          {/* Development Map */}
+          <div className="mb-8">
+            <DevelopmentMap />
           </div>
 
           {/* Account Info */}
