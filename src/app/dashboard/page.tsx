@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
@@ -8,12 +8,40 @@ import Link from "next/link";
 export default function Dashboard() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const [credits, setCredits] = useState<number | null>(null);
+  const [loadingCredits, setLoadingCredits] = useState(true);
 
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // Fetch credits
+  useEffect(() => {
+    async function fetchCredits() {
+      if (!user?.email) return;
+
+      try {
+        const response = await fetch(`/api/user/credits?email=${encodeURIComponent(user.email)}`);
+        const data = await response.json();
+        if (data.success) {
+          setCredits(data.credits);
+        } else {
+          setCredits(0);
+        }
+      } catch (error) {
+        console.error("Error fetching credits:", error);
+        setCredits(0);
+      } finally {
+        setLoadingCredits(false);
+      }
+    }
+
+    if (user?.email) {
+      fetchCredits();
+    }
+  }, [user?.email]);
 
   if (authLoading || !user) {
     return (
@@ -48,12 +76,26 @@ export default function Dashboard() {
         <div className="max-w-4xl mx-auto">
           {/* Welcome Section */}
           <div className="glass-card p-6 sm:p-8 mb-8">
-            <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-              Welcome, {user.user_metadata?.name || user.email?.split("@")[0]}! 👋
-            </h1>
-            <p className="text-gray-600">
-              Manage your stories and account here.
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                  Welcome, {user.user_metadata?.name || user.email?.split("@")[0]}! 👋
+                </h1>
+                <p className="text-gray-600">
+                  Manage your stories and account here.
+                </p>
+              </div>
+              {/* Credits Badge */}
+              <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 border border-amber-200">
+                <span className="text-2xl">💎</span>
+                <div>
+                  <p className="text-xs text-amber-700 font-medium">Your Credits</p>
+                  <p className="text-2xl font-bold text-amber-900">
+                    {loadingCredits ? "..." : credits ?? 0}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Actions */}
@@ -98,6 +140,12 @@ export default function Dashboard() {
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Email</span>
                 <span className="text-gray-900 font-medium">{user.email}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Credits</span>
+                <span className="text-gray-900 font-medium">
+                  {loadingCredits ? "Loading..." : `${credits ?? 0} credits`}
+                </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Member since</span>
