@@ -181,8 +181,14 @@ export default function Home() {
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
                       </div>
                       <button
+                        onClick={() => { router.push("/dashboard"); setShowUserMenu(false); }}
+                        className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg mt-1 flex items-center gap-2"
+                      >
+                        <span>📚</span> My Stories
+                      </button>
+                      <button
                         onClick={() => { signOut(); setShowUserMenu(false); }}
-                        className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg mt-1"
+                        className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                       >
                         Sign out
                       </button>
@@ -229,20 +235,30 @@ export default function Home() {
               Pricing
             </a>
             {user ? (
-              <div className="flex items-center gap-3 pt-2 border-t border-gray-200">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white font-medium">
-                  {user.user_metadata?.name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || "U"}
+              <div className="pt-2 border-t border-gray-200 space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white font-medium">
+                    {user.user_metadata?.name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || "U"}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{user.user_metadata?.name || "User"}</p>
+                    <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{user.user_metadata?.name || "User"}</p>
-                  <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { router.push("/dashboard"); setMobileMenuOpen(false); }}
+                    className="flex-1 py-2 px-4 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+                  >
+                    <span>📚</span> My Stories
+                  </button>
+                  <button
+                    onClick={() => { signOut(); setMobileMenuOpen(false); }}
+                    className="py-2 px-4 text-red-600 text-sm font-medium"
+                  >
+                    Sign out
+                  </button>
                 </div>
-                <button
-                  onClick={() => { signOut(); setMobileMenuOpen(false); }}
-                  className="text-sm text-red-600 font-medium"
-                >
-                  Sign out
-                </button>
               </div>
             ) : (
               <button
