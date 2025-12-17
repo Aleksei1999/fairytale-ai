@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 interface StoryRequest {
   childName: string;
@@ -10,6 +11,7 @@ interface StoryRequest {
   customTopic?: string;
   character: string;
   duration: "short" | "medium" | "long";
+  userEmail: string;
 }
 
 const TOPIC_DESCRIPTIONS: Record<string, string> = {
@@ -60,7 +62,40 @@ export async function POST(request: NextRequest) {
       customTopic,
       character,
       duration,
+      userEmail,
     } = body;
+
+    // Check user credits
+    if (!userEmail) {
+      return NextResponse.json(
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
+    const supabase = createAdminClient();
+
+    // Get user's profile and credits
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("id, credits")
+      .eq("email", userEmail)
+      .single();
+
+    if (profileError || !profile) {
+      console.error("Profile not found:", profileError);
+      return NextResponse.json(
+        { success: false, error: "User profile not found" },
+        { status: 404 }
+      );
+    }
+
+    if (profile.credits < 1) {
+      return NextResponse.json(
+        { success: false, error: "Not enough credits", creditsNeeded: 1, creditsAvailable: profile.credits },
+        { status: 402 }
+      );
+    }
 
     const genderPronoun = childGender === "boy" ? "мальчик" : "девочка";
     const genderHe = childGender === "boy" ? "он" : "она";
@@ -169,6 +204,21 @@ ${childInterests ? `Интересы: ${childInterests}` : ""}
 
     const storyTitle = titleCompletion.choices[0]?.message?.content || `${childName} и ${characterName}`;
 
+    // Deduct 1 credit after successful generation
+    const { error: creditError } = await supabase
+      .from("profiles")
+      .update({
+        credits: profile.credits - 1,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", profile.id);
+
+    if (creditError) {
+      console.error("Error deducting credit:", creditError);
+    } else {
+      console.log(`Deducted 1 credit from ${userEmail}, remaining: ${profile.credits - 1}`);
+    }
+
     return NextResponse.json({
       success: true,
       story: {
@@ -180,6 +230,7 @@ ${childInterests ? `Интересы: ${childInterests}` : ""}
         duration,
         wordCount: storyText.split(/\s+/).length,
       },
+      creditsRemaining: profile.credits - 1,
     });
   } catch (error) {
     console.error("Error generating story:", error);

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useAuth } from "@/components/AuthProvider";
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -58,6 +59,8 @@ const CHARACTERS = [
 
 function CreatePageContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState<Step>(1);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -80,6 +83,13 @@ function CreatePageContent() {
   const chunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const musicRef = useRef<HTMLAudioElement | null>(null);
+
+  // Redirect to home if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/");
+    }
+  }, [user, authLoading, router]);
 
   const [childInfo, setChildInfo] = useState<ChildInfo>({
     name: searchParams.get("name") || "",
@@ -331,12 +341,18 @@ function CreatePageContent() {
           customTopic: storySettings.customTopic,
           character: storySettings.character,
           duration: storySettings.duration,
+          userEmail: user?.email,
         }),
       });
 
       const data = await response.json();
 
       if (!data.success) {
+        if (response.status === 402) {
+          setError("Недостаточно кредитов. Пожалуйста, приобретите кредиты для создания сказок.");
+          setIsGenerating(false);
+          return;
+        }
         throw new Error(data.error || "Ошибка генерации");
       }
 
@@ -370,6 +386,15 @@ function CreatePageContent() {
       setIsGenerating(false);
     }
   };
+
+  // Show loading while checking auth
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+        <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen overflow-hidden">
