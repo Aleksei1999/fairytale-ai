@@ -45,7 +45,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           setSuccess("Check your email to confirm your account!");
         } else {
           onClose();
-          window.location.reload();
+          window.location.href = "/dashboard";
         }
       }
     } catch {

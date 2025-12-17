@@ -85,6 +85,37 @@ export default function Home() {
     setPaymentEmail(user.email || "");
     setPaymentError("");
     setShowPaymentModal(true);
+    // Если авторизован — сразу платим без запроса email
+    if (user.email) {
+      handlePaymentDirect(plan, user.email);
+    }
+  };
+
+  const handlePaymentDirect = async (plan: "monthly" | "yearly", email: string) => {
+    setPaymentLoading(true);
+    setPaymentError("");
+
+    try {
+      const response = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, plan }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.paymentUrl) {
+        window.location.href = data.paymentUrl;
+      } else {
+        setPaymentError(data.error || "Payment creation error");
+        setShowPaymentModal(true);
+      }
+    } catch {
+      setPaymentError("Connection error. Please try again later.");
+      setShowPaymentModal(true);
+    } finally {
+      setPaymentLoading(false);
+    }
   };
 
   const handleCreateStory = () => {
@@ -96,7 +127,9 @@ export default function Home() {
   };
 
   const handlePayment = async () => {
-    if (!paymentEmail || !paymentEmail.includes("@")) {
+    const emailToUse = user?.email || paymentEmail;
+
+    if (!emailToUse || !emailToUse.includes("@")) {
       setPaymentError("Please enter a valid email");
       return;
     }
@@ -109,7 +142,7 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: paymentEmail,
+          email: emailToUse,
           plan: selectedPlan,
         }),
       });
@@ -317,10 +350,6 @@ export default function Home() {
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="text-blue-500">✓</span>
                 <span>First story free</span>
-              </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-blue-500">✓</span>
-                <span>No registration</span>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="text-blue-500">✓</span>
@@ -1022,19 +1051,21 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Email input */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email for subscription
-              </label>
-              <input
-                type="email"
-                placeholder="your@email.com"
-                value={paymentEmail}
-                onChange={(e) => setPaymentEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
-              />
-            </div>
+            {/* Email input - only show if not logged in */}
+            {!user?.email && (
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email for subscription
+                </label>
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={paymentEmail}
+                  onChange={(e) => setPaymentEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
+                />
+              </div>
+            )}
 
             {/* Error message */}
             {paymentError && (
