@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 interface StoryRequest {
   childName: string;
   childAge: string;
@@ -49,6 +45,10 @@ const DURATION_WORDS: Record<string, number> = {
 
 export async function POST(request: NextRequest) {
   try {
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const body: StoryRequest = await request.json();
 
     const {
