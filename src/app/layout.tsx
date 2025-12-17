@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import { Nunito, Comfortaa } from "next/font/google";
+import { AuthProvider } from "@/components/AuthProvider";
 import "./globals.css";
 
 const nunito = Nunito({
   variable: "--font-nunito",
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
 
 const comfortaa = Comfortaa({
   variable: "--font-comfortaa",
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "SkazkaAI — Сказки голосом мамы и папы",
+  title: "FairyTaleAI — Personalized Stories in Your Voice",
   description:
-    "Персонализированные аудиосказки для вашего ребёнка, озвученные клонированным голосом родителя. Создайте волшебную историю за 5 минут.",
-  keywords: ["сказки", "аудиосказки", "дети", "родители", "ИИ", "голос", "клонирование голоса"],
+    "Create personalized audio fairy tales for your child, narrated in your own cloned voice. Make magical stories in minutes.",
+  keywords: ["fairy tales", "stories", "kids", "parents", "AI", "voice cloning", "bedtime stories"],
 };
 
 export default function RootLayout({
@@ -27,9 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body className={`${nunito.variable} ${comfortaa.variable} font-sans antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
