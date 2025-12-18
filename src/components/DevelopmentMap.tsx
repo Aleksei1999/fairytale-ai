@@ -24,137 +24,137 @@ interface Month {
 const YEAR_PROGRAM: Month[] = [
   {
     id: 1,
-    title: "Я и Я",
-    subtitle: "Самоосознание",
+    title: "Me & Myself",
+    subtitle: "Self-Awareness",
     icon: "🪞",
     color: "from-violet-400 to-purple-500",
-    goal: "Ребёнок понимает, кто он, что чувствует, чего хочет",
+    goal: "Child understands who they are, what they feel, what they want",
     locked: false,
     topics: [
-      { id: 1, title: "Кто я, кроме имени", description: "Понять свою уникальность и особенности", completed: false },
-      { id: 2, title: "Мои сильные стороны", description: "Открыть и принять свои таланты", completed: false },
-      { id: 3, title: "Мои слабые стороны — это нормально", description: "Принять несовершенство как часть себя", completed: false },
-      { id: 4, title: "Я могу ошибаться", description: "Ошибки — это путь к росту", completed: false },
-      { id: 5, title: "Когда я злюсь — что делать", description: "Управление гневом и агрессией", completed: false },
-      { id: 6, title: "Когда мне грустно", description: "Принятие грусти и способы справиться", completed: false },
-      { id: 7, title: "Я умею радоваться мелочам", description: "Благодарность и позитивное мышление", completed: false },
-      { id: 8, title: "Я не обязан быть как все", description: "Ценность индивидуальности", completed: false },
-      { id: 9, title: "Моё тело — мой друг", description: "Здоровое отношение к своему телу", completed: false },
-      { id: 10, title: "Моё мнение имеет значение", description: "Уверенность в своих мыслях", completed: false },
-      { id: 11, title: "Я могу сказать «нет»", description: "Установка личных границ", completed: false },
-      { id: 12, title: "Я могу попросить помощи", description: "Сила в признании своих потребностей", completed: false },
-      { id: 13, title: "Я ценен просто так", description: "Безусловная самоценность", completed: false },
-      { id: 14, title: "Я учусь каждый день", description: "Любовь к познанию нового", completed: false },
-      { id: 15, title: "Я расту и меняюсь", description: "Принятие изменений как части жизни", completed: false },
+      { id: 1, title: "Who am I beyond my name", description: "Discover your uniqueness and special qualities", completed: false },
+      { id: 2, title: "My strengths", description: "Recognize and embrace your talents", completed: false },
+      { id: 3, title: "My weaknesses are okay", description: "Accept imperfection as part of being human", completed: false },
+      { id: 4, title: "I can make mistakes", description: "Mistakes are the path to growth", completed: false },
+      { id: 5, title: "When I'm angry — what to do", description: "Managing anger and aggression", completed: false },
+      { id: 6, title: "When I'm sad", description: "Accepting sadness and ways to cope", completed: false },
+      { id: 7, title: "I can enjoy small things", description: "Gratitude and positive thinking", completed: false },
+      { id: 8, title: "I don't have to be like everyone", description: "The value of individuality", completed: false },
+      { id: 9, title: "My body is my friend", description: "Healthy relationship with your body", completed: false },
+      { id: 10, title: "My opinion matters", description: "Confidence in your thoughts", completed: false },
+      { id: 11, title: "I can say 'no'", description: "Setting personal boundaries", completed: false },
+      { id: 12, title: "I can ask for help", description: "Strength in acknowledging your needs", completed: false },
+      { id: 13, title: "I am valuable just as I am", description: "Unconditional self-worth", completed: false },
+      { id: 14, title: "I learn every day", description: "Love of learning new things", completed: false },
+      { id: 15, title: "I grow and change", description: "Accepting change as part of life", completed: false },
     ],
   },
   {
     id: 2,
-    title: "Я и семья",
-    subtitle: "Близкие отношения",
+    title: "Me & Family",
+    subtitle: "Close Relationships",
     icon: "👨‍👩‍👧",
     color: "from-pink-400 to-rose-500",
-    goal: "Понимание роли семьи и выстраивание тёплых отношений",
+    goal: "Understanding family role and building warm relationships",
     locked: true,
     topics: [],
   },
   {
     id: 3,
-    title: "Я и друзья",
-    subtitle: "Дружба и общение",
+    title: "Me & Friends",
+    subtitle: "Friendship & Communication",
     icon: "🤝",
     color: "from-amber-400 to-orange-500",
-    goal: "Навыки дружбы, общения и разрешения конфликтов",
+    goal: "Friendship skills, communication and conflict resolution",
     locked: true,
     topics: [],
   },
   {
     id: 4,
-    title: "Я и эмоции других",
-    subtitle: "Эмпатия",
+    title: "Me & Others' Emotions",
+    subtitle: "Empathy",
     icon: "💗",
     color: "from-red-400 to-pink-500",
-    goal: "Понимание чувств окружающих",
+    goal: "Understanding feelings of others",
     locked: true,
     topics: [],
   },
   {
     id: 5,
-    title: "Я и правила",
-    subtitle: "Дисциплина",
+    title: "Me & Rules",
+    subtitle: "Discipline",
     icon: "📋",
     color: "from-blue-400 to-indigo-500",
-    goal: "Понимание и принятие правил",
+    goal: "Understanding and accepting rules",
     locked: true,
     topics: [],
   },
   {
     id: 6,
-    title: "Я и цели",
-    subtitle: "Целеустремлённость",
+    title: "Me & Goals",
+    subtitle: "Determination",
     icon: "🎯",
     color: "from-green-400 to-emerald-500",
-    goal: "Постановка и достижение целей",
+    goal: "Setting and achieving goals",
     locked: true,
     topics: [],
   },
   {
     id: 7,
-    title: "Я и трудности",
-    subtitle: "Устойчивость",
+    title: "Me & Challenges",
+    subtitle: "Resilience",
     icon: "🏔️",
     color: "from-slate-400 to-gray-500",
-    goal: "Преодоление препятствий",
+    goal: "Overcoming obstacles",
     locked: true,
     topics: [],
   },
   {
     id: 8,
-    title: "Я и мир",
-    subtitle: "Любознательность",
+    title: "Me & The World",
+    subtitle: "Curiosity",
     icon: "🌍",
     color: "from-cyan-400 to-teal-500",
-    goal: "Интерес к окружающему миру",
+    goal: "Interest in the world around",
     locked: true,
     topics: [],
   },
   {
     id: 9,
-    title: "Я и творчество",
-    subtitle: "Креативность",
+    title: "Me & Creativity",
+    subtitle: "Creative Expression",
     icon: "🎨",
     color: "from-fuchsia-400 to-purple-500",
-    goal: "Раскрытие творческого потенциала",
+    goal: "Unlocking creative potential",
     locked: true,
     topics: [],
   },
   {
     id: 10,
-    title: "Я и ответственность",
-    subtitle: "Самостоятельность",
+    title: "Me & Responsibility",
+    subtitle: "Independence",
     icon: "⚖️",
     color: "from-yellow-400 to-amber-500",
-    goal: "Принятие ответственности за свои действия",
+    goal: "Taking responsibility for your actions",
     locked: true,
     topics: [],
   },
   {
     id: 11,
-    title: "Я и команда",
-    subtitle: "Сотрудничество",
+    title: "Me & Team",
+    subtitle: "Collaboration",
     icon: "👥",
     color: "from-sky-400 to-blue-500",
-    goal: "Работа в команде и лидерство",
+    goal: "Teamwork and leadership",
     locked: true,
     topics: [],
   },
   {
     id: 12,
-    title: "Я — лидер",
-    subtitle: "Влияние и ведение",
+    title: "I Am a Leader",
+    subtitle: "Influence & Guidance",
     icon: "👑",
     color: "from-yellow-400 to-orange-500",
-    goal: "Лидерские качества и влияние на других",
+    goal: "Leadership qualities and influencing others",
     locked: true,
     topics: [],
   },
@@ -175,17 +175,17 @@ export function DevelopmentMap() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="font-display text-xl font-bold text-gray-900 flex items-center gap-2">
-              <span>🗺️</span> Карта развития на год
+              <span>🗺️</span> Yearly Development Map
             </h2>
             <p className="text-gray-600 text-sm mt-1">
-              12 месяцев системного развития: от самопознания к лидерству
+              12 months of systematic growth: from self-discovery to leadership
             </p>
           </div>
           <button
             onClick={() => setExpandedMap(!expandedMap)}
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
           >
-            {expandedMap ? "Свернуть" : "Показать все месяцы"}
+            {expandedMap ? "Collapse" : "Show all months"}
           </button>
         </div>
 
@@ -222,11 +222,11 @@ export function DevelopmentMap() {
             </div>
             <div className="flex-1">
               <h3 className="font-display text-2xl font-bold text-gray-900">
-                Месяц {selectedMonth.id}: {selectedMonth.title}
+                Month {selectedMonth.id}: {selectedMonth.title}
               </h3>
               <p className="text-gray-600">{selectedMonth.subtitle}</p>
               <p className="text-sm text-gray-500 mt-1">
-                <span className="font-medium">Цель:</span> {selectedMonth.goal}
+                <span className="font-medium">Goal:</span> {selectedMonth.goal}
               </p>
             </div>
           </div>
@@ -234,8 +234,8 @@ export function DevelopmentMap() {
           {/* Progress Bar */}
           <div className="mb-6">
             <div className="flex justify-between text-sm mb-2">
-              <span className="text-gray-600">Прогресс</span>
-              <span className="font-medium text-gray-900">{completedTopics} из {totalTopics} тем</span>
+              <span className="text-gray-600">Progress</span>
+              <span className="font-medium text-gray-900">{completedTopics} of {totalTopics} topics</span>
             </div>
             <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
               <div
@@ -288,7 +288,7 @@ export function DevelopmentMap() {
                             : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90 shadow-md"
                         }`}
                       >
-                        {topic.completed ? "Повторить" : "Создать сказку"}
+                        {topic.completed ? "Repeat" : "Create Story"}
                       </Link>
                     </div>
                   </div>
@@ -309,15 +309,15 @@ export function DevelopmentMap() {
                               🎬
                             </div>
                             <div className="flex-1">
-                              <h4 className="font-bold text-purple-900">Неделя {weekNumber} завершена!</h4>
-                              <p className="text-sm text-purple-600">Наградите ребёнка персональным мультиком</p>
+                              <h4 className="font-bold text-purple-900">Week {weekNumber} Complete!</h4>
+                              <p className="text-sm text-purple-600">Reward your child with a personalized cartoon</p>
                             </div>
                             <Link
                               href={`/buy-cartoons?week=${weekNumber}&month=${selectedMonth.id}`}
                               className="px-4 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-sm hover:opacity-90 transition-all shadow-lg flex items-center gap-2 whitespace-nowrap"
                             >
                               <span>🏆</span>
-                              <span>Создать мультик</span>
+                              <span>Create Cartoon</span>
                             </Link>
                           </div>
                         </div>
@@ -336,13 +336,13 @@ export function DevelopmentMap() {
         <div className="glass-card p-8 text-center">
           <div className="text-5xl mb-4">🔒</div>
           <h3 className="font-display text-xl font-bold text-gray-900 mb-2">
-            Месяц {selectedMonth.id}: {selectedMonth.title}
+            Month {selectedMonth.id}: {selectedMonth.title}
           </h3>
           <p className="text-gray-600 mb-4">
-            Этот месяц откроется после завершения предыдущих этапов
+            This month will unlock after completing previous stages
           </p>
           <p className="text-sm text-gray-500">
-            Пройдите текущий месяц, чтобы разблокировать следующий
+            Complete the current month to unlock the next one
           </p>
         </div>
       )}
@@ -350,28 +350,28 @@ export function DevelopmentMap() {
       {/* Journey Info */}
       <div className="glass-card p-6">
         <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-          <span>💡</span> О программе развития
+          <span>💡</span> About the Program
         </h4>
         <div className="grid sm:grid-cols-3 gap-4 text-sm">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 flex-shrink-0">1</div>
             <div>
-              <p className="font-medium text-gray-900">Месяцы 1-4</p>
-              <p className="text-gray-600">Я познаю себя</p>
+              <p className="font-medium text-gray-900">Months 1-4</p>
+              <p className="text-gray-600">I discover myself</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">2</div>
             <div>
-              <p className="font-medium text-gray-900">Месяцы 5-8</p>
-              <p className="text-gray-600">Я взаимодействую с миром</p>
+              <p className="font-medium text-gray-900">Months 5-8</p>
+              <p className="text-gray-600">I interact with the world</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">3</div>
             <div>
-              <p className="font-medium text-gray-900">Месяцы 9-12</p>
-              <p className="text-gray-600">Я влияю и веду за собой</p>
+              <p className="font-medium text-gray-900">Months 9-12</p>
+              <p className="text-gray-600">I influence and lead</p>
             </div>
           </div>
         </div>
