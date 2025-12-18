@@ -559,6 +559,241 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== BLOCK: 12-MONTH PROGRAM JOURNEY ===== */}
+      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+            A complete <span className="gradient-text">12-month journey</span>
+          </h2>
+          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+            Your child becomes the star of their own cartoon every week.
+            A structured program that builds emotional intelligence, resilience, and leadership.
+          </p>
+        </div>
+
+        {/* Visual Journey Path */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative bg-gradient-to-b from-emerald-100 via-green-50 to-teal-100 rounded-3xl p-6 sm:p-10 overflow-hidden">
+            {/* Decorative background elements */}
+            <div className="absolute top-10 left-10 text-4xl opacity-20">🌳</div>
+            <div className="absolute top-32 right-12 text-3xl opacity-20">🌲</div>
+            <div className="absolute bottom-32 left-16 text-3xl opacity-15">🌿</div>
+            <div className="absolute bottom-20 right-20 text-4xl opacity-20">🌳</div>
+            <div className="absolute top-1/3 left-1/3 text-2xl opacity-15">🦋</div>
+            <div className="absolute top-2/3 right-1/3 text-2xl opacity-15">🐦</div>
+
+            {/* SVG Winding Path */}
+            <svg className="w-full h-auto relative z-10" viewBox="0 0 400 520" fill="none">
+              {/* Main winding path */}
+              <path
+                d="M 60 40 Q 200 40, 340 90 Q 200 140, 60 190 Q 200 240, 340 290 Q 200 340, 60 390 Q 200 440, 340 490"
+                stroke="url(#journeyGradient)"
+                strokeWidth="12"
+                strokeLinecap="round"
+                fill="none"
+              />
+              {/* Dashed center line */}
+              <path
+                d="M 60 40 Q 200 40, 340 90 Q 200 140, 60 190 Q 200 240, 340 290 Q 200 340, 60 390 Q 200 440, 340 490"
+                stroke="rgba(255,255,255,0.7)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                fill="none"
+                strokeDasharray="10 10"
+              />
+              <defs>
+                <linearGradient id="journeyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#34D399" />
+                  <stop offset="33%" stopColor="#3B82F6" />
+                  <stop offset="66%" stopColor="#8B5CF6" />
+                  <stop offset="100%" stopColor="#F59E0B" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            {/* Milestone points overlaid on path */}
+            <div className="absolute top-[6%] left-[10%] sm:left-[12%] flex flex-col items-center z-20">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
+                🌱
+              </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 1-3</p>
+                <p className="text-xs text-gray-600">Self-Discovery</p>
+              </div>
+            </div>
+
+            <div className="absolute top-[18%] right-[8%] sm:right-[12%] flex flex-col items-center z-20">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
+                👨‍👩‍👧
+              </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 4-6</p>
+                <p className="text-xs text-gray-600">Family & Friends</p>
+              </div>
+            </div>
+
+            <div className="absolute top-[38%] left-[10%] sm:left-[12%] flex flex-col items-center z-20">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
+                💪
+              </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 7-9</p>
+                <p className="text-xs text-gray-600">Resilience</p>
+              </div>
+            </div>
+
+            <div className="absolute top-[56%] right-[8%] sm:right-[12%] flex flex-col items-center z-20">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
+                🎯
+              </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 10-11</p>
+                <p className="text-xs text-gray-600">Goals & Growth</p>
+              </div>
+            </div>
+
+            <div className="absolute top-[76%] left-[10%] sm:left-[12%] flex flex-col items-center z-20">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-3xl sm:text-4xl shadow-2xl border-4 border-white animate-pulse">
+                👑
+              </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs sm:text-sm font-bold text-gray-800">Month 12</p>
+                <p className="text-xs text-gray-600">Leadership</p>
+              </div>
+            </div>
+
+            {/* Final result badge */}
+            <div className="absolute bottom-[2%] right-[5%] sm:right-[10%] z-20">
+              <div className="bg-gradient-to-r from-violet-600 to-purple-600 text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg flex items-center gap-2">
+                <span>🏆</span>
+                <span>Year Complete!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Key Features */}
+        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto mt-8 sm:mt-12">
+          <div className="glass-card-strong p-5 sm:p-6 text-center">
+            <div className="text-3xl sm:text-4xl mb-3">📅</div>
+            <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">12-Month Program</h4>
+            <p className="text-xs sm:text-sm text-gray-600">180+ developmental topics structured for steady growth</p>
+          </div>
+          <div className="glass-card-strong p-5 sm:p-6 text-center">
+            <div className="text-3xl sm:text-4xl mb-3">🎬</div>
+            <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Weekly Cartoons</h4>
+            <p className="text-xs sm:text-sm text-gray-600">Your child stars in personalized animated stories</p>
+          </div>
+          <div className="glass-card-strong p-5 sm:p-6 text-center">
+            <div className="text-3xl sm:text-4xl mb-3">🧠</div>
+            <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Active Engagement</h4>
+            <p className="text-xs sm:text-sm text-gray-600">Children learn values by seeing themselves as heroes</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== BLOCK: TRANSFORM RESULTS ===== */}
+      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="glass-card-strong p-6 sm:p-10 md:p-12">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                Transform your child's <span className="gradient-text">future</span>
+              </h2>
+              <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+                By using FairyTaleAI consistently, you're giving your child the foundation for lifelong success
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10">
+              {/* Benefit 1 */}
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
+                  🌿
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Healthy Emotional Development</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    Increase your child's chances of a mentally healthy life with strong emotional foundations
+                  </p>
+                </div>
+              </div>
+
+              {/* Benefit 2 */}
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
+                  🌊
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Smooth Adaptation</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    Your child will be well-adapted to growing up, handling life transitions with confidence
+                  </p>
+                </div>
+              </div>
+
+              {/* Benefit 3 */}
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-100">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
+                  🕊️
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Stress-Free Interactions</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    Learn to interact with the world harmoniously, without unnecessary stress or conflict
+                  </p>
+                </div>
+              </div>
+
+              {/* Benefit 4 */}
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-100">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
+                  🚀
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Clear Advantages</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    Gain distinct advantages in social situations through developed emotional intelligence
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats bar */}
+            <div className="grid grid-cols-3 gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50">
+              <div className="text-center">
+                <p className="text-2xl sm:text-4xl font-bold gradient-text">180+</p>
+                <p className="text-xs sm:text-sm text-gray-600">Topics Covered</p>
+              </div>
+              <div className="text-center border-x border-gray-200">
+                <p className="text-2xl sm:text-4xl font-bold gradient-text">52</p>
+                <p className="text-xs sm:text-sm text-gray-600">Weekly Cartoons</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl sm:text-4xl font-bold gradient-text">12</p>
+                <p className="text-xs sm:text-sm text-gray-600">Growth Stages</p>
+              </div>
+            </div>
+
+            {/* Final CTA within block */}
+            <div className="mt-8 text-center">
+              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+                Start building your child's emotional foundation today
+              </p>
+              <button
+                onClick={handleCreateStory}
+                className="btn-glow px-8 py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center gap-2"
+              >
+                <span>Begin the Journey</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== BLOCK 4: DEMO ===== */}
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">

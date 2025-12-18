@@ -245,47 +245,88 @@ export function DevelopmentMap() {
             </div>
           </div>
 
-          {/* Topics Grid */}
+          {/* Topics Grid with Weekly Rewards */}
           <div className="grid gap-3">
-            {selectedMonth.topics.map((topic, index) => (
-              <div
-                key={topic.id}
-                className={`p-4 rounded-xl border-2 transition-all ${
-                  topic.completed
-                    ? "bg-green-50 border-green-200"
-                    : "bg-white/50 border-gray-100 hover:border-gray-200"
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  {/* Number */}
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                    topic.completed
-                      ? "bg-green-500 text-white"
-                      : "bg-gray-100 text-gray-500"
-                  }`}>
-                    {topic.completed ? "✓" : index + 1}
-                  </div>
+            {selectedMonth.topics.map((topic, index) => {
+              // Define week boundaries: Week 1 (1-4), Week 2 (5-8), Week 3 (9-12), Week 4 (13-15)
+              const weekEndIndices = [3, 7, 11, 14]; // 0-indexed: after topics 4, 8, 12, 15
+              const isWeekEnd = weekEndIndices.includes(index);
+              const weekNumber = index <= 3 ? 1 : index <= 7 ? 2 : index <= 11 ? 3 : 4;
 
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{topic.title}</h4>
-                    <p className="text-sm text-gray-500">{topic.description}</p>
-                  </div>
-
-                  {/* Action */}
-                  <Link
-                    href={`/create?topic=${encodeURIComponent(topic.title)}&month=${selectedMonth.id}`}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              return (
+                <div key={topic.id}>
+                  {/* Topic Card */}
+                  <div
+                    className={`p-4 rounded-xl border-2 transition-all ${
                       topic.completed
-                        ? "bg-green-100 text-green-700 hover:bg-green-200"
-                        : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90 shadow-md"
+                        ? "bg-green-50 border-green-200"
+                        : "bg-white/50 border-gray-100 hover:border-gray-200"
                     }`}
                   >
-                    {topic.completed ? "Повторить" : "Создать сказку"}
-                  </Link>
+                    <div className="flex items-center gap-4">
+                      {/* Number */}
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+                        topic.completed
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-100 text-gray-500"
+                      }`}>
+                        {topic.completed ? "✓" : index + 1}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900">{topic.title}</h4>
+                        <p className="text-sm text-gray-500">{topic.description}</p>
+                      </div>
+
+                      {/* Action */}
+                      <Link
+                        href={`/create?topic=${encodeURIComponent(topic.title)}&month=${selectedMonth.id}`}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                          topic.completed
+                            ? "bg-green-100 text-green-700 hover:bg-green-200"
+                            : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90 shadow-md"
+                        }`}
+                      >
+                        {topic.completed ? "Повторить" : "Создать сказку"}
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Weekly Reward Button */}
+                  {isWeekEnd && (
+                    <div className="my-4 relative">
+                      {/* Decorative line */}
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t-2 border-dashed border-purple-200"></div>
+                      </div>
+
+                      {/* Reward Card */}
+                      <div className="relative flex justify-center">
+                        <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-purple-50 border-2 border-purple-200 rounded-2xl p-4 shadow-lg max-w-md w-full">
+                          <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl shadow-lg flex-shrink-0">
+                              🎬
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-bold text-purple-900">Неделя {weekNumber} завершена!</h4>
+                              <p className="text-sm text-purple-600">Наградите ребёнка персональным мультиком</p>
+                            </div>
+                            <Link
+                              href={`/buy-cartoons?week=${weekNumber}&month=${selectedMonth.id}`}
+                              className="px-4 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-sm hover:opacity-90 transition-all shadow-lg flex items-center gap-2 whitespace-nowrap"
+                            >
+                              <span>🏆</span>
+                              <span>Создать мультик</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
