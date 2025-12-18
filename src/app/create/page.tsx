@@ -34,28 +34,28 @@ interface ClonedVoice {
 }
 
 const TOPICS = [
-  { id: "teeth", label: "Не хочет чистить зубы", icon: "🪥" },
-  { id: "sleep", label: "Не хочет ложиться спать", icon: "😴" },
-  { id: "food", label: "Плохо ест / капризничает", icon: "🥦" },
-  { id: "fear-dark", label: "Боится темноты", icon: "🌙" },
-  { id: "fear-doctor", label: "Боится врачей", icon: "👨‍⚕️" },
-  { id: "sharing", label: "Не хочет делиться", icon: "🤝" },
-  { id: "toys", label: "Не убирает игрушки", icon: "🧸" },
-  { id: "gadgets", label: "Зависимость от гаджетов", icon: "📱" },
-  { id: "siblings", label: "Обижает брата/сестру", icon: "👫" },
-  { id: "kindergarten", label: "Не хочет в садик", icon: "🏫" },
-  { id: "custom", label: "Своя тема...", icon: "✏️" },
+  { id: "teeth", label: "Doesn't want to brush teeth", icon: "🪥" },
+  { id: "sleep", label: "Doesn't want to go to bed", icon: "😴" },
+  { id: "food", label: "Picky eater / refuses food", icon: "🥦" },
+  { id: "fear-dark", label: "Afraid of the dark", icon: "🌙" },
+  { id: "fear-doctor", label: "Afraid of doctors", icon: "👨‍⚕️" },
+  { id: "sharing", label: "Doesn't want to share", icon: "🤝" },
+  { id: "toys", label: "Won't clean up toys", icon: "🧸" },
+  { id: "gadgets", label: "Screen time addiction", icon: "📱" },
+  { id: "siblings", label: "Fights with siblings", icon: "👫" },
+  { id: "kindergarten", label: "Doesn't want to go to daycare", icon: "🏫" },
+  { id: "custom", label: "Custom topic...", icon: "✏️" },
 ];
 
 const CHARACTERS = [
-  { id: "dinosaur", label: "Динозавр", icon: "🦕" },
-  { id: "unicorn", label: "Единорог", icon: "🦄" },
-  { id: "robot", label: "Робот", icon: "🤖" },
-  { id: "dragon", label: "Дракон", icon: "🐉" },
-  { id: "fairy", label: "Фея", icon: "🧚" },
-  { id: "superhero", label: "Супергерой", icon: "🦸" },
-  { id: "animal", label: "Лесные звери", icon: "🦊" },
-  { id: "space", label: "Космонавт", icon: "👨‍🚀" },
+  { id: "dinosaur", label: "Dinosaur", icon: "🦕" },
+  { id: "unicorn", label: "Unicorn", icon: "🦄" },
+  { id: "robot", label: "Robot", icon: "🤖" },
+  { id: "dragon", label: "Dragon", icon: "🐉" },
+  { id: "fairy", label: "Fairy", icon: "🧚" },
+  { id: "superhero", label: "Superhero", icon: "🦸" },
+  { id: "animal", label: "Forest Animals", icon: "🦊" },
+  { id: "space", label: "Astronaut", icon: "👨‍🚀" },
 ];
 
 function CreatePageContent() {
@@ -175,7 +175,7 @@ function CreatePageContent() {
       setIsRecording(true);
       setRecordingTime(0);
     } catch (err) {
-      alert("Не удалось получить доступ к микрофону. Проверьте разрешения.");
+      alert("Could not access microphone. Please check permissions.");
     }
   };
 
@@ -204,7 +204,7 @@ function CreatePageContent() {
     try {
       const formData = new FormData();
       formData.append("audio", audioBlob, "voice.webm");
-      formData.append("name", `Голос для ${childInfo.name}`);
+      formData.append("name", `Voice for ${childInfo.name}`);
 
       const response = await fetch("/api/clone-voice", {
         method: "POST",
@@ -376,11 +376,11 @@ function CreatePageContent() {
 
       if (!data.success) {
         if (response.status === 402) {
-          setError("Недостаточно кредитов. Пожалуйста, приобретите кредиты для создания сказок.");
+          setError("Not enough credits. Please purchase credits to create stories.");
           setIsGenerating(false);
           return;
         }
-        throw new Error(data.error || "Ошибка генерации");
+        throw new Error(data.error || "Generation error");
       }
 
       const story = {
@@ -411,7 +411,7 @@ function CreatePageContent() {
       }, 500);
 
     } catch (err) {
-      setError("Не удалось создать сказку. Попробуйте ещё раз.");
+      setError("Could not create story. Please try again.");
       setIsGenerating(false);
     }
   };
@@ -436,18 +436,18 @@ function CreatePageContent() {
       if (data.success) {
         setCartoonRequested(true);
         setCartoonCredits((prev) => (prev !== null ? prev - 1 : null));
-        alert("Отлично! Мультик будет готов через 10-15 минут. Мы пришлём уведомление!");
+        alert("Great! Your cartoon will be ready in 10-15 minutes. We'll send a notification!");
       } else {
         if (response.status === 402) {
-          // Не хватает кредитов - редирект на покупку
+          // Not enough credits - redirect to purchase
           router.push("/buy-cartoons");
         } else {
-          alert(data.error || "Ошибка при заказе мультика");
+          alert(data.error || "Error ordering cartoon");
         }
       }
     } catch (err) {
       console.error("Cartoon request error:", err);
-      alert("Ошибка соединения");
+      alert("Connection error");
     } finally {
       setCartoonLoading(false);
     }
@@ -478,7 +478,7 @@ function CreatePageContent() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
               <span className="text-white text-lg">✨</span>
             </div>
-            <span className="font-display text-xl font-bold text-gray-800">СказкаAI</span>
+            <span className="font-display text-xl font-bold text-gray-800">FairyTaleAI</span>
           </Link>
 
           {/* Progress indicator */}
@@ -504,7 +504,7 @@ function CreatePageContent() {
           </div>
 
           <div className="text-sm text-gray-500">
-            Шаг {step} из 4
+            Step {step} of 4
           </div>
         </nav>
       </header>
@@ -516,10 +516,10 @@ function CreatePageContent() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">👶</div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
-                Расскажите о ребёнке
+                Tell Us About Your Child
               </h1>
               <p className="text-gray-600">
-                Эта информация поможет создать персональную сказку
+                This information will help create a personalized story
               </p>
             </div>
 
@@ -527,13 +527,13 @@ function CreatePageContent() {
               {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Как зовут ребёнка? *
+                  What is your child&apos;s name? *
                 </label>
                 <input
                   type="text"
                   value={childInfo.name}
                   onChange={(e) => setChildInfo({ ...childInfo, name: e.target.value })}
-                  placeholder="Имя"
+                  placeholder="Name"
                   className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none bg-white/80"
                 />
               </div>
@@ -541,7 +541,7 @@ function CreatePageContent() {
               {/* Age */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Сколько лет? *
+                  How old? *
                 </label>
                 <div className="flex gap-2 flex-wrap">
                   {["2", "3", "4", "5", "6", "7", "8", "9", "10+"].map((age) => (
@@ -563,7 +563,7 @@ function CreatePageContent() {
               {/* Gender */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Пол ребёнка *
+                  Child&apos;s gender *
                 </label>
                 <div className="flex gap-4">
                   <button
@@ -575,7 +575,7 @@ function CreatePageContent() {
                     }`}
                   >
                     <span className="text-2xl">👦</span>
-                    <span>Мальчик</span>
+                    <span>Boy</span>
                   </button>
                   <button
                     onClick={() => setChildInfo({ ...childInfo, gender: "girl" })}
@@ -586,7 +586,7 @@ function CreatePageContent() {
                     }`}
                   >
                     <span className="text-2xl">👧</span>
-                    <span>Девочка</span>
+                    <span>Girl</span>
                   </button>
                 </div>
               </div>
@@ -594,12 +594,12 @@ function CreatePageContent() {
               {/* Interests */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Интересы и увлечения (опционально)
+                  Interests and hobbies (optional)
                 </label>
                 <textarea
                   value={childInfo.interests}
                   onChange={(e) => setChildInfo({ ...childInfo, interests: e.target.value })}
-                  placeholder="Например: любит динозавров, играет в футбол, смотрит Щенячий патруль..."
+                  placeholder="For example: loves dinosaurs, plays soccer, watches Paw Patrol..."
                   rows={3}
                   className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none bg-white/80 resize-none"
                 />
@@ -614,7 +614,7 @@ function CreatePageContent() {
                   !canProceedStep1 ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                <span>Далее</span>
+                <span>Next</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -629,12 +629,12 @@ function CreatePageContent() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">🎯</div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
-                {developmentTopic ? "Тема из карты развития" : "Выберите тему сказки"}
+                {developmentTopic ? "Topic from Development Map" : "Choose Story Topic"}
               </h1>
               <p className="text-gray-600">
                 {developmentTopic
-                  ? `Месяц ${developmentMonth}: ${developmentTopic}`
-                  : `Какую ситуацию хотите проработать с ${childInfo.name}?`
+                  ? `Month ${developmentMonth}: ${developmentTopic}`
+                  : `What situation would you like to work on with ${childInfo.name}?`
                 }
               </p>
             </div>
@@ -644,7 +644,7 @@ function CreatePageContent() {
               <div className="glass-card p-4 mb-6 flex items-center gap-3 bg-violet-50 border border-violet-200">
                 <span className="text-2xl">🗺️</span>
                 <div className="flex-1">
-                  <p className="font-medium text-violet-900">Тема из карты развития</p>
+                  <p className="font-medium text-violet-900">Topic from Development Map</p>
                   <p className="text-sm text-violet-600">{developmentTopic}</p>
                 </div>
                 <button
@@ -654,7 +654,7 @@ function CreatePageContent() {
                   }}
                   className="text-xs text-violet-500 hover:text-violet-700"
                 >
-                  Изменить тему
+                  Change topic
                 </button>
               </div>
             )}
@@ -663,7 +663,7 @@ function CreatePageContent() {
               {/* Topics */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Тема воспитания *
+                  Parenting Topic *
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {TOPICS.map((topic) => (
@@ -687,12 +687,12 @@ function CreatePageContent() {
               {storySettings.topic === "custom" && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Опишите ситуацию
+                    Describe the situation
                   </label>
                   <textarea
                     value={storySettings.customTopic}
                     onChange={(e) => setStorySettings({ ...storySettings, customTopic: e.target.value })}
-                    placeholder="Например: ребёнок боится оставаться у бабушки..."
+                    placeholder="For example: child is afraid to stay at grandma's house..."
                     rows={3}
                     className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none bg-white/80 resize-none"
                   />
@@ -702,7 +702,7 @@ function CreatePageContent() {
               {/* Character */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Выберите персонажа-помощника *
+                  Choose a helper character *
                 </label>
                 <div className="grid grid-cols-4 gap-3">
                   {CHARACTERS.map((char) => (
@@ -725,13 +725,13 @@ function CreatePageContent() {
               {/* Duration */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Длительность сказки
+                  Story Duration
                 </label>
                 <div className="flex gap-3">
                   {[
-                    { id: "short", label: "Короткая", time: "~2 мин" },
-                    { id: "medium", label: "Средняя", time: "~4 мин" },
-                    { id: "long", label: "Длинная", time: "~7 мин" },
+                    { id: "short", label: "Short", time: "~2 min" },
+                    { id: "medium", label: "Medium", time: "~4 min" },
+                    { id: "long", label: "Long", time: "~7 min" },
                   ].map((dur) => (
                     <button
                       key={dur.id}
@@ -758,7 +758,7 @@ function CreatePageContent() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                 </svg>
-                <span>Назад</span>
+                <span>Back</span>
               </button>
               <button
                 onClick={() => setStep(3)}
@@ -767,7 +767,7 @@ function CreatePageContent() {
                   !canProceedStep2 ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                <span>Далее</span>
+                <span>Next</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -782,22 +782,22 @@ function CreatePageContent() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">🎙️</div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
-                Запишите свой голос
+                Record Your Voice
               </h1>
               <p className="text-gray-600">
-                Прочитайте текст ниже — мы клонируем ваш голос для озвучки
+                Read the text below — we&apos;ll clone your voice for narration
               </p>
             </div>
 
             <div className="glass-card-strong p-8 space-y-6">
               {/* Text to read */}
               <div className="glass-card p-6 bg-sky-50/50">
-                <p className="text-sm text-gray-500 mb-2">Прочитайте этот текст вслух:</p>
+                <p className="text-sm text-gray-500 mb-2">Read this text aloud:</p>
                 <p className="text-gray-800 leading-relaxed">
-                  «Давным-давно, в одном волшебном королевстве, жил маленький {childInfo.gender === "boy" ? "мальчик" : "девочка"} по имени {childInfo.name}.
-                  Каждый день {childInfo.gender === "boy" ? "он" : "она"} просыпался с улыбкой и отправлялся на поиски приключений.
-                  Птицы пели весёлые песни, а солнце светило ярко-ярко.
-                  И вот однажды случилось нечто удивительное, что изменило всё вокруг...»
+                  &quot;Once upon a time, in a magical kingdom, there lived a little {childInfo.gender === "boy" ? "boy" : "girl"} named {childInfo.name}.
+                  Every day {childInfo.gender === "boy" ? "he" : "she"} woke up with a smile and set off on adventures.
+                  Birds sang cheerful songs, and the sun shone bright.
+                  And one day, something amazing happened that changed everything around...&quot;
                 </p>
               </div>
 
@@ -829,7 +829,7 @@ function CreatePageContent() {
                       {formatTime(recordingTime)}
                     </div>
                     <p className="text-sm text-gray-500 mt-1">
-                      Записываем... (минимум 30 секунд)
+                      Recording... (minimum 30 seconds)
                     </p>
                     {/* Fake waveform */}
                     <div className="flex items-center justify-center gap-1 h-12 mt-4">
@@ -855,7 +855,7 @@ function CreatePageContent() {
                       </svg>
                     </div>
                     <p className="mt-4 text-lg font-semibold text-gray-900">
-                      Запись готова! ({formatTime(recordingTime)})
+                      Recording ready! ({formatTime(recordingTime)})
                     </p>
                     <button
                       onClick={() => {
@@ -864,14 +864,14 @@ function CreatePageContent() {
                       }}
                       className="mt-2 text-sm text-blue-600 hover:underline"
                     >
-                      Записать заново
+                      Record again
                     </button>
                   </div>
                 )}
 
                 {!isRecording && !audioBlob && (
                   <p className="mt-4 text-sm text-gray-500">
-                    Нажмите на микрофон, чтобы начать запись
+                    Click the microphone to start recording
                   </p>
                 )}
               </div>
@@ -882,7 +882,7 @@ function CreatePageContent() {
                   onClick={() => setStep(4)}
                   className="text-sm text-gray-500 hover:text-gray-700"
                 >
-                  Пропустить и использовать стандартный голос →
+                  Skip and use default voice →
                 </button>
               </div>
             </div>
@@ -895,7 +895,7 @@ function CreatePageContent() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                 </svg>
-                <span>Назад</span>
+                <span>Back</span>
               </button>
               <button
                 onClick={handleGenerate}
@@ -904,12 +904,12 @@ function CreatePageContent() {
               >
                 {isGenerating ? (
                   <>
-                    <span>Генерируем...</span>
+                    <span>Generating...</span>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   </>
                 ) : (
                   <>
-                    <span>Создать сказку</span>
+                    <span>Create Story</span>
                     <span className="text-xl">✨</span>
                   </>
                 )}
@@ -927,7 +927,7 @@ function CreatePageContent() {
             {isGenerating && (
               <div className="mt-6 glass-card p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-600">Создаём волшебство...</span>
+                  <span className="text-sm text-gray-600">Creating magic...</span>
                   <span className="text-sm font-medium text-gray-900">{Math.round(generationProgress)}%</span>
                 </div>
                 <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -937,11 +937,11 @@ function CreatePageContent() {
                   />
                 </div>
                 <div className="mt-3 text-xs text-gray-500 text-center">
-                  {generationProgress < 30 && (isCloning ? "🎙️ Клонируем ваш голос..." : "📝 Подготовка...")}
-                  {generationProgress >= 30 && generationProgress < 70 && "📝 Пишем сказку..."}
-                  {generationProgress >= 70 && generationProgress < 90 && "🎙️ Озвучиваем историю вашим голосом..."}
-                  {generationProgress >= 90 && generationProgress < 95 && "🎵 Создаём фоновую музыку..."}
-                  {generationProgress >= 95 && "✨ Финальные штрихи..."}
+                  {generationProgress < 30 && (isCloning ? "🎙️ Cloning your voice..." : "📝 Preparing...")}
+                  {generationProgress >= 30 && generationProgress < 70 && "📝 Writing the story..."}
+                  {generationProgress >= 70 && generationProgress < 90 && "🎙️ Narrating with your voice..."}
+                  {generationProgress >= 90 && generationProgress < 95 && "🎵 Creating background music..."}
+                  {generationProgress >= 95 && "✨ Final touches..."}
                 </div>
               </div>
             )}
@@ -954,10 +954,10 @@ function CreatePageContent() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">🎉</div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
-                Сказка готова!
+                Story is Ready!
               </h1>
               <p className="text-gray-600">
-                Персональная история для {childInfo.name}
+                A personalized story for {childInfo.name}
               </p>
             </div>
 
@@ -970,17 +970,17 @@ function CreatePageContent() {
                   </span>
                 </div>
                 <h2 className="font-display text-xl font-bold text-gray-900">
-                  {generatedStory?.title || `${childInfo.name} и ${CHARACTERS.find((c) => c.id === storySettings.character)?.label}`}
+                  {generatedStory?.title || `${childInfo.name} and the ${CHARACTERS.find((c) => c.id === storySettings.character)?.label}`}
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
-                  {generatedStory?.wordCount ? `${generatedStory.wordCount} слов` : ""} • {TOPICS.find((t) => t.id === storySettings.topic)?.label}
+                  {generatedStory?.wordCount ? `${generatedStory.wordCount} words` : ""} • {TOPICS.find((t) => t.id === storySettings.topic)?.label}
                 </p>
               </div>
 
               {/* Story text */}
               <div className="glass-card p-6 mb-6 max-h-80 overflow-y-auto">
                 <p className="text-gray-800 leading-relaxed whitespace-pre-line">
-                  {generatedStory?.text || "Сказка загружается..."}
+                  {generatedStory?.text || "Story loading..."}
                 </p>
               </div>
 
@@ -989,7 +989,7 @@ function CreatePageContent() {
                 {audioBase64 ? (
                   <>
                     <div className="flex items-center justify-between mb-4">
-                      <p className="text-sm text-gray-500">🎙️ Озвучка вашим голосом</p>
+                      <p className="text-sm text-gray-500">🎙️ Narrated in your voice</p>
                       {/* Music toggle */}
                       {backgroundMusicUrl && (
                         <button
@@ -1001,7 +1001,7 @@ function CreatePageContent() {
                           }`}
                         >
                           <span>🎵</span>
-                          <span>{musicEnabled ? "Музыка вкл" : "Музыка выкл"}</span>
+                          <span>{musicEnabled ? "Music on" : "Music off"}</span>
                         </button>
                       )}
                     </div>
@@ -1050,20 +1050,20 @@ function CreatePageContent() {
                     </div>
                     {isGeneratingMusic && (
                       <p className="text-xs text-gray-400 text-center mt-3">
-                        🎵 Генерируем фоновую музыку...
+                        🎵 Generating background music...
                       </p>
                     )}
                   </>
                 ) : isGeneratingAudio ? (
                   <div className="text-center py-4">
                     <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                    <p className="text-sm text-gray-500">Генерируем озвучку...</p>
+                    <p className="text-sm text-gray-500">Generating narration...</p>
                   </div>
                 ) : (
                   <>
-                    <p className="text-sm text-gray-500 text-center mb-4">🎙️ Озвучка недоступна</p>
+                    <p className="text-sm text-gray-500 text-center mb-4">🎙️ Narration not available</p>
                     <p className="text-xs text-gray-400 text-center">
-                      Запишите голос на шаге 3, чтобы получить озвучку вашим голосом
+                      Record your voice in step 3 to get narration in your voice
                     </p>
                   </>
                 )}
@@ -1074,13 +1074,13 @@ function CreatePageContent() {
                 {audioBase64 ? (
                   <a
                     href={`data:audio/mpeg;base64,${audioBase64}`}
-                    download={`${generatedStory?.title || "сказка"}.mp3`}
+                    download={`${generatedStory?.title || "story"}.mp3`}
                     className="flex-1 btn-secondary py-3 font-medium text-gray-700 inline-flex items-center justify-center gap-2"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    <span>Скачать MP3</span>
+                    <span>Download MP3</span>
                   </a>
                 ) : (
                   <button
@@ -1090,7 +1090,7 @@ function CreatePageContent() {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    <span>Скачать MP3</span>
+                    <span>Download MP3</span>
                   </button>
                 )}
                 <button
@@ -1107,7 +1107,7 @@ function CreatePageContent() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                   </svg>
-                  <span>Поделиться</span>
+                  <span>Share</span>
                 </button>
               </div>
 
@@ -1117,13 +1117,13 @@ function CreatePageContent() {
                   <div className="flex items-center gap-2">
                     <span className="text-2xl">🎬</span>
                     <div>
-                      <h3 className="font-bold text-gray-900">Хотите мультик?</h3>
-                      <p className="text-xs text-gray-500">Превратите сказку в анимацию</p>
+                      <h3 className="font-bold text-gray-900">Want a Cartoon?</h3>
+                      <p className="text-xs text-gray-500">Turn your story into animation</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-xs text-purple-600 font-medium">
-                      {cartoonCredits !== null ? `${cartoonCredits} кредитов` : "..."}
+                      {cartoonCredits !== null ? `${cartoonCredits} credits` : "..."}
                     </p>
                   </div>
                 </div>
@@ -1133,7 +1133,7 @@ function CreatePageContent() {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="font-medium">Мультик заказан! Будет готов через 10-15 минут</span>
+                    <span className="font-medium">Cartoon ordered! Ready in 10-15 minutes</span>
                   </div>
                 ) : generatedStory?.id ? (
                   <button
@@ -1148,23 +1148,23 @@ function CreatePageContent() {
                     {cartoonLoading ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Заказываем...</span>
+                        <span>Ordering...</span>
                       </>
                     ) : cartoonCredits !== null && cartoonCredits >= 1 ? (
                       <>
                         <span>🎬</span>
-                        <span>Сделать мультик (1 кредит)</span>
+                        <span>Make Cartoon (1 credit)</span>
                       </>
                     ) : (
                       <>
                         <span>🎬</span>
-                        <span>Купить кредиты</span>
+                        <span>Buy Credits</span>
                       </>
                     )}
                   </button>
                 ) : (
                   <p className="text-sm text-gray-500 text-center py-2">
-                    Сначала создайте сказку
+                    Create a story first
                   </p>
                 )}
 
@@ -1173,7 +1173,7 @@ function CreatePageContent() {
                     href="/buy-cartoons"
                     className="block mt-2 text-center text-sm text-purple-600 hover:underline"
                   >
-                    Купить кредиты на мультики →
+                    Buy cartoon credits →
                   </Link>
                 )}
               </div>
@@ -1189,11 +1189,11 @@ function CreatePageContent() {
                 }}
                 className="btn-glow px-8 py-4 text-white font-semibold text-lg inline-flex items-center gap-2"
               >
-                <span>Создать ещё одну сказку</span>
+                <span>Create Another Story</span>
                 <span className="text-xl">✨</span>
               </button>
               <p className="mt-4 text-sm text-gray-500">
-                У вас осталось 2 бесплатных сказки
+                You have 2 free stories remaining
               </p>
             </div>
           </div>
@@ -1205,7 +1205,7 @@ function CreatePageContent() {
 
 export default function CreatePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Загрузка...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
       <CreatePageContent />
     </Suspense>
   );
