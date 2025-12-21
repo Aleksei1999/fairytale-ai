@@ -81,7 +81,7 @@ export default function Dashboard() {
     }
   };
 
-  if (authLoading || !user) {
+  if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
         <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
@@ -117,7 +117,7 @@ export default function Dashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                  Welcome, {user.user_metadata?.name || user.email?.split("@")[0]}! 👋
+                  Welcome, {user?.user_metadata?.name || user?.email?.split("@")[0] || "Hero"}! 👋
                 </h1>
                 <p className="text-gray-600">
                   Manage your stories and account here.
@@ -209,7 +209,7 @@ export default function Dashboard() {
             <div className="space-y-3">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Email</span>
-                <span className="text-gray-900 font-medium">{user.email}</span>
+                <span className="text-gray-900 font-medium">{user?.email || "—"}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Story Credits</span>
@@ -226,7 +226,7 @@ export default function Dashboard() {
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Member since</span>
                 <span className="text-gray-900 font-medium">
-                  {new Date(user.created_at).toLocaleDateString()}
+                  {user?.created_at ? new Date(user.created_at).toLocaleDateString() : "—"}
                 </span>
               </div>
             </div>
