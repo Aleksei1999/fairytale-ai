@@ -173,8 +173,10 @@ export async function POST(request: NextRequest) {
       {
         method: "POST",
         headers: {
-          "xi-api-key": ELEVENLABS_API_KEY || "",
+          "xi-api-key": ELEVENLABS_API_KEY,
           "Content-Type": "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "Accept": "audio/mpeg",
         },
         body: JSON.stringify({
           text: text,
