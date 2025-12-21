@@ -844,10 +844,10 @@ export default function Home() {
             <span className="text-sm text-gray-600 font-medium">Based on SEL, CBT & Positive Discipline</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Year Program: <span className="gradient-text">4 Steps to a Mature Personality</span>
+            Большое путешествие Героя: <span className="gradient-text">12 месяцев, которые изменят всё</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            A scientifically-backed curriculum that transforms tantrums into conversations and fears into confidence
+            Это не уроки, а увлекательный квест длиною в год. Ребенок проживает захватывающие сюжеты и незаметно для себя вырастает в уверенную, осознанную Личность, готовую к большому миру.
           </p>
         </div>
 
