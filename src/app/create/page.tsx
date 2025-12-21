@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -36,13 +36,8 @@ function CreatePageContent() {
   const [loadingStory, setLoadingStory] = useState(false);
   const [personalizedText, setPersonalizedText] = useState<string>("");
 
-  // Audio state
+  // Audio generation state
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [audioBase64, setAudioBase64] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioProgress, setAudioProgress] = useState(0);
-  const [audioDuration, setAudioDuration] = useState(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const storyId = searchParams.get("storyId");
 
@@ -123,9 +118,9 @@ function CreatePageContent() {
     setStep(2);
   };
 
-  // Generate AI narration
-  const generateNarration = async () => {
-    if (!personalizedText) return;
+  // Generate AI narration and go to story page
+  const generateNarrationAndNavigate = async () => {
+    if (!personalizedText || !storyId) return;
 
     setIsGeneratingAudio(true);
     try {
@@ -140,7 +135,12 @@ function CreatePageContent() {
 
       const data = await response.json();
       if (data.success) {
-        setAudioBase64(data.audio.base64);
+        // Save audio and personalized text to localStorage for story page
+        localStorage.setItem("storyAudio", data.audio.base64);
+        localStorage.setItem("storyPersonalizedText", personalizedText);
+        localStorage.setItem("storyMode", "ai-voice");
+        // Navigate to story page
+        router.push(`/story/${storyId}`);
       } else {
         alert("Could not generate narration. Please try again.");
       }
@@ -152,43 +152,13 @@ function CreatePageContent() {
     }
   };
 
-  // Play/pause audio
-  const playAudio = () => {
-    if (!audioBase64 || !audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
-  // Audio progress tracking
-  useEffect(() => {
-    if (audioRef.current) {
-      const audio = audioRef.current;
-
-      audio.ontimeupdate = () => {
-        setAudioProgress(audio.currentTime);
-      };
-
-      audio.onloadedmetadata = () => {
-        setAudioDuration(audio.duration);
-      };
-
-      audio.onended = () => {
-        setIsPlaying(false);
-        setAudioProgress(0);
-      };
-    }
-  }, [audioBase64]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  // Navigate to story page in read mode
+  const goToReadMode = () => {
+    if (!storyId) return;
+    localStorage.setItem("storyPersonalizedText", personalizedText);
+    localStorage.setItem("storyMode", "read");
+    localStorage.removeItem("storyAudio"); // Clear any previous audio
+    router.push(`/story/${storyId}`);
   };
 
   // Show loading while checking auth
@@ -458,60 +428,20 @@ function CreatePageContent() {
                 </details>
               )}
 
-              {/* Audio Player (if generated) */}
-              {audioBase64 && (
-                <div className="glass-card p-6 mb-6">
-                  <p className="text-sm text-gray-500 mb-4">🎙️ AI Narration</p>
-                  <audio
-                    ref={audioRef}
-                    src={`data:audio/mpeg;base64,${audioBase64}`}
-                    className="hidden"
-                  />
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={playAudio}
-                      className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
-                    >
-                      {isPlaying ? (
-                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                        </svg>
-                      ) : (
-                        <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      )}
-                    </button>
-                    <div className="flex-1">
-                      <div className="h-2 bg-sky-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-sky-400 to-blue-600 transition-all"
-                          style={{ width: audioDuration ? `${(audioProgress / audioDuration) * 100}%` : "0%" }}
-                        />
-                      </div>
-                      <div className="flex justify-between text-xs text-gray-400 mt-1">
-                        <span>{formatTime(audioProgress)}</span>
-                        <span>{formatTime(audioDuration)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {/* Action Buttons */}
               <div className="flex gap-4">
                 {/* Read Myself Button */}
-                <Link
-                  href={`/story/${storyId}`}
+                <button
+                  onClick={goToReadMode}
                   className="flex-1 py-4 rounded-2xl font-semibold text-center transition-all bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90 inline-flex items-center justify-center gap-2"
                 >
                   <span className="text-xl">📖</span>
                   <span>Read It Myself</span>
-                </Link>
+                </button>
 
                 {/* Generate AI Narration Button */}
                 <button
-                  onClick={generateNarration}
+                  onClick={generateNarrationAndNavigate}
                   disabled={isGeneratingAudio || !personalizedText}
                   className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex items-center justify-center gap-2 ${
                     isGeneratingAudio || !personalizedText
@@ -533,21 +463,6 @@ function CreatePageContent() {
                 </button>
               </div>
 
-              {/* Download button if audio exists */}
-              {audioBase64 && (
-                <div className="mt-4">
-                  <a
-                    href={`data:audio/mpeg;base64,${audioBase64}`}
-                    download={`${programStory?.title || "story"}.mp3`}
-                    className="w-full btn-secondary py-3 font-medium text-gray-700 inline-flex items-center justify-center gap-2"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    <span>Download Audio</span>
-                  </a>
-                </div>
-              )}
             </div>
 
             {/* Back button */}

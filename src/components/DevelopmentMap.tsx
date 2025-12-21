@@ -142,32 +142,39 @@ export function DevelopmentMap() {
     }
   }
 
-  function getTimeUntilUnlock(story: Story, weekStories: Story[]): { available: boolean; hoursLeft: number; minutesLeft: number } {
+  function getTimeUntilUnlock(story: Story, weekStories: Story[], currentWeek: Week): { available: boolean; hoursLeft: number; minutesLeft: number } {
     // First story of week 1 is always available
-    if (story.day_in_week === 1 && story.order_num === 1) {
+    if (story.day_in_week === 1 && currentWeek.order_num === 1) {
       return { available: true, hoursLeft: 0, minutesLeft: 0 };
     }
 
-    // Find previous story (day 1 -> day 3 -> day 5, or last story of previous week)
+    // Find previous story
     let previousStory: Story | undefined;
-    if (story.day_in_week === 1) {
-      // First story of a new week - need previous week's last story
-      // For simplicity, check if any story was completed in last 24h
-      const allCompletedTimes = Object.values(storyCompletionTimes);
-      if (allCompletedTimes.length === 0) {
-        return { available: true, hoursLeft: 0, minutesLeft: 0 };
-      }
-      const lastCompletedTime = allCompletedTimes.reduce((latest, time) =>
-        new Date(time) > new Date(latest) ? time : latest
-      );
-      const timeSinceCompletion = currentTime.getTime() - new Date(lastCompletedTime).getTime();
-      const hoursLeft = Math.max(0, 24 - Math.floor(timeSinceCompletion / (1000 * 60 * 60)));
-      const minutesLeft = Math.max(0, 60 - Math.floor((timeSinceCompletion % (1000 * 60 * 60)) / (1000 * 60)));
 
-      if (timeSinceCompletion >= 24 * 60 * 60 * 1000) {
+    if (story.day_in_week === 1) {
+      // First story of a new week - need to check if previous week is completed
+      // Find previous week
+      const allWeeks = blocks.flatMap(b => b.months.flatMap(m => m.weeks));
+      const prevWeekIndex = allWeeks.findIndex(w => w.id === currentWeek.id) - 1;
+
+      if (prevWeekIndex < 0) {
+        // This is the first week, first story is available
         return { available: true, hoursLeft: 0, minutesLeft: 0 };
       }
-      return { available: false, hoursLeft, minutesLeft: minutesLeft % 60 };
+
+      const prevWeek = allWeeks[prevWeekIndex];
+
+      // Check if all stories in previous week are completed
+      const allPrevWeekStoriesCompleted = prevWeek.stories.every(s => completedStories.includes(s.id));
+
+      if (!allPrevWeekStoriesCompleted) {
+        // Previous week not completed - locked
+        return { available: false, hoursLeft: -1, minutesLeft: 0 };
+      }
+
+      // Previous week completed - check 24h timer from last story of previous week
+      const lastStoryOfPrevWeek = prevWeek.stories[prevWeek.stories.length - 1];
+      previousStory = lastStoryOfPrevWeek;
     } else {
       // Day 3 or Day 5 - find previous story in same week
       previousStory = weekStories.find(
@@ -383,7 +390,7 @@ export function DevelopmentMap() {
               <span>📚</span> This Week&apos;s Stories (every other day):
             </p>
             {selectedWeek.stories.map((story) => {
-              const timeInfo = getTimeUntilUnlock(story, selectedWeek.stories);
+              const timeInfo = getTimeUntilUnlock(story, selectedWeek.stories, selectedWeek);
               const isAvailable = timeInfo.available;
               const isCompleted = completedStories.includes(story.id);
               const hasTimer = !isAvailable && timeInfo.hoursLeft >= 0;

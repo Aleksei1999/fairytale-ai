@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -65,10 +65,107 @@ export default function StoryPage() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  // Story mode and audio state
+  const [storyMode, setStoryMode] = useState<"read" | "ai-voice">("read");
+  const [personalizedText, setPersonalizedText] = useState<string>("");
+  const [aiAudioBase64, setAiAudioBase64] = useState<string | null>(null);
+
+  // AI Audio player state
+  const [isAiPlaying, setIsAiPlaying] = useState(false);
+  const [aiAudioProgress, setAiAudioProgress] = useState(0);
+  const [aiAudioDuration, setAiAudioDuration] = useState(0);
+  const aiAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Background music player state
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [musicProgress, setMusicProgress] = useState(0);
+  const [musicDuration, setMusicDuration] = useState(0);
+  const musicRef = useRef<HTMLAudioElement | null>(null);
+
   useEffect(() => {
     loadStoryData();
     checkProgress();
+    loadStoryModeData();
   }, [storyId]);
+
+  // Load story mode and data from localStorage
+  function loadStoryModeData() {
+    const mode = localStorage.getItem("storyMode") as "read" | "ai-voice" | null;
+    if (mode) {
+      setStoryMode(mode);
+    }
+
+    const savedPersonalizedText = localStorage.getItem("storyPersonalizedText");
+    if (savedPersonalizedText) {
+      setPersonalizedText(savedPersonalizedText);
+    }
+
+    const savedAudio = localStorage.getItem("storyAudio");
+    if (savedAudio) {
+      setAiAudioBase64(savedAudio);
+    }
+  }
+
+  // AI Audio player controls
+  function toggleAiAudio() {
+    if (!aiAudioRef.current) return;
+
+    if (isAiPlaying) {
+      aiAudioRef.current.pause();
+      setIsAiPlaying(false);
+    } else {
+      aiAudioRef.current.play();
+      setIsAiPlaying(true);
+    }
+  }
+
+  // Background music controls
+  function toggleMusic() {
+    if (!musicRef.current) return;
+
+    if (isMusicPlaying) {
+      musicRef.current.pause();
+      setIsMusicPlaying(false);
+    } else {
+      musicRef.current.play();
+      setIsMusicPlaying(true);
+    }
+  }
+
+  // AI Audio progress tracking
+  useEffect(() => {
+    if (aiAudioRef.current) {
+      const audio = aiAudioRef.current;
+
+      audio.ontimeupdate = () => setAiAudioProgress(audio.currentTime);
+      audio.onloadedmetadata = () => setAiAudioDuration(audio.duration);
+      audio.onended = () => {
+        setIsAiPlaying(false);
+        setAiAudioProgress(0);
+      };
+    }
+  }, [aiAudioBase64]);
+
+  // Music progress tracking
+  useEffect(() => {
+    if (musicRef.current) {
+      const audio = musicRef.current;
+
+      audio.ontimeupdate = () => setMusicProgress(audio.currentTime);
+      audio.onloadedmetadata = () => setMusicDuration(audio.duration);
+      audio.onended = () => {
+        // Loop music
+        audio.currentTime = 0;
+        audio.play();
+      };
+    }
+  }, []);
+
+  function formatTime(seconds: number) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  }
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -321,9 +418,56 @@ export default function StoryPage() {
                 </p>
               </div>
 
+              {/* AI Audio Player (for ai-voice mode) */}
+              {storyMode === "ai-voice" && aiAudioBase64 && (
+                <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl">🎙️</span>
+                    <span className="text-sm font-medium text-purple-800">AI Narration</span>
+                  </div>
+                  <audio
+                    ref={aiAudioRef}
+                    src={`data:audio/mpeg;base64,${aiAudioBase64}`}
+                    className="hidden"
+                  />
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={toggleAiAudio}
+                      className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
+                    >
+                      {isAiPlaying ? (
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      )}
+                    </button>
+                    <div className="flex-1">
+                      <div className="h-2 bg-purple-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all"
+                          style={{ width: aiAudioDuration ? `${(aiAudioProgress / aiAudioDuration) * 100}%` : "0%" }}
+                        />
+                      </div>
+                      <div className="flex justify-between text-xs text-purple-600 mt-1">
+                        <span>{formatTime(aiAudioProgress)}</span>
+                        <span>{formatTime(aiAudioDuration)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Story Content */}
-              <div className="prose prose-lg max-w-none mb-8">
-                {story.full_text ? (
+              <div className="prose prose-lg max-w-none mb-6">
+                {personalizedText ? (
+                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
+                    {personalizedText}
+                  </div>
+                ) : story.full_text ? (
                   <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
                     {story.full_text}
                   </div>
@@ -337,6 +481,53 @@ export default function StoryPage() {
                   </div>
                 )}
               </div>
+
+              {/* Background Music Player (for read mode) */}
+              {storyMode === "read" && (
+                <div className="glass-card p-4 mb-8 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl">🎵</span>
+                    <span className="text-sm font-medium text-green-800">Background Music</span>
+                  </div>
+                  <audio
+                    ref={musicRef}
+                    src="/audio/story-music.mp3"
+                    className="hidden"
+                    loop
+                  />
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={toggleMusic}
+                      className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
+                    >
+                      {isMusicPlaying ? (
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      )}
+                    </button>
+                    <div className="flex-1">
+                      <div className="h-2 bg-green-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all"
+                          style={{ width: musicDuration ? `${(musicProgress / musicDuration) * 100}%` : "0%" }}
+                        />
+                      </div>
+                      <div className="flex justify-between text-xs text-green-600 mt-1">
+                        <span>{formatTime(musicProgress)}</span>
+                        <span>{formatTime(musicDuration)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-green-600 mt-2 text-center">
+                    Play relaxing music while reading the story
+                  </p>
+                </div>
+              )}
 
               {/* Therapeutic Info (collapsible) */}
               <details className="mb-8">

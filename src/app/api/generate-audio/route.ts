@@ -141,24 +141,27 @@ function addStressMarks(text: string): string {
   return result;
 }
 
+// Default English voice from ElevenLabs (Rachel - warm female voice)
+const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { text, voiceId } = body;
 
-    if (!text || !voiceId) {
+    if (!text) {
       return NextResponse.json(
-        { success: false, error: "Text and voiceId are required" },
+        { success: false, error: "Text is required" },
         { status: 400 }
       );
     }
 
-    // Добавляем ударения в текст для правильного произношения
-    const textWithStress = addStressMarks(text);
+    // Use default voice if not specified or "default"
+    const actualVoiceId = (voiceId && voiceId !== "default") ? voiceId : DEFAULT_VOICE_ID;
 
-    // Генерируем аудио с клонированным голосом через REST API
+    // Generate audio via REST API
     const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+      `https://api.elevenlabs.io/v1/text-to-speech/${actualVoiceId}`,
       {
         method: "POST",
         headers: {
@@ -166,7 +169,7 @@ export async function POST(request: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text: textWithStress,
+          text: text,
           model_id: "eleven_multilingual_v2", // Поддерживает русский язык
           voice_settings: {
             stability: 0.5,
