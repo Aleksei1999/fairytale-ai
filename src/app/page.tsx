@@ -344,9 +344,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: Hero illustration - hidden on mobile, simplified on tablet */}
-          <div className="flex-1 flex justify-center lg:justify-end hidden sm:flex">
-            <div className="relative">
+          {/* Right: Hero illustration */}
+          <div className="flex-1 flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-[280px] sm:max-w-none">
               {/* Blue glow behind photo */}
               <div className="absolute inset-0 bg-gradient-to-br from-sky-300/50 to-blue-500/30 rounded-full blur-3xl scale-110" />
               {/* Video */}
@@ -359,7 +359,7 @@ export default function Home() {
                   playsInline
                   preload="auto"
                   poster="/images/hero-photo.jpg"
-                  className="w-80 sm:w-96 md:w-[450px] h-auto rounded-3xl shadow-2xl"
+                  className="w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
                   onError={(e) => console.error('Video error:', e)}
                 />
               </div>
@@ -1014,13 +1014,15 @@ export default function Home() {
                   </div>
                   {/* Results */}
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
-                    <div className="flex flex-wrap gap-2">
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> Your child stops falling on the floor screaming. Instead, they come to you and say: "Mom, I'm really angry right now, let's hug."
+                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>Your child stops falling on the floor screaming. Instead, they come to you and say: "Mom, I'm really angry right now, let's hug."</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> Night fears and anxiety about new things fade away.
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>Night fears and anxiety about new things fade away.</span>
                       </div>
                     </div>
                   </div>
@@ -1083,13 +1085,15 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
-                    <div className="flex flex-wrap gap-2">
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> Your child is safe. They won't go off with a stranger and won't let themselves be bullied.
+                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>Your child is safe. They won't go off with a stranger and won't let themselves be bullied.</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> They become the life of the party. Other kids are drawn to them because they know how to negotiate and empathize.
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>They become the life of the party. Other kids are drawn to them because they know how to negotiate and empathize.</span>
                       </div>
                     </div>
                   </div>
@@ -1152,13 +1156,15 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
-                    <div className="flex flex-wrap gap-2">
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> You stop being a "parrot" who repeats the same thing 100 times.
+                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>You stop being a "parrot" who repeats the same thing 100 times.</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> Your child initiates cleaning themselves and feels proud of being "like a grown-up." Focus develops for school readiness.
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>Your child initiates cleaning themselves and feels proud of being "like a grown-up." Focus develops for school readiness.</span>
                       </div>
                     </div>
                   </div>
@@ -1221,13 +1227,15 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
-                    <div className="flex flex-wrap gap-2">
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> A Leader's core is formed. Your child isn't afraid to make mistakes, is honest with you, and confident in their abilities.
+                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>A Leader's core is formed. Your child isn't afraid to make mistakes, is honest with you, and confident in their abilities.</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
-                        <span>✅</span> School readiness achieved. They know how to listen, try hard, and believe in themselves.
+                      <div className="flex items-start gap-2 text-sm text-green-700">
+                        <span className="flex-shrink-0 mt-0.5">✅</span>
+                        <span>School readiness achieved. They know how to listen, try hard, and believe in themselves.</span>
                       </div>
                     </div>
                   </div>
