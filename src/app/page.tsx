@@ -1155,6 +1155,99 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== BLOCK: CURRICULUM (Topics of the Year) ===== */}
+      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div className="text-center mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
+            <span className="text-xl">📚</span>
+            <span className="text-sm text-gray-600 font-medium">Curriculum</span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            What will your child <span className="gradient-text">learn in a year</span>?
+          </h2>
+          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+            A comprehensive program that covers all aspects of emotional and social development
+          </p>
+        </div>
+
+        {/* 5 Topics Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 max-w-6xl mx-auto">
+          {/* Topic 1: Emotional Intelligence */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-rose-400 to-pink-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🎭</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Emotional Intelligence
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Recognize and manage their emotions effectively
+            </p>
+          </div>
+
+          {/* Topic 2: Personal Boundaries */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🛡️</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Personal Boundaries
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Say "No" and stand up for their opinion
+            </p>
+          </div>
+
+          {/* Topic 3: Socialization */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">👫</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Socialization
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Make friends and resolve conflicts peacefully
+            </p>
+          </div>
+
+          {/* Topic 4: Goal Setting */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🎯</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Goal Setting
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Dream big and follow through without giving up
+            </p>
+          </div>
+
+          {/* Topic 5: Overcoming Fears */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🦁</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Overcoming Fears
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Turn darkness, mistakes, new places into sources of strength
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom insight */}
+        <div className="mt-10 sm:mt-12 max-w-3xl mx-auto">
+          <div className="glass-card p-5 sm:p-6 text-center bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
+            <p className="text-gray-700 text-sm sm:text-base">
+              <span className="font-bold text-gray-900">Each topic</span> is woven into engaging stories where your child is the hero. They don't just hear about these skills — they <span className="gradient-text font-bold">live them</span>.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ===== BLOCK: TRANSFORM RESULTS ===== */}
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="max-w-5xl mx-auto">
@@ -1253,99 +1346,6 @@ export default function Home() {
                 </svg>
               </button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== BLOCK: CURRICULUM (Topics of the Year) ===== */}
-      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24">
-        <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
-            <span className="text-xl">📚</span>
-            <span className="text-sm text-gray-600 font-medium">Curriculum</span>
-          </div>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            What will your child <span className="gradient-text">learn in a year</span>?
-          </h2>
-          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            A comprehensive program that covers all aspects of emotional and social development
-          </p>
-        </div>
-
-        {/* 5 Topics Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {/* Topic 1: Emotional Intelligence */}
-          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-rose-400 to-pink-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🎭</span>
-            </div>
-            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Emotional Intelligence
-            </h3>
-            <p className="text-gray-600 text-xs sm:text-sm">
-              Recognize and manage their emotions effectively
-            </p>
-          </div>
-
-          {/* Topic 2: Personal Boundaries */}
-          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🛡️</span>
-            </div>
-            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Personal Boundaries
-            </h3>
-            <p className="text-gray-600 text-xs sm:text-sm">
-              Say "No" and stand up for their opinion
-            </p>
-          </div>
-
-          {/* Topic 3: Socialization */}
-          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">👫</span>
-            </div>
-            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Socialization
-            </h3>
-            <p className="text-gray-600 text-xs sm:text-sm">
-              Make friends and resolve conflicts peacefully
-            </p>
-          </div>
-
-          {/* Topic 4: Goal Setting */}
-          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🎯</span>
-            </div>
-            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Goal Setting
-            </h3>
-            <p className="text-gray-600 text-xs sm:text-sm">
-              Dream big and follow through without giving up
-            </p>
-          </div>
-
-          {/* Topic 5: Overcoming Fears */}
-          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🦁</span>
-            </div>
-            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Overcoming Fears
-            </h3>
-            <p className="text-gray-600 text-xs sm:text-sm">
-              Turn darkness, mistakes, new places into sources of strength
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom insight */}
-        <div className="mt-10 sm:mt-12 max-w-3xl mx-auto">
-          <div className="glass-card p-5 sm:p-6 text-center bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
-            <p className="text-gray-700 text-sm sm:text-base">
-              <span className="font-bold text-gray-900">Each topic</span> is woven into engaging stories where your child is the hero. They don't just hear about these skills — they <span className="gradient-text font-bold">live them</span>.
-            </p>
           </div>
         </div>
       </section>
