@@ -1559,109 +1559,187 @@ export default function Home() {
       <section id="pricing" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            An investment in <span className="gradient-text">family peace</span>
+            Choose your <span className="gradient-text">journey</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg">
-            Try for free, stay for results
+            Start with a test drive or commit to transformation
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl mx-auto">
-          {/* Free tier */}
-          <div className="glass-card p-5 sm:p-8">
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
+          {/* MAGIC WEEK - Test Drive */}
+          <div className="glass-card p-5 sm:p-6">
             <div className="text-center mb-4 sm:mb-6">
-              <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Try it</h3>
-              <div className="text-3xl sm:text-4xl font-bold text-gray-900">$0</div>
-              <p className="text-gray-500 text-xs sm:text-sm">For those who want to test</p>
+              <div className="text-3xl mb-2">✨</div>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MAGIC WEEK</h3>
+              <p className="text-xs text-gray-500 mb-3">Test Drive</p>
+              <div className="text-3xl sm:text-4xl font-bold text-gray-900">$4.50</div>
+              <p className="text-gray-500 text-xs mt-1">Try and see your child&apos;s reaction</p>
             </div>
 
-            <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-green-500">✓</span>
-                <span>3 stories (total)</span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-green-500">✓</span>
-                <span>Standard narration</span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-green-500">✓</span>
-                <span>Text version</span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-400 text-sm sm:text-base">
-                <span className="text-gray-300">✗</span>
-                <span>Voice cloning</span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-400 text-sm sm:text-base">
-                <span className="text-gray-300">✗</span>
-                <span>MP3 download</span>
-              </li>
-            </ul>
+            <div className="space-y-3 mb-6 text-sm">
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Program</span>
+                <span className="text-gray-900 font-medium">Week 1 access</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Stories (Text+Music)</span>
+                <span className="text-green-600 font-medium">✓ 3 Scenarios</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">AI Audio</span>
+                <span className="text-green-600 font-medium">✓ 3 included</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">AI Cartoon</span>
+                <span className="text-green-600 font-medium">✓ 1 included</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Methodology</span>
+                <span className="text-gray-900 text-xs">Questions & tasks</span>
+              </div>
+              <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                <span className="text-gray-600">Analytics</span>
+                <span className="text-gray-900 text-xs text-right">📊 &quot;Superpowers&quot;<br/>Weekly Report</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-gray-600">Final Bonuses</span>
+                <span className="text-gray-400">—</span>
+              </div>
+            </div>
 
             <button
-              onClick={handleCreateStory}
-              className="block w-full btn-secondary py-3 sm:py-4 text-center font-semibold text-gray-700 text-sm sm:text-base"
+              onClick={() => openPaymentModal("week")}
+              className="block w-full btn-secondary py-3 text-center font-semibold text-gray-700 text-sm"
             >
-              Create first story
+              Try for $4.50
             </button>
           </div>
 
-          {/* Premium tier */}
-          <div className="glass-card-strong p-5 sm:p-8 relative border-2 border-sky-300">
-            <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">
+          {/* MONTHLY - Basic */}
+          <div className="glass-card-strong p-5 sm:p-6 relative border-2 border-sky-300">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
               Most Popular
             </div>
 
-            <div className="text-center mb-4 sm:mb-6 mt-2 sm:mt-0">
-              <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Super Parent</h3>
-              <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base sm:text-lg text-gray-500 font-normal">/mo</span></div>
-              <p className="text-gray-500 text-xs sm:text-sm">or $249/year (save $99)</p>
+            <div className="text-center mb-4 sm:mb-6 mt-2">
+              <div className="text-3xl mb-2">🚀</div>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MONTHLY</h3>
+              <p className="text-xs text-gray-500 mb-3">Basic</p>
+              <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base text-gray-500 font-normal">/mo</span></div>
+              <p className="text-gray-500 text-xs mt-1">Flexible learning, pay monthly</p>
             </div>
 
-            <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-green-500">✓</span>
-                <span><strong>Unlimited</strong> stories</span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-blue-500">🎙</span>
-                <span><strong>Voice cloning</strong></span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-blue-500">🖼</span>
-                <span><strong>Unique illustrations</strong></span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-blue-500">📥</span>
-                <span><strong>MP3 download</strong></span>
-              </li>
-              <li className="flex items-center gap-2 sm:gap-3 text-gray-700 text-sm sm:text-base">
-                <span className="text-blue-500">🛡</span>
-                <span>Priority generation</span>
-              </li>
-            </ul>
+            <div className="space-y-3 mb-6 text-sm">
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Program</span>
+                <span className="text-gray-900 font-medium">Full month access</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Stories (Text+Music)</span>
+                <span className="text-green-600 font-medium">✓ Unlimited</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">AI Audio</span>
+                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">AI Cartoon</span>
+                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-600">Methodology</span>
+                <span className="text-gray-900 text-xs">Questions, tracking, psychology</span>
+              </div>
+              <div className="flex justify-between items-start py-2 border-b border-gray-100">
+                <span className="text-gray-600">Analytics</span>
+                <span className="text-gray-900 text-xs text-right">📊 &quot;Superpowers&quot;<br/>Monthly Report</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-gray-600">Final Bonuses</span>
+                <span className="text-gray-400">—</span>
+              </div>
+            </div>
 
             <button
               onClick={() => openPaymentModal("monthly")}
-              className="block w-full btn-glow py-3 sm:py-4 text-center font-semibold text-white text-sm sm:text-base"
+              className="block w-full btn-glow py-3 text-center font-semibold text-white text-sm"
             >
-              Subscribe now
+              Subscribe for $29/mo
             </button>
+            <p className="text-center text-xs text-gray-400 mt-2">Cancel anytime</p>
+          </div>
+
+          {/* YEARLY LEGEND */}
+          <div className="glass-card-strong p-5 sm:p-6 relative bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-300">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
+              Best Value
+            </div>
+
+            <div className="text-center mb-4 sm:mb-6 mt-2">
+              <div className="text-3xl mb-2">👑</div>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">YEARLY LEGEND</h3>
+              <p className="text-xs text-gray-500 mb-3">For those committed to results</p>
+              <div className="text-3xl sm:text-4xl font-bold text-amber-600">$189<span className="text-base text-gray-500 font-normal">/year</span></div>
+              <p className="text-gray-500 text-xs mt-1">Save $159 vs monthly</p>
+            </div>
+
+            <div className="space-y-3 mb-6 text-sm">
+              <div className="flex justify-between items-center py-2 border-b border-amber-100">
+                <span className="text-gray-600">Program</span>
+                <span className="text-gray-900 font-medium">All 12 months</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-amber-100">
+                <span className="text-gray-600">Stories (Text+Music)</span>
+                <span className="text-green-600 font-medium">✓ Unlimited</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-amber-100">
+                <span className="text-gray-600">AI Audio</span>
+                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-amber-100">
+                <span className="text-gray-600">AI Cartoon</span>
+                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-amber-100">
+                <span className="text-gray-600">Methodology</span>
+                <span className="text-gray-900 text-xs">Questions, tracking, psychology</span>
+              </div>
+              <div className="flex justify-between items-start py-2 border-b border-amber-100">
+                <span className="text-gray-600">Analytics</span>
+                <span className="text-gray-900 text-xs text-right">📊 &quot;Superpowers&quot;<br/>Monthly Report</span>
+              </div>
+              <div className="py-2">
+                <span className="text-gray-600 block mb-2">Final Bonuses:</span>
+                <div className="space-y-1 text-xs">
+                  <div className="flex items-center gap-2 text-amber-700">
+                    <span>🎁</span>
+                    <span>Digital &quot;Hero Album&quot;</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-amber-700">
+                    <span>🎬</span>
+                    <span>Personal Blockbuster</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-amber-700">
+                    <span>🧠</span>
+                    <span>Personality Passport</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <button
               onClick={() => openPaymentModal("yearly")}
-              className="block w-full mt-2 py-2 text-center text-sm text-blue-600 hover:text-blue-700 font-medium"
+              className="block w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 py-3 rounded-full text-center font-semibold text-white text-sm shadow-lg hover:shadow-xl transition-all"
             >
-              or $249/year (save $99)
+              Become a Legend for $189
             </button>
-            <p className="text-center text-xs text-gray-400 mt-2">
-              Cancel anytime
-            </p>
           </div>
         </div>
 
         {/* Price comparison */}
         <p className="text-center text-gray-500 text-xs sm:text-sm mt-6 sm:mt-8">
-          Less than a cup of coffee, more valuable than any toy
+          All plans include full methodology based on SEL, CBT & Positive Discipline
         </p>
       </section>
 
