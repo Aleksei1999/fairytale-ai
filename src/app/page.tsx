@@ -844,10 +844,10 @@ export default function Home() {
             <span className="text-sm text-gray-600 font-medium">Based on SEL, CBT & Positive Discipline</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Большое путешествие Героя: <span className="gradient-text">12 месяцев, которые изменят всё</span>
+            The Hero's Grand Journey: <span className="gradient-text">12 months that will change everything</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            Это не уроки, а увлекательный квест длиною в год. Ребенок проживает захватывающие сюжеты и незаметно для себя вырастает в уверенную, осознанную Личность, готовую к большому миру.
+            This isn't lessons — it's an exciting year-long quest. Your child lives through captivating stories and, without even realizing it, grows into a confident, self-aware Personality ready for the big world.
           </p>
         </div>
 
