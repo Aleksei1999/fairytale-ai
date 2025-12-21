@@ -357,7 +357,10 @@ export default function Home() {
                   loop
                   muted
                   playsInline
+                  preload="auto"
+                  poster="/images/hero-photo.jpg"
                   className="w-80 sm:w-96 md:w-[450px] h-auto rounded-3xl shadow-2xl"
+                  onError={(e) => console.error('Video error:', e)}
                 />
               </div>
 
