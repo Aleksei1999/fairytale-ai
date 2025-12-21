@@ -156,6 +156,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!ELEVENLABS_API_KEY) {
+      console.error("ELEVENLABS_API_KEY is not set");
+      return NextResponse.json(
+        { success: false, error: "ElevenLabs API key not configured" },
+        { status: 500 }
+      );
+    }
+
     // Use default voice if not specified or "default"
     const actualVoiceId = (voiceId && voiceId !== "default") ? voiceId : DEFAULT_VOICE_ID;
 
@@ -182,9 +190,12 @@ export async function POST(request: NextRequest) {
     );
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("ElevenLabs TTS error:", errorData);
-      throw new Error(errorData.detail?.message || "Failed to generate audio");
+      const errorText = await response.text();
+      console.error("ElevenLabs TTS error:", response.status, errorText);
+      return NextResponse.json(
+        { success: false, error: `ElevenLabs error: ${response.status} - ${errorText.substring(0, 200)}` },
+        { status: 500 }
+      );
     }
 
     // Получаем аудио как ArrayBuffer
