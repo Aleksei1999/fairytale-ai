@@ -1747,31 +1747,39 @@ export default function Home() {
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Frequently asked <span className="gradient-text">questions</span>
+            Parents&apos; top <span className="gradient-text">questions</span>
           </h2>
         </div>
 
         <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4">
           {[
             {
-              q: "Is this a subscription? How do I cancel?",
-              a: "Yes, it's a subscription to support the AI operations. You can cancel with one click in your account — no hidden charges or complicated procedures."
+              q: "We're fighting gadget addiction. Won't your app make it worse?",
+              a: "Quite the opposite. YouTube and games create addiction because they're endless and meaningless (dopamine loop). Our methodology works differently:\n\n1. Time limit: A story or cartoon lasts 3-7 minutes. It's a complete story, after which the child calmly puts down the phone.\n\n2. Connection to reality: After watching, the app gives a task in the real world (e.g., \"Go hug mom\" or \"Draw your fear\"). We bring the child back from the screen to life."
             },
             {
-              q: "How does voice cloning work? Is it hard?",
-              a: "Super easy! You press 'Record', read text from the screen for about 30 seconds. Our AI learns your voice and then narrates any story in your voice."
+              q: "Who writes the scripts — a robot or a human? Is it really safe?",
+              a: "AI is just the \"pen\" we write with. But the \"hand\" is guided by child psychologists. All plots are built on strict SEL and CBT methodology templates. The AI cannot create anything scary or toxic as it operates within strict safety boundaries. This is 100% filtered content."
             },
             {
-              q: "How long is each story?",
-              a: "The optimal length is 3-5 minutes. That's enough to develop the plot and help your child fall asleep without getting bored. You can choose the duration when creating."
+              q: "My child is very active (ADHD), they can't sit still for even a minute. Will this work?",
+              a: "Yes, because this is a story about THEM. A regular cartoon about Peppa Pig might bore them. But when a child sees their own face on screen and hears their own name — the \"ego magic\" kicks in. This holds the attention of even the most restless children and teaches them concentration."
             },
             {
-              q: "Can I save the story?",
-              a: "Yes! With the 'Super Parent' plan, you can download audio files and send them to grandparents, listen in the car, or on a plane without internet."
+              q: "Will my child's photos end up on the internet?",
+              a: "Never. We understand your concern. The photo is used for exactly 1 second — to train the neural network to create the character's face. Immediately after, the original photo is deleted from our servers. The avatar lives only in your private personal account."
             },
             {
-              q: "Is the content safe for kids?",
-              a: "Absolutely. All stories go through triple filtering. The AI is configured to never create scary, violent, or inappropriate content. Plus, you can always preview the story before showing it to your child."
+              q: "How quickly will I see changes in behavior?",
+              a: "Instantly: Your child will be surprised and delighted (\"That's me!\").\n\nAfter 1 week: They'll start using words from the stories (\"I'm angry like the little dragon right now\").\n\nAfter 1 month: You'll notice tantrums become shorter and negotiating becomes easier.\n\nThis is a cumulative effect: the more regular the stories, the faster new neural connections form."
+            },
+            {
+              q: "Why does it cost $29/month? Cartoons on YouTube are free.",
+              a: "YouTube is free because you pay with your child's attention, showing them ads and mindless content. With us, you pay for Education and Personalization.\n\nYou get a personal screenwriter, director, and psychologist. Producing one such personalized cartoon from a freelancer would cost you $100+. With us, you get an entire development program for the price of one dinner at a cafe."
+            },
+            {
+              q: "How do I use the app correctly to get maximum results?",
+              a: "We recommend turning stories into a special evening ritual. Psychologists confirm: 20 minutes before sleep, a child's brain best absorbs information and forms new neural connections.\n\nYour ideal scenario:\n\n1. Create closeness: Lie down and hug your child. This is time when you belong only to each other.\n\n2. Choose Voice Magic: Want to read yourself? Turn on \"Text + Music\" mode. Tired? Turn on the professional narrator. Want magic? Upload a sample of your voice, and AI will narrate the story in your voice.\n\n3. Discuss the important stuff: Right after the story, the app will offer 3 questions. This short dialogue is more important than the cartoon itself — this is where emotional intelligence develops.\n\n4. Track growth: Every Friday, check your email. We'll send a detailed PDF report: what skills your Hero mastered this week."
             }
           ].map((item, i) => (
             <div key={i} className="glass-card overflow-hidden">
@@ -1785,7 +1793,7 @@ export default function Home() {
                 </span>
               </button>
               {openFaq === i && (
-                <div className="px-4 sm:px-6 pb-3 sm:pb-4 text-gray-600 text-sm sm:text-base">
+                <div className="px-4 sm:px-6 pb-3 sm:pb-4 text-gray-600 text-sm sm:text-base whitespace-pre-line">
                   {item.a}
                 </div>
               )}
@@ -1862,7 +1870,7 @@ export default function Home() {
 
           {/* Modal */}
           <div
-            className="relative glass-card-strong p-6 sm:p-8 max-w-md w-full mx-2"
+            className="relative glass-card-strong p-6 sm:p-8 max-w-md w-full mx-2 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
@@ -1877,30 +1885,59 @@ export default function Home() {
 
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg ${
+                selectedPlan === "week"
+                  ? "bg-gradient-to-br from-gray-400 to-gray-600"
+                  : selectedPlan === "yearly"
+                    ? "bg-gradient-to-br from-amber-400 to-yellow-500"
+                    : "bg-gradient-to-br from-sky-400 to-blue-600"
+              }`}>
                 <span className="text-2xl sm:text-3xl">
-                  {selectedPlan === "yearly" ? "🎁" : "✨"}
+                  {selectedPlan === "week" ? "✨" : selectedPlan === "yearly" ? "👑" : "🚀"}
                 </span>
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-                {selectedPlan === "yearly" ? "Yearly subscription" : "Monthly subscription"}
+                {selectedPlan === "week"
+                  ? "Magic Week"
+                  : selectedPlan === "yearly"
+                    ? "Yearly Legend"
+                    : "Monthly Basic"}
               </h3>
-              <div className="text-2xl sm:text-3xl font-bold gradient-text">
-                {selectedPlan === "yearly" ? "$249" : "$29"}
+              <p className="text-gray-500 text-sm mb-3">
+                {selectedPlan === "week"
+                  ? "Test drive — see your child's reaction"
+                  : selectedPlan === "yearly"
+                    ? "Full year access with bonuses"
+                    : "Flexible monthly subscription"}
+              </p>
+              <div className={`text-2xl sm:text-3xl font-bold ${
+                selectedPlan === "yearly" ? "text-amber-600" : "gradient-text"
+              }`}>
+                {selectedPlan === "week" ? "$4.50" : selectedPlan === "yearly" ? "$189" : "$29"}
                 <span className="text-base sm:text-lg text-gray-500 font-normal">
-                  /{selectedPlan === "yearly" ? "year" : "mo"}
+                  {selectedPlan === "week" ? "" : selectedPlan === "yearly" ? "/year" : "/mo"}
                 </span>
               </div>
               {selectedPlan === "yearly" && (
-                <p className="text-green-600 text-sm mt-1">Save $99 (3+ months free)</p>
+                <p className="text-green-600 text-sm mt-1">Save $159 vs monthly</p>
               )}
             </div>
 
             {/* Plan switcher */}
             <div className="flex gap-2 mb-6">
               <button
+                onClick={() => setSelectedPlan("week")}
+                className={`flex-1 py-2 px-3 rounded-full text-xs font-medium transition-all ${
+                  selectedPlan === "week"
+                    ? "bg-gray-600 text-white shadow-lg"
+                    : "bg-white/50 text-gray-600 hover:bg-white"
+                }`}
+              >
+                Week
+              </button>
+              <button
                 onClick={() => setSelectedPlan("monthly")}
-                className={`flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all ${
+                className={`flex-1 py-2 px-3 rounded-full text-xs font-medium transition-all ${
                   selectedPlan === "monthly"
                     ? "bg-blue-500 text-white shadow-lg"
                     : "bg-white/50 text-gray-600 hover:bg-white"
@@ -1910,13 +1947,13 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setSelectedPlan("yearly")}
-                className={`flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all ${
+                className={`flex-1 py-2 px-3 rounded-full text-xs font-medium transition-all ${
                   selectedPlan === "yearly"
-                    ? "bg-blue-500 text-white shadow-lg"
+                    ? "bg-amber-500 text-white shadow-lg"
                     : "bg-white/50 text-gray-600 hover:bg-white"
                 }`}
               >
-                Yearly (-28%)
+                Yearly
               </button>
             </div>
 
@@ -1943,27 +1980,104 @@ export default function Home() {
               </div>
             )}
 
-            {/* Features */}
-            <ul className="space-y-2 mb-6 text-sm">
-              <li className="flex items-center gap-2 text-gray-700">
-                <span className="text-green-500">✓</span>
-                Unlimited stories
-              </li>
-              <li className="flex items-center gap-2 text-gray-700">
-                <span className="text-green-500">✓</span>
-                Voice cloning
-              </li>
-              <li className="flex items-center gap-2 text-gray-700">
-                <span className="text-green-500">✓</span>
-                MP3 download
-              </li>
-            </ul>
+            {/* Features based on plan */}
+            <div className="space-y-3 mb-6 text-sm">
+              {selectedPlan === "week" && (
+                <>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Program access</span>
+                    <span className="font-medium">Week 1</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Stories (Text+Music)</span>
+                    <span className="text-green-600 font-medium">✓ 3 Scenarios</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">AI Audio</span>
+                    <span className="text-green-600 font-medium">✓ 3 included</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">AI Cartoon</span>
+                    <span className="text-green-600 font-medium">✓ 1 included</span>
+                  </div>
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-600">PDF Report</span>
+                    <span className="font-medium">📊 Weekly</span>
+                  </div>
+                </>
+              )}
+              {selectedPlan === "monthly" && (
+                <>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Program access</span>
+                    <span className="font-medium">Full month</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Stories (Text+Music)</span>
+                    <span className="text-green-600 font-medium">✓ Unlimited</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">AI Audio</span>
+                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-gray-600">AI Cartoon</span>
+                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                  </div>
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-600">PDF Report</span>
+                    <span className="font-medium">📊 Monthly</span>
+                  </div>
+                </>
+              )}
+              {selectedPlan === "yearly" && (
+                <>
+                  <div className="flex justify-between py-2 border-b border-amber-100">
+                    <span className="text-gray-600">Program access</span>
+                    <span className="font-medium">All 12 months</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-amber-100">
+                    <span className="text-gray-600">Stories (Text+Music)</span>
+                    <span className="text-green-600 font-medium">✓ Unlimited</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-amber-100">
+                    <span className="text-gray-600">AI Audio</span>
+                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-amber-100">
+                    <span className="text-gray-600">AI Cartoon</span>
+                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                  </div>
+                  <div className="py-2 border-b border-amber-100">
+                    <span className="text-gray-600 block mb-2">Final Bonuses:</span>
+                    <div className="space-y-1 text-xs">
+                      <div className="flex items-center gap-2 text-amber-700">
+                        <span>🎁</span>
+                        <span>Digital &quot;Hero Album&quot;</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-amber-700">
+                        <span>🎬</span>
+                        <span>Personal Blockbuster</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-amber-700">
+                        <span>🧠</span>
+                        <span>Personality Passport</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
 
             {/* Pay button */}
             <button
               onClick={handlePayment}
               disabled={paymentLoading}
-              className="block w-full btn-glow py-3 sm:py-4 text-center font-semibold text-white text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`block w-full py-3 sm:py-4 rounded-full text-center font-semibold text-white text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed transition-all ${
+                selectedPlan === "yearly"
+                  ? "bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 shadow-lg"
+                  : "btn-glow"
+              }`}
             >
               {paymentLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -1974,12 +2088,16 @@ export default function Home() {
                   Processing...
                 </span>
               ) : (
-                `Pay ${selectedPlan === "yearly" ? "$249" : "$29"}`
+                selectedPlan === "week"
+                  ? "Try for $4.50"
+                  : selectedPlan === "yearly"
+                    ? "Become a Legend — $189"
+                    : "Subscribe — $29/mo"
               )}
             </button>
 
             <p className="text-center text-xs text-gray-400 mt-3">
-              Secure payment via Lava Top
+              {selectedPlan === "week" ? "One-time payment" : "Cancel anytime"} • Secure payment
             </p>
           </div>
         </div>
