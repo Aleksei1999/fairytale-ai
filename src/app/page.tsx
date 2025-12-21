@@ -582,97 +582,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== BLOCK: THE MECHANISM ===== */}
+      {/* ===== BLOCK: HOW FAIRYTALE AI WORKS ===== */}
       <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-amber-50/30 to-white">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              How it <span className="gradient-text">really works</span>
+              How the <span className="gradient-text">FairyTale AI</span> magic works
             </h2>
-            <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-              A simple system that turns screen time into quality family moments
+            <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
+              The only system that adapts to your child. You give us the basics — we deliver a complete development program wrapped in an engaging story and cartoon format.
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
-              {/* Step 1: Fairy Tale */}
-              <div className="relative">
-                <div className="glass-card-strong p-6 sm:p-8 h-full">
-                  <div className="absolute -top-4 left-6 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Every other day
-                  </div>
-                  <div className="text-5xl sm:text-6xl mb-4 mt-2">📖</div>
-                  <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-                    Step 1. Personalized Story
-                  </h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    A new story adapted to the week&apos;s theme. Your child listens as their <span className="font-semibold text-violet-600">Avatar</span> overcomes challenges — fear, laziness, greed — and learns from their own example.
-                  </p>
-                  <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="w-2 h-2 bg-violet-400 rounded-full"></span>
-                    <span>3-4 stories per week</span>
-                  </div>
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+              {/* Step 1: Create Avatar */}
+              <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300">
+                <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
+                  1
                 </div>
-                {/* Connector arrow (hidden on mobile) */}
-                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-2xl text-gray-300">→</div>
+                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">🧑‍🎨</div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                  Create an Avatar
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  Upload your child&apos;s photo, enter their name, and select their interests (like space or dinosaurs). The AI creates the <span className="font-semibold text-violet-600">Hero of future adventures</span> in seconds.
+                </p>
               </div>
 
-              {/* Step 2: Weekly Cartoon */}
-              <div className="relative">
-                <div className="glass-card-strong p-6 sm:p-8 h-full border-2 border-amber-200">
-                  <div className="absolute -top-4 left-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Weekly premiere
-                  </div>
-                  <div className="text-5xl sm:text-6xl mb-4 mt-2">🎬</div>
-                  <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-                    Step 2. AI Cartoon
-                  </h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    End of the week — <span className="font-semibold text-amber-600">premiere time!</span> A personalized cartoon where your child sees their achievements from the outside. This creates powerful motivation to keep going.
-                  </p>
-                  <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>1 cartoon every week</span>
-                  </div>
+              {/* Step 2: Get Weekly Story */}
+              <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300">
+                <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
+                  2
                 </div>
-                {/* Connector arrow (hidden on mobile) */}
-                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-2xl text-gray-300">→</div>
+                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">📚</div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                  Get the Weekly Story
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  No guessing what to include. Our smart system automatically selects an <span className="font-semibold text-amber-600">age-appropriate developmental story</span> from our Annual Program.
+                </p>
               </div>
 
-              {/* Step 3: Evening Ritual */}
-              <div className="relative">
-                <div className="glass-card-strong p-6 sm:p-8 h-full">
-                  <div className="absolute -top-4 left-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Every evening
-                  </div>
-                  <div className="text-5xl sm:text-6xl mb-4 mt-2">💙</div>
-                  <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-                    Step 3. Evening Ritual
-                  </h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    Your <span className="font-semibold text-sky-600">20 minutes of closeness</span>. You&apos;re not just turning on a tablet — you discuss the hero&apos;s adventures. We provide ready-made questions to reinforce success and discover your child&apos;s feelings.
-                  </p>
-                  <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="w-2 h-2 bg-sky-400 rounded-full"></span>
-                    <span>Discussion questions included</span>
-                  </div>
+              {/* Step 3: Choose Format */}
+              <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300">
+                <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
+                  3
                 </div>
+                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">🎭</div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                  Choose the Format
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  Read the story yourself with atmospheric music (free), or use <span className="font-semibold text-sky-600">&quot;Stars&quot;</span> to instantly turn the text into an audio drama or a colorful cartoon.
+                </p>
               </div>
-            </div>
 
-            {/* Summary insight */}
-            <div className="mt-10 sm:mt-12">
-              <div className="glass-card p-5 sm:p-6 bg-gradient-to-r from-violet-50 via-amber-50 to-sky-50 border border-gray-200">
-                <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-                  <div className="text-4xl">🔄</div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-1">The cycle that builds character</h4>
-                    <p className="text-gray-600 text-sm">
-                      <span className="font-medium">Story → Reflection → Cartoon Reward → Anticipation</span> — this loop creates sustainable habits and deep emotional bonds between you and your child.
-                    </p>
-                  </div>
+              {/* Step 4: Track Progress */}
+              <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300 border-2 border-emerald-200">
+                <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
+                  4
                 </div>
+                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">📊</div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                  Track Progress
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  At the end of each week, download a <span className="font-semibold text-emerald-600">PDF report</span>: which skills (Soft Skills) your child developed and what to discuss at dinner to reinforce success.
+                </p>
               </div>
             </div>
           </div>
