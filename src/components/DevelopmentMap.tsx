@@ -315,6 +315,31 @@ export function DevelopmentMap() {
           <p className="text-sm text-gray-600 italic">
             {selectedMonth.story_arc}
           </p>
+
+          {/* Progress Bar */}
+          {(() => {
+            const totalStories = selectedMonth.weeks.reduce((acc, w) => acc + w.stories.length, 0);
+            const completedCount = selectedMonth.weeks.reduce(
+              (acc, w) => acc + w.stories.filter((s) => completedStories.includes(s.id)).length,
+              0
+            );
+            const progressPercent = totalStories > 0 ? Math.round((completedCount / totalStories) * 100) : 0;
+
+            return (
+              <div className="mt-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium text-gray-700">Progress</span>
+                  <span className="text-sm text-gray-600">{completedCount} of {totalStories} stories</span>
+                </div>
+                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full bg-gradient-to-r ${selectedBlock.color} transition-all duration-500`}
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })()}
         </div>
 
         {/* Week Tabs */}
@@ -417,10 +442,10 @@ export function DevelopmentMap() {
                       </div>
                     ) : isAvailable ? (
                       <Link
-                        href={`/story/${story.id}`}
+                        href={`/create?storyId=${story.id}`}
                         className={`px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r ${selectedBlock.color} text-white hover:opacity-90 shadow-md transition-all`}
                       >
-                        Start Story
+                        Create Story
                       </Link>
                     ) : hasTimer ? (
                       <div className="flex flex-col items-center text-amber-600 text-sm font-medium">
