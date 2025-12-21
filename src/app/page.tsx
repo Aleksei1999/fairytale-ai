@@ -15,7 +15,7 @@ export default function Home() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">("monthly");
+  const [selectedPlan, setSelectedPlan] = useState<"week" | "monthly" | "yearly">("monthly");
   const [paymentEmail, setPaymentEmail] = useState("");
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState("");
@@ -77,7 +77,7 @@ export default function Home() {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const openPaymentModal = (plan: "monthly" | "yearly") => {
+  const openPaymentModal = (plan: "week" | "monthly" | "yearly") => {
     if (!user) {
       setShowAuthModal(true);
       return;
@@ -92,7 +92,7 @@ export default function Home() {
     }
   };
 
-  const handlePaymentDirect = async (plan: "monthly" | "yearly", email: string) => {
+  const handlePaymentDirect = async (plan: "week" | "monthly" | "yearly", email: string) => {
     setPaymentLoading(true);
     setPaymentError("");
 
