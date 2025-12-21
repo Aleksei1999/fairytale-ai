@@ -13,6 +13,7 @@ export default function Home() {
   const [openProgramBlock, setOpenProgramBlock] = useState<number | null>(0);
   const [selectedVoice, setSelectedVoice] = useState<"mom" | "narrator">("mom");
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [pendingPaymentPlan, setPendingPaymentPlan] = useState<"week" | "monthly" | "yearly" | null>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<"week" | "monthly" | "yearly">("monthly");
@@ -79,18 +80,41 @@ export default function Home() {
 
   const openPaymentModal = (plan: "week" | "monthly" | "yearly") => {
     if (!user) {
+      // Not authorized - save plan and show auth modal
+      setPendingPaymentPlan(plan);
       setShowAuthModal(true);
       return;
     }
-    setSelectedPlan(plan);
-    setPaymentEmail(user.email || "");
-    setPaymentError("");
-    setShowPaymentModal(true);
-    // Если авторизован — сразу платим без запроса email
+    // Authorized - go directly to payment (skip modal)
     if (user.email) {
       handlePaymentDirect(plan, user.email);
+    } else {
+      // Fallback if no email - show modal
+      setSelectedPlan(plan);
+      setPaymentEmail("");
+      setPaymentError("");
+      setShowPaymentModal(true);
     }
   };
+
+  const handleAuthSuccess = () => {
+    // After successful auth, save pending plan to localStorage and reload
+    if (pendingPaymentPlan) {
+      localStorage.setItem("pendingPaymentPlan", pendingPaymentPlan);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    }
+  };
+
+  // Check for pending payment on mount (after auth redirect)
+  useEffect(() => {
+    const savedPlan = localStorage.getItem("pendingPaymentPlan") as "week" | "monthly" | "yearly" | null;
+    if (savedPlan && user?.email) {
+      localStorage.removeItem("pendingPaymentPlan");
+      handlePaymentDirect(savedPlan, user.email);
+    }
+  }, [user]);
 
   const handlePaymentDirect = async (plan: "week" | "monthly" | "yearly", email: string) => {
     setPaymentLoading(true);
@@ -2104,7 +2128,11 @@ export default function Home() {
       )}
 
       {/* Auth Modal */}
-      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => { setShowAuthModal(false); setPendingPaymentPlan(null); }}
+        onSuccess={handleAuthSuccess}
+      />
     </div>
   );
 }

@@ -5,9 +5,11 @@ import { useState } from "react";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
+  redirectUrl?: string;
 }
 
-export function AuthModal({ isOpen, onClose }: AuthModalProps) {
+export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModalProps) {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +47,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           setSuccess("Check your email to confirm your account!");
         } else {
           onClose();
-          window.location.href = "/dashboard";
+          if (onSuccess) {
+            onSuccess();
+          } else {
+            window.location.href = redirectUrl || "/dashboard";
+          }
         }
       }
     } catch {
