@@ -10,6 +10,7 @@ export default function Home() {
   const { user, loading: authLoading, signOut } = useAuth();
   const [childName, setChildName] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openProgramBlock, setOpenProgramBlock] = useState<number | null>(0);
   const [selectedVoice, setSelectedVoice] = useState<"mom" | "narrator">("mom");
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -321,39 +322,24 @@ export default function Home() {
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
-              AI creates personalized fairy tales where your child is the main character.
-              Gently solve behavior, sleep, and tantrum issues.
+              Transform 20 minutes before bedtime into systematic development of Emotional Intelligence and Leadership.
+              Scientific methodology, personalized AI cartoons and fairy tales, transparent progress for parents.
             </p>
 
-            {/* CTA with input */}
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
-              <input
-                type="text"
-                placeholder="Child's name"
-                value={childName}
-                onChange={(e) => setChildName(e.target.value)}
-                className="flex-1 px-5 sm:px-6 py-3 sm:py-4 rounded-full border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80 backdrop-blur text-base"
-              />
+            {/* CTA */}
+            <div className="flex flex-col gap-3 max-w-md mx-auto lg:mx-0">
               <button
                 onClick={handleCreateStory}
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
               >
-                <span>Create for free</span>
+                <span>Start the Hero&apos;s Journey</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </button>
-            </div>
-
-            {/* Trust badges */}
-            <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4 justify-center lg:justify-start text-xs sm:text-sm text-gray-500">
-              <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-gray-500">
                 <span className="text-blue-500">✓</span>
-                <span>First story free</span>
-              </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-blue-500">✓</span>
-                <span>Ready in 1 minute</span>
+                <span>Try the first week free</span>
               </div>
             </div>
           </div>
@@ -361,30 +347,21 @@ export default function Home() {
           {/* Right: Hero illustration - hidden on mobile, simplified on tablet */}
           <div className="flex-1 flex justify-center lg:justify-end hidden sm:flex">
             <div className="relative">
+              {/* Blue glow behind photo */}
               <div className="absolute inset-0 bg-gradient-to-br from-sky-300/50 to-blue-500/30 rounded-full blur-3xl scale-110" />
-              <div className="relative floating">
-                <div className="w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[480px] glass-card-strong flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute top-6 left-6 sm:top-8 sm:left-8 text-xl sm:text-2xl sparkle">⭐</div>
-                  <div className="absolute top-12 right-8 sm:top-16 sm:right-12 text-lg sm:text-xl sparkle" style={{ animationDelay: "0.5s" }}>✨</div>
-                  <div className="absolute bottom-16 left-8 sm:bottom-20 sm:left-12 text-lg sm:text-xl sparkle" style={{ animationDelay: "1s" }}>🌟</div>
-                  <div className="absolute bottom-8 right-6 sm:bottom-12 sm:right-8 text-xl sm:text-2xl sparkle" style={{ animationDelay: "1.5s" }}>💫</div>
-
-                  <div className="text-center">
-                    <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-sky-200 to-sky-400 flex items-center justify-center shadow-xl">
-                      <span className="text-5xl sm:text-6xl md:text-7xl">👧</span>
-                    </div>
-                    <p className="text-gray-600 font-medium px-4 text-sm sm:text-base">
-                      Your child is the<br />
-                      <span className="gradient-text font-bold">story hero</span>
-                    </p>
-                  </div>
-
-                  <div className="absolute -bottom-4 -left-4 text-4xl sm:text-5xl md:text-6xl opacity-60">☁️</div>
-                  <div className="absolute -bottom-2 -right-4 text-3xl sm:text-4xl md:text-5xl opacity-40">☁️</div>
-                </div>
+              {/* Video */}
+              <div className="relative">
+                <video
+                  src="/images/hero-video.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-80 sm:w-96 md:w-[450px] h-auto rounded-3xl shadow-2xl"
+                />
               </div>
 
-              {/* Floating labels - hidden on smaller screens */}
+              {/* Floating labels */}
               <div className="absolute -top-4 -left-8 glass-card px-3 py-2 floating hidden md:block" style={{ animationDelay: "1s" }}>
                 <span className="text-sm">🎙️ Your voice</span>
               </div>
@@ -406,52 +383,41 @@ export default function Home() {
             Sound <span className="gradient-text">familiar</span>?
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            If even one applies — our service was made for you
+            We all promise ourselves to be perfect parents. But in the hustle of days, parenting turns into chaos:
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 max-w-6xl mx-auto">
-          {/* Problem 1 */}
-          <div className="glass-card p-4 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-xl sm:text-2xl">🪥</span>
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          {/* Problem 1 - Useless Screen */}
+          <div className="glass-card p-5 sm:p-6 hover:scale-105 transition-transform duration-300 group">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-2xl">📺</span>
             </div>
-            <h3 className="font-display font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Routines & Hygiene</h3>
-            <p className="text-gray-600 text-xs sm:text-sm hidden sm:block">
-              Every night is a battle over brushing teeth or cleaning up toys. Screaming instead of sleep.
+            <h3 className="font-display font-bold text-gray-900 mb-2 text-base sm:text-lg">Useless Screen Time</h3>
+            <p className="text-gray-600 text-sm">
+              Kids spend hours watching YouTube that doesn&apos;t develop them — it &quot;zombifies&quot; them. You see their curiosity fading, but don&apos;t know what to replace the tablet with that would be equally engaging.
             </p>
           </div>
 
-          {/* Problem 2 */}
-          <div className="glass-card p-4 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-xl sm:text-2xl">⚡</span>
+          {/* Problem 2 - Chaos instead of System */}
+          <div className="glass-card p-5 sm:p-6 hover:scale-105 transition-transform duration-300 group">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-2xl">📉</span>
             </div>
-            <h3 className="font-display font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Behavior</h3>
-            <p className="text-gray-600 text-xs sm:text-sm hidden sm:block">
-              Fights at daycare, picks on younger kids, or won't share. You feel embarrassed around other parents.
+            <h3 className="font-display font-bold text-gray-900 mb-2 text-base sm:text-lg">Chaos Instead of System</h3>
+            <p className="text-gray-600 text-sm">
+              You buy educational toys, try different classes, but give up. There&apos;s no clear plan: how exactly to develop ambition and leadership qualities in your child.
             </p>
           </div>
 
-          {/* Problem 3 */}
-          <div className="glass-card p-4 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-xl sm:text-2xl">👻</span>
+          {/* Problem 3 - I'll have time later */}
+          <div className="glass-card p-5 sm:p-6 hover:scale-105 transition-transform duration-300 group">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-2xl">💔</span>
             </div>
-            <h3 className="font-display font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Fears & Emotions</h3>
-            <p className="text-gray-600 text-xs sm:text-sm hidden sm:block">
-              Afraid of the dark, doctors, or being alone. Takes forever to calm down.
-            </p>
-          </div>
-
-          {/* Problem 4 */}
-          <div className="glass-card p-4 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-xl sm:text-2xl">📵</span>
-            </div>
-            <h3 className="font-display font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Screen Time</h3>
-            <p className="text-gray-600 text-xs sm:text-sm hidden sm:block">
-              Can't tear them away from cartoons. Meltdown when you take the phone away.
+            <h3 className="font-display font-bold text-gray-900 mb-2 text-base sm:text-lg">The &quot;I&apos;ll Have Time&quot; Illusion</h3>
+            <p className="text-gray-600 text-sm">
+              It seems like your child will be little forever. But science says otherwise — there&apos;s almost no time left. The window for forming core values is closing fast.
             </p>
           </div>
         </div>
@@ -460,7 +426,7 @@ export default function Home() {
         <div className="mt-8 sm:mt-12 max-w-3xl mx-auto">
           <div className="glass-card-strong p-5 sm:p-8 text-center">
             <p className="text-base sm:text-lg text-gray-700 mb-3 sm:mb-4">
-              <span className="font-bold text-gray-900">Kids don't hear lectures.</span> Their brains are wired to learn through play and imagery.
+              <span className="font-bold text-gray-900">Kids don&apos;t hear lectures.</span> Their brains are wired to learn through play and imagery.
             </p>
             <p className="text-blue-600 font-semibold text-sm sm:text-base">
               Yelling is useless — you need to tell stories.
@@ -468,17 +434,152 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Platform description */}
-        <div className="mt-6 sm:mt-8 text-center max-w-2xl mx-auto">
-          <p className="text-gray-600 text-sm sm:text-base">
-            <span className="font-semibold text-gray-800">FairyTaleAI</span> — a platform for personalized therapeutic stories
-            adapted to specific situations. Build leadership, moral, and emotional qualities
-            through storytelling <span className="text-blue-600 font-medium">in your own voice</span>.
-          </p>
+        {/* Why Now Section */}
+        <div className="mt-12 sm:mt-20 max-w-5xl mx-auto">
+          <div className="relative overflow-hidden glass-card-strong p-6 sm:p-10 md:p-12 border-2 border-sky-200">
+            {/* Animated background elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-sky-300/30 rounded-full blur-3xl floating" />
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-300/30 rounded-full blur-3xl floating" style={{ animationDelay: "1s" }} />
+              <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-cyan-300/20 rounded-full blur-2xl floating" style={{ animationDelay: "2s" }} />
+            </div>
+
+            {/* Header */}
+            <div className="relative text-center mb-8 sm:mb-10">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-100 to-blue-100 px-4 py-2 rounded-full mb-4 border border-sky-200">
+                <span className="text-xl">⏰</span>
+                <span className="text-blue-700 text-sm font-medium">Critical Window</span>
+              </div>
+              <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+                Why Is This Important <span className="gradient-text">Right Now</span>?
+              </h3>
+              <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+                Psychologists call ages 3-6 the <span className="font-bold text-gray-900">&quot;Programming Period&quot;</span>.
+                This isn&apos;t just childhood — it&apos;s the foundation of their entire future life.
+              </p>
+            </div>
+
+            {/* Facts Grid */}
+            <div className="relative grid md:grid-cols-3 gap-4 sm:gap-6 mb-8">
+              {/* Fact 1 - Harvard */}
+              <div className="group glass-card p-5 sm:p-6 hover:shadow-lg transition-all hover:scale-105 duration-300 border border-sky-100">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+                  <span className="text-3xl">🧒</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1 bg-sky-100 px-2 py-1 rounded-full mb-2">
+                    <span className="text-xs text-sky-700 font-medium">Harvard Research</span>
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">90% Brain Development</h4>
+                  <p className="text-gray-600 text-sm">
+                    By age 6, your child&apos;s brain is <span className="text-gray-900 font-semibold">90% formed</span>. Neural pathways for empathy, trust, and confidence are being built <span className="text-blue-600 font-semibold">right now</span>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fact 2 - Attachment */}
+              <div className="group glass-card p-5 sm:p-6 hover:shadow-lg transition-all hover:scale-105 duration-300 border border-sky-100">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-teal-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+                  <span className="text-3xl">🔐</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1 bg-cyan-100 px-2 py-1 rounded-full mb-2">
+                    <span className="text-xs text-cyan-700 font-medium">Attachment Theory</span>
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">Emotional Bond Window</h4>
+                  <p className="text-gray-600 text-sm">
+                    <span className="text-gray-900 font-semibold">Emotional closeness</span> with parents forms before age 7. If screens replace this contact, teenage years bring <span className="text-red-500 font-semibold">alienation</span>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fact 3 - Bitter Truth */}
+              <div className="group glass-card p-5 sm:p-6 hover:shadow-lg transition-all hover:scale-105 duration-300 border border-sky-100">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+                  <span className="text-3xl">⚠️</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1 bg-amber-100 px-2 py-1 rounded-full mb-2">
+                    <span className="text-xs text-amber-700 font-medium">The Hard Truth</span>
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">Tomorrow May Be Too Late</h4>
+                  <p className="text-gray-600 text-sm">
+                    Today they quietly retreat to their room with a tablet. Miss this moment, and you&apos;ll wake up living with a <span className="text-red-500 font-semibold">stranger who doesn&apos;t trust you</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="relative text-center">
+              <p className="text-gray-700 text-base sm:text-lg font-medium mb-4">
+                Are you ready to risk this bond? Or will you act while the <span className="gradient-text font-bold">&quot;window of opportunity&quot;</span> is still open?
+              </p>
+              <button
+                onClick={handleCreateStory}
+                className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg inline-flex items-center gap-2"
+              >
+                <span>Start Building the Bond</span>
+                <span className="text-xl">💙</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      {/* ===== BLOCK: THE SOLUTION ===== */}
+      <section className="relative z-10 py-16 sm:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Main headline */}
+            <div className="mb-8 sm:mb-12">
+              <div className="inline-block mb-4">
+                <span className="text-5xl sm:text-6xl md:text-7xl drop-shadow-lg">🏰</span>
+              </div>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+                FairyTaleAI — it&apos;s not just stories
+              </h2>
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                It&apos;s a <span className="font-bold text-blue-600">comprehensive personality development system</span>.
+                We&apos;ve packaged methodologies from top child psychologists into a format kids absolutely love.
+              </p>
+            </div>
+
+            {/* Features as floating cards */}
+            <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mt-12 sm:mt-16">
+              {/* Feature 1 */}
+              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500">
+                <div className="text-4xl sm:text-5xl mb-3">📚</div>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">12-Month Curriculum</h3>
+                <p className="text-gray-600 text-sm">
+                  From &quot;Understanding Emotions&quot; to &quot;Leadership&quot; and &quot;Financial Literacy&quot;
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 sm:mt-8">
+                <div className="text-4xl sm:text-5xl mb-3">✨</div>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">Personalization Magic</h3>
+                <p className="text-gray-600 text-sm">
+                  Your child is the <span className="font-bold text-amber-600">Main Hero</span> of every story
+                </p>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500">
+                <div className="text-4xl sm:text-5xl mb-3">🧠</div>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">Scientific Approach</h3>
+                <p className="text-gray-600 text-sm">
+                  Based on <span className="font-semibold">CBT methods</span> that shape character
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ===== BLOCK 3: HOW IT WORKS ===== */}
+      {/* ===== BLOCK: HOW IT WORKS ===== */}
       <section id="how" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
@@ -559,135 +660,590 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== BLOCK: THE MECHANISM ===== */}
+      <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-amber-50/30 to-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+              How it <span className="gradient-text">really works</span>
+            </h2>
+            <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+              A simple system that turns screen time into quality family moments
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+              {/* Step 1: Fairy Tale */}
+              <div className="relative">
+                <div className="glass-card-strong p-6 sm:p-8 h-full">
+                  <div className="absolute -top-4 left-6 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Every other day
+                  </div>
+                  <div className="text-5xl sm:text-6xl mb-4 mt-2">📖</div>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                    Step 1. Personalized Story
+                  </h3>
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                    A new story adapted to the week&apos;s theme. Your child listens as their <span className="font-semibold text-violet-600">Avatar</span> overcomes challenges — fear, laziness, greed — and learns from their own example.
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                    <span className="w-2 h-2 bg-violet-400 rounded-full"></span>
+                    <span>3-4 stories per week</span>
+                  </div>
+                </div>
+                {/* Connector arrow (hidden on mobile) */}
+                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-2xl text-gray-300">→</div>
+              </div>
+
+              {/* Step 2: Weekly Cartoon */}
+              <div className="relative">
+                <div className="glass-card-strong p-6 sm:p-8 h-full border-2 border-amber-200">
+                  <div className="absolute -top-4 left-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Weekly premiere
+                  </div>
+                  <div className="text-5xl sm:text-6xl mb-4 mt-2">🎬</div>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                    Step 2. AI Cartoon
+                  </h3>
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                    End of the week — <span className="font-semibold text-amber-600">premiere time!</span> A personalized cartoon where your child sees their achievements from the outside. This creates powerful motivation to keep going.
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                    <span>1 cartoon every week</span>
+                  </div>
+                </div>
+                {/* Connector arrow (hidden on mobile) */}
+                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-2xl text-gray-300">→</div>
+              </div>
+
+              {/* Step 3: Evening Ritual */}
+              <div className="relative">
+                <div className="glass-card-strong p-6 sm:p-8 h-full">
+                  <div className="absolute -top-4 left-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Every evening
+                  </div>
+                  <div className="text-5xl sm:text-6xl mb-4 mt-2">💙</div>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                    Step 3. Evening Ritual
+                  </h3>
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                    Your <span className="font-semibold text-sky-600">20 minutes of closeness</span>. You&apos;re not just turning on a tablet — you discuss the hero&apos;s adventures. We provide ready-made questions to reinforce success and discover your child&apos;s feelings.
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                    <span className="w-2 h-2 bg-sky-400 rounded-full"></span>
+                    <span>Discussion questions included</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Summary insight */}
+            <div className="mt-10 sm:mt-12">
+              <div className="glass-card p-5 sm:p-6 bg-gradient-to-r from-violet-50 via-amber-50 to-sky-50 border border-gray-200">
+                <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                  <div className="text-4xl">🔄</div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 mb-1">The cycle that builds character</h4>
+                    <p className="text-gray-600 text-sm">
+                      <span className="font-medium">Story → Reflection → Cartoon Reward → Anticipation</span> — this loop creates sustainable habits and deep emotional bonds between you and your child.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== BLOCK: PARENT VALUE (Partnership with Parent) ===== */}
+      <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-indigo-50/30 to-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-10 sm:mb-16">
+              <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
+                <span className="text-xl">🤝</span>
+                <span className="text-sm text-gray-600 font-medium">Partnership</span>
+              </div>
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                We don't replace you. <br className="hidden sm:block" />
+                We become your <span className="gradient-text">co-pilot</span>.
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+              {/* Card 1: Full Transparency (Dashboard) */}
+              <div className="glass-card-strong p-6 sm:p-8 hover:shadow-xl transition-all duration-300">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center mb-5 shadow-lg">
+                  <span className="text-2xl sm:text-3xl">📊</span>
+                </div>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                  Full Transparency
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base mb-5">
+                  In your dashboard you see not just "time in app", but <span className="font-semibold text-gray-900">real skill growth</span>.
+                </p>
+
+                {/* Dashboard Mock */}
+                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-5 shadow-2xl">
+                  {/* Dashboard Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
+                        <span className="text-white text-xs">✨</span>
+                      </div>
+                      <div>
+                        <p className="text-white text-xs font-medium">Emma's Progress</p>
+                        <p className="text-slate-400 text-[10px]">Week 4 of Month 2</p>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-emerald-400 bg-emerald-400/20 px-2 py-0.5 rounded-full">● Live</div>
+                  </div>
+
+                  {/* Circular Progress Charts */}
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
+                    {/* Empathy */}
+                    <div className="text-center">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-1">
+                        <svg className="w-full h-full -rotate-90">
+                          <circle cx="50%" cy="50%" r="45%" fill="none" stroke="#374151" strokeWidth="4" />
+                          <circle
+                            cx="50%" cy="50%" r="45%" fill="none"
+                            stroke="url(#empathyGradient)" strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeDasharray="283"
+                            strokeDashoffset="70"
+                            className="transition-all duration-1000"
+                          />
+                          <defs>
+                            <linearGradient id="empathyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#f472b6" />
+                              <stop offset="100%" stopColor="#ec4899" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-white text-xs sm:text-sm font-bold">75%</span>
+                        </div>
+                      </div>
+                      <p className="text-slate-300 text-[10px] sm:text-xs">Empathy</p>
+                      <p className="text-pink-400 text-[10px] font-semibold">+15%</p>
+                    </div>
+
+                    {/* Confidence */}
+                    <div className="text-center">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-1">
+                        <svg className="w-full h-full -rotate-90">
+                          <circle cx="50%" cy="50%" r="45%" fill="none" stroke="#374151" strokeWidth="4" />
+                          <circle
+                            cx="50%" cy="50%" r="45%" fill="none"
+                            stroke="url(#confidenceGradient)" strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeDasharray="283"
+                            strokeDashoffset="42"
+                            className="transition-all duration-1000"
+                          />
+                          <defs>
+                            <linearGradient id="confidenceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#60a5fa" />
+                              <stop offset="100%" stopColor="#6366f1" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-white text-xs sm:text-sm font-bold">85%</span>
+                        </div>
+                      </div>
+                      <p className="text-slate-300 text-[10px] sm:text-xs">Confidence</p>
+                      <p className="text-indigo-400 text-[10px] font-semibold">+20%</p>
+                    </div>
+
+                    {/* Socialization */}
+                    <div className="text-center">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-1">
+                        <svg className="w-full h-full -rotate-90">
+                          <circle cx="50%" cy="50%" r="45%" fill="none" stroke="#374151" strokeWidth="4" />
+                          <circle
+                            cx="50%" cy="50%" r="45%" fill="none"
+                            stroke="url(#socialGradient)" strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeDasharray="283"
+                            strokeDashoffset="113"
+                            className="transition-all duration-1000"
+                          />
+                          <defs>
+                            <linearGradient id="socialGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#34d399" />
+                              <stop offset="100%" stopColor="#14b8a6" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-white text-xs sm:text-sm font-bold">60%</span>
+                        </div>
+                      </div>
+                      <p className="text-slate-300 text-[10px] sm:text-xs">Social</p>
+                      <p className="text-teal-400 text-[10px] font-semibold">+10%</p>
+                    </div>
+                  </div>
+
+                  {/* Current Focus */}
+                  <div className="bg-slate-700/50 rounded-xl p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+                      <p className="text-slate-300 text-[10px] uppercase tracking-wider">Currently Working On</p>
+                    </div>
+                    <p className="text-white text-xs sm:text-sm font-medium">Taming Anger — "Breathe like a dragon" technique</p>
+                  </div>
+                </div>
+
+                <p className="text-sm text-indigo-600 font-medium mt-4">
+                  You always know exactly what we're working on right now.
+                </p>
+              </div>
+
+              {/* Card 2: Foundation of Friendship */}
+              <div className="glass-card-strong p-6 sm:p-8 hover:shadow-xl transition-all duration-300">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-5 shadow-lg">
+                  <span className="text-2xl sm:text-3xl">💛</span>
+                </div>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                  Foundation of Friendship
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base mb-5">
+                  Using our system as a reason to connect, you're building a <span className="font-semibold text-gray-900">bridge of trust</span>.
+                </p>
+
+                {/* Visual representation */}
+                <div className="glass-card p-5 text-center">
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-3xl shadow-md">
+                      👧
+                    </div>
+                    <div className="text-3xl text-amber-400">💛</div>
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-3xl shadow-md">
+                      👩
+                    </div>
+                  </div>
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                    Your child learns to share experiences with you <span className="font-semibold">now</span>, so at 20 they come home not from obligation, but because <span className="text-amber-600 font-semibold">you're their best friend</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== BLOCK: 12-MONTH PROGRAM JOURNEY ===== */}
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
+            <span className="text-xl">🗺</span>
+            <span className="text-sm text-gray-600 font-medium">Based on SEL, CBT & Positive Discipline</span>
+          </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            A complete <span className="gradient-text">12-month journey</span>
+            Year Program: <span className="gradient-text">4 Steps to a Mature Personality</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            Your child becomes the star of their own cartoon every week.
-            A structured program that builds emotional intelligence, resilience, and leadership.
+            A scientifically-backed curriculum that transforms tantrums into conversations and fears into confidence
           </p>
         </div>
 
-        {/* Visual Journey Path */}
-        <div className="max-w-4xl mx-auto">
-          <div className="relative bg-gradient-to-b from-emerald-100 via-green-50 to-teal-100 rounded-3xl p-6 sm:p-10 overflow-hidden">
-            {/* Decorative background elements */}
-            <div className="absolute top-10 left-10 text-4xl opacity-20">🌳</div>
-            <div className="absolute top-32 right-12 text-3xl opacity-20">🌲</div>
-            <div className="absolute bottom-32 left-16 text-3xl opacity-15">🌿</div>
-            <div className="absolute bottom-20 right-20 text-4xl opacity-20">🌳</div>
-            <div className="absolute top-1/3 left-1/3 text-2xl opacity-15">🦋</div>
-            <div className="absolute top-2/3 right-1/3 text-2xl opacity-15">🐦</div>
+        {/* Program Blocks Accordion */}
+        <div className="max-w-4xl mx-auto space-y-4">
+          {/* Block 1: EQ Foundation */}
+          <div className="glass-card-strong overflow-hidden">
+            <button
+              onClick={() => setOpenProgramBlock(openProgramBlock === 0 ? null : 0)}
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+            >
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
+                🟡
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">Months 1-3</span>
+                </div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">EQ Foundation</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">Me and My Emotions — giving your child a "remote control" for their feelings</p>
+              </div>
+              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 0 ? "rotate-180" : ""}`}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </button>
+            {openProgramBlock === 0 && (
+              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="pt-5 space-y-4">
+                  {/* Goal statement */}
+                  <div className="glass-card p-4 bg-amber-50/50 border border-amber-100">
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">Why this matters:</span> Young children often misbehave not out of spite, but because their brain gets "flooded" with emotions they can't name. A tantrum is a cry for help.
+                    </p>
+                    <p className="text-sm text-gray-700 mt-2">
+                      <span className="font-semibold">Our Goal:</span> Give your child a "Remote Control" for their emotional state. We teach them to translate screaming into words and cope with anxiety without clinging to mom's skirt.
+                    </p>
+                  </div>
+                  {/* Months */}
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-amber-600 mb-2">Month 1</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Meeting Emotions</h4>
+                      <p className="text-xs text-gray-600 mb-2">The Hero learns to recognize Joy, Sadness, Anger, and Fear. They understand: "Feeling emotions is normal, but hitting others is not allowed."</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">SEL (Emotional Awareness)</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-amber-600 mb-2">Month 2</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Taming Anger</h4>
+                      <p className="text-xs text-gray-600 mb-2">Self-control techniques for little ones. The Hero learns to "breathe like a little dragon" and take a pause to avoid throwing a tantrum in the store.</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Self-Regulation</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-amber-600 mb-2">Month 3</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Conquering Fears</h4>
+                      <p className="text-xs text-gray-600 mb-2">Darkness, doctors, monsters. We replace the scary thought "It's dangerous there" with action: "I'll turn on my flashlight and check."</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">CBT (Cognitive Therapy)</span>
+                    </div>
+                  </div>
+                  {/* Results */}
+                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
+                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
+                    <div className="flex flex-wrap gap-2">
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> Your child stops falling on the floor screaming. Instead, they come to you and say: "Mom, I'm really angry right now, let's hug."
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> Night fears and anxiety about new things fade away.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
-            {/* SVG Winding Path */}
-            <svg className="w-full h-auto relative z-10" viewBox="0 0 400 520" fill="none">
-              {/* Main winding path */}
-              <path
-                d="M 60 40 Q 200 40, 340 90 Q 200 140, 60 190 Q 200 240, 340 290 Q 200 340, 60 390 Q 200 440, 340 490"
-                stroke="url(#journeyGradient)"
-                strokeWidth="12"
-                strokeLinecap="round"
-                fill="none"
-              />
-              {/* Dashed center line */}
-              <path
-                d="M 60 40 Q 200 40, 340 90 Q 200 140, 60 190 Q 200 240, 340 290 Q 200 340, 60 390 Q 200 440, 340 490"
-                stroke="rgba(255,255,255,0.7)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                fill="none"
-                strokeDasharray="10 10"
-              />
-              <defs>
-                <linearGradient id="journeyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#34D399" />
-                  <stop offset="33%" stopColor="#3B82F6" />
-                  <stop offset="66%" stopColor="#8B5CF6" />
-                  <stop offset="100%" stopColor="#F59E0B" />
-                </linearGradient>
-              </defs>
-            </svg>
+          {/* Block 2: Social Intelligence */}
+          <div className="glass-card-strong overflow-hidden">
+            <button
+              onClick={() => setOpenProgramBlock(openProgramBlock === 1 ? null : 1)}
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+            >
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
+                🔵
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">Months 4-6</span>
+                </div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Social Intelligence</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">Me and Others — empathy + healthy boundaries without aggression</p>
+              </div>
+              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 1 ? "rotate-180" : ""}`}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </button>
+            {openProgramBlock === 1 && (
+              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="pt-5 space-y-4">
+                  <div className="glass-card p-4 bg-blue-50/50 border border-blue-100">
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">The Challenge:</span> How do you teach a child to stand up for themselves without raising an aggressor? How do you teach them to share without becoming a pushover for everyone?
+                    </p>
+                    <p className="text-sm text-gray-700 mt-2">
+                      <span className="font-semibold">Our Goal:</span> Develop empathy (kindness) while simultaneously building healthy personal boundaries. Your child learns to make friends in a healthy, balanced way.
+                    </p>
+                  </div>
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-blue-600 mb-2">Month 4</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Personal Boundaries</h4>
+                      <p className="text-xs text-gray-600 mb-2">The ability to say a firm "No" to strangers and peers. Understanding: "My body and my toys — my rules."</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Safety & Boundaries</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-blue-600 mb-2">Month 5</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Empathy & Kindness</h4>
+                      <p className="text-xs text-gray-600 mb-2">Prevention of childhood cruelty. The Hero learns to feel another's pain, show compassion, and care for those who are weaker.</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Social Awareness</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-blue-600 mb-2">Month 6</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Conflict Resolution</h4>
+                      <p className="text-xs text-gray-600 mb-2">The art of sandbox diplomacy. How do you share a shovel without fighting? How do you apologize when you're wrong?</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Conflict Resolution</span>
+                    </div>
+                  </div>
+                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
+                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
+                    <div className="flex flex-wrap gap-2">
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> Your child is safe. They won't go off with a stranger and won't let themselves be bullied.
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> They become the life of the party. Other kids are drawn to them because they know how to negotiate and empathize.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
-            {/* Milestone points overlaid on path */}
-            <div className="absolute top-[6%] left-[10%] sm:left-[12%] flex flex-col items-center z-20">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
-                🌱
+          {/* Block 3: Discipline & Will */}
+          <div className="glass-card-strong overflow-hidden">
+            <button
+              onClick={() => setOpenProgramBlock(openProgramBlock === 2 ? null : 2)}
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+            >
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
+                🟢
               </div>
-              <div className="mt-2 text-center">
-                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 1-3</p>
-                <p className="text-xs text-gray-600">Self-Discovery</p>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-0.5 rounded-full">Months 7-9</span>
+                </div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Discipline & Will</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">Me and My Actions — turning routines into games, building independence</p>
               </div>
-            </div>
+              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 2 ? "rotate-180" : ""}`}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </button>
+            {openProgramBlock === 2 && (
+              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="pt-5 space-y-4">
+                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">The Eternal Battle:</span> "Brush your teeth!", "Clean up your toys!", "Get dressed!" — this is exhausting and damages your relationship.
+                    </p>
+                    <p className="text-sm text-gray-700 mt-2">
+                      <span className="font-semibold">Our Goal:</span> Activate internal motivation. We use the Positive Discipline methodology, where routine becomes a game and independence becomes a source of pride.
+                    </p>
+                  </div>
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-green-600 mb-2">Month 7</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Routine Without Tears</h4>
+                      <p className="text-xs text-gray-600 mb-2">We transform boring tasks (sleep, hygiene, cleaning) into Hero missions. The toothbrush is a sword that kills germs!</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Positive Discipline</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-green-600 mb-2">Month 8</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">"I Can Do It Myself!"</h4>
+                      <p className="text-xs text-gray-600 mb-2">The Hero learns to dress themselves, tie shoelaces, and help around the house. Making mistakes isn't scary — not trying is what's scary.</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Independence Building</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-green-600 mb-2">Month 9</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Patience & Persistence</h4>
+                      <p className="text-xs text-gray-600 mb-2">The hardest skill: the ability to wait for a reward (marshmallow test), sit in line, and finish what you started.</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Executive Functions</span>
+                    </div>
+                  </div>
+                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
+                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
+                    <div className="flex flex-wrap gap-2">
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> You stop being a "parrot" who repeats the same thing 100 times.
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> Your child initiates cleaning themselves and feels proud of being "like a grown-up." Focus develops for school readiness.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
-            <div className="absolute top-[18%] right-[8%] sm:right-[12%] flex flex-col items-center z-20">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
-                👨‍👩‍👧
+          {/* Block 4: Leadership & Character */}
+          <div className="glass-card-strong overflow-hidden">
+            <button
+              onClick={() => setOpenProgramBlock(openProgramBlock === 3 ? null : 3)}
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+            >
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
+                🟣
               </div>
-              <div className="mt-2 text-center">
-                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 4-6</p>
-                <p className="text-xs text-gray-600">Family & Friends</p>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full">Months 10-12</span>
+                </div>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Leadership & Character</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">Me as a Person — Growth Mindset and confidence for the big world</p>
               </div>
-            </div>
-
-            <div className="absolute top-[38%] left-[10%] sm:left-[12%] flex flex-col items-center z-20">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
-                💪
+              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 3 ? "rotate-180" : ""}`}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </button>
+            {openProgramBlock === 3 && (
+              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="pt-5 space-y-4">
+                  <div className="glass-card p-4 bg-purple-50/50 border border-purple-100">
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">Preparation for the Big World:</span> School and life require not just knowledge, but inner strength.
+                    </p>
+                    <p className="text-sm text-gray-700 mt-2">
+                      <span className="font-semibold">Our Goal:</span> Form a Growth Mindset. Your child should know: "I can learn anything if I put in the effort." This is a vaccine against the failure complex.
+                    </p>
+                  </div>
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-purple-600 mb-2">Month 10</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Growth Mindset</h4>
+                      <p className="text-xs text-gray-600 mb-2">The Hero falls but gets back up. We teach them to see failure not as "I'm stupid" but as experience: "I'll try again differently."</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Growth Mindset (Carol Dweck)</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-purple-600 mb-2">Month 11</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Honesty & Responsibility</h4>
+                      <p className="text-xs text-gray-600 mb-2">Why lying doesn't pay off. The courage to admit a mistake is a trait of a strong leader, not a weak one.</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Moral Development</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
+                      <div className="text-xs font-medium text-purple-600 mb-2">Month 12</div>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">Confidence & Gratitude</h4>
+                      <p className="text-xs text-gray-600 mb-2">The final assembly of personality. Discovering talents, developing a positive worldview, and setting goals for the future.</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Positive Psychology</span>
+                    </div>
+                  </div>
+                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
+                    <p className="text-xs font-semibold text-green-800 mb-2">✨ Block Results:</p>
+                    <div className="flex flex-wrap gap-2">
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> A Leader's core is formed. Your child isn't afraid to make mistakes, is honest with you, and confident in their abilities.
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-green-700 bg-white/70 px-3 py-1.5 rounded-full">
+                        <span>✅</span> School readiness achieved. They know how to listen, try hard, and believe in themselves.
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="mt-2 text-center">
-                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 7-9</p>
-                <p className="text-xs text-gray-600">Resilience</p>
-              </div>
-            </div>
-
-            <div className="absolute top-[56%] right-[8%] sm:right-[12%] flex flex-col items-center z-20">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl sm:text-3xl shadow-xl border-4 border-white">
-                🎯
-              </div>
-              <div className="mt-2 text-center">
-                <p className="text-xs sm:text-sm font-bold text-gray-800">Months 10-11</p>
-                <p className="text-xs text-gray-600">Goals & Growth</p>
-              </div>
-            </div>
-
-            <div className="absolute top-[76%] left-[10%] sm:left-[12%] flex flex-col items-center z-20">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-3xl sm:text-4xl shadow-2xl border-4 border-white animate-pulse">
-                👑
-              </div>
-              <div className="mt-2 text-center">
-                <p className="text-xs sm:text-sm font-bold text-gray-800">Month 12</p>
-                <p className="text-xs text-gray-600">Leadership</p>
-              </div>
-            </div>
-
-            {/* Final result badge */}
-            <div className="absolute bottom-[2%] right-[5%] sm:right-[10%] z-20">
-              <div className="bg-gradient-to-r from-violet-600 to-purple-600 text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg flex items-center gap-2">
-                <span>🏆</span>
-                <span>Year Complete!</span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
-        {/* Key Features */}
-        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto mt-8 sm:mt-12">
-          <div className="glass-card-strong p-5 sm:p-6 text-center">
-            <div className="text-3xl sm:text-4xl mb-3">📅</div>
-            <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">12-Month Program</h4>
-            <p className="text-xs sm:text-sm text-gray-600">180+ developmental topics structured for steady growth</p>
-          </div>
-          <div className="glass-card-strong p-5 sm:p-6 text-center">
-            <div className="text-3xl sm:text-4xl mb-3">🎬</div>
-            <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Weekly Cartoons</h4>
-            <p className="text-xs sm:text-sm text-gray-600">Your child stars in personalized animated stories</p>
-          </div>
-          <div className="glass-card-strong p-5 sm:p-6 text-center">
-            <div className="text-3xl sm:text-4xl mb-3">🧠</div>
-            <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Active Engagement</h4>
-            <p className="text-xs sm:text-sm text-gray-600">Children learn values by seeing themselves as heroes</p>
+        {/* Year Summary */}
+        <div className="max-w-4xl mx-auto mt-8 sm:mt-12">
+          <div className="glass-card-strong p-6 sm:p-8 text-center bg-gradient-to-r from-amber-50 via-purple-50 to-blue-50">
+            <div className="text-4xl mb-4">🏆</div>
+            <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+              In 12 months, you won't recognize your child
+            </h3>
+            <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
+              You'll see a small but <span className="font-semibold">conscious Personality</span> — someone interesting to talk to, easy to negotiate with, and not scary to let go into the big world.
+            </p>
           </div>
         </div>
       </section>
@@ -790,6 +1346,99 @@ export default function Home() {
                 </svg>
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== BLOCK: CURRICULUM (Topics of the Year) ===== */}
+      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div className="text-center mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
+            <span className="text-xl">📚</span>
+            <span className="text-sm text-gray-600 font-medium">Curriculum</span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            What will your child <span className="gradient-text">learn in a year</span>?
+          </h2>
+          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+            A comprehensive program that covers all aspects of emotional and social development
+          </p>
+        </div>
+
+        {/* 5 Topics Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 max-w-6xl mx-auto">
+          {/* Topic 1: Emotional Intelligence */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-rose-400 to-pink-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🎭</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Emotional Intelligence
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Recognize and manage their emotions effectively
+            </p>
+          </div>
+
+          {/* Topic 2: Personal Boundaries */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🛡️</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Personal Boundaries
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Say "No" and stand up for their opinion
+            </p>
+          </div>
+
+          {/* Topic 3: Socialization */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">👫</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Socialization
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Make friends and resolve conflicts peacefully
+            </p>
+          </div>
+
+          {/* Topic 4: Goal Setting */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🎯</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Goal Setting
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Dream big and follow through without giving up
+            </p>
+          </div>
+
+          {/* Topic 5: Overcoming Fears */}
+          <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-4xl">🦁</span>
+            </div>
+            <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
+              Overcoming Fears
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm">
+              Turn darkness, mistakes, new places into sources of strength
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom insight */}
+        <div className="mt-10 sm:mt-12 max-w-3xl mx-auto">
+          <div className="glass-card p-5 sm:p-6 text-center bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
+            <p className="text-gray-700 text-sm sm:text-base">
+              <span className="font-bold text-gray-900">Each topic</span> is woven into engaging stories where your child is the hero. They don't just hear about these skills — they <span className="gradient-text font-bold">live them</span>.
+            </p>
           </div>
         </div>
       </section>
