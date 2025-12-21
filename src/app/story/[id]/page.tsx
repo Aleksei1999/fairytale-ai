@@ -418,8 +418,8 @@ export default function StoryPage() {
                 </p>
               </div>
 
-              {/* AI Audio Player (for ai-voice mode) */}
-              {storyMode === "ai-voice" && aiAudioBase64 && (
+              {/* Audio Player - AI Voice or Background Music */}
+              {storyMode === "ai-voice" && aiAudioBase64 ? (
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xl">🎙️</span>
@@ -459,32 +459,8 @@ export default function StoryPage() {
                     </div>
                   </div>
                 </div>
-              )}
-
-              {/* Story Content */}
-              <div className="prose prose-lg max-w-none mb-6">
-                {personalizedText ? (
-                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
-                    {personalizedText}
-                  </div>
-                ) : story.full_text ? (
-                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
-                    {story.full_text}
-                  </div>
-                ) : (
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
-                    <p className="text-amber-800 font-medium mb-3">Story Preview:</p>
-                    <p className="text-gray-700 italic">{story.plot}</p>
-                    <p className="text-amber-600 text-sm mt-4">
-                      Full story text will be available soon!
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Background Music Player (for read mode) */}
-              {storyMode === "read" && (
-                <div className="glass-card p-4 mb-8 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
+              ) : (
+                <div className="glass-card p-4 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xl">🎵</span>
                     <span className="text-sm font-medium text-green-800">Background Music</span>
@@ -528,6 +504,27 @@ export default function StoryPage() {
                   </p>
                 </div>
               )}
+
+              {/* Story Content */}
+              <div className="prose prose-lg max-w-none mb-6">
+                {personalizedText ? (
+                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
+                    {personalizedText}
+                  </div>
+                ) : story.full_text ? (
+                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
+                    {story.full_text}
+                  </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+                    <p className="text-amber-800 font-medium mb-3">Story Preview:</p>
+                    <p className="text-gray-700 italic">{story.plot}</p>
+                    <p className="text-amber-600 text-sm mt-4">
+                      Full story text will be available soon!
+                    </p>
+                  </div>
+                )}
+              </div>
 
               {/* Therapeutic Info (collapsible) */}
               <details className="mb-8">
