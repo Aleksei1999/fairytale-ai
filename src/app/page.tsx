@@ -386,7 +386,7 @@ export default function Home() {
             Sound <span className="gradient-text">familiar</span>?
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            We all promise ourselves to be perfect parents. But in the hustle of days, parenting turns into chaos:
+            You genuinely want to give your child the best. But in the endless stream of tasks and exhaustion, parenting often takes a back seat, giving way to chaos:
           </p>
         </div>
 
@@ -577,87 +577,6 @@ export default function Home() {
                   Based on <span className="font-semibold">CBT methods</span> that shape character
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== BLOCK: HOW IT WORKS ===== */}
-      <section id="how" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
-        <div className="text-center mb-8 sm:mb-16">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Create a story in <span className="gradient-text">1 minute</span>
-          </h2>
-          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            AI does all the work for you. It's like magic — press a button, get results.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-4 sm:gap-8 max-w-5xl mx-auto">
-          {/* Step 1 */}
-          <div className="glass-card-strong p-5 sm:p-8 relative group hover:scale-105 transition-transform duration-300">
-            <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
-              1
-            </div>
-            <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">👶</div>
-            <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              Tell us about your child
-            </h3>
-            <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
-              Enter name, age, and interests. The story will be all about them.
-            </p>
-            <div className="glass-card px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-500 italic hidden sm:block">
-              "Emma, 5 years old. Loves dinosaurs and Lego"
-            </div>
-          </div>
-
-          {/* Step 2 */}
-          <div className="glass-card-strong p-5 sm:p-8 relative group hover:scale-105 transition-transform duration-300">
-            <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
-              2
-            </div>
-            <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">🎯</div>
-            <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              Choose a topic
-            </h3>
-            <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
-              What needs work? Pick a ready topic or describe your own.
-            </p>
-            <div className="flex flex-wrap gap-1 sm:gap-2 hidden sm:flex">
-              <span className="glass-card px-2 sm:px-3 py-1 text-xs text-gray-600">Won't eat veggies</span>
-              <span className="glass-card px-2 sm:px-3 py-1 text-xs text-gray-600">Afraid of doctor</span>
-            </div>
-          </div>
-
-          {/* Step 3 */}
-          <div className="glass-card-strong p-5 sm:p-8 relative group hover:scale-105 transition-transform duration-300">
-            <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
-              3
-            </div>
-            <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">✨</div>
-            <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              Story ready!
-            </h3>
-            <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
-              AI instantly creates the plot, draws illustrations, and narrates the story.
-            </p>
-            <div className="glass-card px-3 sm:px-4 py-2 text-xs sm:text-sm text-blue-600 font-medium">
-              🎙 In mom's, dad's, or narrator's voice
-            </div>
-          </div>
-        </div>
-
-        {/* Expert insight */}
-        <div className="mt-8 sm:mt-12 max-w-3xl mx-auto">
-          <div className="glass-card p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
-            <div className="text-2xl sm:text-3xl">💡</div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">Why does it work?</h4>
-              <p className="text-gray-600 text-xs sm:text-sm">
-                The story uses the <span className="font-semibold">"Therapeutic Metaphor"</span> method.
-                We show a hero who made mistakes but corrected them and became a hero.
-                Children subconsciously mirror this behavior.
-              </p>
             </div>
           </div>
         </div>
