@@ -504,7 +504,7 @@ export default function StoryPage() {
                 To access stories and the full program, you need an active subscription.
               </p>
               <Link
-                href="/pricing"
+                href="/#pricing"
                 className="block w-full btn-glow py-3 text-center font-semibold text-white mb-3"
               >
                 View Subscription Plans
