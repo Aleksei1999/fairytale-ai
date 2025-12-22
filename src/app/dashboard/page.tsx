@@ -1,10 +1,45 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { DevelopmentMap } from "@/components/DevelopmentMap";
 import Link from "next/link";
+
+// Animated counter component
+function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?: number }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const previousValue = useRef(0);
+
+  useEffect(() => {
+    if (value === null || value === undefined) return;
+
+    const startValue = previousValue.current;
+    const endValue = value;
+    const startTime = Date.now();
+
+    const animate = () => {
+      const now = Date.now();
+      const progress = Math.min((now - startTime) / duration, 1);
+
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.round(startValue + (endValue - startValue) * easeOutQuart);
+
+      setDisplayValue(currentValue);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        previousValue.current = endValue;
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [value, duration]);
+
+  return <>{displayValue}</>;
+}
 
 export default function Dashboard() {
   const router = useRouter();
@@ -123,24 +158,41 @@ export default function Dashboard() {
                   Manage your stories and account here.
                 </p>
               </div>
-              {/* Credits Badges */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 border border-amber-200">
-                  <span className="text-2xl">📖</span>
-                  <div>
-                    <p className="text-xs text-amber-700 font-medium">Story Credits</p>
-                    <p className="text-2xl font-bold text-amber-900">
-                      {loadingCredits ? "..." : credits ?? 0}
-                    </p>
+              {/* Credits Display */}
+              <div className="flex flex-col items-end gap-2">
+                {/* Total Credits - Main Display */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                  <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-purple-50 border border-white/50 shadow-lg">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-purple-500 shadow-lg">
+                      <span className="text-2xl">⭐</span>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Credits</p>
+                      <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-purple-600 bg-clip-text text-transparent">
+                        {loadingCredits ? (
+                          <span className="inline-block w-12 h-8 bg-gray-200 rounded animate-pulse"></span>
+                        ) : (
+                          <AnimatedCounter value={(credits ?? 0) + (cartoonCredits ?? 0)} duration={1200} />
+                        )}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 border border-purple-200">
-                  <span className="text-2xl">🎬</span>
-                  <div>
-                    <p className="text-xs text-purple-700 font-medium">Cartoon Credits</p>
-                    <p className="text-2xl font-bold text-purple-900">
-                      {loadingCredits ? "..." : cartoonCredits ?? 0}
-                    </p>
+
+                {/* Individual Credits - Smaller */}
+                <div className="flex gap-2">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-100/80 border border-amber-200/50">
+                    <span className="text-sm">📖</span>
+                    <span className="text-sm font-semibold text-amber-800">
+                      {loadingCredits ? "..." : <AnimatedCounter value={credits ?? 0} duration={800} />}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-purple-100/80 border border-purple-200/50">
+                    <span className="text-sm">🎬</span>
+                    <span className="text-sm font-semibold text-purple-800">
+                      {loadingCredits ? "..." : <AnimatedCounter value={cartoonCredits ?? 0} duration={800} />}
+                    </span>
                   </div>
                 </div>
               </div>
