@@ -43,6 +43,7 @@ function CreatePageContent() {
   const [userStars, setUserStars] = useState<number>(0);
   const [loadingStars, setLoadingStars] = useState(true);
   const [notEnoughStars, setNotEnoughStars] = useState(false);
+  const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
 
   const storyId = searchParams.get("storyId");
 
@@ -54,6 +55,29 @@ function CreatePageContent() {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // Check subscription status
+  useEffect(() => {
+    async function checkSubscription() {
+      if (!user?.email) return;
+
+      const supabase = createClient();
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("subscription_until")
+        .eq("email", user.email)
+        .single();
+
+      if (profile?.subscription_until) {
+        const subEnd = new Date(profile.subscription_until);
+        setHasSubscription(subEnd > new Date());
+      } else {
+        setHasSubscription(false);
+      }
+    }
+
+    checkSubscription();
+  }, [user?.email]);
 
   // Load user's star balance
   useEffect(() => {
@@ -222,6 +246,35 @@ function CreatePageContent() {
           <Link href="/dashboard" className="text-blue-600 hover:underline">
             Go to Dashboard
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // No subscription - show paywall
+  if (hasSubscription === false) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+        <div className="glass-card p-8 max-w-md text-center">
+          <div className="text-5xl mb-4">🔒</div>
+          <h2 className="font-display text-2xl font-bold text-gray-900 mb-3">
+            Subscription Required
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Access to the 12-month program requires an active subscription.
+            Subscribe to unlock unlimited stories and track your child&apos;s development.
+          </p>
+          <Link
+            href="/#pricing"
+            className="inline-block btn-glow px-8 py-3 text-white font-semibold rounded-full"
+          >
+            View Plans
+          </Link>
+          <div className="mt-4">
+            <Link href="/dashboard" className="text-gray-500 hover:text-gray-700 text-sm">
+              ← Back to Dashboard
+            </Link>
+          </div>
         </div>
       </div>
     );
