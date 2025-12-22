@@ -6,22 +6,21 @@ interface StarsPaymentRequest {
 }
 
 // Star packages configuration
-// TODO: Add Lava.top offer IDs when products are created
 const STAR_PACKAGES = {
   starter: {
     stars: 10,
     price: 14.90,
-    offerId: "", // TODO: Add Lava.top offer ID
+    offerId: "8b3c646b-47cf-4e0b-bd91-982fe2072529",
   },
   popular: {
     stars: 30,
     price: 39.90,
-    offerId: "", // TODO: Add Lava.top offer ID
+    offerId: "2cc27702-4f40-49e0-817f-59efb19eac22",
   },
   bigpack: {
     stars: 50,
     price: 59.90,
-    offerId: "", // TODO: Add Lava.top offer ID
+    offerId: "be6daac9-f5fb-4bd6-829b-ae1ba3eac3b2",
   },
 };
 
@@ -45,14 +44,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if offer ID is configured
-    if (!pkg.offerId) {
-      console.error(`Lava.top offer ID not configured for package: ${packageId}`);
-      return NextResponse.json(
-        { success: false, error: "Star packages coming soon! Please check back later." },
-        { status: 503 }
-      );
-    }
 
     const apiKey = process.env.LAVA_TOP_API_KEY;
     if (!apiKey) {
