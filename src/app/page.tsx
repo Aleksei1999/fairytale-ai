@@ -893,14 +893,15 @@ export default function Home() {
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">EQ Foundation</h3>
                 <p className="text-sm text-gray-600 hidden sm:block">Me and My Emotions — giving your child a "remote control" for their feelings</p>
               </div>
-              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 0 ? "rotate-180" : ""}`}>
+              <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 0 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
             </button>
-            {openProgramBlock === 0 && (
-              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+            <div className={`accordion-content ${openProgramBlock === 0 ? "open" : ""}`}>
+              <div className="accordion-inner">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
                 <div className="pt-5 space-y-4">
                   {/* Goal statement */}
                   <div className="glass-card p-4 bg-amber-50/50 border border-amber-100">
@@ -948,7 +949,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            )}
+              </div>
+            </div>
           </div>
 
           {/* Block 2: Social Intelligence */}
@@ -967,16 +969,17 @@ export default function Home() {
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Social Intelligence</h3>
                 <p className="text-sm text-gray-600 hidden sm:block">Me and Others — empathy + healthy boundaries without aggression</p>
               </div>
-              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 1 ? "rotate-180" : ""}`}>
+              <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 1 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
             </button>
-            {openProgramBlock === 1 && (
-              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
-                <div className="pt-5 space-y-4">
-                  <div className="glass-card p-4 bg-blue-50/50 border border-blue-100">
+            <div className={`accordion-content ${openProgramBlock === 1 ? "open" : ""}`}>
+              <div className="accordion-inner">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                  <div className="pt-5 space-y-4">
+                    <div className="glass-card p-4 bg-blue-50/50 border border-blue-100">
                     <p className="text-sm text-gray-700">
                       <span className="font-semibold">The Challenge:</span> How do you teach a child to stand up for themselves without raising an aggressor? How do you teach them to share without becoming a pushover for everyone?
                     </p>
@@ -1017,9 +1020,10 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
           {/* Block 3: Discipline & Will */}
@@ -1038,18 +1042,19 @@ export default function Home() {
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Discipline & Will</h3>
                 <p className="text-sm text-gray-600 hidden sm:block">Me and My Actions — turning routines into games, building independence</p>
               </div>
-              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 2 ? "rotate-180" : ""}`}>
+              <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 2 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
             </button>
-            {openProgramBlock === 2 && (
-              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
-                <div className="pt-5 space-y-4">
-                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-sm text-gray-700">
-                      <span className="font-semibold">The Eternal Battle:</span> "Brush your teeth!", "Clean up your toys!", "Get dressed!" — this is exhausting and damages your relationship.
+            <div className={`accordion-content ${openProgramBlock === 2 ? "open" : ""}`}>
+              <div className="accordion-inner">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                  <div className="pt-5 space-y-4">
+                    <div className="glass-card p-4 bg-green-50/50 border border-green-100">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-semibold">The Eternal Battle:</span> "Brush your teeth!", "Clean up your toys!", "Get dressed!" — this is exhausting and damages your relationship.
                     </p>
                     <p className="text-sm text-gray-700 mt-2">
                       <span className="font-semibold">Our Goal:</span> Activate internal motivation. We use the Positive Discipline methodology, where routine becomes a game and independence becomes a source of pride.
@@ -1088,9 +1093,10 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
           {/* Block 4: Leadership & Character */}
@@ -1109,18 +1115,19 @@ export default function Home() {
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Leadership & Character</h3>
                 <p className="text-sm text-gray-600 hidden sm:block">Me as a Person — Growth Mindset and confidence for the big world</p>
               </div>
-              <span className={`text-gray-400 transition-transform flex-shrink-0 ${openProgramBlock === 3 ? "rotate-180" : ""}`}>
+              <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 3 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
             </button>
-            {openProgramBlock === 3 && (
-              <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
-                <div className="pt-5 space-y-4">
-                  <div className="glass-card p-4 bg-purple-50/50 border border-purple-100">
-                    <p className="text-sm text-gray-700">
-                      <span className="font-semibold">Preparation for the Big World:</span> School and life require not just knowledge, but inner strength.
+            <div className={`accordion-content ${openProgramBlock === 3 ? "open" : ""}`}>
+              <div className="accordion-inner">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                  <div className="pt-5 space-y-4">
+                    <div className="glass-card p-4 bg-purple-50/50 border border-purple-100">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-semibold">Preparation for the Big World:</span> School and life require not just knowledge, but inner strength.
                     </p>
                     <p className="text-sm text-gray-700 mt-2">
                       <span className="font-semibold">Our Goal:</span> Form a Growth Mindset. Your child should know: "I can learn anything if I put in the effort." This is a vaccine against the failure complex.
@@ -1159,9 +1166,10 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
 
@@ -1597,7 +1605,7 @@ export default function Home() {
               <div className="text-3xl mb-2">✨</div>
               <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MAGIC WEEK</h3>
               <p className="text-xs text-gray-500 mb-3">Test Drive</p>
-              <div className="text-3xl sm:text-4xl font-bold text-gray-900">$4.50</div>
+              <div className="text-3xl sm:text-4xl font-bold text-gray-900">$5</div>
               <p className="text-gray-500 text-xs mt-1">Try and see your child&apos;s reaction</p>
             </div>
 
@@ -1636,7 +1644,7 @@ export default function Home() {
               onClick={() => openPaymentModal("week")}
               className="block w-full btn-secondary py-3 text-center font-semibold text-gray-700 text-sm"
             >
-              Try for $4.50
+              Try for $5
             </button>
           </div>
 
@@ -1812,15 +1820,19 @@ export default function Home() {
                 className="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-left gap-3"
               >
                 <span className="font-semibold text-gray-900 text-sm sm:text-base">{item.q}</span>
-                <span className={`text-blue-500 transition-transform flex-shrink-0 ${openFaq === i ? "rotate-180" : ""}`}>
-                  ▼
+                <span className={`text-blue-500 accordion-arrow flex-shrink-0 ${openFaq === i ? "open" : ""}`}>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </span>
               </button>
-              {openFaq === i && (
-                <div className="px-4 sm:px-6 pb-3 sm:pb-4 text-gray-600 text-sm sm:text-base whitespace-pre-line">
-                  {item.a}
+              <div className={`accordion-content ${openFaq === i ? "open" : ""}`}>
+                <div className="accordion-inner">
+                  <div className="px-4 sm:px-6 pb-3 sm:pb-4 text-gray-600 text-sm sm:text-base whitespace-pre-line">
+                    {item.a}
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>
@@ -1937,7 +1949,7 @@ export default function Home() {
               <div className={`text-2xl sm:text-3xl font-bold ${
                 selectedPlan === "yearly" ? "text-amber-600" : "gradient-text"
               }`}>
-                {selectedPlan === "week" ? "$4.50" : selectedPlan === "yearly" ? "$189" : "$29"}
+                {selectedPlan === "week" ? "$5" : selectedPlan === "yearly" ? "$189" : "$29"}
                 <span className="text-base sm:text-lg text-gray-500 font-normal">
                   {selectedPlan === "week" ? "" : selectedPlan === "yearly" ? "/year" : "/mo"}
                 </span>
@@ -2113,7 +2125,7 @@ export default function Home() {
                 </span>
               ) : (
                 selectedPlan === "week"
-                  ? "Try for $4.50"
+                  ? "Try for $5"
                   : selectedPlan === "yearly"
                     ? "Become a Legend — $189"
                     : "Subscribe — $29/mo"

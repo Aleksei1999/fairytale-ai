@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   description:
     "Create personalized audio fairy tales for your child, narrated in your own cloned voice. Make magical stories in minutes.",
   keywords: ["fairy tales", "stories", "kids", "parents", "AI", "voice cloning", "bedtime stories"],
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
