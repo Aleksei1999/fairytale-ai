@@ -8,7 +8,6 @@ import { AuthModal } from "@/components/AuthModal";
 export default function Home() {
   const router = useRouter();
   const { user, loading: authLoading, signOut } = useAuth();
-  const [childName, setChildName] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openProgramBlock, setOpenProgramBlock] = useState<number | null>(0);
   const [selectedVoice, setSelectedVoice] = useState<"mom" | "narrator">("mom");
@@ -141,14 +140,6 @@ export default function Home() {
     } finally {
       setPaymentLoading(false);
     }
-  };
-
-  const handleCreateStory = () => {
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
-    router.push("/create");
   };
 
   const handlePayment = async () => {
