@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Nunito, Comfortaa } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
+import { PageLoader } from "@/components/PageLoader";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -30,6 +32,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -52,6 +61,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${nunito.variable} ${comfortaa.variable} font-sans antialiased`}>
+        <Suspense fallback={null}>
+          <PageLoader />
+        </Suspense>
         <AuthProvider>
           {children}
         </AuthProvider>
