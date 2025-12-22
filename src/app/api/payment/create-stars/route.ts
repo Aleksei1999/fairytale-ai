@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 interface StarsPaymentRequest {
-  email: string;
   packageId: "starter" | "popular" | "bigpack";
 }
 
@@ -26,12 +26,23 @@ const STAR_PACKAGES = {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: StarsPaymentRequest = await request.json();
-    const { email, packageId } = body;
+    // Verify user session first
+    const supabaseAuth = await createClient();
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
 
-    if (!email || !packageId) {
+    if (authError || !user || !user.email) {
       return NextResponse.json(
-        { success: false, error: "Email and packageId are required" },
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
+    const body: StarsPaymentRequest = await request.json();
+    const { packageId } = body;
+
+    if (!packageId) {
+      return NextResponse.json(
+        { success: false, error: "packageId is required" },
         { status: 400 }
       );
     }
@@ -54,7 +65,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create invoice via Lava Top API v3
+    // Create invoice via Lava Top API v3 using authenticated user's email
     // Stars are one-time purchases, no periodicity needed
     const response = await fetch("https://gate.lava.top/api/v3/invoice", {
       method: "POST",
@@ -63,7 +74,7 @@ export async function POST(request: NextRequest) {
         "X-Api-Key": apiKey,
       },
       body: JSON.stringify({
-        email,
+        email: user.email,
         offerId: pkg.offerId,
         currency: "USD",
         buyerLanguage: "EN",

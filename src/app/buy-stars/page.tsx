@@ -56,7 +56,7 @@ export default function BuyStars() {
     async function fetchStars() {
       if (!user?.email) return;
       try {
-        const response = await fetch(`/api/user/credits?email=${encodeURIComponent(user.email)}`);
+        const response = await fetch("/api/user/credits");
         const data = await response.json();
         if (data.success) {
           setUserStars(data.credits || 0);
@@ -81,7 +81,6 @@ export default function BuyStars() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: user.email,
           packageId,
         }),
       });

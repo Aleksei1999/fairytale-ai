@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 interface StoryRequest {
   childName: string;
@@ -11,7 +12,6 @@ interface StoryRequest {
   customTopic?: string;
   character: string;
   duration: "short" | "medium" | "long";
-  userEmail: string;
 }
 
 const TOPIC_DESCRIPTIONS: Record<string, string> = {
@@ -47,6 +47,17 @@ const DURATION_WORDS: Record<string, number> = {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify user session first
+    const supabaseAuth = await createClient();
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -62,24 +73,15 @@ export async function POST(request: NextRequest) {
       customTopic,
       character,
       duration,
-      userEmail,
     } = body;
-
-    // Check user credits
-    if (!userEmail) {
-      return NextResponse.json(
-        { success: false, error: "Authentication required" },
-        { status: 401 }
-      );
-    }
 
     const supabase = createAdminClient();
 
-    // Get user's profile and check subscription
+    // Get user's profile and check subscription using authenticated user's email
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("id, credits, subscription_until")
-      .eq("email", userEmail)
+      .eq("email", user.email)
       .single();
 
     if (profileError || !profile) {

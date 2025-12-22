@@ -29,7 +29,7 @@ export default function Dashboard() {
       if (!user?.email) return;
 
       try {
-        const response = await fetch(`/api/user/credits?email=${encodeURIComponent(user.email)}`);
+        const response = await fetch("/api/user/credits");
         const data = await response.json();
         if (data.success) {
           setCredits(data.credits);

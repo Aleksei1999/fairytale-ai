@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
 const STAR_COST_AUDIO = 1; // Cost in stars for AI voice generation
@@ -148,8 +149,19 @@ const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify user session first
+    const supabaseAuth = await createClient();
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
-    const { text, voiceId, userEmail } = body;
+    const { text, voiceId } = body;
 
     if (!text) {
       return NextResponse.json(
@@ -158,19 +170,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!userEmail) {
-      return NextResponse.json(
-        { success: false, error: "User email is required" },
-        { status: 400 }
-      );
-    }
-
-    // Check user's star balance
+    // Check user's star balance using authenticated user's email
     const supabase = createAdminClient();
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("credits")
-      .eq("email", userEmail)
+      .eq("email", user.email)
       .single();
 
     if (profileError || !profile) {
@@ -240,7 +245,7 @@ export async function POST(request: NextRequest) {
     const { error: updateError } = await supabase
       .from("profiles")
       .update({ credits: currentStars - STAR_COST_AUDIO })
-      .eq("email", userEmail);
+      .eq("email", user.email);
 
     if (updateError) {
       console.error("Error deducting stars:", updateError);

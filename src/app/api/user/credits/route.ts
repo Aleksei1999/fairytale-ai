@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const email = searchParams.get("email");
+    // Verify user session first
+    const supabaseAuth = await createClient();
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
 
-    if (!email) {
+    if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: "Email required" },
-        { status: 400 }
+        { success: false, error: "Authentication required" },
+        { status: 401 }
       );
     }
 
@@ -18,7 +20,7 @@ export async function GET(request: NextRequest) {
     const { data: profile, error } = await supabase
       .from("profiles")
       .select("credits, cartoon_credits")
-      .eq("email", email)
+      .eq("email", user.email)
       .single();
 
     if (error || !profile) {

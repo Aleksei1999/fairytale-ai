@@ -86,7 +86,7 @@ export default function Home() {
     }
     // Authorized - go directly to payment (skip modal)
     if (user.email) {
-      handlePaymentDirect(plan, user.email);
+      handlePaymentDirect(plan);
     } else {
       // Fallback if no email - show modal
       setSelectedPlan(plan);
@@ -111,11 +111,11 @@ export default function Home() {
     const savedPlan = localStorage.getItem("pendingPaymentPlan") as "week" | "monthly" | "yearly" | null;
     if (savedPlan && user?.email) {
       localStorage.removeItem("pendingPaymentPlan");
-      handlePaymentDirect(savedPlan, user.email);
+      handlePaymentDirect(savedPlan);
     }
   }, [user]);
 
-  const handlePaymentDirect = async (plan: "week" | "monthly" | "yearly", email: string) => {
+  const handlePaymentDirect = async (plan: "week" | "monthly" | "yearly") => {
     setPaymentLoading(true);
     setPaymentError("");
 
@@ -123,7 +123,7 @@ export default function Home() {
       const response = await fetch("/api/payment/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, plan }),
+        body: JSON.stringify({ plan }),
       });
 
       const data = await response.json();
@@ -143,10 +143,8 @@ export default function Home() {
   };
 
   const handlePayment = async () => {
-    const emailToUse = user?.email || paymentEmail;
-
-    if (!emailToUse || !emailToUse.includes("@")) {
-      setPaymentError("Please enter a valid email");
+    if (!user?.email) {
+      setPaymentError("Please sign in first");
       return;
     }
 
@@ -158,7 +156,6 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: emailToUse,
           plan: selectedPlan,
         }),
       });

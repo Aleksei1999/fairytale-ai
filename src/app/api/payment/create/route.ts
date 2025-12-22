@@ -1,18 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 interface PaymentRequest {
-  email: string;
   plan: "week" | "monthly" | "yearly";
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body: PaymentRequest = await request.json();
-    const { email, plan } = body;
+    // Verify user session first
+    const supabaseAuth = await createClient();
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
 
-    if (!email || !plan) {
+    if (authError || !user || !user.email) {
       return NextResponse.json(
-        { success: false, error: "Email and plan are required" },
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
+    const body: PaymentRequest = await request.json();
+    const { plan } = body;
+
+    if (!plan) {
+      return NextResponse.json(
+        { success: false, error: "Plan is required" },
         { status: 400 }
       );
     }
@@ -44,9 +55,9 @@ export async function POST(request: NextRequest) {
       periodicity = "PERIOD_YEAR";
     }
 
-    // Create invoice via Lava Top API v3
+    // Create invoice via Lava Top API v3 using authenticated user's email
     const requestBody: Record<string, unknown> = {
-      email,
+      email: user.email,
       offerId,
       currency: "USD",
       buyerLanguage: "EN",

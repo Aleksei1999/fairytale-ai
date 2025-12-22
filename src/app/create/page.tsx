@@ -86,7 +86,7 @@ function CreatePageContent() {
 
       setLoadingStars(true);
       try {
-        const response = await fetch(`/api/user/credits?email=${encodeURIComponent(user.email)}`);
+        const response = await fetch("/api/user/credits");
         const data = await response.json();
         if (data.success) {
           setUserStars(data.credits || 0);
@@ -189,8 +189,7 @@ function CreatePageContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: personalizedText,
-          voiceId: "default",
-          userEmail: user.email
+          voiceId: "default"
         }),
       });
 

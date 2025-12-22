@@ -1,32 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 interface CartoonRequest {
   storyId: string;
-  userEmail: string;
 }
 
 const STAR_COST_CARTOON = 5; // Cost in stars for cartoon generation
 
 export async function POST(request: NextRequest) {
   try {
-    const body: CartoonRequest = await request.json();
-    const { storyId, userEmail } = body;
+    // Verify user session first
+    const supabaseAuth = await createClient();
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
 
-    if (!storyId || !userEmail) {
+    if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: "Story ID and email are required" },
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
+    const body: CartoonRequest = await request.json();
+    const { storyId } = body;
+
+    if (!storyId) {
+      return NextResponse.json(
+        { success: false, error: "Story ID is required" },
         { status: 400 }
       );
     }
 
     const supabase = createAdminClient();
 
-    // Get user profile
+    // Get user profile using authenticated user's email
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("id, credits")
-      .eq("email", userEmail)
+      .eq("email", user.email)
       .single();
 
     if (profileError || !profile) {
@@ -115,7 +126,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log(`Cartoon requested for story ${storyId} by ${userEmail}`);
+    console.log(`Cartoon requested for story ${storyId} by ${user.email}`);
 
     return NextResponse.json({
       success: true,
