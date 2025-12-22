@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 interface PaymentRequest {
   email: string;
-  plan: "monthly" | "yearly";
+  plan: "week" | "monthly" | "yearly";
 }
 
 export async function POST(request: NextRequest) {
@@ -26,14 +26,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Single subscription offer ID (supports monthly/yearly via periodicity)
-    const offerId = process.env.LAVA_TOP_SUBSCRIPTION_OFFER_ID;
-    if (!offerId) {
-      console.error("LAVA_TOP_SUBSCRIPTION_OFFER_ID is not configured");
-      return NextResponse.json(
-        { success: false, error: "Payment service not configured" },
-        { status: 500 }
-      );
+    // Different offer IDs for different plans
+    // Week ($5) has its own product, Monthly/Yearly ($29/$189) share another product
+    const weekOfferId = "82ca8328-9624-4ef5-ad69-2131721f51ef";
+    const subscriptionOfferId = "0f1994eb-ee95-4c4b-85ed-4437ed82ba49";
+
+    const offerId = plan === "week" ? weekOfferId : subscriptionOfferId;
+
+    // Determine periodicity based on plan
+    let periodicity: string;
+    if (plan === "week") {
+      periodicity = "WEEKLY";
+    } else if (plan === "monthly") {
+      periodicity = "MONTHLY";
+    } else {
+      periodicity = "PERIOD_YEAR";
     }
 
     // Create invoice via Lava Top API v3
@@ -47,7 +54,7 @@ export async function POST(request: NextRequest) {
         email,
         offerId,
         currency: "USD",
-        periodicity: plan === "monthly" ? "MONTHLY" : "PERIOD_YEAR",
+        periodicity,
         buyerLanguage: "EN",
         clientUtm: {
           utm_source: "fairytale-ai",

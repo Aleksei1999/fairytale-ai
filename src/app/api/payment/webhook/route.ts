@@ -29,52 +29,52 @@ interface WebhookPayload {
   };
 }
 
-// Количество кредитов за подписку
-const SUBSCRIPTION_CREDITS: Record<number, number> = {
-  29: 30,     // $29 monthly → 30 кредитов на сказки
-  249: 360,   // $249 yearly → 360 кредитов на сказки (30 * 12)
-};
+// Pricing configuration
+// Week ($5) = 8 stars (one-time purchase)
+// Monthly ($29) / Yearly ($189) = subscription (unlimited stories + 12-month program)
+// Star packs: Starter ($14.90) = 10 stars, Popular ($39.90) = 30 stars, Big Pack ($59.90) = 50 stars
 
-// Количество кредитов на мультики
-const CARTOON_CREDITS: Record<number, number> = {
-  10: 1,      // $9.90 → 1 мультик
-  30: 4,      // $29.90 → 4 мультика
-  80: 12,     // $79.90 → 12 мультиков
-};
-
-interface CreditResult {
-  storyCredits: number;
-  cartoonCredits: number;
-  type: "subscription" | "cartoon";
+interface PaymentResult {
+  stars: number;
+  subscriptionDays: number;
+  type: "week" | "subscription" | "stars";
 }
 
-function getCreditsForAmount(amount: number): CreditResult {
+function getPaymentResult(amount: number): PaymentResult {
   const roundedAmount = Math.round(amount);
 
-  // Проверяем подписку
-  if (SUBSCRIPTION_CREDITS[roundedAmount]) {
-    return {
-      storyCredits: SUBSCRIPTION_CREDITS[roundedAmount],
-      cartoonCredits: 1, // Бонусный мультик с подпиской
-      type: "subscription"
-    };
+  // Week pack: $5 = 8 stars
+  if (roundedAmount === 5) {
+    return { stars: 8, subscriptionDays: 0, type: "week" };
   }
 
-  // Проверяем покупку мультиков
-  if (CARTOON_CREDITS[roundedAmount]) {
-    return {
-      storyCredits: 0,
-      cartoonCredits: CARTOON_CREDITS[roundedAmount],
-      type: "cartoon"
-    };
+  // Monthly subscription: $29 = 30 days access
+  if (roundedAmount === 29) {
+    return { stars: 0, subscriptionDays: 30, type: "subscription" };
   }
 
-  // Fallback для старых платежей
-  return {
-    storyCredits: Math.ceil(amount / 2),
-    cartoonCredits: 0,
-    type: "subscription"
-  };
+  // Yearly subscription: $189 = 365 days access
+  if (roundedAmount === 189) {
+    return { stars: 0, subscriptionDays: 365, type: "subscription" };
+  }
+
+  // Star packs (to be added later with Lava.top product IDs)
+  // Starter: $14.90 = 10 stars
+  if (roundedAmount === 15) {
+    return { stars: 10, subscriptionDays: 0, type: "stars" };
+  }
+  // Popular: $39.90 = 30 stars
+  if (roundedAmount === 40) {
+    return { stars: 30, subscriptionDays: 0, type: "stars" };
+  }
+  // Big Pack: $59.90 = 50 stars
+  if (roundedAmount === 60) {
+    return { stars: 50, subscriptionDays: 0, type: "stars" };
+  }
+
+  // Fallback for unknown amounts
+  console.warn(`Unknown payment amount: $${amount}`);
+  return { stars: 0, subscriptionDays: 0, type: "stars" };
 }
 
 export async function POST(request: NextRequest) {
@@ -142,12 +142,12 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
     currency,
   });
 
-  // Вычисляем количество кредитов
-  const credits = getCreditsForAmount(amount);
+  // Determine what the payment gives
+  const paymentResult = getPaymentResult(amount);
 
-  console.log(`Credits to add:`, credits);
+  console.log(`Payment result:`, paymentResult);
 
-  // Проверяем, не обработан ли уже этот платёж
+  // Check if payment already processed
   const { data: existingPayment } = await supabase
     .from("payments")
     .select("id")
@@ -159,10 +159,10 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
     return;
   }
 
-  // Находим профиль пользователя по email
-  let { data: profile } = await supabase
+  // Find user profile by email
+  const { data: profile } = await supabase
     .from("profiles")
-    .select("id, credits, cartoon_credits")
+    .select("id, credits, subscription_until")
     .eq("email", buyer.email)
     .single();
 
@@ -171,20 +171,28 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
   if (profile) {
     userId = profile.id;
 
-    // Добавляем кредиты
     const updateData: Record<string, unknown> = {
       updated_at: new Date().toISOString()
     };
 
-    if (credits.storyCredits > 0) {
-      updateData.credits = (profile.credits || 0) + credits.storyCredits;
+    // Add stars if applicable
+    if (paymentResult.stars > 0) {
+      updateData.credits = (profile.credits || 0) + paymentResult.stars;
     }
-    if (credits.cartoonCredits > 0) {
-      updateData.cartoon_credits = (profile.cartoon_credits || 0) + credits.cartoonCredits;
-      // Устанавливаем срок действия 90 дней от сегодня
-      const expireAt = new Date();
-      expireAt.setDate(expireAt.getDate() + 90);
-      updateData.cartoon_credits_expire_at = expireAt.toISOString();
+
+    // Extend subscription if applicable
+    if (paymentResult.subscriptionDays > 0) {
+      const now = new Date();
+      const currentSubEnd = profile.subscription_until
+        ? new Date(profile.subscription_until)
+        : now;
+
+      // Start from current subscription end or now, whichever is later
+      const startDate = currentSubEnd > now ? currentSubEnd : now;
+      const newSubEnd = new Date(startDate);
+      newSubEnd.setDate(newSubEnd.getDate() + paymentResult.subscriptionDays);
+
+      updateData.subscription_until = newSubEnd.toISOString();
     }
 
     const { error: updateError } = await supabase
@@ -193,16 +201,19 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       .eq("id", profile.id);
 
     if (updateError) {
-      console.error("Error updating credits:", updateError);
+      console.error("Error updating profile:", updateError);
     } else {
-      console.log(`Added to ${buyer.email}: ${credits.storyCredits} story credits, ${credits.cartoonCredits} cartoon credits`);
+      const updates = [];
+      if (paymentResult.stars > 0) updates.push(`${paymentResult.stars} stars`);
+      if (paymentResult.subscriptionDays > 0) updates.push(`${paymentResult.subscriptionDays} days subscription`);
+      console.log(`Added to ${buyer.email}: ${updates.join(", ")}`);
     }
   } else {
-    // Пользователь не зарегистрирован - сохраним платёж, кредиты добавятся при регистрации
+    // User not registered - save payment, credits will be added on registration
     console.log(`User ${buyer.email} not found, payment will be credited on registration`);
   }
 
-  // Сохраняем платёж
+  // Save payment record
   const { error: paymentError } = await supabase
     .from("payments")
     .insert({
@@ -211,9 +222,9 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       contract_id: contractId,
       amount,
       currency,
-      credits_added: credits.storyCredits,
-      cartoon_credits_added: credits.cartoonCredits,
-      payment_type: credits.type,
+      credits_added: paymentResult.stars,
+      subscription_days_added: paymentResult.subscriptionDays,
+      payment_type: paymentResult.type,
       status: "success",
       event_type: eventType,
     });

@@ -75,10 +75,10 @@ export async function POST(request: NextRequest) {
 
     const supabase = createAdminClient();
 
-    // Get user's profile and credits
+    // Get user's profile and check subscription
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("id, credits")
+      .select("id, credits, subscription_until")
       .eq("email", userEmail)
       .single();
 
@@ -90,9 +90,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (profile.credits < 1) {
+    // Check if user has active subscription (story generation is free for subscribers)
+    const hasActiveSubscription = profile.subscription_until &&
+      new Date(profile.subscription_until) > new Date();
+
+    if (!hasActiveSubscription) {
       return NextResponse.json(
-        { success: false, error: "Not enough credits", creditsNeeded: 1, creditsAvailable: profile.credits },
+        { success: false, error: "Subscription required", message: "Story generation requires an active subscription" },
         { status: 402 }
       );
     }
@@ -204,20 +208,7 @@ ${childInterests ? `Интересы: ${childInterests}` : ""}
 
     const storyTitle = titleCompletion.choices[0]?.message?.content || `${childName} и ${characterName}`;
 
-    // Deduct 1 credit after successful generation
-    const { error: creditError } = await supabase
-      .from("profiles")
-      .update({
-        credits: profile.credits - 1,
-        updated_at: new Date().toISOString()
-      })
-      .eq("id", profile.id);
-
-    if (creditError) {
-      console.error("Error deducting credit:", creditError);
-    } else {
-      console.log(`Deducted 1 credit from ${userEmail}, remaining: ${profile.credits - 1}`);
-    }
+    // Story generation is FREE for subscribers - no credit deduction
 
     // Сохраняем сказку в БД для истории и n8n
     const { data: savedStory, error: storyError } = await supabase
@@ -257,7 +248,6 @@ ${childInterests ? `Интересы: ${childInterests}` : ""}
         duration,
         wordCount: storyText.split(/\s+/).length,
       },
-      creditsRemaining: profile.credits - 1,
     });
   } catch (error) {
     console.error("Error generating story:", error);

@@ -160,3 +160,32 @@ body {
 main, section {
   animation: fadeIn 0.4s ease-out;
 }
+
+/* Accordion animation */
+@layer components {
+  .accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out;
+    opacity: 0;
+  }
+
+  .accordion-content.open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .accordion-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  /* Arrow rotation */
+  .accordion-arrow {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .accordion-arrow.open {
+    transform: rotate(180deg);
+  }
+}
