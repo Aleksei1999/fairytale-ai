@@ -159,40 +159,21 @@ export default function Dashboard() {
                 </p>
               </div>
               {/* Credits Display */}
-              <div className="flex flex-col items-end gap-2">
-                {/* Total Credits - Main Display */}
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                  <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-purple-50 border border-white/50 shadow-lg">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-purple-500 shadow-lg">
-                      <span className="text-2xl">⭐</span>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Credits</p>
-                      <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-purple-600 bg-clip-text text-transparent">
-                        {loadingCredits ? (
-                          <span className="inline-block w-12 h-8 bg-gray-200 rounded animate-pulse"></span>
-                        ) : (
-                          <AnimatedCounter value={(credits ?? 0) + (cartoonCredits ?? 0)} duration={1200} />
-                        )}
-                      </p>
-                    </div>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-purple-50 border border-white/50 shadow-lg">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-purple-500 shadow-lg">
+                    <span className="text-2xl">⭐</span>
                   </div>
-                </div>
-
-                {/* Individual Credits - Smaller */}
-                <div className="flex gap-2">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-100/80 border border-amber-200/50">
-                    <span className="text-sm">📖</span>
-                    <span className="text-sm font-semibold text-amber-800">
-                      {loadingCredits ? "..." : <AnimatedCounter value={credits ?? 0} duration={800} />}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-purple-100/80 border border-purple-200/50">
-                    <span className="text-sm">🎬</span>
-                    <span className="text-sm font-semibold text-purple-800">
-                      {loadingCredits ? "..." : <AnimatedCounter value={cartoonCredits ?? 0} duration={800} />}
-                    </span>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Credits</p>
+                    <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-purple-600 bg-clip-text text-transparent">
+                      {loadingCredits ? (
+                        <span className="inline-block w-12 h-8 bg-gray-200 rounded animate-pulse"></span>
+                      ) : (
+                        <AnimatedCounter value={(credits ?? 0) + (cartoonCredits ?? 0)} duration={1200} />
+                      )}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -248,15 +229,9 @@ export default function Dashboard() {
                 <span className="text-gray-900 font-medium">{user?.email || "—"}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Story Credits</span>
+                <span className="text-gray-600">Total Credits</span>
                 <span className="text-gray-900 font-medium">
-                  {loadingCredits ? "Loading..." : `${credits ?? 0} credits`}
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Cartoon Credits</span>
-                <span className="text-gray-900 font-medium">
-                  {loadingCredits ? "Loading..." : `${cartoonCredits ?? 0} credits`}
+                  {loadingCredits ? "Loading..." : `${(credits ?? 0) + (cartoonCredits ?? 0)} credits`}
                 </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
