@@ -39,7 +39,14 @@ function CreatePageContent() {
   // Audio generation state
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
 
+  // Stars balance
+  const [userStars, setUserStars] = useState<number>(0);
+  const [loadingStars, setLoadingStars] = useState(true);
+  const [notEnoughStars, setNotEnoughStars] = useState(false);
+
   const storyId = searchParams.get("storyId");
+
+  const STAR_COST_AUDIO = 1;
 
   // Redirect to home if not authenticated
   useEffect(() => {
@@ -47,6 +54,28 @@ function CreatePageContent() {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // Load user's star balance
+  useEffect(() => {
+    async function loadStars() {
+      if (!user?.email) return;
+
+      setLoadingStars(true);
+      try {
+        const response = await fetch(`/api/user/credits?email=${encodeURIComponent(user.email)}`);
+        const data = await response.json();
+        if (data.success) {
+          setUserStars(data.credits || 0);
+        }
+      } catch (err) {
+        console.error("Error loading stars:", err);
+      } finally {
+        setLoadingStars(false);
+      }
+    }
+
+    loadStars();
+  }, [user?.email]);
 
   // Load story from database
   useEffect(() => {
@@ -120,27 +149,41 @@ function CreatePageContent() {
 
   // Generate AI narration and go to story page
   const generateNarrationAndNavigate = async () => {
-    if (!personalizedText || !storyId) return;
+    if (!personalizedText || !storyId || !user?.email) return;
+
+    // Check if user has enough stars
+    if (userStars < STAR_COST_AUDIO) {
+      setNotEnoughStars(true);
+      return;
+    }
 
     setIsGeneratingAudio(true);
+    setNotEnoughStars(false);
     try {
       const response = await fetch("/api/generate-audio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: personalizedText,
-          voiceId: "default" // Use default voice
+          voiceId: "default",
+          userEmail: user.email
         }),
       });
 
       const data = await response.json();
       if (data.success) {
+        // Update local star balance
+        setUserStars(data.starsRemaining);
         // Save audio and personalized text to localStorage for story page
         localStorage.setItem("storyAudio", data.audio.base64);
         localStorage.setItem("storyPersonalizedText", personalizedText);
         localStorage.setItem("storyMode", "ai-voice");
         // Navigate to story page
         router.push(`/story/${storyId}`);
+      } else if (response.status === 402) {
+        // Not enough stars
+        setNotEnoughStars(true);
+        setUserStars(data.current || 0);
       } else {
         alert("Could not generate narration. Please try again.");
       }
@@ -225,8 +268,17 @@ function CreatePageContent() {
             ))}
           </div>
 
-          <div className="text-sm text-gray-500">
-            Step {step} of 2
+          <div className="flex items-center gap-4">
+            {/* Stars balance */}
+            <div className="flex items-center gap-1 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
+              <span className="text-lg">⭐</span>
+              <span className="font-semibold text-amber-700">
+                {loadingStars ? "..." : userStars}
+              </span>
+            </div>
+            <div className="text-sm text-gray-500">
+              Step {step} of 2
+            </div>
           </div>
         </nav>
       </header>
@@ -429,38 +481,63 @@ function CreatePageContent() {
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-4">
-                {/* Read Myself Button */}
-                <button
-                  onClick={goToReadMode}
-                  className="flex-1 py-4 rounded-2xl font-semibold text-center transition-all bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90 inline-flex items-center justify-center gap-2"
-                >
-                  <span className="text-xl">📖</span>
-                  <span>Read It Myself</span>
-                </button>
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
+                  {/* Read Myself Button */}
+                  <button
+                    onClick={goToReadMode}
+                    className="flex-1 py-4 rounded-2xl font-semibold text-center transition-all bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90 inline-flex flex-col items-center justify-center gap-1"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">📖</span>
+                      <span>Read It Myself</span>
+                    </div>
+                    <span className="text-xs opacity-80">Free</span>
+                  </button>
 
-                {/* Generate AI Narration Button */}
-                <button
-                  onClick={generateNarrationAndNavigate}
-                  disabled={isGeneratingAudio || !personalizedText}
-                  className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex items-center justify-center gap-2 ${
-                    isGeneratingAudio || !personalizedText
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg hover:opacity-90"
-                  }`}
-                >
-                  {isGeneratingAudio ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Generating...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-xl">🎙️</span>
-                      <span>Listen with AI Voice</span>
-                    </>
-                  )}
-                </button>
+                  {/* Generate AI Narration Button */}
+                  <button
+                    onClick={generateNarrationAndNavigate}
+                    disabled={isGeneratingAudio || !personalizedText}
+                    className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
+                      isGeneratingAudio || !personalizedText
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg hover:opacity-90"
+                    }`}
+                  >
+                    {isGeneratingAudio ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Generating...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">🎙️</span>
+                          <span>Listen with AI Voice</span>
+                        </div>
+                        <span className="text-xs opacity-80 flex items-center gap-1">
+                          <span>⭐</span> {STAR_COST_AUDIO} Star
+                        </span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Not enough stars warning */}
+                {notEnoughStars && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                    <p className="text-amber-800 font-medium mb-2">
+                      Not enough stars! You have {userStars}, need {STAR_COST_AUDIO}.
+                    </p>
+                    <a
+                      href="/#pricing"
+                      className="text-amber-600 underline hover:text-amber-700"
+                    >
+                      Get more stars
+                    </a>
+                  </div>
+                )}
               </div>
 
             </div>

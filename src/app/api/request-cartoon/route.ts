@@ -6,6 +6,8 @@ interface CartoonRequest {
   userEmail: string;
 }
 
+const STAR_COST_CARTOON = 5; // Cost in stars for cartoon generation
+
 export async function POST(request: NextRequest) {
   try {
     const body: CartoonRequest = await request.json();
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
     // Get user profile
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("id, cartoon_credits")
+      .select("id, credits")
       .eq("email", userEmail)
       .single();
 
@@ -34,11 +36,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check cartoon credits
-    const cartoonCredits = profile.cartoon_credits || 0;
-    if (cartoonCredits < 1) {
+    // Check stars balance
+    const currentStars = profile.credits || 0;
+    if (currentStars < STAR_COST_CARTOON) {
       return NextResponse.json(
-        { success: false, error: "Not enough cartoon credits", creditsAvailable: cartoonCredits },
+        { success: false, error: "Not enough stars", required: STAR_COST_CARTOON, current: currentStars },
         { status: 402 }
       );
     }
@@ -71,11 +73,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Deduct 1 cartoon credit
+    // Deduct stars for cartoon
     const { error: creditError } = await supabase
       .from("profiles")
       .update({
-        cartoon_credits: cartoonCredits - 1,
+        credits: currentStars - STAR_COST_CARTOON,
         updated_at: new Date().toISOString(),
       })
       .eq("id", profile.id);
@@ -101,10 +103,10 @@ export async function POST(request: NextRequest) {
 
     if (updateError) {
       console.error("Error updating story:", updateError);
-      // Refund the credit since the update failed
+      // Refund the stars since the update failed
       await supabase
         .from("profiles")
-        .update({ cartoon_credits: cartoonCredits })
+        .update({ credits: currentStars })
         .eq("id", profile.id);
 
       return NextResponse.json(
@@ -119,7 +121,8 @@ export async function POST(request: NextRequest) {
       success: true,
       message: "Cartoon request submitted",
       storyId,
-      creditsRemaining: cartoonCredits - 1,
+      starsUsed: STAR_COST_CARTOON,
+      starsRemaining: currentStars - STAR_COST_CARTOON,
     });
   } catch (error) {
     console.error("Error requesting cartoon:", error);

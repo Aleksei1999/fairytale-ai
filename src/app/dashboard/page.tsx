@@ -148,23 +148,7 @@ export default function Dashboard() {
           </div>
 
           {/* Actions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {/* Create Story */}
-            <Link
-              href="/create"
-              className="glass-card p-6 hover:shadow-lg transition-shadow group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  ✨
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">Create Story</h3>
-                  <p className="text-gray-600 text-sm">Generate a new personalized fairy tale</p>
-                </div>
-              </div>
-            </Link>
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {/* Buy Story Credits */}
             <button
               onClick={() => setShowPaymentModal(true)}

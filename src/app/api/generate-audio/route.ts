@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
+const STAR_COST_AUDIO = 1; // Cost in stars for AI voice generation
 
 // Словарь ударений для часто неправильно произносимых слов
 // Используем символ ударения (́) после ударной гласной
@@ -147,12 +149,42 @@ const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { text, voiceId } = body;
+    const { text, voiceId, userEmail } = body;
 
     if (!text) {
       return NextResponse.json(
         { success: false, error: "Text is required" },
         { status: 400 }
+      );
+    }
+
+    if (!userEmail) {
+      return NextResponse.json(
+        { success: false, error: "User email is required" },
+        { status: 400 }
+      );
+    }
+
+    // Check user's star balance
+    const supabase = createAdminClient();
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("credits")
+      .eq("email", userEmail)
+      .single();
+
+    if (profileError || !profile) {
+      return NextResponse.json(
+        { success: false, error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const currentStars = profile.credits || 0;
+    if (currentStars < STAR_COST_AUDIO) {
+      return NextResponse.json(
+        { success: false, error: "Not enough stars", required: STAR_COST_AUDIO, current: currentStars },
+        { status: 402 }
       );
     }
 
@@ -204,12 +236,25 @@ export async function POST(request: NextRequest) {
     const audioArrayBuffer = await response.arrayBuffer();
     const audioBase64 = Buffer.from(audioArrayBuffer).toString("base64");
 
+    // Deduct stars after successful generation
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({ credits: currentStars - STAR_COST_AUDIO })
+      .eq("email", userEmail);
+
+    if (updateError) {
+      console.error("Error deducting stars:", updateError);
+      // Still return success since audio was generated
+    }
+
     return NextResponse.json({
       success: true,
       audio: {
         base64: audioBase64,
         mimeType: "audio/mpeg",
       },
+      starsUsed: STAR_COST_AUDIO,
+      starsRemaining: currentStars - STAR_COST_AUDIO,
     });
   } catch (error) {
     console.error("Error generating audio:", error);
