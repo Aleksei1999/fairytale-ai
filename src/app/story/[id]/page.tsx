@@ -82,6 +82,32 @@ export default function StoryPage() {
   const [musicDuration, setMusicDuration] = useState(0);
   const musicRef = useRef<HTMLAudioElement | null>(null);
 
+  // Subscription check
+  const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
+
+  // Check subscription status
+  useEffect(() => {
+    async function checkSubscription() {
+      if (!user?.email) return;
+
+      const supabase = createClient();
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("subscription_until")
+        .eq("email", user.email)
+        .single();
+
+      if (profile?.subscription_until) {
+        const subEnd = new Date(profile.subscription_until);
+        setHasSubscription(subEnd > new Date());
+      } else {
+        setHasSubscription(false);
+      }
+    }
+
+    checkSubscription();
+  }, [user?.email]);
+
   useEffect(() => {
     loadStoryData();
     checkProgress();
@@ -335,6 +361,58 @@ export default function StoryPage() {
             Back to Dashboard
           </Link>
         </div>
+      </div>
+    );
+  }
+
+  // Subscription required paywall
+  if (hasSubscription === false) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+        <header className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
+                <span className="text-xl">✨</span>
+              </div>
+              <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+            </Link>
+            <Link
+              href="/dashboard"
+              className="text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              ← Back to Dashboard
+            </Link>
+          </div>
+        </header>
+
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-md mx-auto text-center">
+            <div className="glass-card-strong p-8">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-4xl mx-auto mb-6">
+                🔒
+              </div>
+              <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
+                Subscription Required
+              </h1>
+              <p className="text-gray-600 mb-6">
+                To access stories and the full program, you need an active subscription.
+              </p>
+              <Link
+                href="/pricing"
+                className="block w-full btn-glow py-3 text-center font-semibold text-white mb-3"
+              >
+                View Subscription Plans
+              </Link>
+              <Link
+                href="/dashboard"
+                className="block text-gray-500 hover:text-gray-700 text-sm"
+              >
+                Back to Dashboard
+              </Link>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
