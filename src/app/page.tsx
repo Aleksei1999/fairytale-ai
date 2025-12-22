@@ -103,6 +103,9 @@ export default function Home() {
       setTimeout(() => {
         window.location.reload();
       }, 500);
+    } else {
+      // No pending payment - redirect to dashboard
+      window.location.href = "/dashboard";
     }
   };
 
