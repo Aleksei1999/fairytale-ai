@@ -34,9 +34,10 @@ export async function POST(request: NextRequest) {
     const offerId = plan === "week" ? weekOfferId : subscriptionOfferId;
 
     // Determine periodicity based on plan
-    let periodicity: string;
+    // Week is a one-time purchase, not a subscription
+    let periodicity: string | undefined;
     if (plan === "week") {
-      periodicity = "WEEKLY";
+      periodicity = undefined; // One-time payment, no periodicity
     } else if (plan === "monthly") {
       periodicity = "MONTHLY";
     } else {
@@ -44,24 +45,30 @@ export async function POST(request: NextRequest) {
     }
 
     // Create invoice via Lava Top API v3
+    const requestBody: Record<string, unknown> = {
+      email,
+      offerId,
+      currency: "USD",
+      buyerLanguage: "EN",
+      clientUtm: {
+        utm_source: "fairytale-ai",
+        utm_medium: "website",
+        utm_campaign: plan,
+      },
+    };
+
+    // Only add periodicity for subscriptions (not for one-time purchases)
+    if (periodicity) {
+      requestBody.periodicity = periodicity;
+    }
+
     const response = await fetch("https://gate.lava.top/api/v3/invoice", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-Api-Key": apiKey,
       },
-      body: JSON.stringify({
-        email,
-        offerId,
-        currency: "USD",
-        periodicity,
-        buyerLanguage: "EN",
-        clientUtm: {
-          utm_source: "fairytale-ai",
-          utm_medium: "website",
-          utm_campaign: plan,
-        },
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
