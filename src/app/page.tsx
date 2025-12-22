@@ -352,15 +352,15 @@ export default function Home() {
 
             {/* CTA */}
             <div className="flex flex-col gap-3 max-w-md mx-auto lg:mx-0">
-              <button
-                onClick={handleCreateStory}
+              <a
+                href="#pricing"
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 <span>Start the Hero&apos;s Journey</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </button>
+              </a>
               <div className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-gray-500">
                 <span className="text-blue-500">✓</span>
                 <span>Try the first week free</span>
@@ -542,13 +542,13 @@ export default function Home() {
               <p className="text-gray-700 text-base sm:text-lg font-medium mb-4">
                 Are you ready to risk this bond? Or will you act while the <span className="gradient-text font-bold">&quot;window of opportunity&quot;</span> is still open?
               </p>
-              <button
-                onClick={handleCreateStory}
+              <a
+                href="#pricing"
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg inline-flex items-center gap-2"
               >
                 <span>Start Building the Bond</span>
                 <span className="text-xl">💙</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -1368,15 +1368,15 @@ export default function Home() {
               <p className="text-gray-600 mb-4 text-sm sm:text-base">
                 Start building your child's emotional foundation today
               </p>
-              <button
-                onClick={handleCreateStory}
+              <a
+                href="#pricing"
                 className="btn-glow px-8 py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center gap-2"
               >
                 <span>Begin the Journey</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -1850,25 +1850,16 @@ export default function Home() {
               Give your child magic
             </h2>
             <p className="text-base sm:text-lg text-sky-100 mb-6 sm:mb-8 max-w-xl mx-auto">
-              The first story is waiting. Enter your child's name and start the magic.
+              The first story is waiting. Start the magical journey today.
             </p>
 
-            {/* Final CTA with input */}
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="text"
-                placeholder="Child's name"
-                value={childName}
-                onChange={(e) => setChildName(e.target.value)}
-                className="flex-1 px-5 sm:px-6 py-3 sm:py-4 rounded-full border-2 border-white/30 focus:border-white focus:outline-none text-gray-700 bg-white/90 backdrop-blur text-base"
-              />
-              <button
-                onClick={handleCreateStory}
-                className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 whitespace-nowrap"
-              >
-                Create story
-              </button>
-            </div>
+            {/* Final CTA */}
+            <a
+              href="#pricing"
+              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 whitespace-nowrap inline-block"
+            >
+              Start the Magic
+            </a>
           </div>
         </div>
       </section>
