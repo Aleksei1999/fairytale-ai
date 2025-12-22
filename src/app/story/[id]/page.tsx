@@ -84,13 +84,17 @@ export default function StoryPage() {
 
   // Subscription check
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
+  // Story unlock check
+  const [isStoryUnlocked, setIsStoryUnlocked] = useState<boolean | null>(null);
 
-  // Check subscription status
+  // Check subscription status and story unlock
   useEffect(() => {
-    async function checkSubscription() {
+    async function checkAccess() {
       if (!user?.email) return;
 
       const supabase = createClient();
+
+      // Check subscription
       const { data: profile } = await supabase
         .from("profiles")
         .select("subscription_until")
@@ -103,10 +107,111 @@ export default function StoryPage() {
       } else {
         setHasSubscription(false);
       }
+
+      // Check if story is unlocked
+      const { data: currentUser } = await supabase.auth.getUser();
+      if (!currentUser.user) return;
+
+      // Get all user progress
+      const { data: progressData } = await supabase
+        .from("user_story_progress")
+        .select("story_id, completed_at")
+        .eq("user_id", currentUser.user.id);
+
+      const completedStories = progressData?.map(p => p.story_id) || [];
+      const completionTimes: Record<number, string> = {};
+      progressData?.forEach(p => {
+        completionTimes[p.story_id] = p.completed_at;
+      });
+
+      // If this story is already completed, it's accessible
+      if (completedStories.includes(storyId)) {
+        setIsStoryUnlocked(true);
+        return;
+      }
+
+      // Load story and week info
+      const { data: storyData } = await supabase
+        .from("program_stories")
+        .select("*, program_weeks!inner(order_num)")
+        .eq("id", storyId)
+        .single();
+
+      if (!storyData) {
+        setIsStoryUnlocked(false);
+        return;
+      }
+
+      const weekOrderNum = storyData.program_weeks.order_num;
+
+      // First story of first week is always available
+      if (storyData.day_in_week === 1 && weekOrderNum === 1) {
+        setIsStoryUnlocked(true);
+        return;
+      }
+
+      // Get all stories in the same week
+      const { data: weekStories } = await supabase
+        .from("program_stories")
+        .select("id, day_in_week, week_id")
+        .eq("week_id", storyData.week_id)
+        .order("day_in_week");
+
+      // Find previous story
+      let previousStoryId: number | null = null;
+
+      if (storyData.day_in_week === 1) {
+        // First story of a new week - need previous week's last story
+        const { data: allWeeks } = await supabase
+          .from("program_weeks")
+          .select("id, order_num")
+          .order("order_num");
+
+        const currentWeekIndex = allWeeks?.findIndex(w => w.id === storyData.week_id) ?? -1;
+        if (currentWeekIndex > 0) {
+          const prevWeek = allWeeks![currentWeekIndex - 1];
+          const { data: prevWeekStories } = await supabase
+            .from("program_stories")
+            .select("id")
+            .eq("week_id", prevWeek.id)
+            .order("day_in_week", { ascending: false })
+            .limit(1);
+
+          previousStoryId = prevWeekStories?.[0]?.id || null;
+        }
+      } else {
+        // Find previous story in same week (day 1 -> day 3, day 3 -> day 5)
+        const prevStory = weekStories?.find(s => s.day_in_week === storyData.day_in_week - 2);
+        previousStoryId = prevStory?.id || null;
+      }
+
+      // If no previous story, it's available
+      if (!previousStoryId) {
+        setIsStoryUnlocked(true);
+        return;
+      }
+
+      // Check if previous story is completed
+      if (!completedStories.includes(previousStoryId)) {
+        setIsStoryUnlocked(false);
+        return;
+      }
+
+      // Check 24-hour timer
+      const completionTime = completionTimes[previousStoryId];
+      if (!completionTime) {
+        setIsStoryUnlocked(true);
+        return;
+      }
+
+      const timeSinceCompletion = new Date().getTime() - new Date(completionTime).getTime();
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+
+      setIsStoryUnlocked(timeSinceCompletion >= twentyFourHours);
     }
 
-    checkSubscription();
-  }, [user?.email]);
+    checkAccess();
+  }, [user?.email, storyId]);
 
   useEffect(() => {
     loadStoryData();
@@ -407,6 +512,52 @@ export default function StoryPage() {
               <Link
                 href="/dashboard"
                 className="block text-gray-500 hover:text-gray-700 text-sm"
+              >
+                Back to Dashboard
+              </Link>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Story locked - not yet unlocked based on progress
+  if (isStoryUnlocked === false) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+        <header className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
+                <span className="text-xl">✨</span>
+              </div>
+              <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+            </Link>
+            <Link
+              href="/dashboard"
+              className="text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              ← Back to Dashboard
+            </Link>
+          </div>
+        </header>
+
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-md mx-auto text-center">
+            <div className="glass-card-strong p-8">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-4xl mx-auto mb-6">
+                🔒
+              </div>
+              <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
+                Story Locked
+              </h1>
+              <p className="text-gray-600 mb-6">
+                This story is not yet available. Complete the previous stories to unlock it.
+              </p>
+              <Link
+                href="/dashboard"
+                className="block w-full btn-glow py-3 text-center font-semibold text-white"
               >
                 Back to Dashboard
               </Link>
