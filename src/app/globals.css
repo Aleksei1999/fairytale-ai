@@ -69,6 +69,7 @@ body {
     0 4px 12px rgba(59, 147, 247, 0.3),
     inset 0 1px 1px rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-glow:hover {
@@ -85,6 +86,12 @@ body {
   border: 2px solid rgba(59, 147, 247, 0.2);
   border-radius: 100px;
   transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* All buttons should have pointer cursor */
+button {
+  cursor: pointer;
 }
 
 .btn-secondary:hover {

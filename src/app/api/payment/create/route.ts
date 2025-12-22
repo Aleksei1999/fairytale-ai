@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     // Different offer IDs for different plans
     // Week ($5) has its own product, Monthly/Yearly ($29/$189) share another product
-    const weekOfferId = "82ca8328-9624-4ef5-ad69-2131721f51ef";
+    const weekOfferId = "378eca87-00e2-4a74-8fa9-68a83e2cac61";
     const subscriptionOfferId = "0f1994eb-ee95-4c4b-85ed-4437ed82ba49";
 
     const offerId = plan === "week" ? weekOfferId : subscriptionOfferId;
