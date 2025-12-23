@@ -19,13 +19,13 @@ export async function GET(_request: NextRequest) {
 
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("credits, cartoon_credits")
+      .select("credits, cartoon_credits, is_admin")
       .eq("email", user.email)
       .single();
 
     if (error || !profile) {
       return NextResponse.json(
-        { success: false, error: "Profile not found", credits: 0, cartoonCredits: 0 },
+        { success: false, error: "Profile not found", credits: 0, cartoonCredits: 0, isAdmin: false },
         { status: 404 }
       );
     }
@@ -34,6 +34,7 @@ export async function GET(_request: NextRequest) {
       success: true,
       credits: profile.credits || 0,
       cartoonCredits: profile.cartoon_credits || 0,
+      isAdmin: profile.is_admin || false,
     });
   } catch (error) {
     console.error("Error fetching credits:", error);

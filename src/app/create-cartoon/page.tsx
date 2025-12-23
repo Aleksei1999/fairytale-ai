@@ -57,7 +57,8 @@ function CreateCartoonContent() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [cartoonCredits, setCartoonCredits] = useState<number | null>(null);
+  const [credits, setCredits] = useState<number | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -72,7 +73,8 @@ function CreateCartoonContent() {
         const response = await fetch("/api/user/credits");
         const data = await response.json();
         if (data.success) {
-          setCartoonCredits(data.cartoonCredits ?? 0);
+          setCredits(data.credits ?? 0);
+          setIsAdmin(data.isAdmin ?? false);
         }
       } catch (err) {
         console.error("Error fetching credits:", err);
@@ -86,8 +88,8 @@ function CreateCartoonContent() {
   const handleGenerate = async () => {
     if (!user?.email) return;
 
-    if (cartoonCredits !== null && cartoonCredits < 1) {
-      setError("You need cartoon credits to generate a character. Please purchase credits first.");
+    if (!isAdmin && credits !== null && credits < 1) {
+      setError("You need credits to generate a character. Please purchase credits first.");
       return;
     }
 
@@ -108,7 +110,7 @@ function CreateCartoonContent() {
 
       if (data.success) {
         setGeneratedImage(data.imageUrl);
-        setCartoonCredits((prev) => (prev !== null ? prev - 1 : null));
+        setCredits((prev) => (prev !== null ? prev - 1 : null));
       } else {
         setError(data.error || "Failed to generate character");
       }
@@ -166,10 +168,10 @@ function CreateCartoonContent() {
             <p className="text-gray-600 max-w-md mx-auto">
               Design your unique Disney-style 3D character for your personalized cartoon!
             </p>
-            {cartoonCredits !== null && (
+            {credits !== null && (
               <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700">
-                <span>🎬</span>
-                <span className="font-medium">{cartoonCredits} cartoon credit{cartoonCredits !== 1 ? "s" : ""} available</span>
+                <span>⭐</span>
+                <span className="font-medium">{credits} credit{credits !== 1 ? "s" : ""} available</span>
               </div>
             )}
           </div>
@@ -354,7 +356,7 @@ function CreateCartoonContent() {
               {/* Generate Button */}
               <button
                 onClick={handleGenerate}
-                disabled={isGenerating || (cartoonCredits !== null && cartoonCredits < 1)}
+                disabled={isGenerating || (!isAdmin && credits !== null && credits < 1)}
                 className="w-full py-4 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
               >
                 {isGenerating ? (
@@ -365,19 +367,19 @@ function CreateCartoonContent() {
                     </svg>
                     Generating Magic...
                   </span>
-                ) : cartoonCredits !== null && cartoonCredits < 1 ? (
+                ) : !isAdmin && credits !== null && credits < 1 ? (
                   "No Credits Available"
                 ) : (
                   <>🎬 Generate Character</>
                 )}
               </button>
 
-              {cartoonCredits !== null && cartoonCredits < 1 && (
+              {!isAdmin && credits !== null && credits < 1 && (
                 <Link
-                  href="/buy-cartoons"
+                  href="/dashboard"
                   className="mt-4 block w-full py-3 rounded-xl font-medium text-center text-purple-600 bg-purple-100 hover:bg-purple-200 transition-colors"
                 >
-                  Buy Cartoon Credits
+                  Buy Credits
                 </Link>
               )}
             </div>

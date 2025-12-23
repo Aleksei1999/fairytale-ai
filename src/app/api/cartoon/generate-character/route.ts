@@ -88,11 +88,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user has cartoon credits
+    // Check if user has credits or is admin
     const supabaseAdmin = getSupabaseAdmin();
     const { data: userData, error: userError } = await supabaseAdmin
       .from("profiles")
-      .select("cartoon_credits")
+      .select("credits, is_admin")
       .eq("email", user.email)
       .single();
 
@@ -103,9 +103,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (userData.cartoon_credits < 1) {
+    const isAdmin = userData.is_admin === true;
+
+    if (!isAdmin && userData.credits < 1) {
       return NextResponse.json(
-        { success: false, error: "Insufficient cartoon credits" },
+        { success: false, error: "Insufficient credits" },
         { status: 400 }
       );
     }
@@ -149,11 +151,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Deduct cartoon credit
-    await supabaseAdmin
-      .from("profiles")
-      .update({ cartoon_credits: userData.cartoon_credits - 1 })
-      .eq("email", user.email);
+    // Deduct credit (skip for admin)
+    if (!isAdmin && userData.credits > 0) {
+      await supabaseAdmin
+        .from("profiles")
+        .update({ credits: userData.credits - 1 })
+        .eq("email", user.email);
+    }
 
     // Save character to database
     await supabaseAdmin
