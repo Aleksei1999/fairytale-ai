@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
-const supabaseAdmin = createSupabaseClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+function getSupabaseAdmin() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_KEY!
+  );
+}
 
 interface CharacterRequest {
   gender: "boy" | "girl";
@@ -87,6 +89,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user has cartoon credits
+    const supabaseAdmin = getSupabaseAdmin();
     const { data: userData, error: userError } = await supabaseAdmin
       .from("users")
       .select("cartoon_credits")

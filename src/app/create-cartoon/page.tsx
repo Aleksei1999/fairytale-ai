@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
@@ -41,7 +41,7 @@ const skinColors = [
   { id: "dark", name: "Dark", color: "#6F4E37" },
 ];
 
-export default function CreateCartoonPage() {
+function CreateCartoonContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const weekId = searchParams.get("weekId");
@@ -385,5 +385,17 @@ export default function CreateCartoonPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function CreateCartoonPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-pink-50 to-purple-100">
+        <div className="animate-spin w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full"></div>
+      </div>
+    }>
+      <CreateCartoonContent />
+    </Suspense>
   );
 }
