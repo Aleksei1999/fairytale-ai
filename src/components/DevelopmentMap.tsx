@@ -51,7 +51,7 @@ export function DevelopmentMap() {
   const [completedStories, setCompletedStories] = useState<number[]>([]);
   const [storyCompletionTimes, setStoryCompletionTimes] = useState<Record<number, string>>({});
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     loadProgramData();
@@ -128,7 +128,17 @@ export function DevelopmentMap() {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-      setUserEmail(user.email || null);
+      // Check if user is admin
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("is_admin")
+        .eq("email", user.email)
+        .single();
+
+      if (profileData?.is_admin) {
+        setIsAdmin(true);
+      }
+
       const { data } = await supabase
         .from("user_story_progress")
         .select("story_id, completed_at")
@@ -479,7 +489,6 @@ export function DevelopmentMap() {
         {/* Weekly Cartoon Reward */}
         {(() => {
           const weekProgress = getWeekProgress(selectedWeek);
-          const isAdmin = userEmail === "fomart94@yandex.ru";
           const isUnlocked = weekProgress === 100 || isAdmin;
 
           return (

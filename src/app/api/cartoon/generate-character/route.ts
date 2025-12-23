@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
     // Check if user has cartoon credits
     const supabaseAdmin = getSupabaseAdmin();
     const { data: userData, error: userError } = await supabaseAdmin
-      .from("users")
+      .from("profiles")
       .select("cartoon_credits")
       .eq("email", user.email)
       .single();
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
 
     // Deduct cartoon credit
     await supabaseAdmin
-      .from("users")
+      .from("profiles")
       .update({ cartoon_credits: userData.cartoon_credits - 1 })
       .eq("email", user.email);
 
