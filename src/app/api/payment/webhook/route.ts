@@ -216,7 +216,7 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
   // Find user profile by email
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, credits, cartoon_credits, subscription_until")
+    .select("id, credits, subscription_until")
     .eq("email", buyer.email)
     .single();
 
@@ -229,14 +229,10 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       updated_at: new Date().toISOString()
     };
 
-    // Add stars if applicable
-    if (paymentResult.stars > 0) {
-      updateData.credits = (profile.credits || 0) + paymentResult.stars;
-    }
-
-    // Add cartoon credits if applicable
-    if (paymentResult.cartoonCredits > 0) {
-      updateData.cartoon_credits = (profile.cartoon_credits || 0) + paymentResult.cartoonCredits;
+    // Add credits (stars + cartoon credits go into unified credits field)
+    const totalCreditsToAdd = paymentResult.stars + paymentResult.cartoonCredits;
+    if (totalCreditsToAdd > 0) {
+      updateData.credits = (profile.credits || 0) + totalCreditsToAdd;
     }
 
     // Extend subscription if applicable
@@ -263,8 +259,7 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       console.error("Error updating profile:", updateError);
     } else {
       const updates = [];
-      if (paymentResult.stars > 0) updates.push(`${paymentResult.stars} stars`);
-      if (paymentResult.cartoonCredits > 0) updates.push(`${paymentResult.cartoonCredits} cartoon credits`);
+      if (totalCreditsToAdd > 0) updates.push(`${totalCreditsToAdd} credits`);
       if (paymentResult.subscriptionDays > 0) updates.push(`${paymentResult.subscriptionDays} days subscription`);
       console.log(`Added to ${buyer.email}: ${updates.join(", ")}`);
     }
