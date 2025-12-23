@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 interface Story {
@@ -41,6 +42,7 @@ interface Block {
 }
 
 export function DevelopmentMap() {
+  const router = useRouter();
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
@@ -49,6 +51,7 @@ export function DevelopmentMap() {
   const [completedStories, setCompletedStories] = useState<number[]>([]);
   const [storyCompletionTimes, setStoryCompletionTimes] = useState<Record<number, string>>({});
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
     loadProgramData();
@@ -125,6 +128,7 @@ export function DevelopmentMap() {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
+      setUserEmail(user.email || null);
       const { data } = await supabase
         .from("user_story_progress")
         .select("story_id, completed_at")
@@ -475,7 +479,8 @@ export function DevelopmentMap() {
         {/* Weekly Cartoon Reward */}
         {(() => {
           const weekProgress = getWeekProgress(selectedWeek);
-          const isUnlocked = weekProgress === 100;
+          const isAdmin = userEmail === "fomart94@yandex.ru";
+          const isUnlocked = weekProgress === 100 || isAdmin;
 
           return (
             <div className={`p-4 rounded-2xl border-2 ${
@@ -504,13 +509,14 @@ export function DevelopmentMap() {
                 </div>
                 <button
                   disabled={!isUnlocked}
+                  onClick={() => isUnlocked && router.push(`/create-cartoon?weekId=${selectedWeek.id}`)}
                   className={`px-4 py-3 rounded-xl font-bold text-sm transition-all ${
                     isUnlocked
                       ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90 shadow-lg"
                       : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }`}
                 >
-                  {isUnlocked ? "🎬 Watch Cartoon" : "🔒 Complete Week"}
+                  {isUnlocked ? "🎬 Create Cartoon" : "🔒 Complete Week"}
                 </button>
               </div>
             </div>
