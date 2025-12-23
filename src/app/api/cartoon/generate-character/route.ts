@@ -50,18 +50,30 @@ function buildCharacterPrompt(options: CharacterRequest): string {
   const eyeDesc = eyeColorDescriptions[options.eyeColor] || options.eyeColor;
   const skinDesc = skinColorDescriptions[options.skinColor] || options.skinColor;
 
-  return `Create a high-quality 3D Disney/Pixar-style character portrait of a cute ${genderWord} child (around 6-8 years old) with the following features:
-- ${hairDesc} hair, styled in a playful and age-appropriate way
-- ${eyeDesc} eyes, large and expressive in the Disney animation style
-- ${skinDesc} skin tone
-- Friendly, warm expression with a gentle smile
-- Soft, rounded facial features typical of Disney/Pixar child characters
-- High-quality 3D render with professional studio lighting
-- Clean, solid color background (soft gradient from light purple to pink)
-- Portrait orientation, showing head and shoulders
-- Wearing colorful, adventure-ready clothing
+  return `Create a high-quality 3D Disney-style character of a cute ${genderWord} child (6-8 years old) with these EXACT features:
 
-Style reference: Similar to characters from Disney's Encanto, Coco, or Pixar's Inside Out. The character should look friendly, approachable, and ready for adventure. High detail, professional quality 3D animation style.`;
+REQUIRED APPEARANCE:
+- ${hairDesc} hair color
+- ${eyeDesc} eye color
+- ${skinDesc} skin tone
+
+STYLE REQUIREMENTS:
+- Hyper-realistic 3D Disney/Pixar animation style (like Encanto, Moana, Coco)
+- Large expressive eyes with detailed iris and reflections
+- Soft, rounded facial features with natural child proportions
+- Smooth, flawless skin texture with subtle subsurface scattering
+- Hair should have individual strand detail and natural flow
+- Warm, friendly expression with a gentle smile
+- Professional studio lighting with soft shadows
+- Clean gradient background (soft purple to pink)
+- Portrait shot showing head and shoulders
+- Colorful, age-appropriate adventure clothing
+
+QUALITY:
+- Ultra high detail, 8K quality render
+- Photorealistic 3D animation style
+- Cinema-quality lighting and rendering
+- The character should look like they belong in a modern Disney/Pixar animated film`;
 }
 
 export async function POST(request: NextRequest) {
