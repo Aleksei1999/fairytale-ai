@@ -416,12 +416,19 @@ export default function Home() {
             <div className="relative w-full max-w-[280px] sm:max-w-none">
               {/* Blue glow behind photo */}
               <div className="absolute inset-0 bg-gradient-to-br from-sky-300/50 to-blue-500/30 rounded-full blur-3xl scale-110" />
-              {/* Animated WebP */}
+              {/* Animated WebP with placeholder */}
               <div className="relative">
+                {/* Static placeholder */}
+                <img
+                  src="/images/hero-photo.jpg"
+                  alt=""
+                  className="w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
+                />
+                {/* Animated WebP overlay */}
                 <img
                   src="/images/ezgif-450c48727913ead7.webp"
                   alt="FairyTale AI Demo"
-                  className="w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
+                  className="absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl shadow-2xl object-cover"
                   loading="eager"
                 />
               </div>
@@ -454,8 +461,8 @@ export default function Home() {
 
         <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
           {/* Problem 1 - Useless Screen */}
-          <div className="glass-card p-5 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+          <div className="glass-card p-5 sm:p-6 hover:scale-[1.02] transition-transform duration-300 group overflow-hidden">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
               <span className="text-2xl">📺</span>
             </div>
             <h3 className="font-display font-bold text-gray-900 mb-2 text-base sm:text-lg">Useless Screen Time</h3>
@@ -465,8 +472,8 @@ export default function Home() {
           </div>
 
           {/* Problem 2 - Chaos instead of System */}
-          <div className="glass-card p-5 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+          <div className="glass-card p-5 sm:p-6 hover:scale-[1.02] transition-transform duration-300 group overflow-hidden">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
               <span className="text-2xl">📉</span>
             </div>
             <h3 className="font-display font-bold text-gray-900 mb-2 text-base sm:text-lg">Chaos Instead of System</h3>
@@ -476,8 +483,8 @@ export default function Home() {
           </div>
 
           {/* Problem 3 - I'll have time later */}
-          <div className="glass-card p-5 sm:p-6 hover:scale-105 transition-transform duration-300 group">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+          <div className="glass-card p-5 sm:p-6 hover:scale-[1.02] transition-transform duration-300 group overflow-hidden">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
               <span className="text-2xl">💔</span>
             </div>
             <h3 className="font-display font-bold text-gray-900 mb-2 text-base sm:text-lg">The &quot;I&apos;ll Have Time&quot; Illusion</h3>
