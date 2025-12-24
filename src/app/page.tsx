@@ -416,22 +416,12 @@ export default function Home() {
             <div className="relative w-full max-w-[280px] sm:max-w-none">
               {/* Blue glow behind photo */}
               <div className="absolute inset-0 bg-gradient-to-br from-sky-300/50 to-blue-500/30 rounded-full blur-3xl scale-110" />
-              {/* Animated WebP with placeholder */}
-              <div className="relative">
-                {/* Static placeholder */}
-                <img
-                  src="/images/hero-photo.jpg"
-                  alt=""
-                  className="w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
-                />
-                {/* Animated WebP overlay */}
-                <img
-                  src="/images/ezgif-450c48727913ead7.webp"
-                  alt="FairyTale AI Demo"
-                  className="absolute top-0 left-0 w-full rounded-2xl sm:rounded-3xl shadow-2xl"
-                  loading="eager"
-                />
-              </div>
+              {/* Hero image */}
+              <img
+                src="/images/hero-photo.jpg"
+                alt="FairyTale AI"
+                className="relative w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
+              />
 
               {/* Floating labels */}
               <div className="absolute -top-4 -left-8 glass-card px-3 py-2 floating hidden md:block" style={{ animationDelay: "1s" }}>
@@ -1811,10 +1801,10 @@ export default function Home() {
 
             <MagneticButton
               onClick={() => openPaymentModal("yearly")}
-              className="block w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 py-3 rounded-full text-center font-semibold text-white text-sm shadow-lg hover:shadow-xl transition-all"
+              className="block w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 py-3 px-4 rounded-full text-center font-semibold text-white text-sm shadow-lg hover:shadow-xl transition-all whitespace-nowrap"
               strength={0.3}
             >
-              Become a Legend for $189
+              Get Yearly — $189
             </MagneticButton>
           </div>
         </div>
@@ -2171,7 +2161,7 @@ export default function Home() {
                 selectedPlan === "week"
                   ? "Try for $5"
                   : selectedPlan === "yearly"
-                    ? "Become a Legend — $189"
+                    ? "Get Yearly — $189"
                     : "Subscribe — $29/mo"
               )}
             </button>
