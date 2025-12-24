@@ -735,22 +735,59 @@ export default function StoryPage() {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={toggleAiAudio}
-                      className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
+                      className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform flex-shrink-0"
                     >
                       {isAiPlaying ? (
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                         </svg>
                       ) : (
-                        <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                       )}
                     </button>
                     <div className="flex-1">
-                      <div className="h-2 bg-purple-100 rounded-full overflow-hidden">
+                      {/* Equalizer bars when playing */}
+                      {isAiPlaying ? (
+                        <div className="flex items-end justify-center gap-1 h-8 mb-2">
+                          {[...Array(20)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-1.5 bg-gradient-to-t from-purple-500 to-pink-400 rounded-full"
+                              style={{
+                                height: `${Math.random() * 100}%`,
+                                animation: `equalizer 0.${3 + (i % 5)}s ease-in-out infinite alternate`,
+                                animationDelay: `${i * 0.05}s`
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex items-end justify-center gap-1 h-8 mb-2">
+                          {[...Array(20)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-1.5 bg-purple-200 rounded-full"
+                              style={{ height: `${20 + (i % 3) * 15}%` }}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      {/* Progress bar */}
+                      <div
+                        className="h-1.5 bg-purple-100 rounded-full overflow-hidden cursor-pointer"
+                        onClick={(e) => {
+                          if (aiAudioRef.current && aiAudioDuration) {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const percent = x / rect.width;
+                            aiAudioRef.current.currentTime = percent * aiAudioDuration;
+                          }
+                        }}
+                      >
                         <div
-                          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all"
+                          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-100"
                           style={{ width: aiAudioDuration ? `${(aiAudioProgress / aiAudioDuration) * 100}%` : "0%" }}
                         />
                       </div>
@@ -760,6 +797,12 @@ export default function StoryPage() {
                       </div>
                     </div>
                   </div>
+                  <style jsx>{`
+                    @keyframes equalizer {
+                      0% { height: 20%; }
+                      100% { height: 100%; }
+                    }
+                  `}</style>
                 </div>
               ) : (
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
@@ -778,22 +821,59 @@ export default function StoryPage() {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={toggleMusic}
-                      className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
+                      className="w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform flex-shrink-0"
                     >
                       {isMusicPlaying ? (
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                         </svg>
                       ) : (
-                        <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                       )}
                     </button>
                     <div className="flex-1">
-                      <div className="h-2 bg-green-100 rounded-full overflow-hidden">
+                      {/* Equalizer bars */}
+                      {isMusicPlaying ? (
+                        <div className="flex items-end justify-center gap-1 h-8 mb-2">
+                          {[...Array(20)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-1.5 bg-gradient-to-t from-green-500 to-emerald-400 rounded-full"
+                              style={{
+                                height: `${Math.random() * 100}%`,
+                                animation: `equalizer-green 0.${3 + (i % 5)}s ease-in-out infinite alternate`,
+                                animationDelay: `${i * 0.05}s`
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex items-end justify-center gap-1 h-8 mb-2">
+                          {[...Array(20)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-1.5 bg-green-200 rounded-full"
+                              style={{ height: `${20 + (i % 3) * 15}%` }}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      {/* Progress bar */}
+                      <div
+                        className="h-1.5 bg-green-100 rounded-full overflow-hidden cursor-pointer"
+                        onClick={(e) => {
+                          if (musicRef.current && musicDuration) {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const percent = x / rect.width;
+                            musicRef.current.currentTime = percent * musicDuration;
+                          }
+                        }}
+                      >
                         <div
-                          className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all"
+                          className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-100"
                           style={{ width: musicDuration ? `${(musicProgress / musicDuration) * 100}%` : "0%" }}
                         />
                       </div>
@@ -803,9 +883,12 @@ export default function StoryPage() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-xs text-green-600 mt-2 text-center">
-                    {musicUrl ? "AI-generated music for this story" : "Play relaxing music while reading"}
-                  </p>
+                  <style jsx>{`
+                    @keyframes equalizer-green {
+                      0% { height: 20%; }
+                      100% { height: 100%; }
+                    }
+                  `}</style>
                 </div>
               )}
 
