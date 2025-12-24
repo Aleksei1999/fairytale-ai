@@ -18,30 +18,20 @@ interface CharacterRequest {
 }
 
 const hairColorDescriptions: Record<string, string> = {
-  blonde: "golden blonde",
-  brown: "rich brown",
-  black: "jet black",
-  red: "vibrant red",
-  auburn: "warm auburn",
-  gray: "silver gray",
+  blonde: "light blonde/white",
+  brown: "brown",
+  black: "black",
 };
 
 const eyeColorDescriptions: Record<string, string> = {
-  blue: "bright blue",
-  green: "emerald green",
-  brown: "warm brown",
-  hazel: "hazel",
-  gray: "steel gray",
-  amber: "golden amber",
+  brown: "brown",
+  green: "green",
+  blue: "blue",
 };
 
 const skinColorDescriptions: Record<string, string> = {
-  fair: "fair porcelain",
-  light: "light",
-  medium: "medium",
-  olive: "olive",
-  tan: "tan",
-  dark: "dark",
+  light: "light/fair Caucasian",
+  dark: "dark/black African",
 };
 
 function buildCharacterPrompt(options: CharacterRequest): string {
@@ -50,30 +40,23 @@ function buildCharacterPrompt(options: CharacterRequest): string {
   const eyeDesc = eyeColorDescriptions[options.eyeColor] || options.eyeColor;
   const skinDesc = skinColorDescriptions[options.skinColor] || options.skinColor;
 
-  return `Create a high-quality 3D Disney-style character of a cute ${genderWord} child (6-8 years old) with these EXACT features:
+  return `Create a 3D Disney/Pixar style character portrait of a cute ${genderWord} child (6-8 years old).
 
-REQUIRED APPEARANCE:
-- ${hairDesc} hair color
-- ${eyeDesc} eye color
-- ${skinDesc} skin tone
+CRITICAL - MUST HAVE THESE EXACT FEATURES:
+- SKIN: ${skinDesc} skin tone (THIS IS VERY IMPORTANT - the skin color MUST be ${skinDesc})
+- HAIR: ${hairDesc} hair
+- EYES: ${eyeDesc} eyes
 
-STYLE REQUIREMENTS:
-- Hyper-realistic 3D Disney/Pixar animation style (like Encanto, Moana, Coco)
-- Large expressive eyes with detailed iris and reflections
-- Soft, rounded facial features with natural child proportions
-- Smooth, flawless skin texture with subtle subsurface scattering
-- Hair should have individual strand detail and natural flow
-- Warm, friendly expression with a gentle smile
-- Professional studio lighting with soft shadows
-- Clean gradient background (soft purple to pink)
-- Portrait shot showing head and shoulders
-- Colorful, age-appropriate adventure clothing
-
-QUALITY:
-- Ultra high detail, 8K quality render
-- Photorealistic 3D animation style
-- Cinema-quality lighting and rendering
-- The character should look like they belong in a modern Disney/Pixar animated film`;
+STYLE:
+- Modern Disney/Pixar 3D animation style (like Encanto, Moana, Coco)
+- Large expressive eyes with reflections
+- Soft rounded child face features
+- Warm friendly smile
+- Clean soft gradient background (purple to pink)
+- Head and shoulders portrait
+- Colorful adventure clothing
+- Professional studio lighting
+- Ultra high quality 8K render`;
 }
 
 export async function POST(request: NextRequest) {

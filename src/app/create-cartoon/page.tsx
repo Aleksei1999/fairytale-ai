@@ -16,30 +16,20 @@ interface CharacterOptions {
 }
 
 const hairColors = [
-  { id: "blonde", name: "Blonde", color: "#F4D03F" },
+  { id: "blonde", name: "Blonde", color: "#F5F5DC" },
   { id: "brown", name: "Brown", color: "#8B4513" },
   { id: "black", name: "Black", color: "#1C1C1C" },
-  { id: "red", name: "Red", color: "#C0392B" },
-  { id: "auburn", name: "Auburn", color: "#A52A2A" },
-  { id: "gray", name: "Gray", color: "#808080" },
 ];
 
 const eyeColors = [
-  { id: "blue", name: "Blue", color: "#3498DB" },
-  { id: "green", name: "Green", color: "#27AE60" },
   { id: "brown", name: "Brown", color: "#8B4513" },
-  { id: "hazel", name: "Hazel", color: "#9A7B4F" },
-  { id: "gray", name: "Gray", color: "#7F8C8D" },
-  { id: "amber", name: "Amber", color: "#FFBF00" },
+  { id: "green", name: "Green", color: "#27AE60" },
+  { id: "blue", name: "Blue", color: "#3498DB" },
 ];
 
 const skinColors = [
-  { id: "fair", name: "Fair", color: "#FDEBD0" },
-  { id: "light", name: "Light", color: "#F5CBA7" },
-  { id: "medium", name: "Medium", color: "#D4A574" },
-  { id: "olive", name: "Olive", color: "#C9A86C" },
-  { id: "tan", name: "Tan", color: "#A67B5B" },
-  { id: "dark", name: "Dark", color: "#6F4E37" },
+  { id: "light", name: "Light", color: "#FDEBD0" },
+  { id: "dark", name: "Dark", color: "#4A3728" },
 ];
 
 function CreateCartoonContent() {
