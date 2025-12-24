@@ -281,34 +281,17 @@ function CreatePageContent() {
       // Update local star balance
       setUserStars(voiceData.starsRemaining);
 
-      // Step 2: Mix voice with music if music was generated
-      let finalAudioBase64 = voiceData.audio.base64;
-
-      if (musicUrl) {
-        setGenerationStatus("Mixing audio tracks...");
-        try {
-          const mixResponse = await fetch("/api/mix-audio", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              voiceBase64: voiceData.audio.base64,
-              musicUrl: musicUrl,
-            }),
-          });
-          const mixData = await mixResponse.json();
-          if (mixData.success) {
-            finalAudioBase64 = mixData.audio.base64;
-          }
-        } catch (mixErr) {
-          console.error("Mix error, using voice only:", mixErr);
-          // Continue with voice only if mixing fails
-        }
-      }
-
       // Save audio and personalized text to localStorage for story page
-      localStorage.setItem("storyAudio", finalAudioBase64);
+      localStorage.setItem("storyAudio", voiceData.audio.base64);
       localStorage.setItem("storyPersonalizedText", personalizedText);
       localStorage.setItem("storyMode", "ai-voice");
+
+      // Save music URL separately (will be played as background on story page)
+      if (musicUrl) {
+        localStorage.setItem("storyMusicUrl", musicUrl);
+      } else {
+        localStorage.removeItem("storyMusicUrl");
+      }
 
       // Navigate to story page
       router.push(`/story/${storyId}`);

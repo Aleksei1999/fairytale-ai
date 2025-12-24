@@ -283,15 +283,24 @@ export default function StoryPage() {
     }
   }
 
-  // AI Audio player controls
+  // AI Audio player controls (also controls background music)
   function toggleAiAudio() {
     if (!aiAudioRef.current) return;
 
     if (isAiPlaying) {
       aiAudioRef.current.pause();
+      // Also pause background music
+      if (musicRef.current) {
+        musicRef.current.pause();
+      }
       setIsAiPlaying(false);
     } else {
       aiAudioRef.current.play();
+      // Also play background music at lower volume
+      if (musicRef.current && musicUrl) {
+        musicRef.current.volume = 0.25; // 25% volume for background
+        musicRef.current.play();
+      }
       setIsAiPlaying(true);
     }
   }
@@ -319,6 +328,11 @@ export default function StoryPage() {
       audio.onended = () => {
         setIsAiPlaying(false);
         setAiAudioProgress(0);
+        // Also stop background music when voice ends
+        if (musicRef.current) {
+          musicRef.current.pause();
+          musicRef.current.currentTime = 0;
+        }
       };
     }
   }, [aiAudioBase64]);
@@ -693,18 +707,31 @@ export default function StoryPage() {
                 </p>
               </div>
 
-              {/* Audio Player - AI Voice or Background Music */}
+              {/* Audio Player - AI Voice with hidden background music, or just Background Music */}
               {storyMode === "ai-voice" && aiAudioBase64 ? (
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
                   <div className="flex items-center gap-2 mb-3">
                     <img src="/images/icons/microphone.png" alt="" className="w-5 h-5" />
                     <span className="text-sm font-medium text-purple-800">AI Narration</span>
+                    {musicUrl && (
+                      <span className="text-xs text-purple-500 ml-auto">+ background music</span>
+                    )}
                   </div>
+                  {/* AI Voice audio */}
                   <audio
                     ref={aiAudioRef}
                     src={`data:audio/mpeg;base64,${aiAudioBase64}`}
                     className="hidden"
                   />
+                  {/* Hidden background music that plays with voice */}
+                  {musicUrl && (
+                    <audio
+                      ref={musicRef}
+                      src={musicUrl}
+                      className="hidden"
+                      loop
+                    />
+                  )}
                   <div className="flex items-center gap-4">
                     <button
                       onClick={toggleAiAudio}
