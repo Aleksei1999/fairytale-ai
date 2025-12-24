@@ -6,6 +6,9 @@ import { join } from "path";
 import { tmpdir } from "os";
 import { randomUUID } from "crypto";
 
+// Увеличиваем таймаут до 60 секунд для микширования аудио
+export const maxDuration = 60;
+
 const execAsync = promisify(exec);
 
 // Микширование голоса диктора с фоновой музыкой

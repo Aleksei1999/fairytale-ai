@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
+// Увеличиваем таймаут до 60 секунд для генерации длинных аудио
+export const maxDuration = 60;
+
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
 const STAR_COST_AUDIO = 1; // Cost in stars for AI voice generation
 
