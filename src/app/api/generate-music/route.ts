@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Увеличиваем таймаут до 120 секунд для генерации музыки (Udio может работать долго)
 export const maxDuration = 120;
 
-const PIAPI_KEY = process.env.PIAPI_API_KEY;
+const PIAPI_KEY = process.env.PIAPI_KEY;
 const PIAPI_BASE_URL = "https://api.piapi.ai/api/v1";
 
 // Промпты для музыки под разные темы сказок (для Udio)
