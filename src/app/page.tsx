@@ -1918,7 +1918,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
               <a href="#" className="hover:text-blue-600 transition-colors">Privacy</a>
               <a href="#" className="hover:text-blue-600 transition-colors">Terms</a>
-              <a href="#" className="hover:text-blue-600 transition-colors">Contact</a>
+              <a href="mailto:hello@app.net.ru" className="hover:text-blue-600 transition-colors">Contact</a>
             </div>
             <p className="text-xs sm:text-sm text-gray-400">
               © 2025 FairyTaleAI
