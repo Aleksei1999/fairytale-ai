@@ -420,7 +420,7 @@ export default function Home() {
               <img
                 src="/images/hero-photo.jpg"
                 alt="FairyTale AI"
-                className="relative w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
+                className="relative w-full sm:w-[400px] md:w-[500px] lg:w-[550px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
               />
 
               {/* Floating labels */}
