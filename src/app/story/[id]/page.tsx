@@ -298,7 +298,7 @@ export default function StoryPage() {
       aiAudioRef.current.play();
       // Also play background music at lower volume
       if (musicRef.current && musicUrl) {
-        musicRef.current.volume = 0.15; // 15% volume for background
+        musicRef.current.volume = 0.10; // 10% volume for background
         musicRef.current.play();
       }
       setIsAiPlaying(true);
