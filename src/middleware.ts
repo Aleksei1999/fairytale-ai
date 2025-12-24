@@ -28,7 +28,37 @@ export async function middleware(request: NextRequest) {
   )
 
   // Refresh session if expired
-  await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Check if user exists in profiles (only for protected routes)
+  if (user && (request.nextUrl.pathname.startsWith('/api/') ||
+               request.nextUrl.pathname.startsWith('/dashboard') ||
+               request.nextUrl.pathname.startsWith('/create') ||
+               request.nextUrl.pathname.startsWith('/story') ||
+               request.nextUrl.pathname.startsWith('/buy-'))) {
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('email', user.email)
+      .single()
+
+    // If user not in profiles, sign them out
+    if (!profile) {
+      await supabase.auth.signOut()
+
+      // For API routes, return 401
+      if (request.nextUrl.pathname.startsWith('/api/')) {
+        return NextResponse.json(
+          { error: 'User not found', success: false },
+          { status: 401 }
+        )
+      }
+
+      // For pages, redirect to home
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
 
   return supabaseResponse
 }

@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { DevelopmentMap } from "@/components/DevelopmentMap";
 import Link from "next/link";
-import { MagneticButton, MagneticLink } from "@/components/MagneticButton";
 import gsap from "gsap";
 
 // Animated counter component
@@ -233,10 +232,9 @@ export default function Dashboard() {
           {/* Actions */}
           <div ref={actionsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {/* Buy Story Credits */}
-            <MagneticButton
+            <button
               onClick={() => setShowPaymentModal(true)}
               className="glass-card p-6 hover:shadow-lg transition-shadow group text-left w-full"
-              strength={0.3}
             >
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -247,13 +245,12 @@ export default function Dashboard() {
                   <p className="text-gray-600 text-sm">Subscribe for more stories</p>
                 </div>
               </div>
-            </MagneticButton>
+            </button>
 
             {/* Buy Cartoon Credits */}
-            <MagneticLink
+            <Link
               href="/buy-cartoons"
               className="glass-card p-6 hover:shadow-lg transition-shadow group border-2 border-purple-200 block"
-              strength={0.3}
             >
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -264,7 +261,7 @@ export default function Dashboard() {
                   <p className="text-gray-600 text-sm">Turn stories into animated videos</p>
                 </div>
               </div>
-            </MagneticLink>
+            </Link>
           </div>
 
           {/* Development Map */}

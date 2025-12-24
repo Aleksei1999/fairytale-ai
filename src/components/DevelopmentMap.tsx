@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { MagneticButton } from "@/components/MagneticButton";
 
 interface Story {
   id: number;
@@ -262,7 +263,7 @@ export function DevelopmentMap() {
         {/* Block Pills */}
         <div className="flex flex-wrap gap-2">
           {blocks.map((block) => (
-            <button
+            <MagneticButton
               key={block.id}
               onClick={() => {
                 setSelectedBlock(block);
@@ -274,10 +275,11 @@ export function DevelopmentMap() {
                   ? `bg-gradient-to-r ${block.color} text-white shadow-lg`
                   : "bg-white/50 text-gray-700 hover:bg-white"
               }`}
+              strength={0.4}
             >
               <span className="mr-1">{block.icon}</span>
               Block {block.order_num}
-            </button>
+            </MagneticButton>
           ))}
         </div>
       </div>
