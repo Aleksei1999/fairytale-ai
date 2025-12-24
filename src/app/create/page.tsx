@@ -38,8 +38,10 @@ function CreatePageContent() {
   const [loadingStory, setLoadingStory] = useState(false);
   const [personalizedText, setPersonalizedText] = useState<string>("");
 
-  // Audio generation state
+  // Audio/Music generation state
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [isGeneratingMusic, setIsGeneratingMusic] = useState(false);
+  const [generationStatus, setGenerationStatus] = useState("");
 
   // Stars balance
   const [userStars, setUserStars] = useState<number>(0);
@@ -213,7 +215,30 @@ function CreatePageContent() {
     setStep(2);
   };
 
-  // Generate AI narration and go to story page
+  // Helper: Generate background music
+  const generateMusic = async (): Promise<string | null> => {
+    try {
+      setGenerationStatus("Generating background music...");
+      const response = await fetch("/api/generate-music", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          topic: programStory?.therapeutic_goal || "custom",
+          storyTitle: programStory?.title,
+        }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        return data.music.url;
+      }
+      return null;
+    } catch (err) {
+      console.error("Music generation error:", err);
+      return null;
+    }
+  };
+
+  // Generate AI narration with music and go to story page
   const generateNarrationAndNavigate = async () => {
     if (!personalizedText || !storyId || !user?.email) return;
 
@@ -225,48 +250,110 @@ function CreatePageContent() {
 
     setIsGeneratingAudio(true);
     setNotEnoughStars(false);
-    try {
-      const response = await fetch("/api/generate-audio", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: personalizedText,
-          voiceId: "default"
-        }),
-      });
 
-      const data = await response.json();
-      if (data.success) {
-        // Update local star balance
-        setUserStars(data.starsRemaining);
-        // Save audio and personalized text to localStorage for story page
-        localStorage.setItem("storyAudio", data.audio.base64);
-        localStorage.setItem("storyPersonalizedText", personalizedText);
-        localStorage.setItem("storyMode", "ai-voice");
-        // Navigate to story page
-        router.push(`/story/${storyId}`);
-      } else if (response.status === 402) {
-        // Not enough stars
-        setNotEnoughStars(true);
-        setUserStars(data.current || 0);
-      } else {
-        alert("Could not generate narration. Please try again.");
+    try {
+      // Step 1: Generate music and voice in parallel
+      setGenerationStatus("Generating voice and music...");
+
+      const [voiceResponse, musicUrl] = await Promise.all([
+        fetch("/api/generate-audio", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: personalizedText,
+            voiceId: "default"
+          }),
+        }),
+        generateMusic(),
+      ]);
+
+      const voiceData = await voiceResponse.json();
+
+      if (!voiceData.success) {
+        if (voiceResponse.status === 402) {
+          setNotEnoughStars(true);
+          setUserStars(voiceData.current || 0);
+          return;
+        }
+        throw new Error("Voice generation failed");
       }
+
+      // Update local star balance
+      setUserStars(voiceData.starsRemaining);
+
+      // Step 2: Mix voice with music if music was generated
+      let finalAudioBase64 = voiceData.audio.base64;
+
+      if (musicUrl) {
+        setGenerationStatus("Mixing audio tracks...");
+        try {
+          const mixResponse = await fetch("/api/mix-audio", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              voiceBase64: voiceData.audio.base64,
+              musicUrl: musicUrl,
+            }),
+          });
+          const mixData = await mixResponse.json();
+          if (mixData.success) {
+            finalAudioBase64 = mixData.audio.base64;
+          }
+        } catch (mixErr) {
+          console.error("Mix error, using voice only:", mixErr);
+          // Continue with voice only if mixing fails
+        }
+      }
+
+      // Save audio and personalized text to localStorage for story page
+      localStorage.setItem("storyAudio", finalAudioBase64);
+      localStorage.setItem("storyPersonalizedText", personalizedText);
+      localStorage.setItem("storyMode", "ai-voice");
+
+      // Navigate to story page
+      router.push(`/story/${storyId}`);
+
     } catch (err) {
       console.error("Audio generation error:", err);
-      alert("Connection error. Please try again.");
+      alert("Could not generate narration. Please try again.");
     } finally {
       setIsGeneratingAudio(false);
+      setGenerationStatus("");
     }
   };
 
-  // Navigate to story page in read mode
-  const goToReadMode = () => {
+  // Navigate to story page in read mode with generated music
+  const goToReadMode = async () => {
     if (!storyId) return;
-    localStorage.setItem("storyPersonalizedText", personalizedText);
-    localStorage.setItem("storyMode", "read");
-    localStorage.removeItem("storyAudio"); // Clear any previous audio
-    router.push(`/story/${storyId}`);
+
+    setIsGeneratingMusic(true);
+    setGenerationStatus("Generating background music...");
+
+    try {
+      // Generate music for read mode
+      const musicUrl = await generateMusic();
+
+      localStorage.setItem("storyPersonalizedText", personalizedText);
+      localStorage.setItem("storyMode", "read");
+      localStorage.removeItem("storyAudio"); // Clear any previous audio
+
+      if (musicUrl) {
+        localStorage.setItem("storyMusicUrl", musicUrl);
+      } else {
+        localStorage.removeItem("storyMusicUrl");
+      }
+
+      router.push(`/story/${storyId}`);
+    } catch (err) {
+      console.error("Error preparing read mode:", err);
+      // Navigate anyway even if music generation fails
+      localStorage.setItem("storyPersonalizedText", personalizedText);
+      localStorage.setItem("storyMode", "read");
+      router.push(`/story/${storyId}`);
+    } finally {
+      setIsGeneratingMusic(false);
+      setGenerationStatus("");
+    }
   };
 
   // Show loading while checking auth
@@ -580,25 +667,49 @@ function CreatePageContent() {
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-4">
+                {/* Generation Status */}
+                {generationStatus && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+                    <div className="flex items-center justify-center gap-2 text-blue-700">
+                      <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                      <span>{generationStatus}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex gap-4">
                   {/* Read Myself Button */}
                   <button
                     onClick={goToReadMode}
-                    className="flex-1 py-4 rounded-2xl font-semibold text-center transition-all bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90 inline-flex flex-col items-center justify-center gap-1"
+                    disabled={isGeneratingMusic || isGeneratingAudio}
+                    className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
+                      isGeneratingMusic || isGeneratingAudio
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90"
+                    }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <img src="/images/icons/book.png" alt="" className="w-6 h-6" />
-                      <span>Read It Myself</span>
-                    </div>
-                    <span className="text-xs opacity-80">Free</span>
+                    {isGeneratingMusic ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Preparing...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <img src="/images/icons/book.png" alt="" className="w-6 h-6" />
+                          <span>Read It Myself</span>
+                        </div>
+                        <span className="text-xs opacity-80">With background music</span>
+                      </>
+                    )}
                   </button>
 
                   {/* Generate AI Narration Button */}
                   <button
                     onClick={generateNarrationAndNavigate}
-                    disabled={isGeneratingAudio || !personalizedText}
+                    disabled={isGeneratingAudio || isGeneratingMusic || !personalizedText}
                     className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
-                      isGeneratingAudio || !personalizedText
+                      isGeneratingAudio || isGeneratingMusic || !personalizedText
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                         : "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg hover:opacity-90"
                     }`}
@@ -612,7 +723,7 @@ function CreatePageContent() {
                       <>
                         <div className="flex items-center gap-2">
                           <img src="/images/icons/microphone.png" alt="" className="w-5 h-5" />
-                          <span>Listen with AI Voice</span>
+                          <span>AI Narrator</span>
                         </div>
                         <span className="text-xs opacity-80 flex items-center gap-1">
                           <img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {STAR_COST_AUDIO} Star

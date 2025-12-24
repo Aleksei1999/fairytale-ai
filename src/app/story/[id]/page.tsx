@@ -70,6 +70,7 @@ export default function StoryPage() {
   const [storyMode, setStoryMode] = useState<"read" | "ai-voice">("read");
   const [personalizedText, setPersonalizedText] = useState<string>("");
   const [aiAudioBase64, setAiAudioBase64] = useState<string | null>(null);
+  const [musicUrl, setMusicUrl] = useState<string | null>(null);
 
   // AI Audio player state
   const [isAiPlaying, setIsAiPlaying] = useState(false);
@@ -273,6 +274,12 @@ export default function StoryPage() {
     const savedAudio = localStorage.getItem("storyAudio");
     if (savedAudio) {
       setAiAudioBase64(savedAudio);
+    }
+
+    // Load generated music URL for read mode
+    const savedMusicUrl = localStorage.getItem("storyMusicUrl");
+    if (savedMusicUrl) {
+      setMusicUrl(savedMusicUrl);
     }
   }
 
@@ -731,11 +738,13 @@ export default function StoryPage() {
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
                   <div className="flex items-center gap-2 mb-3">
                     <img src="/images/icons/moon.png" alt="" className="w-5 h-5" />
-                    <span className="text-sm font-medium text-green-800">Background Music</span>
+                    <span className="text-sm font-medium text-green-800">
+                      {musicUrl ? "Generated Background Music" : "Background Music"}
+                    </span>
                   </div>
                   <audio
                     ref={musicRef}
-                    src="/audio/story-music.mp3"
+                    src={musicUrl || "/audio/story-music.mp3"}
                     className="hidden"
                     loop
                   />
@@ -768,7 +777,7 @@ export default function StoryPage() {
                     </div>
                   </div>
                   <p className="text-xs text-green-600 mt-2 text-center">
-                    Play relaxing music while reading the story
+                    {musicUrl ? "AI-generated music for this story" : "Play relaxing music while reading"}
                   </p>
                 </div>
               )}

@@ -1,25 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SUNO_API_KEY = process.env.SUNO_API_KEY;
-const SUNO_API_URL = process.env.SUNO_API_URL || "https://api.sunoapi.org";
+const PIAPI_KEY = process.env.PIAPI_API_KEY;
+const PIAPI_BASE_URL = "https://api.piapi.ai/api/v1";
 
-// Промпты для музыки под разные темы сказок (для Suno)
+// Промпты для музыки под разные темы сказок (для Udio)
 const MUSIC_PROMPTS: Record<string, string> = {
-  teeth: "gentle lullaby, soft piano, magical chimes, children's music, calming, bedtime story background, instrumental",
-  sleep: "dreamy lullaby, soft strings, music box melody, sleepy, peaceful, nighttime, children's instrumental, very calm",
-  food: "playful cheerful melody, xylophone, light and happy, children's music, fun kitchen vibes, instrumental",
-  "fear-dark": "magical and reassuring, soft orchestral, twinkling stars, gentle courage theme, children's instrumental",
-  "fear-doctor": "brave adventure theme, soft and encouraging, gentle brass, heroic but calm, children's instrumental",
-  sharing: "warm friendly melody, acoustic guitar, happy together, friendship theme, children's instrumental",
-  toys: "playful bouncy tune, toy piano, music box, organizing fun, light and cheerful, children's instrumental",
-  gadgets: "nature sounds mixed with soft melody, acoustic, outdoor adventure, discovery theme, children's instrumental",
-  siblings: "sweet family melody, warm strings, love and harmony, gentle bonding theme, children's instrumental",
-  kindergarten: "bright morning melody, cheerful flute, new adventures, exciting but gentle, children's instrumental",
-  custom: "magical fairy tale melody, soft orchestral, enchanting, children's story background, instrumental",
+  teeth: "gentle lullaby, soft piano, magical chimes, children's music, calming, bedtime story background, instrumental, no vocals",
+  sleep: "dreamy lullaby, soft strings, music box melody, sleepy, peaceful, nighttime, children's instrumental, very calm, no vocals",
+  food: "playful cheerful melody, xylophone, light and happy, children's music, fun kitchen vibes, instrumental, no vocals",
+  "fear-dark": "magical and reassuring, soft orchestral, twinkling stars, gentle courage theme, children's instrumental, no vocals",
+  "fear-doctor": "brave adventure theme, soft and encouraging, gentle brass, heroic but calm, children's instrumental, no vocals",
+  sharing: "warm friendly melody, acoustic guitar, happy together, friendship theme, children's instrumental, no vocals",
+  toys: "playful bouncy tune, toy piano, music box, organizing fun, light and cheerful, children's instrumental, no vocals",
+  gadgets: "nature sounds mixed with soft melody, acoustic, outdoor adventure, discovery theme, children's instrumental, no vocals",
+  siblings: "sweet family melody, warm strings, love and harmony, gentle bonding theme, children's instrumental, no vocals",
+  kindergarten: "bright morning melody, cheerful flute, new adventures, exciting but gentle, children's instrumental, no vocals",
+  emotions: "gentle emotional melody, soft piano and strings, introspective, calming, children's story background, no vocals",
+  friendship: "warm and joyful, ukulele and light percussion, playful friendship theme, children's music, no vocals",
+  confidence: "uplifting and encouraging, gentle orchestral, building confidence theme, positive, children's instrumental, no vocals",
+  custom: "magical fairy tale melody, soft orchestral, enchanting, children's story background, instrumental, whimsical, no vocals",
 };
 
-// Локальные royalty-free треки для разных настроений
-// Файлы в /public/music/
+// Локальные royalty-free треки для fallback
 const FALLBACK_MUSIC: Record<string, string> = {
   calm: "/music/calm.mp3",
   playful: "/music/playful.mp3",
@@ -27,7 +29,7 @@ const FALLBACK_MUSIC: Record<string, string> = {
   adventure: "/music/adventure.mp3",
 };
 
-// Маппинг тем на настроение музыки
+// Маппинг тем на настроение музыки (для fallback)
 const TOPIC_TO_MOOD: Record<string, string> = {
   teeth: "playful",
   sleep: "calm",
@@ -39,26 +41,29 @@ const TOPIC_TO_MOOD: Record<string, string> = {
   gadgets: "adventure",
   siblings: "calm",
   kindergarten: "adventure",
+  emotions: "calm",
+  friendship: "playful",
+  confidence: "adventure",
   custom: "magical",
 };
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { topic } = body;
+    const { topic, storyTitle } = body;
 
-    // Если Suno API настроен — используем его
-    if (SUNO_API_KEY && SUNO_API_KEY !== "your_suno_api_key_here") {
+    // Если PiAPI ключ настроен — используем Udio
+    if (PIAPI_KEY && PIAPI_KEY !== "your_piapi_key_here") {
       try {
-        const musicUrl = await generateWithSuno(topic);
+        const musicUrl = await generateWithUdio(topic, storyTitle);
         if (musicUrl) {
           return NextResponse.json({
             success: true,
-            music: { url: musicUrl, source: "suno" },
+            music: { url: musicUrl, source: "udio" },
           });
         }
       } catch (err) {
-        console.error("Suno generation failed, using fallback:", err);
+        console.error("Udio generation failed, using fallback:", err);
       }
     }
 
@@ -80,52 +85,85 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Генерация через Suno API
-async function generateWithSuno(topic: string): Promise<string | null> {
-  const musicPrompt = MUSIC_PROMPTS[topic] || MUSIC_PROMPTS.custom;
+// Генерация через Udio API (PiAPI)
+async function generateWithUdio(topic: string, storyTitle?: string): Promise<string | null> {
+  const basePrompt = MUSIC_PROMPTS[topic] || MUSIC_PROMPTS.custom;
+  const prompt = storyTitle
+    ? `${basePrompt}, background music for story "${storyTitle}"`
+    : basePrompt;
 
-  const response = await fetch(`${SUNO_API_URL}/api/generate`, {
+  // Создаём задачу на генерацию
+  const createResponse = await fetch(`${PIAPI_BASE_URL}/task`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${SUNO_API_KEY}`,
+      "X-API-Key": PIAPI_KEY || "",
     },
     body: JSON.stringify({
-      prompt: musicPrompt,
-      make_instrumental: true,
+      model: "music-u",
+      task_type: "generate_music",
+      input: {
+        prompt: prompt,
+        lyrics_type: "instrumental",
+        negative_tags: "vocals, singing, voice, lyrics, speech",
+      },
     }),
   });
 
-  if (!response.ok) {
-    throw new Error("Suno API request failed");
+  if (!createResponse.ok) {
+    const errorData = await createResponse.json();
+    console.error("PiAPI create task error:", errorData);
+    throw new Error("Failed to create music generation task");
   }
 
-  const data = await response.json();
-  const taskId = data.task_id || data.id;
+  const createData = await createResponse.json();
+  const taskId = createData.data?.task_id || createData.task_id;
 
   if (!taskId) {
-    return data.audio_url || data.url || null;
+    console.error("No task_id in response:", createData);
+    throw new Error("No task_id returned from PiAPI");
   }
 
-  // Polling для получения результата
+  // Polling для получения результата (макс 2 минуты)
   for (let i = 0; i < 60; i++) {
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const statusResponse = await fetch(`${SUNO_API_URL}/api/get?ids=${taskId}`, {
-      headers: { "Authorization": `Bearer ${SUNO_API_KEY}` },
+    const statusResponse = await fetch(`${PIAPI_BASE_URL}/task/${taskId}`, {
+      headers: {
+        "X-API-Key": PIAPI_KEY || "",
+      },
     });
 
-    const statusData = await statusResponse.json();
-    const task = Array.isArray(statusData) ? statusData[0] : statusData;
-
-    if (task.status === "complete" || task.audio_url) {
-      return task.audio_url || task.url;
+    if (!statusResponse.ok) {
+      console.error("PiAPI get task error:", await statusResponse.text());
+      continue;
     }
 
-    if (task.status === "failed") {
-      throw new Error("Suno generation failed");
+    const statusData = await statusResponse.json();
+    const task = statusData.data || statusData;
+    const status = task.status;
+
+    console.log(`Music generation status: ${status} (attempt ${i + 1})`);
+
+    if (status === "completed") {
+      // Получаем URL аудио из output
+      const audioUrl = task.output?.audio_url
+        || task.output?.audio?.[0]?.url
+        || task.output?.url
+        || task.audio_url;
+
+      if (audioUrl) {
+        return audioUrl;
+      }
+      console.error("No audio URL in completed task:", task);
+      throw new Error("No audio URL in completed task");
+    }
+
+    if (status === "failed") {
+      console.error("Music generation failed:", task.error);
+      throw new Error(task.error?.message || "Music generation failed");
     }
   }
 
-  throw new Error("Suno generation timeout");
+  throw new Error("Music generation timeout (2 minutes)");
 }

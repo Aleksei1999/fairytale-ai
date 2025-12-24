@@ -6,9 +6,10 @@
 ## Технологии
 - **Frontend:** Next.js 15, React, Tailwind CSS v4
 - **Backend:** Next.js API Routes, Supabase (PostgreSQL + Auth)
-- **AI:** OpenAI GPT-4o-mini (сказки), ElevenLabs (озвучка)
+- **AI:** OpenAI GPT-4o-mini (сказки), ElevenLabs (озвучка), Udio/PiAPI (музыка)
 - **Payments:** Lava.top API
 - **Мультики:** n8n workflow (внешний сервис)
+- **Audio:** ffmpeg (микширование голоса с музыкой)
 
 ## Система тарифов
 
@@ -127,6 +128,8 @@ src/
 │   ├── api/
 │   │   ├── generate-story/     # Генерация сказки (требует подписку)
 │   │   ├── generate-audio/     # Озвучка ElevenLabs (1 звезда)
+│   │   ├── generate-music/     # Генерация музыки через Udio/PiAPI
+│   │   ├── mix-audio/          # Микширование голоса с музыкой (ffmpeg)
 │   │   ├── request-cartoon/    # Запрос мультика (5 звёзд)
 │   │   ├── cartoon/
 │   │   │   └── generate-character/  # Генерация персонажа DALL-E 3
@@ -145,6 +148,25 @@ src/
 │   └── DevelopmentMap.tsx
 └── lib/
     └── supabase/
+```
+
+## Переменные окружения
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+# ElevenLabs (озвучка)
+ELEVENLABS_API_KEY=
+
+# PiAPI (генерация музыки через Udio)
+PIAPI_API_KEY=
+
+# OpenAI (DALL-E 3 для персонажей)
+OPENAI_API_KEY=
+
+# Lava.top (платежи)
+LAVA_SECRET_KEY=
 ```
 
 ## В планах (TODO)
