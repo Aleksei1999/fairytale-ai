@@ -38,6 +38,12 @@ export function PageLoader() {
           return prev + 10;
         });
       }, 200);
+
+      // Safety timeout - hide loader after 5 seconds max
+      setTimeout(() => {
+        setLoading(false);
+        setProgress(0);
+      }, 5000);
     };
 
     // Intercept link clicks
@@ -47,8 +53,8 @@ export function PageLoader() {
 
       if (link) {
         const href = link.getAttribute("href");
-        // Only trigger for internal navigation
-        if (href && href.startsWith("/") && !href.startsWith("//")) {
+        // Only trigger for internal navigation, skip auth routes (they redirect externally)
+        if (href && href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/api/auth")) {
           const currentPath = window.location.pathname + window.location.search;
           if (href !== currentPath) {
             handleStart();
