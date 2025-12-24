@@ -116,11 +116,13 @@ export async function POST(request: NextRequest) {
     }
 
     const isAdmin = userData.is_admin === true;
+    const currentCredits = userData.credits ?? 0;
 
-    if (!isAdmin && userData.credits < 1) {
+    // STRICT CHECK: Users with 0 or less credits cannot generate
+    if (!isAdmin && currentCredits < 1) {
       return NextResponse.json(
-        { success: false, error: "Insufficient credits" },
-        { status: 400 }
+        { success: false, error: "Insufficient credits. Please purchase credits first.", current: currentCredits },
+        { status: 402 }
       );
     }
 
@@ -164,10 +166,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Deduct credit (skip for admin)
-    if (!isAdmin && userData.credits > 0) {
+    if (!isAdmin) {
+      const newCredits = Math.max(0, currentCredits - 1); // Never go below 0
       await supabaseAdmin
         .from("profiles")
-        .update({ credits: userData.credits - 1 })
+        .update({ credits: newCredits })
         .eq("email", user.email);
     }
 

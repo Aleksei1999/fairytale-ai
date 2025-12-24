@@ -244,10 +244,11 @@ export async function POST(request: NextRequest) {
     const audioArrayBuffer = await response.arrayBuffer();
     const audioBase64 = Buffer.from(audioArrayBuffer).toString("base64");
 
-    // Deduct stars after successful generation
+    // Deduct stars after successful generation (never go below 0)
+    const newCredits = Math.max(0, currentStars - STAR_COST_AUDIO);
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({ credits: currentStars - STAR_COST_AUDIO })
+      .update({ credits: newCredits })
       .eq("email", user.email);
 
     if (updateError) {
