@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   keywords: ["fairy tales", "stories", "kids", "parents", "AI", "voice cloning", "bedtime stories"],
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg?v=2", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=2", sizes: "any" },
     ],
-    shortcut: "/favicon.ico",
-    apple: "/favicon.svg",
+    shortcut: "/favicon.ico?v=2",
+    apple: "/favicon.svg?v=2",
   },
 };
 

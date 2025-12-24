@@ -428,7 +428,7 @@ export default function Home() {
                 <img
                   src="/images/ezgif-450c48727913ead7.webp"
                   alt="FairyTale AI Demo"
-                  className="absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl shadow-2xl object-cover"
+                  className="absolute top-0 left-0 w-full rounded-2xl sm:rounded-3xl shadow-2xl"
                   loading="eager"
                 />
               </div>
