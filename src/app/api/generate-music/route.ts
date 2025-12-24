@@ -123,16 +123,13 @@ async function generateWithUdio(topic: string, storyTitle?: string): Promise<str
     console.log(`Music generation status: ${status} (attempt ${i + 1})`);
 
     if (status === "completed") {
-      // Получаем URL аудио из output
-      const audioUrl = task.output?.audio_url
-        || task.output?.audio?.[0]?.url
-        || task.output?.url
-        || task.audio_url;
+      // Udio возвращает songs array с song_path
+      const audioUrl = task.output?.songs?.[0]?.song_path;
 
       if (audioUrl) {
         return audioUrl;
       }
-      console.error("No audio URL in completed task:", task);
+      console.error("No audio URL in completed task:", JSON.stringify(task.output, null, 2));
       throw new Error("No audio URL in completed task");
     }
 
