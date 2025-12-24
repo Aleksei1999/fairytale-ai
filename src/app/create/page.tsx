@@ -215,8 +215,7 @@ function CreatePageContent() {
     setStep(2);
   };
 
-  // Helper: Generate background music
-  // Returns full URL for Udio-generated music, or null for fallback (local files)
+  // Helper: Generate background music via Udio
   const generateMusic = async (): Promise<string | null> => {
     try {
       setGenerationStatus("Generating background music...");
@@ -229,13 +228,7 @@ function CreatePageContent() {
         }),
       });
       const data = await response.json();
-      if (data.success && data.music) {
-        // Only return URL if it's from Udio (full URL), not fallback (relative path)
-        if (data.music.source === "udio" && data.music.url.startsWith("http")) {
-          return data.music.url;
-        }
-        // For fallback, return the relative path - it will work in browser audio player
-        // but won't be used for server-side mixing
+      if (data.success && data.music?.url) {
         return data.music.url;
       }
       return null;

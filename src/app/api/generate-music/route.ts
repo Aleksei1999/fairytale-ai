@@ -24,59 +24,33 @@ const MUSIC_PROMPTS: Record<string, string> = {
   custom: "magical fairy tale melody, soft orchestral, enchanting, children's story background, instrumental, whimsical, no vocals",
 };
 
-// Локальные royalty-free треки для fallback
-const FALLBACK_MUSIC: Record<string, string> = {
-  calm: "/music/calm.mp3",
-  playful: "/music/playful.mp3",
-  magical: "/music/magical.mp3",
-  adventure: "/music/adventure.mp3",
-};
-
-// Маппинг тем на настроение музыки (для fallback)
-const TOPIC_TO_MOOD: Record<string, string> = {
-  teeth: "playful",
-  sleep: "calm",
-  food: "playful",
-  "fear-dark": "magical",
-  "fear-doctor": "adventure",
-  sharing: "playful",
-  toys: "playful",
-  gadgets: "adventure",
-  siblings: "calm",
-  kindergarten: "adventure",
-  emotions: "calm",
-  friendship: "playful",
-  confidence: "adventure",
-  custom: "magical",
-};
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { topic, storyTitle } = body;
 
-    // Если PiAPI ключ настроен — используем Udio
-    if (PIAPI_KEY && PIAPI_KEY !== "your_piapi_key_here") {
-      try {
-        const musicUrl = await generateWithUdio(topic, storyTitle);
-        if (musicUrl) {
-          return NextResponse.json({
-            success: true,
-            music: { url: musicUrl, source: "udio" },
-          });
-        }
-      } catch (err) {
-        console.error("Udio generation failed, using fallback:", err);
-      }
+    // Проверяем наличие PiAPI ключа
+    if (!PIAPI_KEY || PIAPI_KEY === "your_piapi_key_here") {
+      return NextResponse.json({
+        success: false,
+        error: "Music generation not configured (no PIAPI_API_KEY)",
+      });
     }
 
-    // Fallback: используем готовые треки
-    const mood = TOPIC_TO_MOOD[topic] || "magical";
-    const fallbackUrl = FALLBACK_MUSIC[mood] || FALLBACK_MUSIC.magical;
+    // Генерируем музыку через Udio
+    const musicUrl = await generateWithUdio(topic, storyTitle);
+
+    if (musicUrl) {
+      return NextResponse.json({
+        success: true,
+        music: { url: musicUrl, source: "udio" },
+      });
+    }
 
     return NextResponse.json({
-      success: true,
-      music: { url: fallbackUrl, source: "fallback" },
+      success: false,
+      error: "Music generation failed",
     });
 
   } catch (error) {
