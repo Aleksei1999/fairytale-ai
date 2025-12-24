@@ -4,6 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { AuthModal } from "@/components/AuthModal";
+import { useScrollAnimations } from "@/components/ScrollAnimations";
+import { MagneticLink, MagneticButton } from "@/components/MagneticButton";
+import { AnimatedText, AnimatedWords, AnimatedLine } from "@/components/AnimatedText";
 
 export default function Home() {
   const router = useRouter();
@@ -25,6 +28,9 @@ export default function Home() {
   const [audioDuration, setAudioDuration] = useState(0);
   const [navigatingToDashboard, setNavigatingToDashboard] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Initialize GSAP scroll animations
+  useScrollAnimations();
 
   const audioSources = {
     mom: "/audio/mom.MP3",
@@ -199,7 +205,7 @@ export default function Home() {
       )}
 
       {/* Decorative background elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-20 left-10 w-64 h-64 bg-sky-200/30 rounded-full blur-3xl" />
         <div className="absolute top-40 right-20 w-96 h-96 bg-sky-300/20 rounded-full blur-3xl" />
         <div className="absolute bottom-40 left-1/4 w-80 h-80 bg-sky-100/40 rounded-full blur-3xl" />
@@ -210,7 +216,7 @@ export default function Home() {
         <nav className="glass-card px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
-              <span className="text-white text-sm sm:text-lg">✨</span>
+              <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <span className="font-display text-lg sm:text-xl font-bold text-gray-800">FairyTaleAI</span>
           </div>
@@ -262,7 +268,7 @@ export default function Home() {
                           </>
                         ) : (
                           <>
-                            <span>📚</span> My Stories
+                            <img src="/images/icons/book.png" alt="" className="w-4 h-4 inline" /> My Stories
                           </>
                         )}
                       </button>
@@ -276,12 +282,13 @@ export default function Home() {
                   )}
                 </div>
               ) : (
-                <button
+                <MagneticButton
                   onClick={() => setShowAuthModal(true)}
                   className="btn-glow px-4 sm:px-6 py-2 sm:py-2.5 text-white font-medium text-sm sm:text-base hidden sm:block"
+                  strength={0.3}
                 >
                   Sign in
-                </button>
+                </MagneticButton>
               )
             )}
             {/* Mobile menu button */}
@@ -341,7 +348,7 @@ export default function Home() {
                       </>
                     ) : (
                       <>
-                        <span>📚</span> My Stories
+                        <img src="/images/icons/book.png" alt="" className="w-4 h-4 inline" /> My Stories
                       </>
                     )}
                   </button>
@@ -354,12 +361,13 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <button
+              <MagneticButton
                 onClick={() => { setShowAuthModal(true); setMobileMenuOpen(false); }}
                 className="btn-glow px-6 py-3 text-white font-medium mt-2"
+                strength={0.3}
               >
                 Sign in
-              </button>
+              </MagneticButton>
             )}
           </div>
         )}
@@ -376,8 +384,7 @@ export default function Home() {
             </div>
 
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
-              Parenting through{" "}
-              <span className="gradient-text">magic</span>
+              <AnimatedText text="Parenting through" delay={0.2} /> <AnimatedText text="magic" className="gradient-text" delay={0.8} />
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
@@ -387,15 +394,16 @@ export default function Home() {
 
             {/* CTA */}
             <div className="flex flex-col gap-3 max-w-md mx-auto lg:mx-0">
-              <a
+              <MagneticLink
                 href="#pricing"
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
+                strength={0.4}
               >
                 <span>Start the Hero&apos;s Journey</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </a>
+              </MagneticLink>
               <div className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-gray-500">
                 <span className="text-blue-500">✓</span>
                 <span>Try the first week free</span>
@@ -408,27 +416,22 @@ export default function Home() {
             <div className="relative w-full max-w-[280px] sm:max-w-none">
               {/* Blue glow behind photo */}
               <div className="absolute inset-0 bg-gradient-to-br from-sky-300/50 to-blue-500/30 rounded-full blur-3xl scale-110" />
-              {/* Video */}
+              {/* Animated WebP */}
               <div className="relative">
-                <video
-                  src="/images/hero-video.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  poster="/images/hero-photo.jpg"
+                <img
+                  src="/images/ezgif-450c48727913ead7.webp"
+                  alt="FairyTale AI Demo"
                   className="w-full sm:w-96 md:w-[450px] h-auto rounded-2xl sm:rounded-3xl shadow-2xl"
-                  onError={(e) => console.error('Video error:', e)}
+                  loading="eager"
                 />
               </div>
 
               {/* Floating labels */}
               <div className="absolute -top-4 -left-8 glass-card px-3 py-2 floating hidden md:block" style={{ animationDelay: "1s" }}>
-                <span className="text-sm">🎙️ Your voice</span>
+                <span className="text-sm flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Your voice</span>
               </div>
               <div className="absolute top-20 -right-12 glass-card px-3 py-2 floating hidden md:block" style={{ animationDelay: "2s" }}>
-                <span className="text-sm">🧠 AI script</span>
+                <span className="text-sm flex items-center gap-1"><img src="/images/icons/brain.png" alt="" className="w-4 h-4" /> AI script</span>
               </div>
               <div className="absolute bottom-20 -left-16 glass-card px-3 py-2 floating hidden lg:block" style={{ animationDelay: "3s" }}>
                 <span className="text-sm">💜 Therapy</span>
@@ -442,7 +445,7 @@ export default function Home() {
       <section id="problems" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Sound <span className="gradient-text">familiar</span>?
+            <AnimatedWords text="Sound" scrollTrigger /> <AnimatedWords text="familiar?" className="gradient-text" scrollTrigger />
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             You genuinely want to give your child the best. But in the endless stream of tasks and exhaustion, parenting often takes a back seat, giving way to chaos:
@@ -577,13 +580,14 @@ export default function Home() {
               <p className="text-gray-700 text-base sm:text-lg font-medium mb-4">
                 Are you ready to risk this bond? Or will you act while the <span className="gradient-text font-bold">&quot;window of opportunity&quot;</span> is still open?
               </p>
-              <a
+              <MagneticLink
                 href="#pricing"
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg inline-flex items-center gap-2"
+                strength={0.4}
               >
                 <span>Start Building the Bond</span>
                 <span className="text-xl">💙</span>
-              </a>
+              </MagneticLink>
             </div>
           </div>
         </div>
@@ -611,8 +615,8 @@ export default function Home() {
             {/* Features as floating cards */}
             <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mt-12 sm:mt-16">
               {/* Feature 1 */}
-              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500">
-                <div className="text-4xl sm:text-5xl mb-3">📚</div>
+              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 text-center">
+                <div className="mb-3 flex justify-center"><img src="/images/icons/book.png" alt="Book" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">12-Month Curriculum</h3>
                 <p className="text-gray-600 text-sm">
                   From &quot;Understanding Emotions&quot; to &quot;Leadership&quot; and &quot;Financial Literacy&quot;
@@ -620,8 +624,8 @@ export default function Home() {
               </div>
 
               {/* Feature 2 */}
-              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 sm:mt-8">
-                <div className="text-4xl sm:text-5xl mb-3">✨</div>
+              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 sm:mt-8 text-center">
+                <div className="mb-3 flex justify-center"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">Personalization Magic</h3>
                 <p className="text-gray-600 text-sm">
                   Your child is the <span className="font-bold text-amber-600">Main Hero</span> of every story
@@ -629,8 +633,8 @@ export default function Home() {
               </div>
 
               {/* Feature 3 */}
-              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500">
-                <div className="text-4xl sm:text-5xl mb-3">🧠</div>
+              <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 text-center">
+                <div className="mb-3 flex justify-center"><img src="/images/icons/brain.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">Scientific Approach</h3>
                 <p className="text-gray-600 text-sm">
                   Based on <span className="font-semibold">CBT methods</span> that shape character
@@ -646,7 +650,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              How the <span className="gradient-text">FairyTale AI</span> magic works
+              <AnimatedLine text="How the" scrollTrigger /> <AnimatedLine text="FairyTale AI" className="gradient-text" scrollTrigger /> <AnimatedLine text="magic works" scrollTrigger />
             </h2>
             <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
               The only system that adapts to your child. You give us the basics — we deliver a complete development program wrapped in an engaging story and cartoon format.
@@ -674,7 +678,7 @@ export default function Home() {
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   2
                 </div>
-                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">📚</div>
+                <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/book.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   Get the Weekly Story
                 </h3>
@@ -688,7 +692,7 @@ export default function Home() {
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   3
                 </div>
-                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">🎭</div>
+                <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/mask.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   Choose the Format
                 </h3>
@@ -702,7 +706,7 @@ export default function Home() {
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   4
                 </div>
-                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">📊</div>
+                <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/chart.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   Track Progress
                 </h3>
@@ -735,7 +739,7 @@ export default function Home() {
               {/* Card 1: Full Transparency (Dashboard) */}
               <div className="glass-card-strong p-6 sm:p-8 hover:shadow-xl transition-all duration-300">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center mb-5 shadow-lg">
-                  <span className="text-2xl sm:text-3xl">📊</span>
+                  <img src="/images/icons/chart.png" alt="" className="w-8 h-8 sm:w-10 sm:h-10" />
                 </div>
                 <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
                   Full Transparency
@@ -750,7 +754,7 @@ export default function Home() {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-                        <span className="text-white text-xs">✨</span>
+                        <img src="/images/icons/magic-wand.png" alt="" className="w-4 h-4" />
                       </div>
                       <div>
                         <p className="text-white text-xs font-medium">Emma's Progress</p>
@@ -903,7 +907,7 @@ export default function Home() {
             <span className="text-sm text-gray-600 font-medium">Based on SEL, CBT & Positive Discipline</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            The Hero's Grand Journey: <span className="gradient-text">12 months that will change everything</span>
+            <AnimatedText text="The Hero's Grand Journey: " scrollTrigger type="fade" /><AnimatedText text="12 months that will change everything" className="gradient-text" scrollTrigger type="chars" />
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             This isn't lessons — it's an exciting year-long quest. Your child lives through captivating stories and, without even realizing it, grows into a confident, self-aware Personality ready for the big world.
@@ -970,7 +974,7 @@ export default function Home() {
                   </div>
                   {/* Results */}
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
@@ -1043,7 +1047,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
@@ -1116,7 +1120,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
@@ -1189,7 +1193,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3">✨ Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
@@ -1211,7 +1215,7 @@ export default function Home() {
         {/* Year Summary */}
         <div className="max-w-4xl mx-auto mt-8 sm:mt-12">
           <div className="glass-card-strong p-6 sm:p-8 text-center bg-gradient-to-r from-amber-50 via-purple-50 to-blue-50">
-            <div className="text-4xl mb-4">🏆</div>
+            <div className="mb-4"><img src="/images/icons/trophy.png" alt="" className="w-12 h-12 mx-auto" /></div>
             <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
               In 12 months, you won't recognize your child
             </h3>
@@ -1226,7 +1230,7 @@ export default function Home() {
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <div className="text-center mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
-            <span className="text-xl">📚</span>
+            <img src="/images/icons/book.png" alt="" className="w-6 h-6" />
             <span className="text-sm text-gray-600 font-medium">Curriculum</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -1242,7 +1246,7 @@ export default function Home() {
           {/* Topic 1: Emotional Intelligence */}
           <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-rose-400 to-pink-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🎭</span>
+              <img src="/images/icons/mask.png" alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
               Emotional Intelligence
@@ -1281,7 +1285,7 @@ export default function Home() {
           {/* Topic 4: Goal Setting */}
           <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🎯</span>
+              <img src="/images/icons/target.png" alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
               Goal Setting
@@ -1294,7 +1298,7 @@ export default function Home() {
           {/* Topic 5: Overcoming Fears */}
           <div className="glass-card-strong p-5 sm:p-6 text-center hover:scale-105 hover:-translate-y-2 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-3xl sm:text-4xl">🦁</span>
+              <img src="/images/icons/lion.png" alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
               Overcoming Fears
@@ -1370,8 +1374,8 @@ export default function Home() {
 
               {/* Benefit 4 */}
               <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-100">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
-                  🚀
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <img src="/images/icons/rocket.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Clear Advantages</h4>
@@ -1403,15 +1407,16 @@ export default function Home() {
               <p className="text-gray-600 mb-4 text-sm sm:text-base">
                 Start building your child's emotional foundation today
               </p>
-              <a
+              <MagneticLink
                 href="#pricing"
                 className="btn-glow px-8 py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center gap-2"
+                strength={0.4}
               >
                 <span>Begin the Journey</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </a>
+              </MagneticLink>
             </div>
           </div>
         </div>
@@ -1435,16 +1440,16 @@ export default function Home() {
               <div className="relative hidden sm:block">
                 <div className="aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-100 via-sky-100 to-sky-100 flex items-center justify-center overflow-hidden">
                   <div className="text-center p-4 sm:p-6">
-                    <div className="text-6xl sm:text-8xl mb-3 sm:mb-4">🌟</div>
+                    <div className="mb-3 sm:mb-4"><img src="/images/icons/sparkle.png" alt="" className="w-16 h-16 sm:w-24 sm:h-24 mx-auto" /></div>
                     <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-200 to-amber-400 flex items-center justify-center shadow-lg mb-3 sm:mb-4">
                       <span className="text-3xl sm:text-4xl">👦</span>
                     </div>
                     <p className="text-xs sm:text-sm text-gray-500">Oliver and the Brave Firefly</p>
                   </div>
                   {/* Decorative elements */}
-                  <div className="absolute top-4 left-4 text-xl sm:text-2xl sparkle">⭐</div>
-                  <div className="absolute top-8 right-6 text-lg sm:text-xl sparkle" style={{ animationDelay: "0.5s" }}>✨</div>
-                  <div className="absolute bottom-8 left-8 text-lg sm:text-xl sparkle" style={{ animationDelay: "1s" }}>🌙</div>
+                  <div className="absolute top-4 left-4 sparkle"><img src="/images/icons/star.png" alt="" className="w-6 h-6 sm:w-8 sm:h-8" /></div>
+                  <div className="absolute top-8 right-6 sparkle" style={{ animationDelay: "0.5s" }}><img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5 sm:w-6 sm:h-6" /></div>
+                  <div className="absolute bottom-8 left-8 sparkle" style={{ animationDelay: "1s" }}><img src="/images/icons/moon.png" alt="" className="w-5 h-5 sm:w-6 sm:h-6" /></div>
                 </div>
                 <p className="text-center text-xs text-gray-400 mt-2 sm:mt-3">
                   Illustration created by AI automatically
@@ -1455,7 +1460,7 @@ export default function Home() {
               <div>
                 {/* Context */}
                 <div className="glass-card px-3 sm:px-4 py-2 inline-flex items-center gap-2 mb-4 sm:mb-6">
-                  <span className="text-blue-500">🎯</span>
+                  <img src="/images/icons/target.png" alt="" className="w-5 h-5" />
                   <span className="text-xs sm:text-sm text-gray-600">Problem: <strong>Oliver (5 y.o.) is afraid of the dark</strong></span>
                 </div>
 
@@ -1474,7 +1479,7 @@ export default function Home() {
                           : "bg-white/50 text-gray-600 hover:bg-white"
                       }`}
                     >
-                      🎙 Mom's voice
+                      <span className="flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Mom's voice</span>
                     </button>
                     <button
                       onClick={() => setSelectedVoice("narrator")}
@@ -1484,7 +1489,7 @@ export default function Home() {
                           : "bg-white/50 text-gray-600 hover:bg-white"
                       }`}
                     >
-                      🎤 Narrator
+                      <span className="flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Narrator</span>
                     </button>
                   </div>
 
@@ -1562,7 +1567,7 @@ export default function Home() {
           {/* Trust 2 */}
           <div className="glass-card-strong p-5 sm:p-8 text-center hover:scale-105 transition-transform duration-300">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
-              <span className="text-2xl sm:text-3xl">🧠</span>
+              <img src="/images/icons/brain.png" alt="" className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
             <h3 className="font-display text-base sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
               CBT Methodology
@@ -1626,7 +1631,7 @@ export default function Home() {
       <section id="pricing" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Choose your <span className="gradient-text">journey</span>
+            <AnimatedWords text="Choose your" scrollTrigger /> <AnimatedText text="journey" className="gradient-text" scrollTrigger />
           </h2>
           <p className="text-gray-600 text-base sm:text-lg">
             Start with a test drive or commit to transformation
@@ -1637,7 +1642,7 @@ export default function Home() {
           {/* MAGIC WEEK - Test Drive */}
           <div className="glass-card p-5 sm:p-6">
             <div className="text-center mb-4 sm:mb-6">
-              <div className="text-3xl mb-2">✨</div>
+              <div className="mb-2"><img src="/images/icons/magic-wand.png" alt="" className="w-10 h-10 mx-auto" /></div>
               <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MAGIC WEEK</h3>
               <p className="text-xs text-gray-500 mb-3">Test Drive</p>
               <div className="text-3xl sm:text-4xl font-bold text-gray-900">$5</div>
@@ -1667,7 +1672,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-start py-2 border-b border-gray-100">
                 <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right">📊 &quot;Superpowers&quot;<br/>Weekly Report</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> &quot;Superpowers&quot; Weekly Report</span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="text-gray-600">Final Bonuses</span>
@@ -1675,12 +1680,13 @@ export default function Home() {
               </div>
             </div>
 
-            <button
+            <MagneticButton
               onClick={() => openPaymentModal("week")}
               className="block w-full btn-secondary py-3 text-center font-semibold text-gray-700 text-sm"
+              strength={0.3}
             >
               Try for $5
-            </button>
+            </MagneticButton>
           </div>
 
           {/* MONTHLY - Basic */}
@@ -1690,7 +1696,7 @@ export default function Home() {
             </div>
 
             <div className="text-center mb-4 sm:mb-6 mt-2">
-              <div className="text-3xl mb-2">🚀</div>
+              <div className="mb-2"><img src="/images/icons/rocket.png" alt="" className="w-10 h-10 mx-auto" /></div>
               <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MONTHLY</h3>
               <p className="text-xs text-gray-500 mb-3">Basic</p>
               <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base text-gray-500 font-normal">/mo</span></div>
@@ -1708,11 +1714,11 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">AI Audio</span>
-                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">AI Cartoon</span>
-                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Methodology</span>
@@ -1720,7 +1726,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-start py-2 border-b border-gray-100">
                 <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right">📊 &quot;Superpowers&quot;<br/>Monthly Report</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> &quot;Superpowers&quot; Monthly Report</span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="text-gray-600">Final Bonuses</span>
@@ -1728,12 +1734,13 @@ export default function Home() {
               </div>
             </div>
 
-            <button
+            <MagneticButton
               onClick={() => openPaymentModal("monthly")}
               className="block w-full btn-glow py-3 text-center font-semibold text-white text-sm"
+              strength={0.3}
             >
               Subscribe for $29/mo
-            </button>
+            </MagneticButton>
             <p className="text-center text-xs text-gray-400 mt-2">Cancel anytime</p>
           </div>
 
@@ -1744,7 +1751,7 @@ export default function Home() {
             </div>
 
             <div className="text-center mb-4 sm:mb-6 mt-2">
-              <div className="text-3xl mb-2">👑</div>
+              <div className="mb-2"><img src="/images/icons/crown.png" alt="" className="w-10 h-10 mx-auto" /></div>
               <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">YEARLY LEGEND</h3>
               <p className="text-xs text-gray-500 mb-3">For those committed to results</p>
               <div className="text-3xl sm:text-4xl font-bold text-amber-600">$189<span className="text-base text-gray-500 font-normal">/year</span></div>
@@ -1762,11 +1769,11 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
                 <span className="text-gray-600">AI Audio</span>
-                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
                 <span className="text-gray-600">AI Cartoon</span>
-                <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
                 <span className="text-gray-600">Methodology</span>
@@ -1774,33 +1781,34 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-start py-2 border-b border-amber-100">
                 <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right">📊 &quot;Superpowers&quot;<br/>Monthly Report</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> &quot;Superpowers&quot; Monthly Report</span>
               </div>
               <div className="py-2">
                 <span className="text-gray-600 block mb-2">Final Bonuses:</span>
                 <div className="space-y-1 text-xs">
                   <div className="flex items-center gap-2 text-amber-700">
-                    <span>🎁</span>
+                    <img src="/images/icons/gift.png" alt="" className="w-4 h-4" />
                     <span>Digital &quot;Hero Album&quot;</span>
                   </div>
                   <div className="flex items-center gap-2 text-amber-700">
-                    <span>🎬</span>
+                    <img src="/images/icons/movie.png" alt="" className="w-4 h-4" />
                     <span>Personal Blockbuster</span>
                   </div>
                   <div className="flex items-center gap-2 text-amber-700">
-                    <span>🧠</span>
+                    <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
                     <span>Personality Passport</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <button
+            <MagneticButton
               onClick={() => openPaymentModal("yearly")}
               className="block w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 py-3 rounded-full text-center font-semibold text-white text-sm shadow-lg hover:shadow-xl transition-all"
+              strength={0.3}
             >
               Become a Legend for $189
-            </button>
+            </MagneticButton>
           </div>
         </div>
 
@@ -1880,7 +1888,7 @@ export default function Home() {
           <div className="absolute bottom-0 right-1/4 w-40 sm:w-80 h-40 sm:h-80 bg-sky-300/20 rounded-full blur-3xl" />
 
           <div className="relative">
-            <div className="text-4xl sm:text-5xl mb-4 sm:mb-6 sparkle">✨</div>
+            <div className="mb-4 sm:mb-6 sparkle"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" /></div>
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
               Give your child magic
             </h2>
@@ -1889,12 +1897,13 @@ export default function Home() {
             </p>
 
             {/* Final CTA */}
-            <a
+            <MagneticLink
               href="#pricing"
-              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 whitespace-nowrap inline-block"
+              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 whitespace-nowrap inline-block"
+              strength={0.4}
             >
               Start the Magic
-            </a>
+            </MagneticLink>
           </div>
         </div>
       </section>
@@ -1905,7 +1914,7 @@ export default function Home() {
           <div className="flex flex-col items-center gap-4 sm:gap-6 md:flex-row md:justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-                <span className="text-white text-sm">✨</span>
+                <img src="/images/icons/magic-wand.png" alt="" className="w-4 h-4" />
               </div>
               <span className="font-display font-bold text-gray-800">FairyTaleAI</span>
             </div>
@@ -1954,9 +1963,11 @@ export default function Home() {
                     ? "bg-gradient-to-br from-amber-400 to-yellow-500"
                     : "bg-gradient-to-br from-sky-400 to-blue-600"
               }`}>
-                <span className="text-2xl sm:text-3xl">
-                  {selectedPlan === "week" ? "✨" : selectedPlan === "yearly" ? "👑" : "🚀"}
-                </span>
+                <img
+                  src={selectedPlan === "week" ? "/images/icons/magic-wand.png" : selectedPlan === "yearly" ? "/images/icons/trophy.png" : "/images/icons/rocket.png"}
+                  alt=""
+                  className="w-8 h-8 sm:w-10 sm:h-10"
+                />
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                 {selectedPlan === "week"
@@ -2064,7 +2075,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between py-2">
                     <span className="text-gray-600">PDF Report</span>
-                    <span className="font-medium">📊 Weekly</span>
+                    <span className="font-medium flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Weekly</span>
                   </div>
                 </>
               )}
@@ -2080,15 +2091,15 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-600">AI Audio</span>
-                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-600">AI Cartoon</span>
-                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
                   </div>
                   <div className="flex justify-between py-2">
                     <span className="text-gray-600">PDF Report</span>
-                    <span className="font-medium">📊 Monthly</span>
+                    <span className="font-medium flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Monthly</span>
                   </div>
                 </>
               )}
@@ -2104,25 +2115,25 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between py-2 border-b border-amber-100">
                     <span className="text-gray-600">AI Audio</span>
-                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-amber-100">
                     <span className="text-gray-600">AI Cartoon</span>
-                    <span className="text-amber-600 font-medium">⭐️ Extra Stars</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
                   </div>
                   <div className="py-2 border-b border-amber-100">
                     <span className="text-gray-600 block mb-2">Final Bonuses:</span>
                     <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-2 text-amber-700">
-                        <span>🎁</span>
+                        <img src="/images/icons/gift.png" alt="" className="w-4 h-4" />
                         <span>Digital &quot;Hero Album&quot;</span>
                       </div>
                       <div className="flex items-center gap-2 text-amber-700">
-                        <span>🎬</span>
+                        <img src="/images/icons/movie.png" alt="" className="w-4 h-4" />
                         <span>Personal Blockbuster</span>
                       </div>
                       <div className="flex items-center gap-2 text-amber-700">
-                        <span>🧠</span>
+                        <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
                         <span>Personality Passport</span>
                       </div>
                     </div>
