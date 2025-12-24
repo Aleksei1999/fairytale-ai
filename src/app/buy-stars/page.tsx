@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
+import gsap from "gsap";
 
 const STAR_PACKAGES = [
   {
@@ -14,7 +15,7 @@ const STAR_PACKAGES = [
     pricePerStar: "$1.49",
     description: "10 Audio OR 2 Cartoons",
     popular: false,
-    emoji: "⭐",
+    icon: "/images/icons/star.png",
   },
   {
     id: "popular",
@@ -24,7 +25,7 @@ const STAR_PACKAGES = [
     pricePerStar: "$1.33",
     description: "Full month: 12 Audio + 3 Cartoons",
     popular: true,
-    emoji: "🌟",
+    icon: "/images/icons/sparkle.png",
   },
   {
     id: "bigpack",
@@ -34,7 +35,7 @@ const STAR_PACKAGES = [
     pricePerStar: "$1.19",
     description: "Best value — stock up!",
     popular: false,
-    emoji: "💫",
+    icon: "/images/icons/trophy.png",
   },
 ];
 
@@ -45,11 +46,68 @@ export default function BuyStars() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [userStars, setUserStars] = useState<number | null>(null);
 
+  // Refs for GSAP animations
+  const headerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
+  const packagesRef = useRef<HTMLDivElement>(null);
+  const noteRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // GSAP entrance animations
+  useEffect(() => {
+    if (authLoading || !user) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        );
+      }
+
+      // Title animation
+      if (titleRef.current) {
+        gsap.fromTo(titleRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
+        );
+      }
+
+      // Info card animation
+      if (infoRef.current) {
+        gsap.fromTo(infoRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, delay: 0.3, ease: "power2.out" }
+        );
+      }
+
+      // Packages animation
+      if (packagesRef.current) {
+        const cards = packagesRef.current.children;
+        gsap.fromTo(cards,
+          { opacity: 0, y: 40, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, delay: 0.4, ease: "back.out(1.2)" }
+        );
+      }
+
+      // Note animation
+      if (noteRef.current) {
+        gsap.fromTo(noteRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, delay: 0.8, ease: "power2.out" }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [authLoading, user]);
 
   // Fetch star balance
   useEffect(() => {
@@ -111,11 +169,11 @@ export default function BuyStars() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6">
+      <header ref={headerRef} className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-              <span className="text-xl">✨</span>
+              <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
             <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
           </Link>
@@ -132,9 +190,9 @@ export default function BuyStars() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
+          <div ref={titleRef} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-200 mb-6">
-              <span className="text-xl">⭐</span>
+              <img src="/images/icons/star.png" alt="" className="w-5 h-5" />
               <span className="text-sm font-medium text-amber-700">
                 {userStars !== null ? `You have ${userStars} stars` : "Loading..."}
               </span>
@@ -148,14 +206,14 @@ export default function BuyStars() {
           </div>
 
           {/* What stars do */}
-          <div className="glass-card p-6 mb-8">
+          <div ref={infoRef} className="glass-card p-6 mb-8">
             <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
-              <span>✨</span> What can you do with stars?
+              <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> What can you do with stars?
             </h3>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50/50 border border-blue-100">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-2xl flex-shrink-0">
-                  🎙️
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                  <img src="/images/icons/microphone.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">AI Voice Narration</p>
@@ -164,8 +222,8 @@ export default function BuyStars() {
                 </div>
               </div>
               <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-50/50 border border-purple-100">
-                <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-2xl flex-shrink-0">
-                  🎬
+                <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                  <img src="/images/icons/movie.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Animated Cartoon</p>
@@ -177,7 +235,7 @@ export default function BuyStars() {
           </div>
 
           {/* Packages */}
-          <div className="grid sm:grid-cols-3 gap-6 mb-8">
+          <div ref={packagesRef} className="grid sm:grid-cols-3 gap-6 mb-8">
             {STAR_PACKAGES.map((pkg) => (
               <div
                 key={pkg.id}
@@ -192,7 +250,9 @@ export default function BuyStars() {
                 )}
 
                 <div className="text-center mb-4">
-                  <div className="text-4xl mb-2">{pkg.emoji}</div>
+                  <div className="flex justify-center mb-2">
+                    <img src={pkg.icon} alt="" className="w-12 h-12" />
+                  </div>
                   <h3 className="font-bold text-xl text-gray-900">
                     {pkg.stars} Stars
                   </h3>
@@ -230,7 +290,7 @@ export default function BuyStars() {
           </div>
 
           {/* Note */}
-          <div className="glass-card p-6 text-center">
+          <div ref={noteRef} className="glass-card p-6 text-center">
             <p className="text-gray-600 text-sm">
               <span className="font-semibold text-gray-900">Note:</span> Stars never expire!
               Use them anytime for AI voice narration or cartoon generation.

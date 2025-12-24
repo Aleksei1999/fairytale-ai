@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
+import { MagneticButton } from "@/components/MagneticButton";
+import gsap from "gsap";
 
 type Step = 1 | 2;
 
@@ -49,12 +51,52 @@ function CreatePageContent() {
 
   const STAR_COST_AUDIO = 1;
 
+  // Refs for GSAP animations
+  const headerRef = useRef<HTMLElement>(null);
+  const step1Ref = useRef<HTMLDivElement>(null);
+  const step2Ref = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
   // Redirect to home if not authenticated
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // GSAP entrance animations
+  useEffect(() => {
+    if (authLoading || !user || hasSubscription === null) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        );
+      }
+
+      // Step content animation
+      const currentStepRef = step === 1 ? step1Ref : step2Ref;
+      if (currentStepRef.current) {
+        gsap.fromTo(currentStepRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
+        );
+      }
+
+      // Form animation for step 1
+      if (step === 1 && formRef.current) {
+        gsap.fromTo(formRef.current,
+          { opacity: 0, y: 40, scale: 0.98 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: 0.4, ease: "back.out(1.2)" }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [authLoading, user, step, hasSubscription]);
 
   // Check subscription status
   useEffect(() => {
@@ -255,7 +297,9 @@ function CreatePageContent() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
         <div className="glass-card p-8 max-w-md text-center">
-          <div className="text-5xl mb-4">🔒</div>
+          <div className="flex justify-center mb-4">
+            <img src="/images/icons/crown.png" alt="" className="w-14 h-14" />
+          </div>
           <h2 className="font-display text-2xl font-bold text-gray-900 mb-3">
             Subscription Required
           </h2>
@@ -289,11 +333,11 @@ function CreatePageContent() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 container mx-auto px-6 py-6">
+      <header ref={headerRef} className="relative z-10 container mx-auto px-6 py-6">
         <nav className="glass-card px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
-              <span className="text-white text-lg">✨</span>
+              <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
             <span className="font-display text-xl font-bold text-gray-800">FairyTaleAI</span>
           </Link>
@@ -323,7 +367,7 @@ function CreatePageContent() {
           <div className="flex items-center gap-4">
             {/* Stars balance */}
             <div className="flex items-center gap-1 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
-              <span className="text-lg">⭐</span>
+              <img src="/images/icons/star.png" alt="" className="w-5 h-5" />
               <span className="font-semibold text-amber-700">
                 {loadingStars ? "..." : userStars}
               </span>
@@ -338,9 +382,11 @@ function CreatePageContent() {
       <main className="relative z-10 container mx-auto px-6 py-8">
         {/* Step 1: Child Info */}
         {step === 1 && (
-          <div className="max-w-2xl mx-auto">
+          <div ref={step1Ref} className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
-              <div className="text-5xl mb-4">👶</div>
+              <div className="flex justify-center mb-4">
+                <img src="/images/icons/heart.png" alt="" className="w-14 h-14" />
+              </div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
                 Tell Us About Your Child
               </h1>
@@ -357,14 +403,14 @@ function CreatePageContent() {
             ) : programStory && (
               <div className="glass-card p-6 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">📖</span>
+                  <img src="/images/icons/book.png" alt="" className="w-8 h-8" />
                   <h3 className="font-bold text-gray-900">{programStory.title}</h3>
                 </div>
                 <p className="text-sm text-gray-600 italic">{programStory.plot}</p>
               </div>
             )}
 
-            <div className="glass-card-strong p-8 space-y-6">
+            <div ref={formRef} className="glass-card-strong p-8 space-y-6">
               {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -475,9 +521,9 @@ function CreatePageContent() {
 
         {/* Step 2: Story Display */}
         {step === 2 && (
-          <div className="max-w-3xl mx-auto">
+          <div ref={step2Ref} className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
-              <div className="text-5xl mb-4">📖</div>
+              <div className="mb-4 flex justify-center"><img src="/images/icons/book.png" alt="" className="w-14 h-14" /></div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
                 {programStory?.title || "Your Story"}
               </h1>
@@ -541,7 +587,7 @@ function CreatePageContent() {
                     className="flex-1 py-4 rounded-2xl font-semibold text-center transition-all bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90 inline-flex flex-col items-center justify-center gap-1"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">📖</span>
+                      <img src="/images/icons/book.png" alt="" className="w-6 h-6" />
                       <span>Read It Myself</span>
                     </div>
                     <span className="text-xs opacity-80">Free</span>
@@ -565,11 +611,11 @@ function CreatePageContent() {
                     ) : (
                       <>
                         <div className="flex items-center gap-2">
-                          <span className="text-xl">🎙️</span>
+                          <img src="/images/icons/microphone.png" alt="" className="w-5 h-5" />
                           <span>Listen with AI Voice</span>
                         </div>
                         <span className="text-xs opacity-80 flex items-center gap-1">
-                          <span>⭐</span> {STAR_COST_AUDIO} Star
+                          <img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {STAR_COST_AUDIO} Star
                         </span>
                       </>
                     )}

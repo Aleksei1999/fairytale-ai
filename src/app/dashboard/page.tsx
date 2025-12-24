@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { DevelopmentMap } from "@/components/DevelopmentMap";
 import Link from "next/link";
+import { MagneticButton, MagneticLink } from "@/components/MagneticButton";
+import gsap from "gsap";
 
 // Animated counter component
 function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?: number }) {
@@ -52,11 +54,59 @@ export default function Dashboard() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState("");
 
+  // Refs for GSAP animations
+  const welcomeRef = useRef<HTMLDivElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const accountRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // GSAP entrance animations
+  useEffect(() => {
+    if (authLoading || !user) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        );
+      }
+
+      // Welcome section animation
+      if (welcomeRef.current) {
+        gsap.fromTo(welcomeRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
+        );
+      }
+
+      // Actions grid animation
+      if (actionsRef.current) {
+        const cards = actionsRef.current.children;
+        gsap.fromTo(cards,
+          { opacity: 0, y: 40, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, delay: 0.4, ease: "back.out(1.2)" }
+        );
+      }
+
+      // Account info animation
+      if (accountRef.current) {
+        gsap.fromTo(accountRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, delay: 0.7, ease: "power2.out" }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [authLoading, user]);
 
   // Fetch credits
   useEffect(() => {
@@ -127,11 +177,11 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6">
+      <header ref={headerRef} className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-              <span className="text-xl">✨</span>
+              <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
             <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
           </Link>
@@ -148,7 +198,7 @@ export default function Dashboard() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Welcome Section */}
-          <div className="glass-card p-6 sm:p-8 mb-8">
+          <div ref={welcomeRef} className="glass-card p-6 sm:p-8 mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
@@ -163,7 +213,7 @@ export default function Dashboard() {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
                 <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-purple-50 border border-white/50 shadow-lg">
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-purple-500 shadow-lg">
-                    <span className="text-2xl">⭐</span>
+                    <img src="/images/icons/star.png" alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Credits</p>
@@ -181,38 +231,40 @@ export default function Dashboard() {
           </div>
 
           {/* Actions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div ref={actionsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {/* Buy Story Credits */}
-            <button
+            <MagneticButton
               onClick={() => setShowPaymentModal(true)}
-              className="glass-card p-6 hover:shadow-lg transition-shadow group text-left"
+              className="glass-card p-6 hover:shadow-lg transition-shadow group text-left w-full"
+              strength={0.3}
             >
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  📖
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <img src="/images/icons/book.png" alt="" className="w-9 h-9" />
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-gray-900">Get Story Credits</h3>
                   <p className="text-gray-600 text-sm">Subscribe for more stories</p>
                 </div>
               </div>
-            </button>
+            </MagneticButton>
 
             {/* Buy Cartoon Credits */}
-            <Link
+            <MagneticLink
               href="/buy-cartoons"
-              className="glass-card p-6 hover:shadow-lg transition-shadow group border-2 border-purple-200"
+              className="glass-card p-6 hover:shadow-lg transition-shadow group border-2 border-purple-200 block"
+              strength={0.3}
             >
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  🎬
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <img src="/images/icons/movie.png" alt="" className="w-9 h-9" />
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-gray-900">Buy Cartoons</h3>
                   <p className="text-gray-600 text-sm">Turn stories into animated videos</p>
                 </div>
               </div>
-            </Link>
+            </MagneticLink>
           </div>
 
           {/* Development Map */}
@@ -221,7 +273,7 @@ export default function Dashboard() {
           </div>
 
           {/* Account Info */}
-          <div className="glass-card p-6">
+          <div ref={accountRef} className="glass-card p-6">
             <h2 className="font-bold text-lg text-gray-900 mb-4">Account Info</h2>
             <div className="space-y-3">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
@@ -267,7 +319,7 @@ export default function Dashboard() {
 
             <div className="text-center mb-6">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <span className="text-3xl">📖</span>
+                <img src="/images/icons/book.png" alt="" className="w-10 h-10" />
               </div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
                 Get Story Credits

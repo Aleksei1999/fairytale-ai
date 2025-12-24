@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/AuthProvider";
+import gsap from "gsap";
 
 interface Question {
   id: number;
@@ -86,6 +87,11 @@ export default function StoryPage() {
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
   // Story unlock check
   const [isStoryUnlocked, setIsStoryUnlocked] = useState<boolean | null>(null);
+
+  // Refs for GSAP animations
+  const headerRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const storyCardRef = useRef<HTMLDivElement>(null);
 
   // Check subscription status and story unlock
   useEffect(() => {
@@ -218,6 +224,39 @@ export default function StoryPage() {
     checkProgress();
     loadStoryModeData();
   }, [storyId]);
+
+  // GSAP entrance animations
+  useEffect(() => {
+    if (loading || !story) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        );
+      }
+
+      // Content animation
+      if (contentRef.current) {
+        gsap.fromTo(contentRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
+        );
+      }
+
+      // Story card animation
+      if (storyCardRef.current) {
+        gsap.fromTo(storyCardRef.current,
+          { opacity: 0, y: 40, scale: 0.98 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: 0.4, ease: "back.out(1.2)" }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [loading, story, currentStep]);
 
   // Load story mode and data from localStorage
   function loadStoryModeData() {
@@ -478,7 +517,7 @@ export default function StoryPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-                <span className="text-xl">✨</span>
+                <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
               </div>
               <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
             </Link>
@@ -494,8 +533,8 @@ export default function StoryPage() {
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-md mx-auto text-center">
             <div className="glass-card-strong p-8">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-4xl mx-auto mb-6">
-                🔒
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-6">
+                <img src="/images/icons/crown.png" alt="" className="w-12 h-12" />
               </div>
               <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
                 Subscription Required
@@ -530,7 +569,7 @@ export default function StoryPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-                <span className="text-xl">✨</span>
+                <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
               </div>
               <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
             </Link>
@@ -546,8 +585,8 @@ export default function StoryPage() {
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-md mx-auto text-center">
             <div className="glass-card-strong p-8">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-4xl mx-auto mb-6">
-                🔒
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center mx-auto mb-6">
+                <img src="/images/icons/crown.png" alt="" className="w-12 h-12 opacity-50" />
               </div>
               <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
                 Story Locked
@@ -571,11 +610,11 @@ export default function StoryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6">
+      <header ref={headerRef} className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
-              <span className="text-xl">✨</span>
+              <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
             <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
           </Link>
@@ -590,7 +629,7 @@ export default function StoryPage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto">
+        <div ref={contentRef} className="max-w-3xl mx-auto">
           {/* Breadcrumb */}
           {block && month && week && (
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
@@ -611,7 +650,7 @@ export default function StoryPage() {
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
               currentStep === "story" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
             }`}>
-              <span>📖</span>
+              <img src="/images/icons/book.png" alt="" className="w-4 h-4" />
               <span className="text-sm font-medium">Story</span>
             </div>
             <div className="w-8 h-0.5 bg-gray-300"></div>
@@ -619,7 +658,7 @@ export default function StoryPage() {
               currentStep === "questions" ? "bg-blue-500 text-white" :
               currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 text-gray-600"
             }`}>
-              <span>💬</span>
+              <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
               <span className="text-sm font-medium">Questions</span>
             </div>
             <div className="w-8 h-0.5 bg-gray-300"></div>
@@ -633,11 +672,11 @@ export default function StoryPage() {
 
           {/* Story Step */}
           {currentStep === "story" && (
-            <div className="glass-card-strong p-6 sm:p-8">
+            <div ref={storyCardRef} className="glass-card-strong p-6 sm:p-8">
               {/* Story Header */}
               <div className="text-center mb-8">
-                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${block?.color || "from-blue-400 to-blue-600"} flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg`}>
-                  📖
+                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${block?.color || "from-blue-400 to-blue-600"} flex items-center justify-center mx-auto mb-4 shadow-lg`}>
+                  <img src="/images/icons/book.png" alt="" className="w-12 h-12" />
                 </div>
                 <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                   {story.title}
@@ -651,7 +690,7 @@ export default function StoryPage() {
               {storyMode === "ai-voice" && aiAudioBase64 ? (
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">🎙️</span>
+                    <img src="/images/icons/microphone.png" alt="" className="w-5 h-5" />
                     <span className="text-sm font-medium text-purple-800">AI Narration</span>
                   </div>
                   <audio
@@ -691,7 +730,7 @@ export default function StoryPage() {
               ) : (
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">🎵</span>
+                    <img src="/images/icons/moon.png" alt="" className="w-5 h-5" />
                     <span className="text-sm font-medium text-green-800">Background Music</span>
                   </div>
                   <audio
@@ -877,8 +916,8 @@ export default function StoryPage() {
           {/* Complete Step */}
           {currentStep === "complete" && (
             <div className="glass-card-strong p-6 sm:p-8 text-center">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-5xl mx-auto mb-6 shadow-lg">
-                🎉
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <img src="/images/icons/trophy.png" alt="" className="w-14 h-14" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
                 Story Completed!

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
+import gsap from "gsap";
 
 type Gender = "boy" | "girl";
 
@@ -60,11 +61,50 @@ function CreateCartoonContent() {
   const [credits, setCredits] = useState<number | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // Refs for GSAP animations
+  const headerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const panelsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
+
+  // GSAP entrance animations
+  useEffect(() => {
+    if (authLoading || !user) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        );
+      }
+
+      // Title animation
+      if (titleRef.current) {
+        gsap.fromTo(titleRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
+        );
+      }
+
+      // Panels animation
+      if (panelsRef.current) {
+        const panels = panelsRef.current.children;
+        gsap.fromTo(panels,
+          { opacity: 0, y: 40, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.2, delay: 0.4, ease: "back.out(1.2)" }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, [authLoading, user]);
 
   useEffect(() => {
     async function fetchCredits() {
@@ -137,11 +177,11 @@ function CreateCartoonContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-purple-100">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6">
+      <header ref={headerRef} className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-600 flex items-center justify-center">
-              <span className="text-xl">✨</span>
+              <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
             <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
           </Link>
@@ -158,9 +198,9 @@ function CreateCartoonContent() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Title */}
-          <div className="text-center mb-8">
+          <div ref={titleRef} className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mb-4 shadow-xl">
-              <span className="text-4xl">🎬</span>
+              <img src="/images/icons/movie.png" alt="" className="w-12 h-12" />
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
               Create Your Character
@@ -170,17 +210,17 @@ function CreateCartoonContent() {
             </p>
             {credits !== null && (
               <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700">
-                <span>⭐</span>
+                <img src="/images/icons/star.png" alt="" className="w-4 h-4" />
                 <span className="font-medium">{credits} credit{credits !== 1 ? "s" : ""} available</span>
               </div>
             )}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div ref={panelsRef} className="grid md:grid-cols-2 gap-8">
             {/* Customization Panel */}
             <div className="glass-card-strong p-6 sm:p-8">
               <h2 className="font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
-                <span>🎨</span> Customize Character
+                <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> Customize Character
               </h2>
 
               {/* Gender Selection */}
@@ -300,7 +340,7 @@ function CreateCartoonContent() {
             {/* Preview Panel */}
             <div className="glass-card-strong p-6 sm:p-8">
               <h2 className="font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
-                <span>👀</span> Preview
+                <img src="/images/icons/target.png" alt="" className="w-5 h-5" /> Preview
               </h2>
 
               {/* Character Preview */}
@@ -370,7 +410,9 @@ function CreateCartoonContent() {
                 ) : !isAdmin && credits !== null && credits < 1 ? (
                   "No Credits Available"
                 ) : (
-                  <>🎬 Generate Character</>
+                  <span className="flex items-center justify-center gap-2">
+                    <img src="/images/icons/movie.png" alt="" className="w-5 h-5" /> Generate Character
+                  </span>
                 )}
               </button>
 
