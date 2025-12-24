@@ -147,8 +147,8 @@ function addStressMarks(text: string): string {
   return result;
 }
 
-// Default English voice from ElevenLabs (Rachel - warm female voice)
-const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
+// Default voice from ElevenLabs
+const DEFAULT_VOICE_ID = "O4NKp88bb2JkAnrCbwQt";
 
 export async function POST(request: NextRequest) {
   try {
