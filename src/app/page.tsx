@@ -23,6 +23,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [navigatingToDashboard, setNavigatingToDashboard] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const audioSources = {
@@ -75,6 +76,13 @@ export default function Home() {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const navigateToDashboard = () => {
+    setNavigatingToDashboard(true);
+    setShowUserMenu(false);
+    setMobileMenuOpen(false);
+    router.push("/dashboard");
   };
 
   const openPaymentModal = (plan: "week" | "monthly" | "yearly") => {
@@ -180,6 +188,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen overflow-hidden">
+      {/* Full screen loading overlay */}
+      {navigatingToDashboard && (
+        <div className="fixed inset-0 z-[100] bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <p className="text-gray-600 font-medium">Loading your dashboard...</p>
+          </div>
+        </div>
+      )}
+
       {/* Decorative background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 w-64 h-64 bg-sky-200/30 rounded-full blur-3xl" />
@@ -230,10 +248,23 @@ export default function Home() {
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
                       </div>
                       <button
-                        onClick={() => { router.push("/dashboard"); setShowUserMenu(false); }}
-                        className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg mt-1 flex items-center gap-2"
+                        onClick={navigateToDashboard}
+                        disabled={navigatingToDashboard}
+                        className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg mt-1 flex items-center gap-2 disabled:opacity-50"
                       >
-                        <span>📚</span> My Stories
+                        {navigatingToDashboard ? (
+                          <>
+                            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            Loading...
+                          </>
+                        ) : (
+                          <>
+                            <span>📚</span> My Stories
+                          </>
+                        )}
                       </button>
                       <button
                         onClick={() => { signOut(); setShowUserMenu(false); }}
@@ -296,10 +327,23 @@ export default function Home() {
                 </div>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => { router.push("/dashboard"); setMobileMenuOpen(false); }}
-                    className="flex-1 py-2 px-4 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+                    onClick={navigateToDashboard}
+                    disabled={navigatingToDashboard}
+                    className="flex-1 py-2 px-4 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    <span>📚</span> My Stories
+                    {navigatingToDashboard ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        <span>📚</span> My Stories
+                      </>
+                    )}
                   </button>
                   <button
                     onClick={() => { signOut(); setMobileMenuOpen(false); }}
