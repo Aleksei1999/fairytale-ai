@@ -393,11 +393,11 @@ function CreateCartoonContent() {
                 </div>
               )}
 
-              {/* Generate Button */}
+              {/* Create Avatar Button */}
               <button
                 onClick={handleGenerate}
-                disabled={isGenerating || (!isAdmin && credits !== null && credits < 1)}
-                className="w-full py-4 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
+                disabled={isGenerating || (!isAdmin && credits !== null && credits < 1) || !!generatedImage}
+                className="w-full py-4 rounded-xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl mb-3"
               >
                 {isGenerating ? (
                   <span className="flex items-center justify-center gap-2">
@@ -405,16 +405,45 @@ function CreateCartoonContent() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Generating Magic...
+                    Creating Avatar...
+                  </span>
+                ) : generatedImage ? (
+                  <span className="flex items-center justify-center gap-2">
+                    ✓ Avatar Created
                   </span>
                 ) : !isAdmin && credits !== null && credits < 1 ? (
                   "No Credits Available"
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <img src="/images/icons/movie.png" alt="" className="w-5 h-5" /> Generate Character
+                    <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> Create Avatar
                   </span>
                 )}
               </button>
+
+              {/* Generate Character Button - only active after avatar is created */}
+              <button
+                onClick={() => {
+                  // TODO: Navigate to cartoon generation or trigger cartoon creation
+                  alert("Cartoon generation coming soon!");
+                }}
+                disabled={!generatedImage}
+                className={`w-full py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl ${
+                  generatedImage
+                    ? "text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                    : "text-gray-400 bg-gray-200 cursor-not-allowed"
+                }`}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <img src="/images/icons/movie.png" alt="" className={`w-5 h-5 ${!generatedImage ? "opacity-50" : ""}`} />
+                  Generate Character
+                </span>
+              </button>
+
+              {!generatedImage && (
+                <p className="text-xs text-gray-500 text-center mt-2">
+                  Create an avatar first to generate your character
+                </p>
+              )}
 
               {!isAdmin && credits !== null && credits < 1 && (
                 <Link
