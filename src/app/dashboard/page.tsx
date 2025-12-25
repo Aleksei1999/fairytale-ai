@@ -73,8 +73,9 @@ export default function Dashboard() {
         const response = await fetch("/api/user/credits");
         const data = await response.json();
 
-        // If profile not found (deleted from DB), sign out and redirect to home
-        if (!data.success && response.status === 404) {
+        // If profile not found (deleted from DB) or error, sign out and redirect
+        if (!data.success && (response.status === 404 || data.error === "Profile not found")) {
+          console.log("Profile not found, signing out...");
           const supabase = createClient();
           await supabase.auth.signOut();
           window.location.href = "/";
