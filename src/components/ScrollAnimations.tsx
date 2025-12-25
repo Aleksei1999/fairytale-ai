@@ -11,21 +11,23 @@ if (typeof window !== 'undefined') {
 
 export function useScrollAnimations() {
   useEffect(() => {
-    // Skip ALL animations on mobile for better scroll performance
+    // Skip heavy animations on mobile for better scroll performance
     const isMobile = window.innerWidth < 768
 
-    // Completely skip GSAP on mobile - just return early
-    if (isMobile) {
-      return
-    }
-
-    // Configure ScrollTrigger for desktop only
+    // Configure ScrollTrigger for mobile
     ScrollTrigger.config({
       ignoreMobileResize: true,
     })
 
     // Wait for DOM to be ready
     const ctx = gsap.context(() => {
+      // Skip scroll animations on mobile
+      if (isMobile) {
+        // Just set elements to visible state without animation
+        gsap.set('section', { opacity: 1, y: 0 })
+        gsap.set('.glass-card, .glass-card-strong', { opacity: 1, y: 0, scale: 1 })
+        return
+      }
       // Animate all sections on scroll
       gsap.utils.toArray<HTMLElement>('section').forEach((section, i) => {
         // Fade in and slide up animation for sections

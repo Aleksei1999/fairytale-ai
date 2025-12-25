@@ -111,33 +111,6 @@ html, body {
   touch-action: pan-y;
 }
 
-/* Disable heavy effects on mobile for better scroll performance */
-@media (max-width: 767px) {
-  /* Disable backdrop-filter (very heavy on mobile GPU) */
-  .glass-card,
-  .glass-card-strong,
-  .btn-secondary,
-  .tech-panel {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  /* Disable floating animations */
-  .floating {
-    animation: none !important;
-  }
-
-  /* Disable sparkle animations */
-  .sparkle {
-    animation: none !important;
-  }
-
-  /* Simplify section animations */
-  main, section {
-    animation: none !important;
-  }
-}
-
 /* Glassmorphism cards */
 .glass-card {
   background: rgba(255, 255, 255, 0.7);
