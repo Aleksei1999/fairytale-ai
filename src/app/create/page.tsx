@@ -5,7 +5,6 @@ import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
-import { MagneticButton } from "@/components/MagneticButton";
 import gsap from "gsap";
 
 type Step = 1 | 2;
@@ -168,18 +167,38 @@ function CreatePageContent() {
     loadStory();
   }, [storyId]);
 
-  // Load saved child info from localStorage
+  // Load saved child info from localStorage and skip to step 2 if already filled
   useEffect(() => {
     const saved = localStorage.getItem("childInfo");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         setChildInfo(parsed);
+        // If child info is complete, skip to step 2
+        if (parsed.name && parsed.age && parsed.gender) {
+          // Personalize text if story is loaded
+          if (programStory?.full_text) {
+            const personalized = programStory.full_text
+              .replace(/\{childName\}/g, parsed.name)
+              .replace(/\{he_she\}/g, parsed.gender === "boy" ? "he" : "she")
+              .replace(/\{his_her\}/g, parsed.gender === "boy" ? "his" : "her")
+              .replace(/\{him_her\}/g, parsed.gender === "boy" ? "him" : "her");
+            setPersonalizedText(personalized);
+          } else if (programStory?.plot) {
+            const personalized = programStory.plot
+              .replace(/\{childName\}/g, parsed.name)
+              .replace(/\{he_she\}/g, parsed.gender === "boy" ? "he" : "she")
+              .replace(/\{his_her\}/g, parsed.gender === "boy" ? "his" : "her")
+              .replace(/\{him_her\}/g, parsed.gender === "boy" ? "him" : "her");
+            setPersonalizedText(personalized);
+          }
+          setStep(2);
+        }
       } catch (e) {
         console.error("Error parsing saved child info:", e);
       }
     }
-  }, []);
+  }, [programStory]);
 
   const [childInfo, setChildInfo] = useState<ChildInfo>({
     name: "",
