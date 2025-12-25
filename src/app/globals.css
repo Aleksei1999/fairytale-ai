@@ -100,6 +100,15 @@ html {
 
 body {
   min-height: 100vh;
+  /* Fix mobile scroll issues with GSAP */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure smooth scrolling on mobile */
+html, body {
+  overscroll-behavior: none;
+  touch-action: pan-y;
 }
 
 /* Glassmorphism cards */

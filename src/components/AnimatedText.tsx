@@ -36,6 +36,14 @@ export function AnimatedText({ text, className = '', delay = 0, type = 'chars', 
     const elements = container.querySelectorAll('.anim-item')
     if (!elements || elements.length === 0) return
 
+    // Skip animations on mobile for better scroll performance
+    const isMobile = window.innerWidth < 768
+    if (isMobile) {
+      // Just show elements without animation
+      gsap.set(elements, { opacity: 1, y: 0, x: 0, scale: 1, rotateX: 0, skewX: 0 })
+      return
+    }
+
     const animationConfig = {
       chars: {
         from: { opacity: 0, y: 20, scale: 0.8 },

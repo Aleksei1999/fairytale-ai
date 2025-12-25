@@ -23,7 +23,20 @@ export function MorphingBackground() {
 
     if (!container || !blob1 || !blob2 || !blob3) return
 
+    // Skip animations on mobile for better scroll performance
+    const isMobile = window.innerWidth < 768
+
+    // Configure ScrollTrigger for mobile
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+    })
+
     const ctx = gsap.context(() => {
+      // Skip all animations on mobile
+      if (isMobile) {
+        return
+      }
+
       // Continuous floating animation for blobs
       gsap.to(blob1, {
         x: '+=50',
