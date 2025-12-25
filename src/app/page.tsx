@@ -1616,14 +1616,14 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {/* MAGIC WEEK - Test Drive */}
+          {/* FREE TRIAL - Test Drive */}
           <div className="glass-card p-5 sm:p-6">
             <div className="text-center mb-4 sm:mb-6">
               <div className="mb-2"><img src="/images/icons/magic-wand.png" alt="" className="w-10 h-10 mx-auto" /></div>
-              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MAGIC WEEK</h3>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">FREE TRIAL</h3>
               <p className="text-xs text-gray-500 mb-3">Test Drive</p>
-              <div className="text-3xl sm:text-4xl font-bold text-gray-900">$5</div>
-              <p className="text-gray-500 text-xs mt-1">Try and see your child&apos;s reaction</p>
+              <div className="text-3xl sm:text-4xl font-bold text-green-600">$0</div>
+              <p className="text-gray-500 text-xs mt-1">Try free for 7 days</p>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
@@ -1633,15 +1633,15 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Stories (Text+Music)</span>
-                <span className="text-green-600 font-medium">✓ 3 Scenarios</span>
+                <span className="text-green-600 font-medium">✓ 3 Stories</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">AI Audio</span>
-                <span className="text-green-600 font-medium">✓ 3 included</span>
+                <span className="text-gray-400">Not included</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">AI Cartoon</span>
-                <span className="text-green-600 font-medium">✓ 1 included</span>
+                <span className="text-gray-400">Not included</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Methodology</span>
@@ -1649,7 +1649,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-start py-2 border-b border-gray-100">
                 <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> &quot;Superpowers&quot; Weekly Report</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Weekly Report</span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="text-gray-600">Final Bonuses</span>
@@ -1662,7 +1662,7 @@ export default function Home() {
               className="block w-full btn-secondary py-3 text-center font-semibold text-gray-700 text-sm"
               strength={0.3}
             >
-              Try for $5
+              Start Free Trial
             </MagneticButton>
           </div>
 
@@ -1675,9 +1675,9 @@ export default function Home() {
             <div className="text-center mb-4 sm:mb-6 mt-2">
               <div className="mb-2"><img src="/images/icons/rocket.png" alt="" className="w-10 h-10 mx-auto" /></div>
               <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MONTHLY</h3>
-              <p className="text-xs text-gray-500 mb-3">Basic</p>
-              <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base text-gray-500 font-normal">/mo</span></div>
-              <p className="text-gray-500 text-xs mt-1">Flexible learning, pay monthly</p>
+              <p className="text-xs text-gray-500 mb-3">Full Access</p>
+              <div className="text-3xl sm:text-4xl font-bold gradient-text">$8<span className="text-base text-gray-500 font-normal">/first month</span></div>
+              <p className="text-gray-500 text-xs mt-1">Then $29/month</p>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
@@ -1703,7 +1703,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-start py-2 border-b border-gray-100">
                 <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> &quot;Superpowers&quot; Monthly Report</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Monthly Report</span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="text-gray-600">Final Bonuses</span>
@@ -1716,7 +1716,7 @@ export default function Home() {
               className="block w-full btn-glow py-3 text-center font-semibold text-white text-sm"
               strength={0.3}
             >
-              Subscribe for $29/mo
+              Start for $8
             </MagneticButton>
             <p className="text-center text-xs text-gray-400 mt-2">Cancel anytime</p>
           </div>
@@ -1826,8 +1826,8 @@ export default function Home() {
               a: "Instantly: Your child will be surprised and delighted (\"That's me!\").\n\nAfter 1 week: They'll start using words from the stories (\"I'm angry like the little dragon right now\").\n\nAfter 1 month: You'll notice tantrums become shorter and negotiating becomes easier.\n\nThis is a cumulative effect: the more regular the stories, the faster new neural connections form."
             },
             {
-              q: "Why does it cost $29/month? Cartoons on YouTube are free.",
-              a: "YouTube is free because you pay with your child's attention, showing them ads and mindless content. With us, you pay for Education and Personalization.\n\nYou get a personal screenwriter, director, and psychologist. Producing one such personalized cartoon from a freelancer would cost you $100+. With us, you get an entire development program for the price of one dinner at a cafe."
+              q: "Why subscribe after the free trial?",
+              a: "The free trial lets you see your child's reaction to 3 personalized stories. After that, a subscription unlocks unlimited stories, AI voice narration, and animated cartoons.\n\nYou get a personal screenwriter, director, and psychologist. Producing one such personalized cartoon from a freelancer would cost you $100+. With us, you get an entire development program starting at just $8 for your first month."
             },
             {
               q: "How do I use the app correctly to get maximum results?",
@@ -1950,26 +1950,29 @@ export default function Home() {
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                 {selectedPlan === "week"
-                  ? "Magic Week"
+                  ? "Free Trial"
                   : selectedPlan === "yearly"
                     ? "Yearly Legend"
-                    : "Monthly Basic"}
+                    : "Monthly"}
               </h3>
               <p className="text-gray-500 text-sm mb-3">
                 {selectedPlan === "week"
-                  ? "Test drive — see your child's reaction"
+                  ? "Try free for 7 days — 3 stories"
                   : selectedPlan === "yearly"
                     ? "Full year access with bonuses"
-                    : "Flexible monthly subscription"}
+                    : "Full access, first month $8"}
               </p>
               <div className={`text-2xl sm:text-3xl font-bold ${
-                selectedPlan === "yearly" ? "text-amber-600" : "gradient-text"
+                selectedPlan === "week" ? "text-green-600" : selectedPlan === "yearly" ? "text-amber-600" : "gradient-text"
               }`}>
-                {selectedPlan === "week" ? "$5" : selectedPlan === "yearly" ? "$189" : "$29"}
+                {selectedPlan === "week" ? "$0" : selectedPlan === "yearly" ? "$189" : "$8"}
                 <span className="text-base sm:text-lg text-gray-500 font-normal">
-                  {selectedPlan === "week" ? "" : selectedPlan === "yearly" ? "/year" : "/mo"}
+                  {selectedPlan === "week" ? "" : selectedPlan === "yearly" ? "/year" : "/first month"}
                 </span>
               </div>
+              {selectedPlan === "monthly" && (
+                <p className="text-gray-500 text-sm mt-1">Then $29/month</p>
+              )}
               {selectedPlan === "yearly" && (
                 <p className="text-green-600 text-sm mt-1">Save $159 vs monthly</p>
               )}
@@ -1981,11 +1984,11 @@ export default function Home() {
                 onClick={() => setSelectedPlan("week")}
                 className={`flex-1 py-2 px-3 rounded-full text-xs font-medium transition-all ${
                   selectedPlan === "week"
-                    ? "bg-gray-600 text-white shadow-lg"
+                    ? "bg-green-600 text-white shadow-lg"
                     : "bg-white/50 text-gray-600 hover:bg-white"
                 }`}
               >
-                Week
+                Free Trial
               </button>
               <button
                 onClick={() => setSelectedPlan("monthly")}
@@ -2042,15 +2045,15 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-600">Stories (Text+Music)</span>
-                    <span className="text-green-600 font-medium">✓ 3 Scenarios</span>
+                    <span className="text-green-600 font-medium">✓ 3 Stories</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-600">AI Audio</span>
-                    <span className="text-green-600 font-medium">✓ 3 included</span>
+                    <span className="text-gray-400">Not included</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-600">AI Cartoon</span>
-                    <span className="text-green-600 font-medium">✓ 1 included</span>
+                    <span className="text-gray-400">Not included</span>
                   </div>
                   <div className="flex justify-between py-2">
                     <span className="text-gray-600">PDF Report</span>
@@ -2141,15 +2144,15 @@ export default function Home() {
                 </span>
               ) : (
                 selectedPlan === "week"
-                  ? "Try for $5"
+                  ? "Start Free Trial"
                   : selectedPlan === "yearly"
                     ? "Get Yearly — $189"
-                    : "Subscribe — $29/mo"
+                    : "Start for $8"
               )}
             </button>
 
             <p className="text-center text-xs text-gray-400 mt-3">
-              {selectedPlan === "week" ? "One-time payment" : "Cancel anytime"} • Secure payment
+              {selectedPlan === "week" ? "No payment required" : "Cancel anytime"} • Secure
             </p>
           </div>
         </div>

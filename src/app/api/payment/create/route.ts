@@ -38,17 +38,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Different offer IDs for different plans
-    // Week ($5) has its own product, Monthly/Yearly ($29/$189) share another product
-    const weekOfferId = "378eca87-00e2-4a74-8fa9-68a83e2cac61";
+    // Free Trial ($0/week) - 906b87bc-0fd3-4eca-a8a2-71b654e52ba5
+    // Monthly ($8 first month, then $29) / Yearly ($189) - 0f1994eb-ee95-4c4b-85ed-4437ed82ba49
+    const freeTrialOfferId = "906b87bc-0fd3-4eca-a8a2-71b654e52ba5";
     const subscriptionOfferId = "0f1994eb-ee95-4c4b-85ed-4437ed82ba49";
 
-    const offerId = plan === "week" ? weekOfferId : subscriptionOfferId;
+    const offerId = plan === "week" ? freeTrialOfferId : subscriptionOfferId;
 
     // Determine periodicity based on plan
-    // Week is a one-time purchase, not a subscription
+    // Free trial is a one-time activation, Monthly/Yearly are subscriptions
     let periodicity: string | undefined;
     if (plan === "week") {
-      periodicity = undefined; // One-time payment, no periodicity
+      periodicity = undefined; // Free trial, no payment periodicity
     } else if (plan === "monthly") {
       periodicity = "MONTHLY";
     } else {

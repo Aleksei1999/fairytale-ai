@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     // Get user's profile and check subscription using authenticated user's email
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("id, credits, subscription_until")
+      .select("id, credits, subscription_until, subscription_type, free_trial_stories_used")
       .eq("email", user.email)
       .single();
 
@@ -99,6 +99,23 @@ export async function POST(request: NextRequest) {
     if (!hasActiveSubscription) {
       return NextResponse.json(
         { success: false, error: "Subscription required", message: "Story generation requires an active subscription" },
+        { status: 402 }
+      );
+    }
+
+    // Check free trial story limit (max 3 stories)
+    const isFreeTrial = profile.subscription_type === "free_trial";
+    const freeTrialStoriesUsed = profile.free_trial_stories_used || 0;
+    const FREE_TRIAL_STORY_LIMIT = 3;
+
+    if (isFreeTrial && freeTrialStoriesUsed >= FREE_TRIAL_STORY_LIMIT) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Free trial limit reached",
+          message: "You have used all 3 stories in your free trial. Subscribe to continue creating stories!",
+          freeTrialLimitReached: true
+        },
         { status: 402 }
       );
     }
@@ -211,6 +228,13 @@ ${childInterests ? `Интересы: ${childInterests}` : ""}
     const storyTitle = titleCompletion.choices[0]?.message?.content || `${childName} и ${characterName}`;
 
     // Story generation is FREE for subscribers - no credit deduction
+    // But for free trial users, increment the story counter
+    if (isFreeTrial) {
+      await supabase
+        .from("profiles")
+        .update({ free_trial_stories_used: freeTrialStoriesUsed + 1 })
+        .eq("id", profile.id);
+    }
 
     // Сохраняем сказку в БД для истории и n8n
     const { data: savedStory, error: storyError } = await supabase

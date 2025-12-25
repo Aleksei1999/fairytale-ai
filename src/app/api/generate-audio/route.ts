@@ -173,11 +173,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check user's star balance using authenticated user's email
+    // Check user's star balance and subscription type using authenticated user's email
     const supabase = createAdminClient();
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("credits")
+      .select("credits, subscription_type")
       .eq("email", user.email)
       .single();
 
@@ -185,6 +185,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: "User not found" },
         { status: 404 }
+      );
+    }
+
+    // Block AI Audio for free trial users
+    if (profile.subscription_type === "free_trial") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "AI Audio not available",
+          message: "AI Audio is not available in the free trial. Subscribe to unlock this feature!",
+          freeTrialRestriction: true
+        },
+        { status: 403 }
       );
     }
 
