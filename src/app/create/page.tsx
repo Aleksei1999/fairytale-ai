@@ -33,6 +33,7 @@ function CreatePageContent() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState<Step>(1);
+  const [skippedStep1, setSkippedStep1] = useState(false); // Track if we auto-skipped step 1
   const [programStory, setProgramStory] = useState<ProgramStory | null>(null);
   const [loadingStory, setLoadingStory] = useState(false);
   const [personalizedText, setPersonalizedText] = useState<string>("");
@@ -193,6 +194,7 @@ function CreatePageContent() {
             setPersonalizedText(personalized);
           }
           setStep(2);
+          setSkippedStep1(true);
         }
       } catch (e) {
         console.error("Error parsing saved child info:", e);
@@ -755,15 +757,27 @@ function CreatePageContent() {
 
             {/* Back button */}
             <div className="mt-8 flex justify-between">
-              <button
-                onClick={() => setStep(1)}
-                className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-                </svg>
-                <span>Back</span>
-              </button>
+              {skippedStep1 ? (
+                <Link
+                  href="/dashboard"
+                  className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                  </svg>
+                  <span>Back to Dashboard</span>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setStep(1)}
+                  className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                  </svg>
+                  <span>Back</span>
+                </button>
+              )}
               <Link
                 href="/dashboard"
                 className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
