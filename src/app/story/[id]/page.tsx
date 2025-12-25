@@ -671,7 +671,7 @@ export default function StoryPage() {
 
           {/* Story Step */}
           {currentStep === "story" && (
-            <div ref={storyCardRef} className="glass-card-strong p-6 sm:p-8">
+            <div className="glass-card-strong p-6 sm:p-8">
               {/* Story Header */}
               <div className="text-center mb-8">
                 <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${block?.color || "from-blue-400 to-blue-600"} flex items-center justify-center mx-auto mb-4 shadow-lg`}>
