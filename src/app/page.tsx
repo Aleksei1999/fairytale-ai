@@ -1689,8 +1689,7 @@ export default function Home() {
               <div className="mb-2"><img src="/images/icons/rocket.png" alt="" className="w-10 h-10 mx-auto" /></div>
               <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MONTHLY</h3>
               <p className="text-xs text-gray-500 mb-3">Full Access</p>
-              <div className="text-3xl sm:text-4xl font-bold gradient-text">$8<span className="text-base text-gray-500 font-normal">/first month</span></div>
-              <p className="text-gray-500 text-xs mt-1">Then $29/month</p>
+              <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base text-gray-500 font-normal">/month</span></div>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
@@ -1729,9 +1728,9 @@ export default function Home() {
               className="block w-full btn-glow py-3 text-center font-semibold text-white text-sm"
               strength={0.3}
             >
-              Start for $8
+              Start for <span className="line-through text-gray-400">$29</span> $8
             </MagneticButton>
-            <p className="text-center text-xs text-gray-400 mt-2">Cancel anytime</p>
+            <p className="text-center text-xs text-gray-400 mt-2">First month</p>
           </div>
 
           {/* YEARLY LEGEND */}
