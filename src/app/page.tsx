@@ -1728,7 +1728,7 @@ export default function Home() {
               className="block w-full btn-glow py-3 text-center font-semibold text-white text-sm"
               strength={0.3}
             >
-              Start for <span className="line-through text-gray-400">$29</span> $8
+              Start for <span className="line-through opacity-70">$29</span> $8
             </MagneticButton>
             <p className="text-center text-xs text-gray-400 mt-2">First month</p>
           </div>
