@@ -48,7 +48,7 @@ export default function Dashboard() {
   const [cartoonCredits, setCartoonCredits] = useState<number | null>(null);
   const [loadingCredits, setLoadingCredits] = useState(true);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<"week" | "monthly" | "yearly">("monthly");
+  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">("monthly");
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState("");
   const [subscriptionType, setSubscriptionType] = useState<string | null>(null);
@@ -453,29 +453,6 @@ export default function Dashboard() {
 
             {/* Plan Selection */}
             <div className="space-y-3 mb-6">
-              {/* Free Trial - only show if never had subscription */}
-              {!subscriptionType && (
-                <button
-                  onClick={() => setSelectedPlan("week")}
-                  className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
-                    selectedPlan === "week"
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray-200 hover:border-gray-300"
-                  }`}
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="font-bold text-gray-900">Free Trial</p>
-                        <span className="px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded-full font-medium">7 days</span>
-                      </div>
-                      <p className="text-sm text-gray-600">3 stories, no AI audio</p>
-                    </div>
-                    <p className="text-xl font-bold text-green-600">$0</p>
-                  </div>
-                </button>
-              )}
-
               {/* Monthly */}
               <button
                 onClick={() => setSelectedPlan("monthly")}
@@ -543,8 +520,6 @@ export default function Dashboard() {
                   </svg>
                   Processing...
                 </span>
-              ) : selectedPlan === "week" ? (
-                "Start Free Trial"
               ) : (
                 "Subscribe Now"
               )}

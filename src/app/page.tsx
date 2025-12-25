@@ -90,6 +90,19 @@ export default function Home() {
   };
 
   const openPaymentModal = (plan: "week" | "monthly" | "yearly") => {
+    // Free Trial (week) = just registration, no payment
+    if (plan === "week") {
+      if (!user) {
+        // Not authorized - show auth modal, after registration they get free trial automatically
+        setPendingPaymentPlan(null); // Don't save plan - no payment needed
+        setShowAuthModal(true);
+      } else {
+        // Already authorized - redirect to dashboard (they already have or had trial)
+        window.location.href = "/dashboard";
+      }
+      return;
+    }
+
     if (!user) {
       // Not authorized - save plan and show auth modal
       setPendingPaymentPlan(plan);
