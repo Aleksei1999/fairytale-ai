@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { DevelopmentMap } from "@/components/DevelopmentMap";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
 // Animated counter component
@@ -74,7 +75,8 @@ export default function Dashboard() {
 
         // If profile not found (deleted from DB), sign out and redirect to home
         if (!data.success && response.status === 404) {
-          await fetch("/api/auth/signout", { method: "POST" });
+          const supabase = createClient();
+          await supabase.auth.signOut();
           window.location.href = "/";
           return;
         }
