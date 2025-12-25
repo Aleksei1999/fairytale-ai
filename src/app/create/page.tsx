@@ -108,10 +108,16 @@ function CreatePageContent() {
     loadAllData();
   }, [user?.email, storyId]);
 
-  // Load saved child info from localStorage and skip to step 2 if already filled
+  // Load saved child info from localStorage (per-user) and skip to step 2 if already filled
   useEffect(() => {
-    const saved = localStorage.getItem("childInfo");
-    const hasSeenIntro = localStorage.getItem("hasSeenIntro");
+    if (!user?.id) return;
+
+    // Use user-specific keys
+    const userKey = `childInfo_${user.id}`;
+    const introKey = `hasSeenIntro_${user.id}`;
+
+    const saved = localStorage.getItem(userKey);
+    const hasSeenIntro = localStorage.getItem(introKey);
 
     if (saved) {
       try {
@@ -149,7 +155,7 @@ function CreatePageContent() {
       setStep(1);
     }
     // Otherwise stay on step 0 (intro)
-  }, [programStory]);
+  }, [programStory, user?.id]);
 
   const [childInfo, setChildInfo] = useState<ChildInfo>({
     name: "",
@@ -162,7 +168,9 @@ function CreatePageContent() {
 
   // Save child info and go to step 2
   const handleContinue = () => {
-    localStorage.setItem("childInfo", JSON.stringify(childInfo));
+    if (user?.id) {
+      localStorage.setItem(`childInfo_${user.id}`, JSON.stringify(childInfo));
+    }
 
     // Personalize the story text with child's name
     if (programStory?.full_text) {
@@ -550,7 +558,9 @@ function CreatePageContent() {
 
                   <button
                     onClick={() => {
-                      localStorage.setItem("hasSeenIntro", "true");
+                      if (user?.id) {
+                        localStorage.setItem(`hasSeenIntro_${user.id}`, "true");
+                      }
                       setStep(1);
                     }}
                     className="btn-glow px-10 py-4 text-white font-semibold text-lg inline-flex items-center gap-3"

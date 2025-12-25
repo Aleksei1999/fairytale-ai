@@ -223,7 +223,7 @@ export default function StoryPage() {
 
     // Load async data in parallel
     Promise.all([loadStoryData(), checkProgress()]);
-  }, [storyId]);
+  }, [storyId, user?.id]);
 
 
   // Load story mode and data from localStorage
@@ -249,16 +249,18 @@ export default function StoryPage() {
       setMusicUrl(savedMusicUrl);
     }
 
-    // Load child name for personalization
-    const savedChildInfo = localStorage.getItem("childInfo");
-    if (savedChildInfo) {
-      try {
-        const parsed = JSON.parse(savedChildInfo);
-        if (parsed.name) {
-          setChildName(parsed.name);
+    // Load child name for personalization (per-user)
+    if (user?.id) {
+      const savedChildInfo = localStorage.getItem(`childInfo_${user.id}`);
+      if (savedChildInfo) {
+        try {
+          const parsed = JSON.parse(savedChildInfo);
+          if (parsed.name) {
+            setChildName(parsed.name);
+          }
+        } catch (e) {
+          // ignore parse errors
         }
-      } catch (e) {
-        // ignore parse errors
       }
     }
   }
