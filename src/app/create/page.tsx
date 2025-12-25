@@ -23,6 +23,7 @@ interface ProgramStory {
   therapeutic_goal: string;
   methodology: string;
   why_important: string;
+  parent_intro: string | null;
   day_in_week: number;
   week_id: number;
 }
@@ -585,18 +586,63 @@ function CreatePageContent() {
               </p>
             </div>
 
-            {/* Story Preview */}
+            {/* Story Preview with Parent Intro */}
             {loadingStory ? (
               <div className="glass-card p-6 mb-6 text-center">
                 <div className="animate-spin w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
               </div>
             ) : programStory && (
-              <div className="glass-card p-6 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <img src="/images/icons/book.png" alt="" className="w-8 h-8" />
-                  <h3 className="font-bold text-gray-900">{programStory.title}</h3>
+              <div className="space-y-4 mb-6">
+                {/* Story Title */}
+                <div className="glass-card p-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
+                  <div className="flex items-center gap-3 mb-2">
+                    <img src="/images/icons/book.png" alt="" className="w-8 h-8" />
+                    <h3 className="font-bold text-gray-900">{programStory.title}</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 italic">{programStory.plot}</p>
                 </div>
-                <p className="text-sm text-gray-600 italic">{programStory.plot}</p>
+
+                {/* Parent Introduction */}
+                {programStory.parent_intro && (
+                  <div className="glass-card p-6 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-xl">ℹ️</span>
+                      <h4 className="font-bold text-amber-800">For Parents: What We&apos;re Exploring Today</h4>
+                    </div>
+                    <div className="text-sm text-amber-900 space-y-3 whitespace-pre-line">
+                      {programStory.parent_intro.split('**Tip before listening:**').map((part, index) => (
+                        index === 0 ? (
+                          <p key={index}>{part.trim()}</p>
+                        ) : (
+                          <div key={index} className="bg-amber-100/50 rounded-xl p-4 border border-amber-200">
+                            <p className="font-semibold text-amber-800 mb-1">💡 Tip before listening:</p>
+                            <p className="text-amber-700 italic">{part.trim()}</p>
+                          </div>
+                        )
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Therapeutic Goal & Methodology */}
+                {(programStory.therapeutic_goal || programStory.methodology) && (
+                  <div className="glass-card p-4 bg-white/50 border border-gray-200">
+                    <div className="flex flex-wrap gap-4 text-xs">
+                      {programStory.therapeutic_goal && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600">🎯</span>
+                          <span className="text-gray-600"><strong>Goal:</strong> {programStory.therapeutic_goal}</span>
+                        </div>
+                      )}
+                      {programStory.methodology && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-blue-600">📚</span>
+                          <span className="text-gray-600"><strong>Method:</strong> {programStory.methodology}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
