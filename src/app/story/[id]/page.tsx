@@ -218,9 +218,11 @@ export default function StoryPage() {
   }, [user?.email, storyId]);
 
   useEffect(() => {
-    loadStoryData();
-    checkProgress();
+    // Load localStorage data immediately (sync)
     loadStoryModeData();
+
+    // Load async data in parallel
+    Promise.all([loadStoryData(), checkProgress()]);
   }, [storyId]);
 
 
@@ -350,10 +352,19 @@ export default function StoryPage() {
   async function loadStoryData() {
     const supabase = createClient();
 
-    // Load story
+    // Load story with all related data in one query using joins
     const { data: storyData } = await supabase
       .from("program_stories")
-      .select("*")
+      .select(`
+        *,
+        program_weeks!inner (
+          *,
+          program_months!inner (
+            *,
+            program_blocks!inner (*)
+          )
+        )
+      `)
       .eq("id", storyId)
       .single();
 
@@ -362,9 +373,18 @@ export default function StoryPage() {
       return;
     }
 
-    setStory(storyData);
+    // Extract nested data
+    const weekData = storyData.program_weeks;
+    const monthData = weekData?.program_months;
+    const blockData = monthData?.program_blocks;
 
-    // Load questions
+    // Set all state
+    setStory(storyData);
+    if (weekData) setWeek(weekData);
+    if (monthData) setMonth(monthData);
+    if (blockData) setBlock(blockData);
+
+    // Load questions in parallel (can't join with story)
     const { data: questionsData } = await supabase
       .from("program_questions")
       .select("*")
@@ -372,38 +392,6 @@ export default function StoryPage() {
       .order("order_num");
 
     setQuestions(questionsData || []);
-
-    // Load week
-    const { data: weekData } = await supabase
-      .from("program_weeks")
-      .select("*")
-      .eq("id", storyData.week_id)
-      .single();
-
-    if (weekData) {
-      setWeek(weekData);
-
-      // Load month
-      const { data: monthData } = await supabase
-        .from("program_months")
-        .select("*")
-        .eq("id", weekData.month_id)
-        .single();
-
-      if (monthData) {
-        setMonth(monthData);
-
-        // Load block
-        const { data: blockData } = await supabase
-          .from("program_blocks")
-          .select("*")
-          .eq("id", monthData.block_id)
-          .single();
-
-        setBlock(blockData);
-      }
-    }
-
     setLoading(false);
   }
 
