@@ -63,7 +63,7 @@ export default function Dashboard() {
     }
   }, [user, authLoading, router]);
 
-  // Fetch credits
+  // Fetch credits and check if profile exists
   useEffect(() => {
     async function fetchCredits() {
       if (!user?.email) return;
@@ -71,6 +71,13 @@ export default function Dashboard() {
       try {
         const response = await fetch("/api/user/credits");
         const data = await response.json();
+
+        // If profile not found (deleted from DB), redirect to home
+        if (!data.success && response.status === 404) {
+          router.push("/");
+          return;
+        }
+
         if (data.success) {
           setCredits(data.credits);
           setCartoonCredits(data.cartoonCredits);
@@ -95,7 +102,7 @@ export default function Dashboard() {
     if (user?.email) {
       fetchCredits();
     }
-  }, [user?.email]);
+  }, [user?.email, router]);
 
   const handleBuyCredits = async () => {
     if (!user?.email) return;
