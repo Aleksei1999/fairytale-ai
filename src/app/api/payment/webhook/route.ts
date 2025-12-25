@@ -39,7 +39,8 @@ interface PaymentResult {
   stars: number;
   cartoonCredits: number;
   subscriptionDays: number;
-  type: "week" | "subscription" | "stars" | "cartoon";
+  type: "week" | "subscription" | "stars" | "cartoon" | "free_trial";
+  subscriptionType?: "free_trial" | "monthly" | "yearly";
 }
 
 function getPaymentResult(amount: number, utmCampaign?: string): PaymentResult {
@@ -70,31 +71,39 @@ function getPaymentResult(amount: number, utmCampaign?: string): PaymentResult {
     }
 
     // Subscription plans (identified by utm_campaign)
+    // Free Trial: $0, 7 days, 3 stories max, no AI Audio
     if (utmCampaign === "week") {
-      return { stars: 8, cartoonCredits: 0, subscriptionDays: 0, type: "week" };
+      return { stars: 0, cartoonCredits: 0, subscriptionDays: 7, type: "free_trial", subscriptionType: "free_trial" };
     }
+    // Monthly: $8 first month, then $29
     if (utmCampaign === "monthly") {
-      return { stars: 0, cartoonCredits: 0, subscriptionDays: 30, type: "subscription" };
+      return { stars: 0, cartoonCredits: 0, subscriptionDays: 30, type: "subscription", subscriptionType: "monthly" };
     }
+    // Yearly: $189
     if (utmCampaign === "yearly") {
-      return { stars: 0, cartoonCredits: 0, subscriptionDays: 365, type: "subscription" };
+      return { stars: 0, cartoonCredits: 0, subscriptionDays: 365, type: "subscription", subscriptionType: "yearly" };
     }
   }
 
   // Fallback: identify by amount (for recurring payments or missing utm)
-  // Week pack: $5 = 8 stars
-  if (roundedAmount === 5) {
-    return { stars: 8, cartoonCredits: 0, subscriptionDays: 0, type: "week" };
+  // Free trial: $0 = 7 days access (free trial)
+  if (roundedAmount === 0) {
+    return { stars: 0, cartoonCredits: 0, subscriptionDays: 7, type: "free_trial", subscriptionType: "free_trial" };
   }
 
-  // Monthly subscription: $29 = 30 days access
+  // Monthly subscription first month: $8 = 30 days access
+  if (roundedAmount === 8) {
+    return { stars: 0, cartoonCredits: 0, subscriptionDays: 30, type: "subscription", subscriptionType: "monthly" };
+  }
+
+  // Monthly subscription recurring: $29 = 30 days access
   if (roundedAmount === 29) {
-    return { stars: 0, cartoonCredits: 0, subscriptionDays: 30, type: "subscription" };
+    return { stars: 0, cartoonCredits: 0, subscriptionDays: 30, type: "subscription", subscriptionType: "monthly" };
   }
 
   // Yearly subscription: $189 = 365 days access
   if (roundedAmount === 189) {
-    return { stars: 0, cartoonCredits: 0, subscriptionDays: 365, type: "subscription" };
+    return { stars: 0, cartoonCredits: 0, subscriptionDays: 365, type: "subscription", subscriptionType: "yearly" };
   }
 
   // Star packs by amount (fallback)
@@ -216,7 +225,7 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
   // Find user profile by email
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, credits, subscription_until")
+    .select("id, credits, subscription_until, subscription_type")
     .eq("email", buyer.email)
     .single();
 
@@ -250,6 +259,17 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       updateData.subscription_until = newSubEnd.toISOString();
     }
 
+    // Set subscription type (free_trial, monthly, yearly)
+    if (paymentResult.subscriptionType) {
+      updateData.subscription_type = paymentResult.subscriptionType;
+
+      // For free trial, also set the start date and reset story counter
+      if (paymentResult.subscriptionType === "free_trial") {
+        updateData.free_trial_started_at = new Date().toISOString();
+        updateData.free_trial_stories_used = 0;
+      }
+    }
+
     const { error: updateError } = await supabase
       .from("profiles")
       .update(updateData)
@@ -261,6 +281,7 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
       const updates = [];
       if (totalCreditsToAdd > 0) updates.push(`${totalCreditsToAdd} credits`);
       if (paymentResult.subscriptionDays > 0) updates.push(`${paymentResult.subscriptionDays} days subscription`);
+      if (paymentResult.subscriptionType) updates.push(`type: ${paymentResult.subscriptionType}`);
       console.log(`Added to ${buyer.email}: ${updates.join(", ")}`);
     }
   } else {
