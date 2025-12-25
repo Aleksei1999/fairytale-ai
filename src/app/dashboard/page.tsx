@@ -73,9 +73,9 @@ export default function Dashboard() {
         const response = await fetch("/api/user/credits");
         const data = await response.json();
 
-        // If profile not found (deleted from DB) or error, sign out and redirect
-        if (!data.success && (response.status === 404 || data.error === "Profile not found")) {
-          console.log("Profile not found, signing out...");
+        // If unauthorized (401), profile not found (404), or auth error - sign out and redirect
+        if (!data.success && (response.status === 401 || response.status === 404 || data.error === "Profile not found" || data.error === "Authentication required")) {
+          console.log("Auth/Profile error, signing out...", response.status, data.error);
           const supabase = createClient();
           await supabase.auth.signOut();
           window.location.href = "/";
