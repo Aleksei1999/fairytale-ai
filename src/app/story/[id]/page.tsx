@@ -88,6 +88,8 @@ export default function StoryPage() {
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
   // Story unlock check
   const [isStoryUnlocked, setIsStoryUnlocked] = useState<boolean | null>(null);
+  // Child name for personalization
+  const [childName, setChildName] = useState<string>("Hero");
 
   // Refs for GSAP animations
   const headerRef = useRef<HTMLElement>(null);
@@ -280,6 +282,19 @@ export default function StoryPage() {
     const savedMusicUrl = localStorage.getItem("storyMusicUrl");
     if (savedMusicUrl) {
       setMusicUrl(savedMusicUrl);
+    }
+
+    // Load child name for personalization
+    const savedChildInfo = localStorage.getItem("childInfo");
+    if (savedChildInfo) {
+      try {
+        const parsed = JSON.parse(savedChildInfo);
+        if (parsed.name) {
+          setChildName(parsed.name);
+        }
+      } catch (e) {
+        // ignore parse errors
+      }
     }
   }
 
@@ -900,7 +915,7 @@ export default function StoryPage() {
                   </div>
                 ) : story.full_text ? (
                   <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
-                    {story.full_text}
+                    {story.full_text.replace(/\{childName\}/g, childName)}
                   </div>
                 ) : (
                   <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
