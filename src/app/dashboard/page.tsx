@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { DevelopmentMap } from "@/components/DevelopmentMap";
 import Link from "next/link";
-import gsap from "gsap";
 
 // Animated counter component
 function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?: number }) {
@@ -53,59 +52,11 @@ export default function Dashboard() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState("");
 
-  // Refs for GSAP animations
-  const welcomeRef = useRef<HTMLDivElement>(null);
-  const actionsRef = useRef<HTMLDivElement>(null);
-  const accountRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
-
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
-
-  // GSAP entrance animations
-  useEffect(() => {
-    if (authLoading || !user) return;
-
-    const ctx = gsap.context(() => {
-      // Header animation
-      if (headerRef.current) {
-        gsap.fromTo(headerRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-        );
-      }
-
-      // Welcome section animation
-      if (welcomeRef.current) {
-        gsap.fromTo(welcomeRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
-        );
-      }
-
-      // Actions grid animation
-      if (actionsRef.current) {
-        const cards = actionsRef.current.children;
-        gsap.fromTo(cards,
-          { opacity: 0, y: 40, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, delay: 0.4, ease: "back.out(1.2)" }
-        );
-      }
-
-      // Account info animation
-      if (accountRef.current) {
-        gsap.fromTo(accountRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 0.7, ease: "power2.out" }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, [authLoading, user]);
 
   // Fetch credits
   useEffect(() => {
@@ -176,7 +127,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header ref={headerRef} className="container mx-auto px-4 py-6">
+      <header className="container mx-auto px-4 py-6 animate-fade-in-up">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
@@ -197,7 +148,7 @@ export default function Dashboard() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Welcome Section */}
-          <div ref={welcomeRef} className="glass-card p-6 sm:p-8 mb-8">
+          <div className="glass-card p-6 sm:p-8 mb-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
@@ -230,7 +181,7 @@ export default function Dashboard() {
           </div>
 
           {/* Actions */}
-          <div ref={actionsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {/* Buy Story Credits */}
             <button
               onClick={() => setShowPaymentModal(true)}
@@ -270,7 +221,7 @@ export default function Dashboard() {
           </div>
 
           {/* Account Info */}
-          <div ref={accountRef} className="glass-card p-6">
+          <div className="glass-card p-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <h2 className="font-bold text-lg text-gray-900 mb-4">Account Info</h2>
             <div className="space-y-3">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">

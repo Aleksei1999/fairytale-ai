@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/AuthProvider";
-import gsap from "gsap";
 
 interface Question {
   id: number;
@@ -91,10 +90,6 @@ export default function StoryPage() {
   // Child name for personalization
   const [childName, setChildName] = useState<string>("Hero");
 
-  // Refs for GSAP animations
-  const headerRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const storyCardRef = useRef<HTMLDivElement>(null);
 
   // Check subscription status and story unlock
   useEffect(() => {
@@ -228,38 +223,6 @@ export default function StoryPage() {
     loadStoryModeData();
   }, [storyId]);
 
-  // GSAP entrance animations
-  useEffect(() => {
-    if (loading || !story) return;
-
-    const ctx = gsap.context(() => {
-      // Header animation
-      if (headerRef.current) {
-        gsap.fromTo(headerRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-        );
-      }
-
-      // Content animation
-      if (contentRef.current) {
-        gsap.fromTo(contentRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
-        );
-      }
-
-      // Story card animation
-      if (storyCardRef.current) {
-        gsap.fromTo(storyCardRef.current,
-          { opacity: 0, y: 40, scale: 0.98 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: 0.4, ease: "back.out(1.2)" }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, [loading, story, currentStep]);
 
   // Load story mode and data from localStorage
   function loadStoryModeData() {
@@ -646,7 +609,7 @@ export default function StoryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header ref={headerRef} className="container mx-auto px-4 py-6">
+      <header className="container mx-auto px-4 py-6 animate-fade-in-up">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
@@ -665,7 +628,7 @@ export default function StoryPage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <div ref={contentRef} className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           {/* Breadcrumb */}
           {block && month && week && (
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
