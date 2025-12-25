@@ -13,7 +13,6 @@ export default function Home() {
   const { user, loading: authLoading, signOut } = useAuth();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openProgramBlock, setOpenProgramBlock] = useState<number | null>(0);
-  const [selectedVoice, setSelectedVoice] = useState<"mom" | "narrator">("mom");
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingPaymentPlan, setPendingPaymentPlan] = useState<"week" | "monthly" | "yearly" | null>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -31,20 +30,6 @@ export default function Home() {
 
   // Initialize GSAP scroll animations
   useScrollAnimations();
-
-  const audioSources = {
-    mom: "/audio/mom.MP3",
-    narrator: "/audio/dictor.MP3",
-  };
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      setIsPlaying(false);
-      setAudioProgress(0);
-    }
-  }, [selectedVoice]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -66,7 +51,7 @@ export default function Home() {
       audio.removeEventListener("loadedmetadata", updateDuration);
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [selectedVoice]);
+  }, []);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -1456,15 +1441,8 @@ export default function Home() {
                 <div className="aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-100 via-sky-100 to-sky-100 flex items-center justify-center overflow-hidden">
                   <div className="text-center p-4 sm:p-6">
                     <div className="mb-3 sm:mb-4"><img src="/images/icons/sparkle.png" alt="" className="w-16 h-16 sm:w-24 sm:h-24 mx-auto" /></div>
-                    <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-200 to-amber-400 flex items-center justify-center shadow-lg mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl">👦</span>
-                    </div>
                     <p className="text-xs sm:text-sm text-gray-500">Oliver and the Brave Firefly</p>
                   </div>
-                  {/* Decorative elements */}
-                  <div className="absolute top-4 left-4 sparkle"><img src="/images/icons/star.png" alt="" className="w-6 h-6 sm:w-8 sm:h-8" /></div>
-                  <div className="absolute top-8 right-6 sparkle" style={{ animationDelay: "0.5s" }}><img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5 sm:w-6 sm:h-6" /></div>
-                  <div className="absolute bottom-8 left-8 sparkle" style={{ animationDelay: "1s" }}><img src="/images/icons/moon.png" alt="" className="w-5 h-5 sm:w-6 sm:h-6" /></div>
                 </div>
                 <p className="text-center text-xs text-gray-400 mt-2 sm:mt-3">
                   Illustration created by AI automatically
@@ -1482,30 +1460,13 @@ export default function Home() {
                 {/* Audio player */}
                 <div className="glass-card p-4 sm:p-6 mb-4 sm:mb-6">
                   {/* Hidden audio element */}
-                  <audio ref={audioRef} src={audioSources[selectedVoice]} preload="metadata" />
+                  <audio ref={audioRef} src="/audio/dictor.MP3" preload="metadata" />
 
-                  {/* Voice selector */}
-                  <div className="flex gap-2 mb-3 sm:mb-4">
-                    <button
-                      onClick={() => setSelectedVoice("mom")}
-                      className={`flex-1 py-2 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-medium transition-all ${
-                        selectedVoice === "mom"
-                          ? "bg-blue-500 text-white shadow-lg"
-                          : "bg-white/50 text-gray-600 hover:bg-white"
-                      }`}
-                    >
-                      <span className="flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Mom's voice</span>
-                    </button>
-                    <button
-                      onClick={() => setSelectedVoice("narrator")}
-                      className={`flex-1 py-2 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-medium transition-all ${
-                        selectedVoice === "narrator"
-                          ? "bg-blue-500 text-white shadow-lg"
-                          : "bg-white/50 text-gray-600 hover:bg-white"
-                      }`}
-                    >
-                      <span className="flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Narrator</span>
-                    </button>
+                  {/* Voice label */}
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                    <span className="py-2 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-medium bg-blue-500 text-white shadow-lg inline-flex items-center gap-1">
+                      <img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Narrator
+                    </span>
                   </div>
 
                   {/* Play button and progress */}
