@@ -72,9 +72,10 @@ export default function Dashboard() {
         const response = await fetch("/api/user/credits");
         const data = await response.json();
 
-        // If profile not found (deleted from DB), redirect to home
+        // If profile not found (deleted from DB), sign out and redirect to home
         if (!data.success && response.status === 404) {
-          router.push("/");
+          await fetch("/api/auth/signout", { method: "POST" });
+          window.location.href = "/";
           return;
         }
 
