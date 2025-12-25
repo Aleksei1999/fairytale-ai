@@ -91,6 +91,18 @@ export default function Home() {
     router.push("/dashboard");
   };
 
+  // Scroll to pricing section, but show auth modal first if not logged in
+  const scrollToPricing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!user) {
+      // Not authorized - show auth modal first
+      setShowAuthModal(true);
+      return;
+    }
+    // Authorized - scroll to pricing
+    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const openPaymentModal = (plan: "week" | "monthly" | "yearly") => {
     if (!user) {
       // Not authorized - save plan and show auth modal
@@ -227,7 +239,7 @@ export default function Home() {
             <a href="#how" className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
               How it works
             </a>
-            <a href="#pricing" className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
+            <a href="#pricing" onClick={scrollToPricing} className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
               Pricing
             </a>
             {/* Auth button */}
@@ -318,7 +330,7 @@ export default function Home() {
             <a href="#how" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
               How it works
             </a>
-            <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
+            <a href="#pricing" onClick={(e) => { setMobileMenuOpen(false); scrollToPricing(e); }} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
               Pricing
             </a>
             {user ? (
@@ -399,6 +411,7 @@ export default function Home() {
             <div className="flex flex-col gap-3 max-w-md mx-auto lg:mx-0">
               <MagneticLink
                 href="#pricing"
+                onClick={scrollToPricing}
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
                 strength={0.4}
               >
@@ -582,6 +595,7 @@ export default function Home() {
               </p>
               <MagneticLink
                 href="#pricing"
+                onClick={scrollToPricing}
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg inline-flex items-center gap-2"
                 strength={0.4}
               >
@@ -1409,6 +1423,7 @@ export default function Home() {
               </p>
               <MagneticLink
                 href="#pricing"
+                onClick={scrollToPricing}
                 className="btn-glow px-8 py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center gap-2"
                 strength={0.4}
               >
@@ -1899,6 +1914,7 @@ export default function Home() {
             {/* Final CTA */}
             <MagneticLink
               href="#pricing"
+              onClick={scrollToPricing}
               className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 whitespace-nowrap inline-block"
               strength={0.4}
             >

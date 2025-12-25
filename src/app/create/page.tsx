@@ -197,7 +197,7 @@ function CreatePageContent() {
     // Personalize the story text with child's name
     if (programStory?.full_text) {
       const personalized = programStory.full_text
-        .replace(/\{child_name\}/g, childInfo.name)
+        .replace(/\{childName\}/g, childInfo.name)
         .replace(/\{he_she\}/g, childInfo.gender === "boy" ? "he" : "she")
         .replace(/\{his_her\}/g, childInfo.gender === "boy" ? "his" : "her")
         .replace(/\{him_her\}/g, childInfo.gender === "boy" ? "him" : "her");
@@ -205,7 +205,7 @@ function CreatePageContent() {
     } else if (programStory?.plot) {
       // If no full_text, use plot as fallback
       const personalized = programStory.plot
-        .replace(/\{child_name\}/g, childInfo.name)
+        .replace(/\{childName\}/g, childInfo.name)
         .replace(/\{he_she\}/g, childInfo.gender === "boy" ? "he" : "she")
         .replace(/\{his_her\}/g, childInfo.gender === "boy" ? "his" : "her")
         .replace(/\{him_her\}/g, childInfo.gender === "boy" ? "him" : "her");

@@ -16,6 +16,7 @@ interface MagneticLinkProps {
   className?: string
   href: string
   strength?: number
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
 export function MagneticButton({
@@ -142,6 +143,7 @@ export function MagneticLink({
   className = '',
   href,
   strength = 0.4,
+  onClick,
 }: MagneticLinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null)
   const contentRef = useRef<HTMLSpanElement>(null)
@@ -207,6 +209,7 @@ export function MagneticLink({
       ref={linkRef}
       href={href}
       className={className}
+      onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
