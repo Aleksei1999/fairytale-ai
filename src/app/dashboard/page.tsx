@@ -48,9 +48,14 @@ export default function Dashboard() {
   const [cartoonCredits, setCartoonCredits] = useState<number | null>(null);
   const [loadingCredits, setLoadingCredits] = useState(true);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">("monthly");
+  const [selectedPlan, setSelectedPlan] = useState<"week" | "monthly" | "yearly">("monthly");
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState("");
+  const [subscriptionType, setSubscriptionType] = useState<string | null>(null);
+  const [subscriptionUntil, setSubscriptionUntil] = useState<string | null>(null);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [freeTrialExpired, setFreeTrialExpired] = useState(false);
+  const [freeTrialStoriesUsed, setFreeTrialStoriesUsed] = useState(0);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -69,6 +74,11 @@ export default function Dashboard() {
         if (data.success) {
           setCredits(data.credits);
           setCartoonCredits(data.cartoonCredits);
+          setSubscriptionType(data.subscriptionType);
+          setSubscriptionUntil(data.subscriptionUntil);
+          setHasActiveSubscription(data.hasActiveSubscription);
+          setFreeTrialExpired(data.freeTrialExpired);
+          setFreeTrialStoriesUsed(data.freeTrialStoriesUsed);
         } else {
           setCredits(0);
           setCartoonCredits(0);
@@ -180,24 +190,122 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            {/* Buy Story Credits */}
-            <button
-              onClick={() => setShowPaymentModal(true)}
-              className="glass-card p-6 hover:shadow-lg transition-shadow group text-left w-full"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <img src="/images/icons/book.png" alt="" className="w-9 h-9" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">Get Story Credits</h3>
-                  <p className="text-gray-600 text-sm">Subscribe for more stories</p>
+          {/* Free Trial Expired Banner */}
+          {freeTrialExpired && (
+            <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 p-[2px]">
+                <div className="relative rounded-2xl bg-white p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg text-gray-900 mb-1">Your Free Trial Has Ended</h3>
+                        <p className="text-gray-600 text-sm">
+                          You created {freeTrialStoriesUsed} stories during your trial. Subscribe now to continue creating unlimited magical stories!
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowPaymentModal(true)}
+                      className="flex-shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:scale-105 transition-all"
+                    >
+                      Subscribe for $8/mo
+                    </button>
+                  </div>
                 </div>
               </div>
-            </button>
+            </div>
+          )}
 
+          {/* No Subscription Banner (never had one) */}
+          {!hasActiveSubscription && !freeTrialExpired && !subscriptionType && (
+            <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-[2px]">
+                <div className="relative rounded-2xl bg-white p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg text-gray-900 mb-1">Start Your Free Trial</h3>
+                        <p className="text-gray-600 text-sm">
+                          Try FairyTaleAI free for 7 days! Create up to 3 personalized stories for your child.
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowPaymentModal(true)}
+                      className="flex-shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold hover:shadow-lg hover:scale-105 transition-all"
+                    >
+                      Start Free Trial
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Active Subscription Info */}
+          {hasActiveSubscription && subscriptionType && subscriptionType !== "free_trial" && (
+            <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+              <div className="glass-card p-4 border-2 border-green-200 bg-green-50/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">
+                      {subscriptionType === "monthly" ? "Monthly" : "Yearly"} Subscription Active
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Valid until {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Active Free Trial Info */}
+          {hasActiveSubscription && subscriptionType === "free_trial" && (
+            <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+              <div className="glass-card p-4 border-2 border-blue-200 bg-blue-50/50">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Free Trial Active</p>
+                      <p className="text-sm text-gray-600">
+                        {freeTrialStoriesUsed}/3 stories used • Expires {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowPaymentModal(true)}
+                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:shadow-lg transition-all"
+                  >
+                    Upgrade
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="grid grid-cols-1 gap-4 mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {/* Buy Cartoon Credits */}
             <Link
               href="/buy-cartoons"
@@ -242,6 +350,63 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+
+          {/* Subscription Info */}
+          {subscriptionType && (
+            <div className="glass-card p-6 mt-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <h2 className="font-bold text-lg text-gray-900 mb-4">Subscription</h2>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-gray-600">Current Plan</span>
+                  <span className="text-gray-900 font-medium">
+                    {subscriptionType === "free_trial" ? "Free Trial" :
+                     subscriptionType === "monthly" ? "Monthly ($29/mo)" :
+                     subscriptionType === "yearly" ? "Yearly ($189/yr)" : subscriptionType}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-gray-600">Status</span>
+                  <span className={`font-medium ${hasActiveSubscription ? "text-green-600" : "text-red-600"}`}>
+                    {hasActiveSubscription ? "Active" : "Expired"}
+                  </span>
+                </div>
+                {subscriptionUntil && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">
+                      {hasActiveSubscription ? "Days Remaining" : "Expired On"}
+                    </span>
+                    <span className="text-gray-900 font-medium">
+                      {hasActiveSubscription ? (
+                        <>
+                          {Math.max(0, Math.ceil((new Date(subscriptionUntil).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)))} days
+                          <span className="text-gray-500 text-sm ml-2">
+                            (until {new Date(subscriptionUntil).toLocaleDateString()})
+                          </span>
+                        </>
+                      ) : (
+                        new Date(subscriptionUntil).toLocaleDateString()
+                      )}
+                    </span>
+                  </div>
+                )}
+                {hasActiveSubscription && subscriptionType !== "free_trial" && (
+                  <div className="pt-4">
+                    <a
+                      href="https://billing.lava.top"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Cancel Subscription
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
@@ -266,19 +431,45 @@ export default function Dashboard() {
             </button>
 
             <div className="text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src="/images/icons/book.png" alt="" className="w-10 h-10" />
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
               </div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
-                Get Story Credits
+                {freeTrialExpired || subscriptionType === "free_trial" ? "Upgrade Your Plan" : "Choose Your Plan"}
               </h3>
               <p className="text-gray-600">
-                Subscribe to create magical personalized stories
+                {freeTrialExpired ? "Continue creating magical stories for your child" : "Start creating personalized stories"}
               </p>
             </div>
 
             {/* Plan Selection */}
             <div className="space-y-3 mb-6">
+              {/* Free Trial - only show if never had subscription */}
+              {!subscriptionType && (
+                <button
+                  onClick={() => setSelectedPlan("week")}
+                  className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
+                    selectedPlan === "week"
+                      ? "border-green-500 bg-green-50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-gray-900">Free Trial</p>
+                        <span className="px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded-full font-medium">7 days</span>
+                      </div>
+                      <p className="text-sm text-gray-600">3 stories, no AI audio</p>
+                    </div>
+                    <p className="text-xl font-bold text-green-600">$0</p>
+                  </div>
+                </button>
+              )}
+
+              {/* Monthly */}
               <button
                 onClick={() => setSelectedPlan("monthly")}
                 className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
@@ -289,13 +480,22 @@ export default function Dashboard() {
               >
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-bold text-gray-900">Monthly</p>
-                    <p className="text-sm text-gray-600">5 stories per month</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-gray-900">Monthly</p>
+                      {freeTrialExpired && (
+                        <span className="px-2 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-full font-medium">Best value</span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600">Unlimited stories + AI audio</p>
                   </div>
-                  <p className="text-xl font-bold text-gray-900">$29/mo</p>
+                  <div className="text-right">
+                    <p className="text-xl font-bold text-gray-900">$8<span className="text-sm font-normal text-gray-500">/mo</span></p>
+                    <p className="text-xs text-gray-500">then $29/mo</p>
+                  </div>
                 </div>
               </button>
 
+              {/* Yearly */}
               <button
                 onClick={() => setSelectedPlan("yearly")}
                 className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
@@ -307,11 +507,11 @@ export default function Dashboard() {
                 <div className="flex justify-between items-center">
                   <div>
                     <p className="font-bold text-gray-900">Yearly</p>
-                    <p className="text-sm text-gray-600">60 stories per year</p>
+                    <p className="text-sm text-gray-600">Unlimited stories + AI audio</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-bold text-gray-900">$249/yr</p>
-                    <p className="text-xs text-green-600 font-medium">Save 28%</p>
+                    <p className="text-xl font-bold text-gray-900">$189<span className="text-sm font-normal text-gray-500">/yr</span></p>
+                    <p className="text-xs text-green-600 font-medium">Save 46%</p>
                   </div>
                 </div>
               </button>
@@ -336,6 +536,8 @@ export default function Dashboard() {
                   </svg>
                   Processing...
                 </span>
+              ) : selectedPlan === "week" ? (
+                "Start Free Trial"
               ) : (
                 "Subscribe Now"
               )}

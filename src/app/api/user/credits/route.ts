@@ -19,7 +19,7 @@ export async function GET(_request: NextRequest) {
 
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("credits, cartoon_credits, is_admin")
+      .select("credits, cartoon_credits, is_admin, subscription_type, subscription_until, free_trial_stories_used")
       .eq("email", user.email)
       .single();
 
@@ -30,11 +30,23 @@ export async function GET(_request: NextRequest) {
       );
     }
 
+    // Check subscription status
+    const subscriptionUntil = profile.subscription_until ? new Date(profile.subscription_until) : null;
+    const hasActiveSubscription = subscriptionUntil && subscriptionUntil > new Date();
+    const isFreeTrial = profile.subscription_type === "free_trial";
+    const freeTrialExpired = isFreeTrial && !hasActiveSubscription;
+
     return NextResponse.json({
       success: true,
       credits: profile.credits || 0,
       cartoonCredits: profile.cartoon_credits || 0,
       isAdmin: profile.is_admin || false,
+      subscriptionType: profile.subscription_type || null,
+      subscriptionUntil: profile.subscription_until || null,
+      hasActiveSubscription,
+      isFreeTrial,
+      freeTrialExpired,
+      freeTrialStoriesUsed: profile.free_trial_stories_used || 0,
     });
   } catch (error) {
     console.error("Error fetching credits:", error);
