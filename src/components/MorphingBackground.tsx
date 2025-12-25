@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -14,8 +14,19 @@ export function MorphingBackground() {
   const blob1Ref = useRef<HTMLDivElement>(null)
   const blob2Ref = useRef<HTMLDivElement>(null)
   const blob3Ref = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check if mobile on mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   useEffect(() => {
+    // Skip ALL animations and GSAP on mobile
+    if (isMobile) {
+      return
+    }
+
     const container = containerRef.current
     const blob1 = blob1Ref.current
     const blob2 = blob2Ref.current
@@ -23,19 +34,12 @@ export function MorphingBackground() {
 
     if (!container || !blob1 || !blob2 || !blob3) return
 
-    // Skip animations on mobile for better scroll performance
-    const isMobile = window.innerWidth < 768
-
-    // Configure ScrollTrigger for mobile
+    // Configure ScrollTrigger for desktop only
     ScrollTrigger.config({
       ignoreMobileResize: true,
     })
 
     const ctx = gsap.context(() => {
-      // Skip all animations on mobile
-      if (isMobile) {
-        return
-      }
 
       // Continuous floating animation for blobs
       gsap.to(blob1, {
@@ -124,7 +128,19 @@ export function MorphingBackground() {
     })
 
     return () => ctx.revert()
-  }, [])
+  }, [isMobile])
+
+  // On mobile, render simple background without heavy blobs
+  if (isMobile) {
+    return (
+      <div
+        className="fixed inset-0 -z-10"
+        style={{
+          background: 'linear-gradient(135deg, #F0F7FF 0%, #E8F4FF 50%, #F5F0FF 100%)',
+        }}
+      />
+    )
+  }
 
   return (
     <div
