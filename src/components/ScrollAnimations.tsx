@@ -11,8 +11,8 @@ if (typeof window !== 'undefined') {
 
 export function useScrollAnimations() {
   useEffect(() => {
-    // Check if mobile
-    const isMobile = window.innerWidth < 768
+    // Check if mobile or tablet (< 1024px)
+    const isMobile = window.innerWidth < 1024
 
     // Configure ScrollTrigger
     ScrollTrigger.config({

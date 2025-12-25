@@ -36,8 +36,8 @@ export function AnimatedText({ text, className = '', delay = 0, type = 'chars', 
     const elements = container.querySelectorAll('.anim-item')
     if (!elements || elements.length === 0) return
 
-    // Simpler animations on mobile
-    const isMobile = window.innerWidth < 768
+    // Simpler animations on mobile and tablet (< 1024px)
+    const isMobile = window.innerWidth < 1024
     if (isMobile) {
       // Simple fade-in on mobile (no character-by-character)
       gsap.fromTo(

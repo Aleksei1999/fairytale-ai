@@ -23,8 +23,8 @@ export function MorphingBackground() {
 
     if (!container || !blob1 || !blob2 || !blob3) return
 
-    // Skip animations on mobile for better scroll performance
-    const isMobile = window.innerWidth < 768
+    // Skip animations on mobile and tablet for better scroll performance
+    const isMobile = window.innerWidth < 1024
 
     // Configure ScrollTrigger for mobile
     ScrollTrigger.config({
