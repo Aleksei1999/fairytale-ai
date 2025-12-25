@@ -59,73 +59,53 @@ function CreatePageContent() {
     }
   }, [user, authLoading, router]);
 
-  // Check subscription status
+  // Load all data in parallel
   useEffect(() => {
-    async function checkSubscription() {
-      if (!user?.email) return;
+    if (!user?.email) return;
 
+    async function loadAllData() {
       const supabase = createClient();
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("subscription_until")
-        .eq("email", user.email)
-        .single();
 
-      if (profile?.subscription_until) {
-        const subEnd = new Date(profile.subscription_until);
+      // Run all requests in parallel
+      const [subscriptionResult, starsResult, storyResult] = await Promise.all([
+        // Check subscription
+        supabase
+          .from("profiles")
+          .select("subscription_until")
+          .eq("email", user!.email!)
+          .single(),
+        // Load stars
+        fetch("/api/user/credits").then(r => r.json()).catch(() => ({ success: false })),
+        // Load story
+        storyId
+          ? supabase.from("program_stories").select("*").eq("id", parseInt(storyId)).single()
+          : Promise.resolve({ data: null, error: null })
+      ]);
+
+      // Process subscription
+      if (subscriptionResult.data?.subscription_until) {
+        const subEnd = new Date(subscriptionResult.data.subscription_until);
         setHasSubscription(subEnd > new Date());
       } else {
         setHasSubscription(false);
       }
-    }
 
-    checkSubscription();
-  }, [user?.email]);
-
-  // Load user's star balance
-  useEffect(() => {
-    async function loadStars() {
-      if (!user?.email) return;
-
-      setLoadingStars(true);
-      try {
-        const response = await fetch("/api/user/credits");
-        const data = await response.json();
-        if (data.success) {
-          setUserStars(data.credits || 0);
-        }
-      } catch (err) {
-        console.error("Error loading stars:", err);
-      } finally {
-        setLoadingStars(false);
+      // Process stars
+      if (starsResult.success) {
+        setUserStars(starsResult.credits || 0);
       }
-    }
+      setLoadingStars(false);
 
-    loadStars();
-  }, [user?.email]);
-
-  // Load story from database
-  useEffect(() => {
-    async function loadStory() {
-      if (!storyId) return;
-
-      setLoadingStory(true);
-      const supabase = createClient();
-
-      const { data, error } = await supabase
-        .from("program_stories")
-        .select("*")
-        .eq("id", parseInt(storyId))
-        .single();
-
-      if (data && !error) {
-        setProgramStory(data);
+      // Process story
+      if (storyResult.data && !storyResult.error) {
+        setProgramStory(storyResult.data);
       }
       setLoadingStory(false);
     }
 
-    loadStory();
-  }, [storyId]);
+    setLoadingStory(!!storyId);
+    loadAllData();
+  }, [user?.email, storyId]);
 
   // Load saved child info from localStorage and skip to step 2 if already filled
   useEffect(() => {
