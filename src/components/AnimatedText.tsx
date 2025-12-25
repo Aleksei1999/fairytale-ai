@@ -36,10 +36,15 @@ export function AnimatedText({ text, className = '', delay = 0, type = 'chars', 
     const elements = container.querySelectorAll('.anim-item')
     if (!elements || elements.length === 0) return
 
-    // Skip animations on mobile for better scroll performance
+    // Simpler animations on mobile
     const isMobile = window.innerWidth < 768
     if (isMobile) {
-      // Just show elements without animation
+      // Simple fade-in on mobile (no character-by-character)
+      gsap.fromTo(
+        container,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, delay: delay, ease: 'power2.out' }
+      )
       gsap.set(elements, { opacity: 1, y: 0, x: 0, scale: 1, rotateX: 0, skewX: 0 })
       return
     }

@@ -384,7 +384,10 @@ export default function Home() {
             </div>
 
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
-              <AnimatedText text="Parenting through" delay={0.2} /> <AnimatedText text="magic" className="gradient-text" delay={0.8} />
+              <AnimatedText text="Parenting through" delay={0.2} />
+              <br className="sm:hidden" />
+              <span className="sm:inline"> </span>
+              <AnimatedText text="magic" className="gradient-text" delay={0.8} />
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
