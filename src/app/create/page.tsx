@@ -7,7 +7,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
 import gsap from "gsap";
 
-type Step = 1 | 2;
+type Step = 0 | 1 | 2;
 
 interface ChildInfo {
   name: string;
@@ -32,7 +32,7 @@ function CreatePageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
-  const [step, setStep] = useState<Step>(1);
+  const [step, setStep] = useState<Step>(0);
   const [skippedStep1, setSkippedStep1] = useState(false); // Track if we auto-skipped step 1
   const [programStory, setProgramStory] = useState<ProgramStory | null>(null);
   const [loadingStory, setLoadingStory] = useState(false);
@@ -171,6 +171,8 @@ function CreatePageContent() {
   // Load saved child info from localStorage and skip to step 2 if already filled
   useEffect(() => {
     const saved = localStorage.getItem("childInfo");
+    const hasSeenIntro = localStorage.getItem("hasSeenIntro");
+
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -195,11 +197,18 @@ function CreatePageContent() {
           }
           setStep(2);
           setSkippedStep1(true);
+        } else if (hasSeenIntro) {
+          // Has seen intro but child info incomplete - go to step 1
+          setStep(1);
         }
       } catch (e) {
         console.error("Error parsing saved child info:", e);
       }
+    } else if (hasSeenIntro) {
+      // No child info but has seen intro - go to step 1
+      setStep(1);
     }
+    // Otherwise stay on step 0 (intro)
   }, [programStory]);
 
   const [childInfo, setChildInfo] = useState<ChildInfo>({
@@ -423,7 +432,8 @@ function CreatePageContent() {
         <div className="absolute bottom-40 left-1/4 w-80 h-80 bg-sky-100/40 rounded-full blur-3xl" />
       </div>
 
-      {/* Header */}
+      {/* Header - hidden on step 0 */}
+      {step !== 0 && (
       <header ref={headerRef} className="relative z-10 container mx-auto px-6 py-6">
         <nav className="glass-card px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -469,8 +479,158 @@ function CreatePageContent() {
           </div>
         </nav>
       </header>
+      )}
 
       <main className="relative z-10 container mx-auto px-6 py-8">
+        {/* Step 0: Welcome Intro */}
+        {step === 0 && (
+          <div className="max-w-3xl mx-auto">
+            <div className="glass-card-strong p-8 sm:p-10">
+              {/* Header */}
+              <div className="text-center mb-8">
+                <div className="flex justify-center mb-4">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
+                    <span className="text-4xl">👋</span>
+                  </div>
+                </div>
+                <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                  Welcome to the World of Emotional Intelligence!
+                </h1>
+                <p className="text-gray-600 text-lg">
+                  Dear Parents, you&apos;ve made a tremendous investment in your child&apos;s future.
+                </p>
+              </div>
+
+              {/* Content */}
+              <div className="space-y-8 text-gray-700">
+                <p className="text-center text-gray-600">
+                  An exciting year-long journey awaits you. We won&apos;t just be listening to fairy tales —
+                  we&apos;ll be building a Happy Personality together.
+                </p>
+
+                {/* 3 Golden Rules */}
+                <div>
+                  <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <span>🚀</span> How to Get Maximum Benefit? (3 Golden Rules)
+                  </h2>
+
+                  <div className="space-y-4">
+                    {/* Rule 1 */}
+                    <div className="bg-purple-50 rounded-2xl p-5 border border-purple-100">
+                      <h3 className="font-bold text-purple-800 mb-2 flex items-center gap-2">
+                        <span>🌙</span> 1. Create a Ritual
+                      </h3>
+                      <p className="text-purple-700">
+                        Fairy tales work best when your child&apos;s brain is relaxed. The ideal time is before bed.
+                        Make it your tradition: <em>&quot;We brushed our teeth, got into bed, and now we&apos;re heading to the Magical Forest.&quot;</em>
+                      </p>
+                    </div>
+
+                    {/* Rule 2 */}
+                    <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
+                      <h3 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                        <span>🐢</span> 2. Don&apos;t Rush (1 story = 1 day)
+                      </h3>
+                      <p className="text-blue-700 mb-2">
+                        Our program is carefully paced. Don&apos;t listen to all stories in one evening!
+                      </p>
+                      <ul className="text-blue-600 text-sm space-y-1 ml-4">
+                        <li>• The mind needs time to &quot;digest&quot; each lesson</li>
+                        <li>• Recommended pace: 3-4 stories per week</li>
+                        <li>• At the end of the week — a reinforcing Cartoon</li>
+                      </ul>
+                    </div>
+
+                    {/* Rule 3 */}
+                    <div className="bg-green-50 rounded-2xl p-5 border border-green-100">
+                      <h3 className="font-bold text-green-800 mb-2 flex items-center gap-2">
+                        <span>🗣</span> 3. Stay in Dialogue
+                      </h3>
+                      <p className="text-green-700 mb-2">
+                        The platform is your helper, but the Main Teacher is YOU.
+                        After each story, we give you &quot;Magic Questions.&quot; Be sure to discuss them with your child (it only takes 2 minutes).
+                      </p>
+                      <div className="bg-green-100/50 rounded-xl p-3 text-sm text-green-700 italic">
+                        Without your discussion, the story remains just entertainment.<br/>
+                        With your discussion, it transforms into a skill.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* What Each Lesson Contains */}
+                <div>
+                  <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <span>🧩</span> What Does Each Lesson Include?
+                  </h2>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                      <div className="font-bold text-amber-800 mb-1">1. Parent Intro</div>
+                      <p className="text-amber-700 text-sm">A short text for you to read before calling your child</p>
+                    </div>
+                    <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
+                      <div className="font-bold text-pink-800 mb-1">2. Audio Story</div>
+                      <p className="text-pink-700 text-sm">AI narration or read aloud by you</p>
+                    </div>
+                    <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
+                      <div className="font-bold text-cyan-800 mb-1">3. Discussion Questions</div>
+                      <p className="text-cyan-700 text-sm">Reinforce the lesson together</p>
+                    </div>
+                    <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
+                      <div className="font-bold text-violet-800 mb-1">4. Weekly Cartoon</div>
+                      <p className="text-violet-700 text-sm">Your child sees their Avatar on screen!</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Why Kids Love It */}
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 border border-yellow-200">
+                  <h2 className="font-display text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+                    <span>✨</span> Why Will Your Child Love This?
+                  </h2>
+                  <p className="text-gray-700 mb-3">
+                    The main secret is <strong>PERSONALIZATION</strong>.
+                  </p>
+                  <p className="text-gray-600">
+                    In every story and cartoon, your child hears their own Name, and their character appears on screen.
+                    For a child&apos;s brain, this is real magic: <em>&quot;Wow! This story is about ME!&quot;</em>
+                  </p>
+                  <p className="text-orange-600 font-medium mt-3">
+                    This increases engagement 10x compared to regular cartoons.
+                  </p>
+                </div>
+
+                {/* Ready Section */}
+                <div className="text-center pt-4">
+                  <p className="text-gray-600 mb-2">Are you ready?</p>
+                  <p className="text-gray-500 mb-6">
+                    Get comfortable. The first week is dedicated to <strong>Getting to Know Emotions</strong>.<br/>
+                    Let&apos;s discover who lives inside us!
+                  </p>
+
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("hasSeenIntro", "true");
+                      setStep(1);
+                    }}
+                    className="btn-glow px-10 py-4 text-white font-semibold text-lg inline-flex items-center gap-3"
+                  >
+                    <span>Start Week 1: Getting to Know Emotions</span>
+                    <span className="text-xl">👉</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Back to dashboard link */}
+            <div className="mt-6 text-center">
+              <Link href="/dashboard" className="text-gray-500 hover:text-gray-700 text-sm">
+                ← Back to Dashboard
+              </Link>
+            </div>
+          </div>
+        )}
+
         {/* Step 1: Child Info */}
         {step === 1 && (
           <div ref={step1Ref} className="max-w-2xl mx-auto">
