@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
-import gsap from "gsap";
 
 const STAR_PACKAGES = [
   {
@@ -46,68 +45,11 @@ export default function BuyStars() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [userStars, setUserStars] = useState<number | null>(null);
 
-  // Refs for GSAP animations
-  const headerRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const infoRef = useRef<HTMLDivElement>(null);
-  const packagesRef = useRef<HTMLDivElement>(null);
-  const noteRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
-
-  // GSAP entrance animations
-  useEffect(() => {
-    if (authLoading || !user) return;
-
-    const ctx = gsap.context(() => {
-      // Header animation
-      if (headerRef.current) {
-        gsap.fromTo(headerRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-        );
-      }
-
-      // Title animation
-      if (titleRef.current) {
-        gsap.fromTo(titleRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
-        );
-      }
-
-      // Info card animation
-      if (infoRef.current) {
-        gsap.fromTo(infoRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 0.3, ease: "power2.out" }
-        );
-      }
-
-      // Packages animation
-      if (packagesRef.current) {
-        const cards = packagesRef.current.children;
-        gsap.fromTo(cards,
-          { opacity: 0, y: 40, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, delay: 0.4, ease: "back.out(1.2)" }
-        );
-      }
-
-      // Note animation
-      if (noteRef.current) {
-        gsap.fromTo(noteRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, delay: 0.8, ease: "power2.out" }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, [authLoading, user]);
 
   // Fetch star balance
   useEffect(() => {
@@ -165,7 +107,7 @@ export default function BuyStars() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header ref={headerRef} className="container mx-auto px-4 py-6">
+      <header className="container mx-auto px-4 py-6 animate-fade-in-up">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
@@ -186,7 +128,7 @@ export default function BuyStars() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div ref={titleRef} className="text-center mb-12">
+          <div className="text-center mb-12 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-200 mb-6">
               <img src="/images/icons/star.png" alt="" className="w-5 h-5" />
               <span className="text-sm font-medium text-amber-700">
@@ -202,7 +144,7 @@ export default function BuyStars() {
           </div>
 
           {/* What stars do */}
-          <div ref={infoRef} className="glass-card p-6 mb-8">
+          <div className="glass-card p-6 mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
               <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> What can you do with stars?
             </h3>
@@ -231,13 +173,14 @@ export default function BuyStars() {
           </div>
 
           {/* Packages */}
-          <div ref={packagesRef} className="grid sm:grid-cols-3 gap-6 mb-8">
-            {STAR_PACKAGES.map((pkg) => (
+          <div className="grid sm:grid-cols-3 gap-6 mb-8">
+            {STAR_PACKAGES.map((pkg, index) => (
               <div
                 key={pkg.id}
-                className={`glass-card p-6 relative ${
+                className={`glass-card p-6 relative animate-fade-in-up ${
                   pkg.popular ? "border-2 border-amber-400 shadow-lg" : ""
                 }`}
+                style={{ animationDelay: `${0.2 + index * 0.1}s` }}
               >
                 {pkg.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-xs font-semibold">
@@ -286,7 +229,7 @@ export default function BuyStars() {
           </div>
 
           {/* Note */}
-          <div ref={noteRef} className="glass-card p-6 text-center">
+          <div className="glass-card p-6 text-center animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             <p className="text-gray-600 text-sm">
               <span className="font-semibold text-gray-900">Note:</span> Stars never expire!
               Use them anytime for AI voice narration or cartoon generation.

@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, Suspense, useRef } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
-import gsap from "gsap";
 
 type Step = 0 | 1 | 2;
 
@@ -53,52 +52,12 @@ function CreatePageContent() {
 
   const STAR_COST_AUDIO = 1;
 
-  // Refs for GSAP animations
-  const headerRef = useRef<HTMLElement>(null);
-  const step1Ref = useRef<HTMLDivElement>(null);
-  const step2Ref = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
-
   // Redirect to home if not authenticated
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/");
     }
   }, [user, authLoading, router]);
-
-  // GSAP entrance animations
-  useEffect(() => {
-    if (authLoading || !user || hasSubscription === null) return;
-
-    const ctx = gsap.context(() => {
-      // Header animation
-      if (headerRef.current) {
-        gsap.fromTo(headerRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-        );
-      }
-
-      // Step content animation
-      const currentStepRef = step === 1 ? step1Ref : step2Ref;
-      if (currentStepRef.current) {
-        gsap.fromTo(currentStepRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power2.out" }
-        );
-      }
-
-      // Form animation for step 1
-      if (step === 1 && formRef.current) {
-        gsap.fromTo(formRef.current,
-          { opacity: 0, y: 40, scale: 0.98 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: 0.4, ease: "back.out(1.2)" }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, [authLoading, user, step, hasSubscription]);
 
   // Check subscription status
   useEffect(() => {
@@ -434,7 +393,7 @@ function CreatePageContent() {
 
       {/* Header - hidden on step 0 */}
       {step !== 0 && (
-      <header ref={headerRef} className="relative z-10 container mx-auto px-6 py-6">
+      <header className="relative z-10 container mx-auto px-6 py-6 animate-fade-in-up">
         <nav className="glass-card px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
@@ -633,7 +592,7 @@ function CreatePageContent() {
 
         {/* Step 1: Child Info */}
         {step === 1 && (
-          <div ref={step1Ref} className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto animate-fade-in-up">
             <div className="text-center mb-8">
               <div className="flex justify-center mb-4">
                 <img src="/images/icons/heart.png" alt="" className="w-14 h-14" />
@@ -661,7 +620,7 @@ function CreatePageContent() {
               </div>
             )}
 
-            <div ref={formRef} className="glass-card-strong p-8 space-y-6">
+            <div className="glass-card-strong p-8 space-y-6">
               {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -772,7 +731,7 @@ function CreatePageContent() {
 
         {/* Step 2: Story Display */}
         {step === 2 && (
-          <div ref={step2Ref} className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto animate-fade-in-up">
             <div className="text-center mb-8">
               <div className="mb-4 flex justify-center"><img src="/images/icons/book.png" alt="" className="w-14 h-14" /></div>
               <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
