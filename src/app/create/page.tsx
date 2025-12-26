@@ -38,10 +38,10 @@ function CreatePageContent() {
   const [loadingStory, setLoadingStory] = useState(false);
   const [personalizedText, setPersonalizedText] = useState<string>("");
 
-  // Audio/Music generation state
+  // Audio generation state
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [isGeneratingMusic, setIsGeneratingMusic] = useState(false);
   const [generationStatus, setGenerationStatus] = useState("");
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // Stars balance
   const [userStars, setUserStars] = useState<number>(0);
@@ -193,30 +193,23 @@ function CreatePageContent() {
     setStep(2);
   };
 
-  // Helper: Generate background music via Udio
-  const generateMusic = async (): Promise<string | null> => {
-    try {
-      setGenerationStatus("Generating background music...");
-      const response = await fetch("/api/generate-music", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          topic: programStory?.therapeutic_goal || "custom",
-          storyTitle: programStory?.title,
-        }),
-      });
-      const data = await response.json();
-      if (data.success && data.music?.url) {
-        return data.music.url;
-      }
-      return null;
-    } catch (err) {
-      console.error("Music generation error:", err);
-      return null;
-    }
+  // Static background music URL
+  const BACKGROUND_MUSIC_URL = "/audio/background-music.mp3";
+
+  // Navigate to story page in read mode with background music
+  const goToReadMode = () => {
+    if (!storyId) return;
+    setIsNavigating(true);
+
+    localStorage.setItem("storyPersonalizedText", personalizedText);
+    localStorage.setItem("storyMode", "read");
+    localStorage.removeItem("storyAudio"); // Clear any previous audio
+    localStorage.setItem("storyMusicUrl", BACKGROUND_MUSIC_URL);
+
+    router.push(`/story/${storyId}`);
   };
 
-  // Generate AI narration with music and go to story page
+  // Generate AI narration and go to story page
   const generateNarrationAndNavigate = async () => {
     if (!personalizedText || !storyId || !user?.email) return;
 
@@ -230,20 +223,16 @@ function CreatePageContent() {
     setNotEnoughStars(false);
 
     try {
-      // Step 1: Generate music and voice in parallel
-      setGenerationStatus("Generating voice and music...");
+      setGenerationStatus("Generating AI voice...");
 
-      const [voiceResponse, musicUrl] = await Promise.all([
-        fetch("/api/generate-audio", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            text: personalizedText,
-            voiceId: "default"
-          }),
+      const voiceResponse = await fetch("/api/generate-audio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: personalizedText,
+          voiceId: "default"
         }),
-        generateMusic(),
-      ]);
+      });
 
       const voiceData = await voiceResponse.json();
 
@@ -263,13 +252,7 @@ function CreatePageContent() {
       localStorage.setItem("storyAudio", voiceData.audio.base64);
       localStorage.setItem("storyPersonalizedText", personalizedText);
       localStorage.setItem("storyMode", "ai-voice");
-
-      // Save music URL separately (will be played as background on story page)
-      if (musicUrl) {
-        localStorage.setItem("storyMusicUrl", musicUrl);
-      } else {
-        localStorage.removeItem("storyMusicUrl");
-      }
+      localStorage.setItem("storyMusicUrl", BACKGROUND_MUSIC_URL);
 
       // Navigate to story page
       router.push(`/story/${storyId}`);
@@ -279,40 +262,6 @@ function CreatePageContent() {
       alert("Could not generate narration. Please try again.");
     } finally {
       setIsGeneratingAudio(false);
-      setGenerationStatus("");
-    }
-  };
-
-  // Navigate to story page in read mode with generated music
-  const goToReadMode = async () => {
-    if (!storyId) return;
-
-    setIsGeneratingMusic(true);
-    setGenerationStatus("Generating background music...");
-
-    try {
-      // Generate music for read mode
-      const musicUrl = await generateMusic();
-
-      localStorage.setItem("storyPersonalizedText", personalizedText);
-      localStorage.setItem("storyMode", "read");
-      localStorage.removeItem("storyAudio"); // Clear any previous audio
-
-      if (musicUrl) {
-        localStorage.setItem("storyMusicUrl", musicUrl);
-      } else {
-        localStorage.removeItem("storyMusicUrl");
-      }
-
-      router.push(`/story/${storyId}`);
-    } catch (err) {
-      console.error("Error preparing read mode:", err);
-      // Navigate anyway even if music generation fails
-      localStorage.setItem("storyPersonalizedText", personalizedText);
-      localStorage.setItem("storyMode", "read");
-      router.push(`/story/${storyId}`);
-    } finally {
-      setIsGeneratingMusic(false);
       setGenerationStatus("");
     }
   };
@@ -821,17 +770,17 @@ function CreatePageContent() {
                   {/* Read Myself Button */}
                   <button
                     onClick={goToReadMode}
-                    disabled={isGeneratingMusic || isGeneratingAudio}
+                    disabled={isNavigating || isGeneratingAudio}
                     className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
-                      isGeneratingMusic || isGeneratingAudio
+                      isNavigating || isGeneratingAudio
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                         : "bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90"
                     }`}
                   >
-                    {isGeneratingMusic ? (
+                    {isNavigating ? (
                       <div className="flex items-center gap-2">
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Preparing...</span>
+                        <span>Loading...</span>
                       </div>
                     ) : (
                       <>
@@ -847,9 +796,9 @@ function CreatePageContent() {
                   {/* Generate AI Narration Button */}
                   <button
                     onClick={generateNarrationAndNavigate}
-                    disabled={isGeneratingAudio || isGeneratingMusic || !personalizedText}
+                    disabled={isGeneratingAudio || isNavigating || !personalizedText}
                     className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
-                      isGeneratingAudio || isGeneratingMusic || !personalizedText
+                      isGeneratingAudio || isNavigating || !personalizedText
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                         : "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg hover:opacity-90"
                     }`}
