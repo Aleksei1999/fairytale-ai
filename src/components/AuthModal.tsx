@@ -79,15 +79,12 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
       if (!response.ok) {
         setError(data.error || "Something went wrong");
       } else {
-        if (mode === "signup") {
-          setSuccess("Check your email to confirm your account!");
+        // Both signin and signup redirect to dashboard
+        onClose();
+        if (onSuccess) {
+          onSuccess();
         } else {
-          onClose();
-          if (onSuccess) {
-            onSuccess();
-          } else {
-            window.location.href = redirectUrl || "/dashboard";
-          }
+          window.location.href = redirectUrl || "/dashboard";
         }
       }
     } catch {
