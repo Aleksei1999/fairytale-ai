@@ -1,12 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
   redirectUrl?: string;
+}
+
+// Get UTM parameters from URL
+function getUtmParams() {
+  if (typeof window === "undefined") return {};
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get("utm_source") || undefined,
+    utm_medium: params.get("utm_medium") || undefined,
+    utm_campaign: params.get("utm_campaign") || undefined,
+    utm_term: params.get("utm_term") || undefined,
+    utm_content: params.get("utm_content") || undefined,
+  };
 }
 
 export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModalProps) {
@@ -17,6 +30,12 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [utmParams, setUtmParams] = useState<Record<string, string | undefined>>({});
+
+  // Capture UTM params on mount
+  useEffect(() => {
+    setUtmParams(getUtmParams());
+  }, []);
 
   if (!isOpen) return null;
 
@@ -47,7 +66,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
       const endpoint = mode === "signin" ? "/api/auth/signin" : "/api/auth/signup";
       const body = mode === "signin"
         ? { email, password }
-        : { email, password, name };
+        : { email, password, name, ...utmParams };
 
       const response = await fetch(endpoint, {
         method: "POST",

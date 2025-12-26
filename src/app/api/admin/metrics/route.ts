@@ -37,6 +37,8 @@ export async function GET(_request: NextRequest) {
       storiesResult,
       paymentsResult,
       recentRegistrationsResult,
+      utmProfilesResult,
+      utmPaymentsResult,
     ] = await Promise.all([
       // Total users and subscription breakdown
       supabase
@@ -59,12 +61,25 @@ export async function GET(_request: NextRequest) {
         .from("profiles")
         .select("id, created_at")
         .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()),
+
+      // UTM data from profiles (registrations)
+      supabase
+        .from("profiles")
+        .select("utm_source, utm_medium, utm_campaign"),
+
+      // UTM data from payments
+      supabase
+        .from("payments")
+        .select("utm_source, utm_campaign, amount")
+        .eq("status", "completed"),
     ]);
 
     const profiles = profilesResult.data || [];
     const stories = storiesResult.data || [];
     const payments = paymentsResult.data || [];
     const recentRegistrations = recentRegistrationsResult.data || [];
+    const utmProfiles = utmProfilesResult.data || [];
+    const utmPayments = utmPaymentsResult.data || [];
 
     // Calculate metrics
     const now = new Date();
@@ -122,6 +137,33 @@ export async function GET(_request: NextRequest) {
       storiesByDay.push({ date: dateStr, count });
     }
 
+    // UTM Analytics - Registrations by source
+    const utmRegistrations: Record<string, number> = {};
+    utmProfiles.forEach(p => {
+      const source = p.utm_source || "direct";
+      utmRegistrations[source] = (utmRegistrations[source] || 0) + 1;
+    });
+
+    // UTM Analytics - Payments by source
+    const utmPaymentsBySource: Record<string, { count: number; revenue: number }> = {};
+    utmPayments.forEach(p => {
+      const source = p.utm_source || "direct";
+      if (!utmPaymentsBySource[source]) {
+        utmPaymentsBySource[source] = { count: 0, revenue: 0 };
+      }
+      utmPaymentsBySource[source].count += 1;
+      utmPaymentsBySource[source].revenue += p.amount || 0;
+    });
+
+    // Convert to arrays for frontend
+    const registrationsBySource = Object.entries(utmRegistrations)
+      .map(([source, count]) => ({ source, count }))
+      .sort((a, b) => b.count - a.count);
+
+    const paymentsBySource = Object.entries(utmPaymentsBySource)
+      .map(([source, data]) => ({ source, ...data }))
+      .sort((a, b) => b.revenue - a.revenue);
+
     return NextResponse.json({
       success: true,
       metrics: {
@@ -147,6 +189,10 @@ export async function GET(_request: NextRequest) {
         registrations: {
           last30Days: recentRegistrations.length,
           byDay: registrationsByDay,
+        },
+        utm: {
+          registrationsBySource,
+          paymentsBySource,
         },
       },
     });
