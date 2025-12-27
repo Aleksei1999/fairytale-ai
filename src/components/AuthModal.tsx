@@ -179,24 +179,24 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               {/* Child Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Child&apos;s name *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">What is your child&apos;s name? *</label>
                 <input
                   type="text"
                   value={childInfo.name}
                   onChange={(e) => setChildInfo({ ...childInfo, name: e.target.value })}
-                  placeholder="Enter name"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
+                  placeholder="Name"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
                 />
               </div>
 
               {/* Age */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Age *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">How old? *</label>
                 <div className="flex gap-2 flex-wrap">
-                  {["2", "3", "4", "5", "6", "7", "8"].map((age) => (
+                  {["2", "3", "4", "5", "6", "7", "8", "9", "10+"].map((age) => (
                     <button
                       key={age}
                       type="button"
@@ -215,30 +215,30 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
 
               {/* Gender */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Gender *</label>
-                <div className="flex gap-3">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Child&apos;s gender *</label>
+                <div className="flex gap-4">
                   <button
                     type="button"
                     onClick={() => setChildInfo({ ...childInfo, gender: "boy" })}
-                    className={`flex-1 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${
+                    className={`flex-1 py-4 rounded-2xl font-medium transition-all flex items-center justify-center gap-2 ${
                       childInfo.gender === "boy"
                         ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
                         : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
                     }`}
                   >
-                    <span className="text-xl">👦</span>
+                    <span className="text-2xl">👦</span>
                     <span>Boy</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setChildInfo({ ...childInfo, gender: "girl" })}
-                    className={`flex-1 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${
+                    className={`flex-1 py-4 rounded-2xl font-medium transition-all flex items-center justify-center gap-2 ${
                       childInfo.gender === "girl"
                         ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
                         : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
                     }`}
                   >
-                    <span className="text-xl">👧</span>
+                    <span className="text-2xl">👧</span>
                     <span>Girl</span>
                   </button>
                 </div>
@@ -246,13 +246,13 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
 
               {/* Interests */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Interests (optional)</label>
-                <input
-                  type="text"
+                <label className="block text-sm font-medium text-gray-700 mb-2">Interests and hobbies (optional)</label>
+                <textarea
                   value={childInfo.interests}
                   onChange={(e) => setChildInfo({ ...childInfo, interests: e.target.value })}
-                  placeholder="Dinosaurs, space, princesses..."
-                  className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
+                  placeholder="For example: loves dinosaurs, plays soccer, watches Paw Patrol..."
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80 resize-none"
                 />
               </div>
             </div>
