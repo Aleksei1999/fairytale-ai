@@ -510,6 +510,102 @@ export default function Home() {
       </section>
       END TEMPORARILY HIDDEN */}
 
+      {/* Why Now Section */}
+      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative overflow-hidden glass-card-strong p-6 sm:p-10 md:p-12 border-2 border-sky-200">
+            {/* Animated background elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-sky-300/30 rounded-full blur-3xl floating" />
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-300/30 rounded-full blur-3xl floating" style={{ animationDelay: "1s" }} />
+              <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-cyan-300/20 rounded-full blur-2xl floating" style={{ animationDelay: "2s" }} />
+            </div>
+
+            {/* Header */}
+            <div className="relative text-center mb-8 sm:mb-10">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-100 to-blue-100 px-4 py-2 rounded-full mb-4 border border-sky-200">
+                <span className="text-xl">⏰</span>
+                <span className="text-blue-700 text-sm font-medium">Critical Window</span>
+              </div>
+              <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+                Why Is This Important <span className="gradient-text">Right Now</span>?
+              </h3>
+              <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+                Psychologists call ages 3-6 the <span className="font-bold text-gray-900">&quot;Programming Period&quot;</span>.
+                This isn&apos;t just childhood — it&apos;s the foundation of their entire future life.
+              </p>
+            </div>
+
+            {/* Facts Grid */}
+            <div className="relative grid md:grid-cols-3 gap-4 sm:gap-6 mb-8">
+              {/* Fact 1 - Harvard */}
+              <div className="group glass-card p-5 sm:p-6 hover:shadow-lg transition-all hover:scale-105 duration-300 border border-sky-100">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+                  <span className="text-3xl">🧒</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1 bg-sky-100 px-2 py-1 rounded-full mb-2">
+                    <span className="text-xs text-sky-700 font-medium">Harvard Research</span>
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">90% Brain Development</h4>
+                  <p className="text-gray-600 text-sm">
+                    By age 6, your child&apos;s brain is <span className="text-gray-900 font-semibold">90% formed</span>. Neural pathways for empathy, trust, and confidence are being built <span className="text-blue-600 font-semibold">right now</span>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fact 2 - Attachment */}
+              <div className="group glass-card p-5 sm:p-6 hover:shadow-lg transition-all hover:scale-105 duration-300 border border-sky-100">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-teal-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+                  <span className="text-3xl">🔐</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1 bg-cyan-100 px-2 py-1 rounded-full mb-2">
+                    <span className="text-xs text-cyan-700 font-medium">Attachment Theory</span>
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">Emotional Bond Window</h4>
+                  <p className="text-gray-600 text-sm">
+                    <span className="text-gray-900 font-semibold">Emotional closeness</span> with parents forms before age 7. If screens replace this contact, teenage years bring <span className="text-red-500 font-semibold">alienation</span>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fact 3 - Bitter Truth */}
+              <div className="group glass-card p-5 sm:p-6 hover:shadow-lg transition-all hover:scale-105 duration-300 border border-sky-100">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform mx-auto sm:mx-0">
+                  <span className="text-3xl">⚠️</span>
+                </div>
+                <div className="text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1 bg-amber-100 px-2 py-1 rounded-full mb-2">
+                    <span className="text-xs text-amber-700 font-medium">The Hard Truth</span>
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">Tomorrow May Be Too Late</h4>
+                  <p className="text-gray-600 text-sm">
+                    Today they quietly retreat to their room with a tablet. Miss this moment, and you&apos;ll wake up living with a <span className="text-red-500 font-semibold">stranger who doesn&apos;t trust you</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="relative text-center">
+              <p className="text-gray-700 text-base sm:text-lg font-medium mb-4">
+                Are you ready to risk this bond? Or will you act while the <span className="gradient-text font-bold">&quot;window of opportunity&quot;</span> is still open?
+              </p>
+              <MagneticLink
+                href="#pricing"
+                onClick={scrollToPricing}
+                className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg inline-flex items-center gap-2"
+                strength={0.4}
+              >
+                <span>Start Building the Bond</span>
+                <span className="text-xl">💙</span>
+              </MagneticLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== BLOCK: THE SOLUTION ===== */}
       <section className="relative z-10 py-16 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6">
