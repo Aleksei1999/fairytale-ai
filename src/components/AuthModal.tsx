@@ -7,6 +7,7 @@ interface AuthModalProps {
   onClose: () => void;
   onSuccess?: () => void;
   redirectUrl?: string;
+  initialMode?: "signin" | "signup";
 }
 
 interface ChildInfo {
@@ -29,8 +30,8 @@ function getUtmParams() {
   };
 }
 
-export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModalProps) {
-  const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
+export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode = "signin" }: AuthModalProps) {
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot">(initialMode);
   const [step, setStep] = useState<"auth" | "child-info">("auth");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,13 +52,15 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
     setUtmParams(getUtmParams());
   }, []);
 
-  // Reset step when modal opens/closes or mode changes
+  // Reset step and mode when modal opens/closes
   useEffect(() => {
     if (!isOpen) {
       setStep("auth");
       setChildInfo({ name: "", age: "", gender: "", interests: "" });
+    } else {
+      setMode(initialMode);
     }
-  }, [isOpen]);
+  }, [isOpen, initialMode]);
 
   if (!isOpen) return null;
 

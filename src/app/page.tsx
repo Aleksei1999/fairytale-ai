@@ -15,6 +15,7 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openProgramBlock, setOpenProgramBlock] = useState<number | null>(0);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<"signin" | "signup">("signin");
   const [pendingPaymentPlan, setPendingPaymentPlan] = useState<"week" | "monthly" | "yearly" | null>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -81,7 +82,8 @@ export default function Home() {
   const scrollToPricing = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!user) {
-      // Not authorized - show auth modal first
+      // Not authorized - show auth modal first (signup mode for CTA)
+      setAuthModalMode("signup");
       setShowAuthModal(true);
       return;
     }
@@ -93,8 +95,9 @@ export default function Home() {
     // Free Trial (week) = just registration, no payment
     if (plan === "week") {
       if (!user) {
-        // Not authorized - show auth modal, after registration they get free trial automatically
+        // Not authorized - show auth modal (signup mode), after registration they get free trial automatically
         setPendingPaymentPlan(null); // Don't save plan - no payment needed
+        setAuthModalMode("signup");
         setShowAuthModal(true);
       } else {
         // Already authorized - redirect to dashboard (they already have or had trial)
@@ -104,8 +107,9 @@ export default function Home() {
     }
 
     if (!user) {
-      // Not authorized - save plan and show auth modal
+      // Not authorized - save plan and show auth modal (signup mode)
       setPendingPaymentPlan(plan);
+      setAuthModalMode("signup");
       setShowAuthModal(true);
       return;
     }
@@ -294,7 +298,7 @@ export default function Home() {
                 </div>
               ) : (
                 <MagneticButton
-                  onClick={() => setShowAuthModal(true)}
+                  onClick={() => { setAuthModalMode("signin"); setShowAuthModal(true); }}
                   className="btn-glow px-4 sm:px-6 py-2 sm:py-2.5 text-white font-medium text-sm sm:text-base hidden sm:block"
                   strength={0.3}
                 >
@@ -373,7 +377,7 @@ export default function Home() {
               </div>
             ) : (
               <MagneticButton
-                onClick={() => { setShowAuthModal(true); setMobileMenuOpen(false); }}
+                onClick={() => { setAuthModalMode("signin"); setShowAuthModal(true); setMobileMenuOpen(false); }}
                 className="btn-glow px-6 py-3 text-white font-medium mt-2"
                 strength={0.3}
               >
@@ -2174,6 +2178,7 @@ export default function Home() {
         isOpen={showAuthModal}
         onClose={() => { setShowAuthModal(false); setPendingPaymentPlan(null); }}
         onSuccess={handleAuthSuccess}
+        initialMode={authModalMode}
       />
     </div>
   );
