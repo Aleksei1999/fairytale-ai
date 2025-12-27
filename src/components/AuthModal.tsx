@@ -151,7 +151,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
 
       {/* Modal */}
       <div
-        className={`relative glass-card-strong p-6 sm:p-8 w-full mx-2 ${
+        className={`relative glass-card-strong p-6 sm:p-8 w-full mx-2 max-h-[90vh] overflow-y-auto ${
           step === "child-info" ? "max-w-lg" : "max-w-md"
         }`}
         onClick={(e) => e.stopPropagation()}
