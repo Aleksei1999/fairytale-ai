@@ -11,12 +11,16 @@ interface SignupRequest {
   utm_campaign?: string;
   utm_term?: string;
   utm_content?: string;
+  child_name?: string;
+  child_age?: string;
+  child_gender?: string;
+  child_interests?: string;
 }
 
 export async function POST(request: Request) {
   try {
     const body: SignupRequest = await request.json()
-    const { email, password, name, utm_source, utm_medium, utm_campaign, utm_term, utm_content } = body
+    const { email, password, name, utm_source, utm_medium, utm_campaign, utm_term, utm_content, child_name, child_age, child_gender, child_interests } = body
 
     if (!email || !password) {
       return NextResponse.json(
@@ -37,8 +41,8 @@ export async function POST(request: Request) {
       },
     })
 
-    // If signup successful and we have UTM data, update the profile
-    if (!error && data.user && (utm_source || utm_medium || utm_campaign)) {
+    // If signup successful, update the profile with UTM and child data
+    if (!error && data.user) {
       const adminClient = createAdminClient()
       await adminClient
         .from('profiles')
@@ -48,6 +52,10 @@ export async function POST(request: Request) {
           utm_campaign,
           utm_term,
           utm_content,
+          child_name,
+          child_age,
+          child_gender,
+          child_interests,
         })
         .eq('email', email)
     }

@@ -49,6 +49,14 @@ function CreatePageContent() {
   const [notEnoughStars, setNotEnoughStars] = useState(false);
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
 
+  // Child info
+  const [childInfo, setChildInfo] = useState<ChildInfo>({
+    name: "",
+    age: "",
+    gender: "",
+    interests: "",
+  });
+
   const storyId = searchParams.get("storyId");
 
   const STAR_COST_AUDIO = 1;
@@ -68,11 +76,11 @@ function CreatePageContent() {
       const supabase = createClient();
 
       // Run all requests in parallel
-      const [subscriptionResult, starsResult, storyResult] = await Promise.all([
-        // Check subscription
+      const [profileResult, starsResult, storyResult] = await Promise.all([
+        // Get profile with subscription and child info
         supabase
           .from("profiles")
-          .select("subscription_until")
+          .select("subscription_until, child_name, child_age, child_gender, child_interests")
           .eq("email", user!.email!)
           .single(),
         // Load stars
@@ -84,11 +92,26 @@ function CreatePageContent() {
       ]);
 
       // Process subscription
-      if (subscriptionResult.data?.subscription_until) {
-        const subEnd = new Date(subscriptionResult.data.subscription_until);
+      if (profileResult.data?.subscription_until) {
+        const subEnd = new Date(profileResult.data.subscription_until);
         setHasSubscription(subEnd > new Date());
       } else {
         setHasSubscription(false);
+      }
+
+      // Load child info from database if available
+      if (profileResult.data?.child_name && profileResult.data?.child_age && profileResult.data?.child_gender) {
+        const dbChildInfo: ChildInfo = {
+          name: profileResult.data.child_name,
+          age: profileResult.data.child_age,
+          gender: profileResult.data.child_gender as "boy" | "girl",
+          interests: profileResult.data.child_interests || "",
+        };
+        setChildInfo(dbChildInfo);
+        // Also save to localStorage for quick access
+        if (user?.id) {
+          localStorage.setItem(`childInfo_${user.id}`, JSON.stringify(dbChildInfo));
+        }
       }
 
       // Process stars
@@ -106,63 +129,41 @@ function CreatePageContent() {
 
     setLoadingStory(!!storyId);
     loadAllData();
-  }, [user?.email, storyId]);
+  }, [user?.email, storyId, user?.id]);
 
-  // Load saved child info from localStorage (per-user) and skip to step 2 if already filled
+  // Check if child info is complete and handle step navigation
   useEffect(() => {
     if (!user?.id) return;
 
-    // Use user-specific keys
-    const userKey = `childInfo_${user.id}`;
     const introKey = `hasSeenIntro_${user.id}`;
-
-    const saved = localStorage.getItem(userKey);
     const hasSeenIntro = localStorage.getItem(introKey);
 
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setChildInfo(parsed);
-        // If child info is complete, skip to step 2
-        if (parsed.name && parsed.age && parsed.gender) {
-          // Personalize text if story is loaded
-          if (programStory?.full_text) {
-            const personalized = programStory.full_text
-              .replace(/\{childName\}/g, parsed.name)
-              .replace(/\{he_she\}/g, parsed.gender === "boy" ? "he" : "she")
-              .replace(/\{his_her\}/g, parsed.gender === "boy" ? "his" : "her")
-              .replace(/\{him_her\}/g, parsed.gender === "boy" ? "him" : "her");
-            setPersonalizedText(personalized);
-          } else if (programStory?.plot) {
-            const personalized = programStory.plot
-              .replace(/\{childName\}/g, parsed.name)
-              .replace(/\{he_she\}/g, parsed.gender === "boy" ? "he" : "she")
-              .replace(/\{his_her\}/g, parsed.gender === "boy" ? "his" : "her")
-              .replace(/\{him_her\}/g, parsed.gender === "boy" ? "him" : "her");
-            setPersonalizedText(personalized);
-          }
-          setStep(2);
-          setSkippedStep1(true);
-        } else if (hasSeenIntro) {
-          // Has seen intro but child info incomplete - go to step 1
-          setStep(1);
-        }
-      } catch (e) {
-        console.error("Error parsing saved child info:", e);
+    // If child info is complete (from DB or localStorage), skip to step 2
+    if (childInfo.name && childInfo.age && childInfo.gender) {
+      // Personalize text if story is loaded
+      if (programStory?.full_text) {
+        const personalized = programStory.full_text
+          .replace(/\{childName\}/g, childInfo.name)
+          .replace(/\{he_she\}/g, childInfo.gender === "boy" ? "he" : "she")
+          .replace(/\{his_her\}/g, childInfo.gender === "boy" ? "his" : "her")
+          .replace(/\{him_her\}/g, childInfo.gender === "boy" ? "him" : "her");
+        setPersonalizedText(personalized);
+      } else if (programStory?.plot) {
+        const personalized = programStory.plot
+          .replace(/\{childName\}/g, childInfo.name)
+          .replace(/\{he_she\}/g, childInfo.gender === "boy" ? "he" : "she")
+          .replace(/\{his_her\}/g, childInfo.gender === "boy" ? "his" : "her")
+          .replace(/\{him_her\}/g, childInfo.gender === "boy" ? "him" : "her");
+        setPersonalizedText(personalized);
       }
+      setStep(2);
+      setSkippedStep1(true);
     } else if (hasSeenIntro) {
-      // No child info but has seen intro - go to step 1
+      // Has seen intro but child info incomplete - go to step 1
       setStep(1);
     }
     // Otherwise stay on step 0 (intro)
-  }, [programStory, user?.id]);
-
-  const [childInfo, setChildInfo] = useState<ChildInfo>({
-    name: "",
-    age: "",
-    gender: "",
-    interests: "",
-  });
+  }, [programStory, user?.id, childInfo.name, childInfo.age, childInfo.gender]);
 
   const canProceedStep1 = childInfo.name && childInfo.age && childInfo.gender;
 

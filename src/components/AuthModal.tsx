@@ -9,6 +9,13 @@ interface AuthModalProps {
   redirectUrl?: string;
 }
 
+interface ChildInfo {
+  name: string;
+  age: string;
+  gender: "boy" | "girl" | "";
+  interests: string;
+}
+
 // Get UTM parameters from URL
 function getUtmParams() {
   if (typeof window === "undefined") return {};
@@ -24,6 +31,7 @@ function getUtmParams() {
 
 export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModalProps) {
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
+  const [step, setStep] = useState<"auth" | "child-info">("auth");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -31,13 +39,29 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [utmParams, setUtmParams] = useState<Record<string, string | undefined>>({});
+  const [childInfo, setChildInfo] = useState<ChildInfo>({
+    name: "",
+    age: "",
+    gender: "",
+    interests: "",
+  });
 
   // Capture UTM params on mount
   useEffect(() => {
     setUtmParams(getUtmParams());
   }, []);
 
+  // Reset step when modal opens/closes or mode changes
+  useEffect(() => {
+    if (!isOpen) {
+      setStep("auth");
+      setChildInfo({ name: "", age: "", gender: "", interests: "" });
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const canProceedChildInfo = childInfo.name && childInfo.age && childInfo.gender;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,10 +87,26 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
         return;
       }
 
+      // For signup, first show child info step
+      if (mode === "signup" && step === "auth") {
+        setStep("child-info");
+        setLoading(false);
+        return;
+      }
+
       const endpoint = mode === "signin" ? "/api/auth/signin" : "/api/auth/signup";
       const body = mode === "signin"
         ? { email, password }
-        : { email, password, name, ...utmParams };
+        : {
+            email,
+            password,
+            name,
+            ...utmParams,
+            child_name: childInfo.name,
+            child_age: childInfo.age,
+            child_gender: childInfo.gender,
+            child_interests: childInfo.interests,
+          };
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -121,6 +161,139 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
           </svg>
         </button>
 
+        {/* Child Info Step */}
+        {step === "child-info" && (
+          <>
+            <div className="text-center mb-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <span className="text-2xl sm:text-3xl">👶</span>
+              </div>
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+                Tell us about your child
+              </h3>
+              <p className="text-gray-600 text-sm">
+                We&apos;ll personalize every story with their name!
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {/* Child Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Child&apos;s name *</label>
+                <input
+                  type="text"
+                  value={childInfo.name}
+                  onChange={(e) => setChildInfo({ ...childInfo, name: e.target.value })}
+                  placeholder="Enter name"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
+                />
+              </div>
+
+              {/* Age */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Age *</label>
+                <div className="flex gap-2 flex-wrap">
+                  {["2", "3", "4", "5", "6", "7", "8"].map((age) => (
+                    <button
+                      key={age}
+                      type="button"
+                      onClick={() => setChildInfo({ ...childInfo, age })}
+                      className={`px-4 py-2 rounded-full font-medium transition-all ${
+                        childInfo.age === age
+                          ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
+                          : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
+                      }`}
+                    >
+                      {age}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Gender */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Gender *</label>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setChildInfo({ ...childInfo, gender: "boy" })}
+                    className={`flex-1 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${
+                      childInfo.gender === "boy"
+                        ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
+                        : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
+                    }`}
+                  >
+                    <span className="text-xl">👦</span>
+                    <span>Boy</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setChildInfo({ ...childInfo, gender: "girl" })}
+                    className={`flex-1 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${
+                      childInfo.gender === "girl"
+                        ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
+                        : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
+                    }`}
+                  >
+                    <span className="text-xl">👧</span>
+                    <span>Girl</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Interests */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Interests (optional)</label>
+                <input
+                  type="text"
+                  value={childInfo.interests}
+                  onChange={(e) => setChildInfo({ ...childInfo, interests: e.target.value })}
+                  placeholder="Dinosaurs, space, princesses..."
+                  className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div className="mt-4 p-3 rounded-xl bg-red-50 text-red-600 text-sm">
+                {error}
+              </div>
+            )}
+
+            <div className="mt-6 space-y-3">
+              <button
+                onClick={handleSubmit}
+                disabled={!canProceedChildInfo || loading}
+                className={`w-full btn-glow py-3 text-center font-semibold text-white ${
+                  !canProceedChildInfo || loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Creating account...
+                  </span>
+                ) : (
+                  "Create account"
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep("auth")}
+                className="w-full py-2 text-gray-500 hover:text-gray-700 text-sm"
+              >
+                ← Back
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Auth Step */}
+        {step === "auth" && (
+          <>
         {/* Header */}
         <div className="text-center mb-6">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
@@ -293,6 +466,8 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl }: AuthModal
             </>
           )}
         </p>
+          </>
+        )}
       </div>
     </div>
   );
