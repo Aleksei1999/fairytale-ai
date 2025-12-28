@@ -3,15 +3,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useAuth } from "@/components/AuthProvider";
 import { AuthModal } from "@/components/AuthModal";
 import { useScrollAnimations } from "@/components/ScrollAnimations";
 import { MagneticLink, MagneticButton } from "@/components/MagneticButton";
 import { AnimatedText, AnimatedWords, AnimatedLine } from "@/components/AnimatedText";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function Home() {
   const router = useRouter();
   const { user, loading: authLoading, signOut } = useAuth();
+  const t = useTranslations();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openProgramBlock, setOpenProgramBlock] = useState<number | null>(0);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -237,14 +240,16 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
             <a href="#problems" className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
-              Problems
+              {t("nav.problems")}
             </a>
             <a href="#how" className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
-              How it works
+              {t("nav.howItWorks")}
             </a>
             <a href="#pricing" onClick={scrollToPricing} className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
-              Pricing
+              {t("nav.pricing")}
             </a>
+            {/* Language switcher */}
+            <LanguageSwitcher />
             {/* Auth button */}
             {!authLoading && (
               user ? (
@@ -283,7 +288,7 @@ export default function Home() {
                           </>
                         ) : (
                           <>
-                            <img src="/images/icons/book.png" alt="" className="w-4 h-4 inline" /> My Stories
+                            <img src="/images/icons/book.png" alt="" className="w-4 h-4 inline" /> {t("nav.myStories")}
                           </>
                         )}
                       </button>
@@ -291,7 +296,7 @@ export default function Home() {
                         onClick={() => { signOut(); setShowUserMenu(false); }}
                         className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                       >
-                        Sign out
+                        {t("nav.signOut")}
                       </button>
                     </div>
                   )}
@@ -302,7 +307,7 @@ export default function Home() {
                   className="btn-glow px-4 sm:px-6 py-2 sm:py-2.5 text-white font-medium text-sm sm:text-base hidden sm:block"
                   strength={0.3}
                 >
-                  Sign in
+                  {t("nav.signIn")}
                 </MagneticButton>
               )
             )}
@@ -328,14 +333,17 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="md:hidden mt-2 glass-card p-4 flex flex-col gap-3">
             <a href="#problems" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
-              Problems
+              {t("nav.problems")}
             </a>
             <a href="#how" onClick={() => setMobileMenuOpen(false)} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
-              How it works
+              {t("nav.howItWorks")}
             </a>
             <a href="#pricing" onClick={(e) => { setMobileMenuOpen(false); scrollToPricing(e); }} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
-              Pricing
+              {t("nav.pricing")}
             </a>
+            <div className="py-2 px-4">
+              <LanguageSwitcher />
+            </div>
             {user ? (
               <div className="pt-2 border-t border-gray-200 space-y-3">
                 <div className="flex items-center gap-3">
@@ -363,7 +371,7 @@ export default function Home() {
                       </>
                     ) : (
                       <>
-                        <img src="/images/icons/book.png" alt="" className="w-4 h-4 inline" /> My Stories
+                        <img src="/images/icons/book.png" alt="" className="w-4 h-4 inline" /> {t("nav.myStories")}
                       </>
                     )}
                   </button>
@@ -371,7 +379,7 @@ export default function Home() {
                     onClick={() => { signOut(); setMobileMenuOpen(false); }}
                     className="py-2 px-4 text-red-600 text-sm font-medium"
                   >
-                    Sign out
+                    {t("nav.signOut")}
                   </button>
                 </div>
               </div>
@@ -381,7 +389,7 @@ export default function Home() {
                 className="btn-glow px-6 py-3 text-white font-medium mt-2"
                 strength={0.3}
               >
-                Sign in
+                {t("nav.signIn")}
               </MagneticButton>
             )}
           </div>

@@ -1,0 +1,120 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "error": "Error",
+    "success": "Success"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "create": "Create Story",
+    "pricing": "Pricing",
+    "problems": "Problems",
+    "howItWorks": "How it works",
+    "myStories": "My Stories",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out"
+  },
+  "hero": {
+    "title": "Personalized Stories for Your Child",
+    "subtitle": "Create magical audio fairy tales with AI narration in minutes",
+    "cta": "Start Free",
+    "ctaSecondary": "Learn More"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "freeTrial": {
+      "name": "Free Trial",
+      "price": "Free",
+      "period": "7 days",
+      "features": {
+        "stories": "3 stories",
+        "noAudio": "No AI audio",
+        "noCartoon": "No cartoons"
+      }
+    },
+    "monthly": {
+      "name": "Monthly",
+      "price": "$8",
+      "priceAfter": "$29/mo",
+      "period": "first month",
+      "features": {
+        "unlimitedStories": "Unlimited stories",
+        "aiAudio": "AI audio for stars",
+        "cartoons": "Cartoons for stars"
+      }
+    },
+    "yearly": {
+      "name": "Yearly",
+      "price": "$189",
+      "period": "per year",
+      "features": {
+        "unlimitedStories": "Unlimited stories",
+        "aiAudio": "AI audio for stars",
+        "cartoons": "Cartoons for stars",
+        "savings": "Save 50%"
+      }
+    },
+    "buyButton": "Subscribe"
+  },
+  "auth": {
+    "signInTitle": "Sign In",
+    "signUpTitle": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signInButton": "Sign In",
+    "signUpButton": "Sign Up",
+    "orContinueWith": "or continue with",
+    "google": "Google"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "yourStories": "Your Stories",
+    "noStories": "You don't have any stories yet",
+    "createFirst": "Create your first story",
+    "subscription": "Subscription",
+    "subscriptionActive": "Active until",
+    "subscriptionExpired": "Expired",
+    "stars": "Stars",
+    "buyStars": "Buy Stars"
+  },
+  "create": {
+    "title": "Create Story",
+    "step1": "Step 1: About the Child",
+    "step2": "Step 2: Story Theme",
+    "childName": "Child's Name",
+    "childAge": "Age",
+    "childGender": "Gender",
+    "boy": "Boy",
+    "girl": "Girl",
+    "storyTheme": "Story Theme",
+    "generateButton": "Create Story",
+    "generating": "Creating magic..."
+  },
+  "story": {
+    "listen": "Listen",
+    "read": "Read",
+    "generateAudio": "Generate Audio",
+    "generatingAudio": "Generating...",
+    "audioReady": "Audio ready!",
+    "requestCartoon": "Request Cartoon",
+    "cartoonCost": "5 stars"
+  },
+  "footer": {
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "offer": "Public Offer",
+    "copyright": "© 2025 FairyTale AI. All rights reserved."
+  }
+}

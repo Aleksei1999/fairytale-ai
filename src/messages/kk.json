@@ -1,0 +1,120 @@
+{
+  "common": {
+    "loading": "Жүктелуде...",
+    "save": "Сақтау",
+    "cancel": "Болдырмау",
+    "close": "Жабу",
+    "back": "Артқа",
+    "next": "Келесі",
+    "submit": "Жіберу",
+    "error": "Қате",
+    "success": "Сәтті"
+  },
+  "nav": {
+    "home": "Басты бет",
+    "dashboard": "Жеке кабинет",
+    "create": "Ертегі жасау",
+    "pricing": "Тарифтер",
+    "problems": "Мәселелер",
+    "howItWorks": "Қалай жұмыс істейді",
+    "myStories": "Менің ертегілерім",
+    "signIn": "Кіру",
+    "signUp": "Тіркелу",
+    "signOut": "Шығу"
+  },
+  "hero": {
+    "title": "Балаңызға арналған жеке ертегілер",
+    "subtitle": "AI дауыстау арқылы сиқырлы аудио-ертегілерді бірнеше минутта жасаңыз",
+    "cta": "Тегін бастау",
+    "ctaSecondary": "Көбірек білу"
+  },
+  "pricing": {
+    "title": "Тарифті таңдаңыз",
+    "freeTrial": {
+      "name": "Сынақ мерзімі",
+      "price": "Тегін",
+      "period": "7 күн",
+      "features": {
+        "stories": "3 ертегі",
+        "noAudio": "AI дауыстау жоқ",
+        "noCartoon": "Мультфильмдер жоқ"
+      }
+    },
+    "monthly": {
+      "name": "Айлық жазылым",
+      "price": "$8",
+      "priceAfter": "$29/ай",
+      "period": "бірінші ай",
+      "features": {
+        "unlimitedStories": "Шексіз ертегілер",
+        "aiAudio": "AI дауыстау жұлдыздар үшін",
+        "cartoons": "Мультфильмдер жұлдыздар үшін"
+      }
+    },
+    "yearly": {
+      "name": "Жылдық жазылым",
+      "price": "$189",
+      "period": "жылына",
+      "features": {
+        "unlimitedStories": "Шексіз ертегілер",
+        "aiAudio": "AI дауыстау жұлдыздар үшін",
+        "cartoons": "Мультфильмдер жұлдыздар үшін",
+        "savings": "50% үнемдеу"
+      }
+    },
+    "buyButton": "Жазылу"
+  },
+  "auth": {
+    "signInTitle": "Аккаунтқа кіру",
+    "signUpTitle": "Аккаунт жасау",
+    "email": "Email",
+    "password": "Құпия сөз",
+    "confirmPassword": "Құпия сөзді растаңыз",
+    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+    "noAccount": "Аккаунтыңыз жоқ па?",
+    "hasAccount": "Аккаунтыңыз бар ма?",
+    "signInButton": "Кіру",
+    "signUpButton": "Тіркелу",
+    "orContinueWith": "немесе жалғастыру",
+    "google": "Google"
+  },
+  "dashboard": {
+    "title": "Жеке кабинет",
+    "yourStories": "Сіздің ертегілеріңіз",
+    "noStories": "Сізде әлі ертегілер жоқ",
+    "createFirst": "Бірінші ертегіні жасау",
+    "subscription": "Жазылым",
+    "subscriptionActive": "Белсенді дейін",
+    "subscriptionExpired": "Мерзімі өтті",
+    "stars": "Жұлдыздар",
+    "buyStars": "Жұлдыздар сатып алу"
+  },
+  "create": {
+    "title": "Ертегі жасау",
+    "step1": "1-қадам: Бала туралы",
+    "step2": "2-қадам: Ертегі тақырыбы",
+    "childName": "Баланың аты",
+    "childAge": "Жасы",
+    "childGender": "Жынысы",
+    "boy": "Ұл",
+    "girl": "Қыз",
+    "storyTheme": "Ертегі тақырыбы",
+    "generateButton": "Ертегі жасау",
+    "generating": "Сиқыр жасалуда..."
+  },
+  "story": {
+    "listen": "Тыңдау",
+    "read": "Оқу",
+    "generateAudio": "Дауыстау",
+    "generatingAudio": "Дауыстау...",
+    "audioReady": "Аудио дайын!",
+    "requestCartoon": "Мультфильм тапсырысы",
+    "cartoonCost": "5 жұлдыз"
+  },
+  "footer": {
+    "terms": "Қолдану шарттары",
+    "privacy": "Құпиялылық саясаты",
+    "offer": "Жария оферта",
+    "copyright": "© 2025 FairyTale AI. Барлық құқықтар қорғалған."
+  }
+}

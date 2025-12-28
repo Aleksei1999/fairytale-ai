@@ -1,0 +1,120 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "back": "Назад",
+    "next": "Далее",
+    "submit": "Отправить",
+    "error": "Ошибка",
+    "success": "Успешно"
+  },
+  "nav": {
+    "home": "Главная",
+    "dashboard": "Личный кабинет",
+    "create": "Создать сказку",
+    "pricing": "Тарифы",
+    "problems": "Проблемы",
+    "howItWorks": "Как это работает",
+    "myStories": "Мои сказки",
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "signOut": "Выйти"
+  },
+  "hero": {
+    "title": "Персональные сказки для вашего ребёнка",
+    "subtitle": "Создавайте волшебные аудио-сказки с AI озвучкой за несколько минут",
+    "cta": "Начать бесплатно",
+    "ctaSecondary": "Узнать больше"
+  },
+  "pricing": {
+    "title": "Выберите тариф",
+    "freeTrial": {
+      "name": "Пробный период",
+      "price": "Бесплатно",
+      "period": "7 дней",
+      "features": {
+        "stories": "3 сказки",
+        "noAudio": "Без AI озвучки",
+        "noCartoon": "Без мультиков"
+      }
+    },
+    "monthly": {
+      "name": "Месячная подписка",
+      "price": "$8",
+      "priceAfter": "$29/мес",
+      "period": "первый месяц",
+      "features": {
+        "unlimitedStories": "Безлимит сказок",
+        "aiAudio": "AI озвучка за звёзды",
+        "cartoons": "Мультики за звёзды"
+      }
+    },
+    "yearly": {
+      "name": "Годовая подписка",
+      "price": "$189",
+      "period": "в год",
+      "features": {
+        "unlimitedStories": "Безлимит сказок",
+        "aiAudio": "AI озвучка за звёзды",
+        "cartoons": "Мультики за звёзды",
+        "savings": "Экономия 50%"
+      }
+    },
+    "buyButton": "Оформить"
+  },
+  "auth": {
+    "signInTitle": "Вход в аккаунт",
+    "signUpTitle": "Создать аккаунт",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "forgotPassword": "Забыли пароль?",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "signInButton": "Войти",
+    "signUpButton": "Зарегистрироваться",
+    "orContinueWith": "или продолжить с",
+    "google": "Google"
+  },
+  "dashboard": {
+    "title": "Личный кабинет",
+    "yourStories": "Ваши сказки",
+    "noStories": "У вас пока нет сказок",
+    "createFirst": "Создать первую сказку",
+    "subscription": "Подписка",
+    "subscriptionActive": "Активна до",
+    "subscriptionExpired": "Истекла",
+    "stars": "Звёзды",
+    "buyStars": "Купить звёзды"
+  },
+  "create": {
+    "title": "Создать сказку",
+    "step1": "Шаг 1: О ребёнке",
+    "step2": "Шаг 2: Тема сказки",
+    "childName": "Имя ребёнка",
+    "childAge": "Возраст",
+    "childGender": "Пол",
+    "boy": "Мальчик",
+    "girl": "Девочка",
+    "storyTheme": "Тема сказки",
+    "generateButton": "Создать сказку",
+    "generating": "Создаём волшебство..."
+  },
+  "story": {
+    "listen": "Слушать",
+    "read": "Читать",
+    "generateAudio": "Озвучить",
+    "generatingAudio": "Озвучиваем...",
+    "audioReady": "Аудио готово!",
+    "requestCartoon": "Заказать мультик",
+    "cartoonCost": "5 звёзд"
+  },
+  "footer": {
+    "terms": "Условия использования",
+    "privacy": "Политика конфиденциальности",
+    "offer": "Публичная оферта",
+    "copyright": "© 2025 FairyTale AI. Все права защищены."
+  }
+}
