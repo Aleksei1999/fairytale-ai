@@ -403,19 +403,18 @@ export default function Home() {
           <div className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 glass-card px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-xs sm:text-sm text-gray-600">Over 5,000 parents already with us</span>
+              <span className="text-xs sm:text-sm text-gray-600">{t("hero.badge")}</span>
             </div>
 
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
-              <AnimatedText text="Parenting through" delay={0.2} />
+              <AnimatedText text={t("hero.titlePart1")} delay={0.2} />
               <br className="sm:hidden" />
               <span className="sm:inline"> </span>
-              <AnimatedText text="magic" className="gradient-text" delay={0.8} />
+              <AnimatedText text={t("hero.titlePart2")} className="gradient-text" delay={0.8} />
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
-              Transform 20 minutes before bedtime into systematic development of Emotional Intelligence and Leadership.
-              Scientific methodology, personalized AI cartoons and fairy tales, transparent progress for parents.
+              {t("hero.subtitle")}
             </p>
 
             {/* CTA */}
@@ -426,14 +425,14 @@ export default function Home() {
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
                 strength={0.4}
               >
-                <span>Start the Hero&apos;s Journey</span>
+                <span>{t("hero.cta")}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </MagneticLink>
               <div className="flex items-center gap-1.5 sm:gap-2 justify-center text-xs sm:text-sm text-gray-500">
                 <span className="text-blue-500">✓</span>
-                <span>Try the first week free</span>
+                <span>{t("hero.ctaHint")}</span>
               </div>
             </div>
           </div>
@@ -452,13 +451,13 @@ export default function Home() {
 
               {/* Floating labels */}
               <div className="absolute -top-4 -left-8 glass-card px-3 py-2 floating hidden md:block" style={{ animationDelay: "1s" }}>
-                <span className="text-sm flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Your voice</span>
+                <span className="text-sm flex items-center gap-1"><img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> {t("hero.floatingVoice")}</span>
               </div>
               <div className="absolute top-20 -right-12 glass-card px-3 py-2 floating hidden md:block" style={{ animationDelay: "2s" }}>
-                <span className="text-sm flex items-center gap-1"><img src="/images/icons/brain.png" alt="" className="w-4 h-4" /> AI script</span>
+                <span className="text-sm flex items-center gap-1"><img src="/images/icons/brain.png" alt="" className="w-4 h-4" /> {t("hero.floatingAI")}</span>
               </div>
               <div className="absolute bottom-20 -left-16 glass-card px-3 py-2 floating hidden lg:block" style={{ animationDelay: "3s" }}>
-                <span className="text-sm">💜 Therapy</span>
+                <span className="text-sm">💜 {t("hero.floatingTherapy")}</span>
               </div>
             </div>
           </div>
@@ -674,10 +673,10 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              <AnimatedLine text="How the" scrollTrigger /> <AnimatedLine text="FairyTale AI" className="gradient-text" scrollTrigger /> <AnimatedLine text="magic works" scrollTrigger />
+              <AnimatedLine text={t("howItWorks.title1")} scrollTrigger /> <AnimatedLine text={t("howItWorks.title2")} className="gradient-text" scrollTrigger /> <AnimatedLine text={t("howItWorks.title3")} scrollTrigger />
             </h2>
             <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
-              The only system that adapts to your child. You give us the basics — we deliver a complete development program wrapped in an engaging story and cartoon format.
+              {t("howItWorks.subtitle")}
             </p>
           </div>
 
@@ -690,10 +689,12 @@ export default function Home() {
                 </div>
                 <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">🧑‍🎨</div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  Create an Avatar
+                  {t("howItWorks.step1Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  Upload your child&apos;s photo, enter their name, and select their interests (like space or dinosaurs). The AI creates the <span className="font-semibold text-violet-600">Hero of future adventures</span> in seconds.
+                  {t.rich("howItWorks.step1Text", {
+                    highlight: (chunks) => <span className="font-semibold text-violet-600">{chunks}</span>
+                  })}
                 </p>
               </div>
 
@@ -704,10 +705,12 @@ export default function Home() {
                 </div>
                 <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/book.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  Get the Weekly Story
+                  {t("howItWorks.step2Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  No guessing what to include. Our smart system automatically selects an <span className="font-semibold text-amber-600">age-appropriate developmental story</span> from our Annual Program.
+                  {t.rich("howItWorks.step2Text", {
+                    highlight: (chunks) => <span className="font-semibold text-amber-600">{chunks}</span>
+                  })}
                 </p>
               </div>
 
@@ -718,10 +721,12 @@ export default function Home() {
                 </div>
                 <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/mask.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  Choose the Format
+                  {t("howItWorks.step3Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  Read the story yourself with atmospheric music (free), or use <span className="font-semibold text-sky-600">&quot;Stars&quot;</span> to instantly turn the text into an audio drama or a colorful cartoon.
+                  {t.rich("howItWorks.step3Text", {
+                    highlight: (chunks) => <span className="font-semibold text-sky-600">{chunks}</span>
+                  })}
                 </p>
               </div>
 
@@ -732,10 +737,12 @@ export default function Home() {
                 </div>
                 <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/chart.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  Track Progress
+                  {t("howItWorks.step4Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  At the end of each week, download a <span className="font-semibold text-emerald-600">PDF report</span>: which skills (Soft Skills) your child developed and what to discuss at dinner to reinforce success.
+                  {t.rich("howItWorks.step4Text", {
+                    highlight: (chunks) => <span className="font-semibold text-emerald-600">{chunks}</span>
+                  })}
                 </p>
               </div>
             </div>
@@ -751,11 +758,11 @@ export default function Home() {
             <div className="text-center mb-10 sm:mb-16">
               <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
                 <span className="text-xl">🤝</span>
-                <span className="text-sm text-gray-600 font-medium">Partnership</span>
+                <span className="text-sm text-gray-600 font-medium">{t("partnership.badge")}</span>
               </div>
               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                We don't replace you. <br className="hidden sm:block" />
-                We become your <span className="gradient-text">co-pilot</span>.
+                {t("partnership.title1")} <br className="hidden sm:block" />
+                {t("partnership.title2")} <span className="gradient-text">{t("partnership.title3")}</span>.
               </h2>
             </div>
 
@@ -766,10 +773,12 @@ export default function Home() {
                   <img src="/images/icons/chart.png" alt="" className="w-8 h-8 sm:w-10 sm:h-10" />
                 </div>
                 <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-                  Full Transparency
+                  {t("partnership.transparencyTitle")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base mb-5">
-                  In your dashboard you see not just "time in app", but <span className="font-semibold text-gray-900">real skill growth</span>.
+                  {t.rich("partnership.transparencyText", {
+                    highlight: (chunks) => <span className="font-semibold text-gray-900">{chunks}</span>
+                  })}
                 </p>
 
                 {/* Dashboard Mock */}
@@ -1632,10 +1641,10 @@ export default function Home() {
       <section id="pricing" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            <AnimatedWords text="Choose your" scrollTrigger /> <AnimatedText text="journey" className="gradient-text" scrollTrigger />
+            <AnimatedWords text={t("pricing.title1")} scrollTrigger /> <AnimatedText text={t("pricing.title2")} className="gradient-text" scrollTrigger />
           </h2>
           <p className="text-gray-600 text-base sm:text-lg">
-            Start with a test drive or commit to transformation
+            {t("pricing.subtitle")}
           </p>
         </div>
 
@@ -1644,40 +1653,40 @@ export default function Home() {
           <div className="glass-card p-5 sm:p-6">
             <div className="text-center mb-4 sm:mb-6">
               <div className="mb-2"><img src="/images/icons/magic-wand.png" alt="" className="w-10 h-10 mx-auto" /></div>
-              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">FREE TRIAL</h3>
-              <p className="text-xs text-gray-500 mb-3">Test Drive</p>
-              <div className="text-3xl sm:text-4xl font-bold text-green-600">$0</div>
-              <p className="text-gray-500 text-xs mt-1">Try free for 7 days</p>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">{t("pricing.freeTrial.name")}</h3>
+              <p className="text-xs text-gray-500 mb-3">{t("pricing.freeTrial.subtitle")}</p>
+              <div className="text-3xl sm:text-4xl font-bold text-green-600">{t("pricing.freeTrial.price")}</div>
+              <p className="text-gray-500 text-xs mt-1">{t("pricing.freeTrial.period")}</p>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Program</span>
-                <span className="text-gray-900 font-medium">Week 1 access</span>
+                <span className="text-gray-600">{t("pricing.features.program")}</span>
+                <span className="text-gray-900 font-medium">{t("pricing.features.week1")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Stories (Text+Music)</span>
-                <span className="text-green-600 font-medium">✓ 3 Stories</span>
+                <span className="text-gray-600">{t("pricing.features.stories")}</span>
+                <span className="text-green-600 font-medium">✓ {t("pricing.features.threeStories")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">AI Audio</span>
-                <span className="text-gray-400">Not included</span>
+                <span className="text-gray-600">{t("pricing.features.aiAudio")}</span>
+                <span className="text-gray-400">{t("pricing.features.notIncluded")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">AI Cartoon</span>
-                <span className="text-gray-400">Not included</span>
+                <span className="text-gray-600">{t("pricing.features.aiCartoon")}</span>
+                <span className="text-gray-400">{t("pricing.features.notIncluded")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Methodology</span>
-                <span className="text-gray-900 text-xs">Questions & tasks</span>
+                <span className="text-gray-600">{t("pricing.features.methodology")}</span>
+                <span className="text-gray-900 text-xs">{t("pricing.features.questionsBasic")}</span>
               </div>
               <div className="flex justify-between items-start py-2 border-b border-gray-100">
-                <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Weekly Report</span>
+                <span className="text-gray-600">{t("pricing.features.analytics")}</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> {t("pricing.features.weeklyReport")}</span>
               </div>
               <div className="flex justify-between items-center py-2">
-                <span className="text-gray-600">Final Bonuses</span>
-                <span className="text-gray-400">—</span>
+                <span className="text-gray-600">{t("pricing.features.bonuses")}</span>
+                <span className="text-gray-400">{t("pricing.features.noBonuses")}</span>
               </div>
             </div>
 
@@ -1686,51 +1695,51 @@ export default function Home() {
               className="block w-full btn-secondary py-3 text-center font-semibold text-gray-700 text-sm"
               strength={0.3}
             >
-              Start Free Trial
+              {t("pricing.freeTrial.button")}
             </MagneticButton>
           </div>
 
           {/* MONTHLY - Basic */}
           <div className="glass-card-strong p-5 sm:p-6 relative border-2 border-sky-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
-              Most Popular
+              {t("pricing.monthly.popular")}
             </div>
 
             <div className="text-center mb-4 sm:mb-6 mt-2">
               <div className="mb-2"><img src="/images/icons/rocket.png" alt="" className="w-10 h-10 mx-auto" /></div>
-              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">MONTHLY</h3>
-              <p className="text-xs text-gray-500 mb-3">Full Access</p>
-              <div className="text-3xl sm:text-4xl font-bold gradient-text">$29<span className="text-base text-gray-500 font-normal">/month</span></div>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">{t("pricing.monthly.name")}</h3>
+              <p className="text-xs text-gray-500 mb-3">{t("pricing.monthly.subtitle")}</p>
+              <div className="text-3xl sm:text-4xl font-bold gradient-text">{t("pricing.monthly.price")}<span className="text-base text-gray-500 font-normal">{t("pricing.monthly.period")}</span></div>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Program</span>
-                <span className="text-gray-900 font-medium">Full month access</span>
+                <span className="text-gray-600">{t("pricing.features.program")}</span>
+                <span className="text-gray-900 font-medium">{t("pricing.features.fullMonth")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Stories (Text+Music)</span>
-                <span className="text-green-600 font-medium">✓ Unlimited</span>
+                <span className="text-gray-600">{t("pricing.features.stories")}</span>
+                <span className="text-green-600 font-medium">✓ {t("pricing.features.unlimited")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">AI Audio</span>
-                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                <span className="text-gray-600">{t("pricing.features.aiAudio")}</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("pricing.features.extraStars")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">AI Cartoon</span>
-                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                <span className="text-gray-600">{t("pricing.features.aiCartoon")}</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("pricing.features.extraStars")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Methodology</span>
-                <span className="text-gray-900 text-xs">Questions, tracking, psychology</span>
+                <span className="text-gray-600">{t("pricing.features.methodology")}</span>
+                <span className="text-gray-900 text-xs">{t("pricing.features.questionsFull")}</span>
               </div>
               <div className="flex justify-between items-start py-2 border-b border-gray-100">
-                <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Monthly Report</span>
+                <span className="text-gray-600">{t("pricing.features.analytics")}</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> {t("pricing.features.monthlyReport")}</span>
               </div>
               <div className="flex justify-between items-center py-2">
-                <span className="text-gray-600">Final Bonuses</span>
-                <span className="text-gray-400">—</span>
+                <span className="text-gray-600">{t("pricing.features.bonuses")}</span>
+                <span className="text-gray-400">{t("pricing.features.noBonuses")}</span>
               </div>
             </div>
 
@@ -1739,64 +1748,56 @@ export default function Home() {
               className="block w-full btn-glow py-3 text-center font-semibold text-white text-sm"
               strength={0.3}
             >
-              Start for <span className="line-through opacity-70">$29</span> $8
+              {t("pricing.monthly.button")} <span className="line-through opacity-70">$29</span> $8
             </MagneticButton>
-            <p className="text-center text-xs text-gray-400 mt-2">First month</p>
+            <p className="text-center text-xs text-gray-400 mt-2">{t("pricing.monthly.firstMonth")}</p>
           </div>
 
           {/* YEARLY LEGEND */}
           <div className="glass-card-strong p-5 sm:p-6 relative bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
-              Best Value
+              {t("pricing.yearly.bestValue")}
             </div>
 
             <div className="text-center mb-4 sm:mb-6 mt-2">
               <div className="mb-2"><img src="/images/icons/crown.png" alt="" className="w-10 h-10 mx-auto" /></div>
-              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">YEARLY LEGEND</h3>
-              <p className="text-xs text-gray-500 mb-3">For those committed to results</p>
-              <div className="text-3xl sm:text-4xl font-bold text-amber-600">$189<span className="text-base text-gray-500 font-normal">/year</span></div>
-              <p className="text-gray-500 text-xs mt-1">Save $159 vs monthly</p>
+              <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-1">{t("pricing.yearly.name")}</h3>
+              <p className="text-xs text-gray-500 mb-3">{t("pricing.yearly.subtitle")}</p>
+              <div className="text-3xl sm:text-4xl font-bold text-amber-600">{t("pricing.yearly.price")}<span className="text-base text-gray-500 font-normal">{t("pricing.yearly.period")}</span></div>
+              <p className="text-gray-500 text-xs mt-1">{t("pricing.yearly.savings")}</p>
             </div>
 
             <div className="space-y-3 mb-6 text-sm">
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
-                <span className="text-gray-600">Program</span>
-                <span className="text-gray-900 font-medium">All 12 months</span>
+                <span className="text-gray-600">{t("pricing.features.program")}</span>
+                <span className="text-gray-900 font-medium">{t("pricing.features.fullYear")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
-                <span className="text-gray-600">Stories (Text+Music)</span>
-                <span className="text-green-600 font-medium">✓ Unlimited</span>
+                <span className="text-gray-600">{t("pricing.features.stories")}</span>
+                <span className="text-green-600 font-medium">✓ {t("pricing.features.unlimited")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
-                <span className="text-gray-600">AI Audio</span>
-                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                <span className="text-gray-600">{t("pricing.features.aiAudio")}</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("pricing.features.extraStars")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
-                <span className="text-gray-600">AI Cartoon</span>
-                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                <span className="text-gray-600">{t("pricing.features.aiCartoon")}</span>
+                <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("pricing.features.extraStars")}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-amber-100">
-                <span className="text-gray-600">Methodology</span>
-                <span className="text-gray-900 text-xs">Questions, tracking, psychology</span>
+                <span className="text-gray-600">{t("pricing.features.methodology")}</span>
+                <span className="text-gray-900 text-xs">{t("pricing.features.questionsFull")}</span>
               </div>
               <div className="flex justify-between items-start py-2 border-b border-amber-100">
-                <span className="text-gray-600">Analytics</span>
-                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> &quot;Superpowers&quot; Monthly Report</span>
+                <span className="text-gray-600">{t("pricing.features.analytics")}</span>
+                <span className="text-gray-900 text-xs text-right flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> {t("pricing.features.fullReports")}</span>
               </div>
               <div className="py-2">
-                <span className="text-gray-600 block mb-2">Final Bonuses:</span>
+                <span className="text-gray-600 block mb-2">{t("pricing.features.bonuses")}:</span>
                 <div className="space-y-1 text-xs">
                   <div className="flex items-center gap-2 text-amber-700">
                     <img src="/images/icons/gift.png" alt="" className="w-4 h-4" />
-                    <span>Digital &quot;Hero Album&quot;</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-amber-700">
-                    <img src="/images/icons/movie.png" alt="" className="w-4 h-4" />
-                    <span>Personal Blockbuster</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-amber-700">
-                    <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
-                    <span>Personality Passport</span>
+                    <span>{t("pricing.features.certificate")}</span>
                   </div>
                 </div>
               </div>
@@ -1807,7 +1808,7 @@ export default function Home() {
               className="block w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 py-3 px-4 rounded-full text-center font-semibold text-white text-sm shadow-lg hover:shadow-xl transition-all whitespace-nowrap"
               strength={0.3}
             >
-              Get Yearly — $189
+              {t("pricing.yearly.button")} — $189
             </MagneticButton>
           </div>
         </div>

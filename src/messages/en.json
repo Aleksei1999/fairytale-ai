@@ -23,46 +23,69 @@
     "signOut": "Sign Out"
   },
   "hero": {
-    "title": "Personalized Stories for Your Child",
-    "subtitle": "Create magical audio fairy tales with AI narration in minutes",
-    "cta": "Start Free",
-    "ctaSecondary": "Learn More"
+    "badge": "Over 5,000 parents already with us",
+    "titlePart1": "Parenting through",
+    "titlePart2": "magic",
+    "subtitle": "Transform 20 minutes before bedtime into systematic development of Emotional Intelligence and Leadership. Scientific methodology, personalized AI cartoons and fairy tales, transparent progress for parents.",
+    "cta": "Start the Hero's Journey",
+    "ctaHint": "Try the first week free",
+    "floatingVoice": "Your voice",
+    "floatingAI": "AI script",
+    "floatingTherapy": "Therapy"
   },
   "pricing": {
-    "title": "Choose Your Plan",
+    "title1": "Choose your",
+    "title2": "journey",
+    "subtitle": "Start with a test drive or commit to transformation",
     "freeTrial": {
-      "name": "Free Trial",
-      "price": "Free",
-      "period": "7 days",
-      "features": {
-        "stories": "3 stories",
-        "noAudio": "No AI audio",
-        "noCartoon": "No cartoons"
-      }
+      "name": "FREE TRIAL",
+      "subtitle": "Test Drive",
+      "price": "$0",
+      "period": "Try free for 7 days",
+      "button": "Start Free Trial"
     },
     "monthly": {
-      "name": "Monthly",
-      "price": "$8",
-      "priceAfter": "$29/mo",
-      "period": "first month",
-      "features": {
-        "unlimitedStories": "Unlimited stories",
-        "aiAudio": "AI audio for stars",
-        "cartoons": "Cartoons for stars"
-      }
+      "name": "MONTHLY",
+      "subtitle": "Full Access",
+      "price": "$29",
+      "period": "/month",
+      "button": "Start for",
+      "firstMonth": "First month",
+      "popular": "Most Popular"
     },
     "yearly": {
-      "name": "Yearly",
+      "name": "YEARLY LEGEND",
+      "subtitle": "Full Program",
       "price": "$189",
-      "period": "per year",
-      "features": {
-        "unlimitedStories": "Unlimited stories",
-        "aiAudio": "AI audio for stars",
-        "cartoons": "Cartoons for stars",
-        "savings": "Save 50%"
-      }
+      "period": "/year",
+      "button": "Start Legend Journey",
+      "bestValue": "Best Value",
+      "savings": "Save $159"
     },
-    "buyButton": "Subscribe"
+    "features": {
+      "program": "Program",
+      "week1": "Week 1 access",
+      "fullMonth": "Full month access",
+      "fullYear": "Full year (12 months)",
+      "stories": "Stories (Text+Music)",
+      "threeStories": "3 Stories",
+      "unlimited": "Unlimited",
+      "aiAudio": "AI Audio",
+      "notIncluded": "Not included",
+      "extraStars": "Extra Stars",
+      "included": "Included",
+      "aiCartoon": "AI Cartoon",
+      "methodology": "Methodology",
+      "questionsBasic": "Questions & tasks",
+      "questionsFull": "Questions, tracking, psychology",
+      "analytics": "Analytics",
+      "weeklyReport": "Weekly Report",
+      "monthlyReport": "Monthly Report",
+      "fullReports": "Weekly + Final Report",
+      "bonuses": "Final Bonuses",
+      "noBonuses": "—",
+      "certificate": "Certificate + Graduation"
+    }
   },
   "auth": {
     "signInTitle": "Sign In",
@@ -116,5 +139,41 @@
     "privacy": "Privacy Policy",
     "offer": "Public Offer",
     "copyright": "© 2025 FairyTale AI. All rights reserved."
+  },
+  "howItWorks": {
+    "title1": "How the",
+    "title2": "FairyTale AI",
+    "title3": "magic works",
+    "subtitle": "The only system that adapts to your child. You give us the basics — we deliver a complete development program wrapped in an engaging story and cartoon format.",
+    "step1Title": "Create an Avatar",
+    "step1Text": "Upload your child's photo, enter their name, and select their interests (like space or dinosaurs). The AI creates the <highlight>Hero of future adventures</highlight> in seconds.",
+    "step2Title": "Get the Weekly Story",
+    "step2Text": "No guessing what to include. Our smart system automatically selects an <highlight>age-appropriate developmental story</highlight> from our Annual Program.",
+    "step3Title": "Choose the Format",
+    "step3Text": "Read the story yourself with atmospheric music (free), or use <highlight>\"Stars\"</highlight> to instantly turn the text into an audio drama or a colorful cartoon.",
+    "step4Title": "Track Progress",
+    "step4Text": "At the end of each week, download a <highlight>PDF report</highlight>: which skills (Soft Skills) your child developed and what to discuss at dinner to reinforce success."
+  },
+  "partnership": {
+    "badge": "Partnership",
+    "title1": "We don't replace you.",
+    "title2": "We become your",
+    "title3": "co-pilot",
+    "transparencyTitle": "Full Transparency",
+    "transparencyText": "In your dashboard you see not just \"time in app\", but <highlight>real skill growth</highlight>.",
+    "progressTitle": "Emma's Progress",
+    "progressWeek": "Week 4 of Month 2",
+    "live": "Live",
+    "empathy": "Empathy",
+    "resilience": "Resilience",
+    "leadership": "Leadership",
+    "weeklyGoals": "Weekly Goals",
+    "goalsCompleted": "completed",
+    "viewFullReport": "View Full Report →",
+    "scienceTitle": "Science-Backed",
+    "scienceText": "Our methodology is developed by child psychology experts with 15+ years of experience.",
+    "sciencePoint1": "Each story targets specific emotional development stages",
+    "sciencePoint2": "Adapts to your child's responses and progress",
+    "sciencePoint3": "Weekly reports with actionable parent tips"
   }
 }
