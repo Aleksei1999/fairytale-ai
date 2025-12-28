@@ -138,7 +138,31 @@
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
     "offer": "Public Offer",
-    "copyright": "© 2025 FairyTale AI. All rights reserved."
+    "contact": "Contact",
+    "copyright": "© 2025 FairyTaleAI"
+  },
+  "faq": {
+    "title1": "Parents' top",
+    "title2": "questions",
+    "q1": "We're fighting gadget addiction. Won't your app make it worse?",
+    "a1": "Quite the opposite. YouTube and games create addiction because they're endless and meaningless (dopamine loop). Our methodology works differently:\n\n1. Time limit: A story or cartoon lasts 3-7 minutes. It's a complete story, after which the child calmly puts down the phone.\n\n2. Connection to reality: After watching, the app gives a task in the real world (e.g., \"Go hug mom\" or \"Draw your fear\"). We bring the child back from the screen to life.",
+    "q2": "Who writes the scripts — a robot or a human? Is it really safe?",
+    "a2": "AI is just the \"pen\" we write with. But the \"hand\" is guided by child psychologists. All plots are built on strict SEL and CBT methodology templates. The AI cannot create anything scary or toxic as it operates within strict safety boundaries. This is 100% filtered content.",
+    "q3": "My child is very active (ADHD), they can't sit still for even a minute. Will this work?",
+    "a3": "Yes, because this is a story about THEM. A regular cartoon about Peppa Pig might bore them. But when a child sees their own face on screen and hears their own name — the \"ego magic\" kicks in. This holds the attention of even the most restless children and teaches them concentration.",
+    "q4": "Will my child's photos end up on the internet?",
+    "a4": "Never. We understand your concern. The photo is used for exactly 1 second — to train the neural network to create the character's face. Immediately after, the original photo is deleted from our servers. The avatar lives only in your private personal account.",
+    "q5": "How quickly will I see changes in behavior?",
+    "a5": "Instantly: Your child will be surprised and delighted (\"That's me!\").\n\nAfter 1 week: They'll start using words from the stories (\"I'm angry like the little dragon right now\").\n\nAfter 1 month: You'll notice tantrums become shorter and negotiating becomes easier.\n\nThis is a cumulative effect: the more regular the stories, the faster new neural connections form.",
+    "q6": "Why subscribe after the free trial?",
+    "a6": "The free trial lets you see your child's reaction to 3 personalized stories. After that, a subscription unlocks unlimited stories, AI voice narration, and animated cartoons.\n\nYou get a personal screenwriter, director, and psychologist. Producing one such personalized cartoon from a freelancer would cost you $100+. With us, you get an entire development program starting at just $8 for your first month.",
+    "q7": "How do I use the app correctly to get maximum results?",
+    "a7": "We recommend turning stories into a special evening ritual. Psychologists confirm: 20 minutes before sleep, a child's brain best absorbs information and forms new neural connections.\n\nYour ideal scenario:\n\n1. Create closeness: Lie down and hug your child. This is time when you belong only to each other.\n\n2. Choose Voice Magic: Want to read yourself? Turn on \"Text + Music\" mode. Tired? Turn on the professional narrator. Want magic? Upload a sample of your voice, and AI will narrate the story in your voice.\n\n3. Discuss the important stuff: Right after the story, the app will offer 3 questions. This short dialogue is more important than the cartoon itself — this is where emotional intelligence develops.\n\n4. Track growth: Every Friday, check your email. We'll send a detailed PDF report: what skills your Hero mastered this week."
+  },
+  "finalCta": {
+    "title": "Give your child magic",
+    "subtitle": "The first story is waiting. Start the magical journey today.",
+    "button": "Start the Magic"
   },
   "howItWorks": {
     "title1": "How the",

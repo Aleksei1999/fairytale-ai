@@ -1823,40 +1823,19 @@ export default function Home() {
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Parents&apos; top <span className="gradient-text">questions</span>
+            {t("faq.title1")} <span className="gradient-text">{t("faq.title2")}</span>
           </h2>
         </div>
 
         <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4">
           {[
-            {
-              q: "We're fighting gadget addiction. Won't your app make it worse?",
-              a: "Quite the opposite. YouTube and games create addiction because they're endless and meaningless (dopamine loop). Our methodology works differently:\n\n1. Time limit: A story or cartoon lasts 3-7 minutes. It's a complete story, after which the child calmly puts down the phone.\n\n2. Connection to reality: After watching, the app gives a task in the real world (e.g., \"Go hug mom\" or \"Draw your fear\"). We bring the child back from the screen to life."
-            },
-            {
-              q: "Who writes the scripts — a robot or a human? Is it really safe?",
-              a: "AI is just the \"pen\" we write with. But the \"hand\" is guided by child psychologists. All plots are built on strict SEL and CBT methodology templates. The AI cannot create anything scary or toxic as it operates within strict safety boundaries. This is 100% filtered content."
-            },
-            {
-              q: "My child is very active (ADHD), they can't sit still for even a minute. Will this work?",
-              a: "Yes, because this is a story about THEM. A regular cartoon about Peppa Pig might bore them. But when a child sees their own face on screen and hears their own name — the \"ego magic\" kicks in. This holds the attention of even the most restless children and teaches them concentration."
-            },
-            {
-              q: "Will my child's photos end up on the internet?",
-              a: "Never. We understand your concern. The photo is used for exactly 1 second — to train the neural network to create the character's face. Immediately after, the original photo is deleted from our servers. The avatar lives only in your private personal account."
-            },
-            {
-              q: "How quickly will I see changes in behavior?",
-              a: "Instantly: Your child will be surprised and delighted (\"That's me!\").\n\nAfter 1 week: They'll start using words from the stories (\"I'm angry like the little dragon right now\").\n\nAfter 1 month: You'll notice tantrums become shorter and negotiating becomes easier.\n\nThis is a cumulative effect: the more regular the stories, the faster new neural connections form."
-            },
-            {
-              q: "Why subscribe after the free trial?",
-              a: "The free trial lets you see your child's reaction to 3 personalized stories. After that, a subscription unlocks unlimited stories, AI voice narration, and animated cartoons.\n\nYou get a personal screenwriter, director, and psychologist. Producing one such personalized cartoon from a freelancer would cost you $100+. With us, you get an entire development program starting at just $8 for your first month."
-            },
-            {
-              q: "How do I use the app correctly to get maximum results?",
-              a: "We recommend turning stories into a special evening ritual. Psychologists confirm: 20 minutes before sleep, a child's brain best absorbs information and forms new neural connections.\n\nYour ideal scenario:\n\n1. Create closeness: Lie down and hug your child. This is time when you belong only to each other.\n\n2. Choose Voice Magic: Want to read yourself? Turn on \"Text + Music\" mode. Tired? Turn on the professional narrator. Want magic? Upload a sample of your voice, and AI will narrate the story in your voice.\n\n3. Discuss the important stuff: Right after the story, the app will offer 3 questions. This short dialogue is more important than the cartoon itself — this is where emotional intelligence develops.\n\n4. Track growth: Every Friday, check your email. We'll send a detailed PDF report: what skills your Hero mastered this week."
-            }
+            { q: t("faq.q1"), a: t("faq.a1") },
+            { q: t("faq.q2"), a: t("faq.a2") },
+            { q: t("faq.q3"), a: t("faq.a3") },
+            { q: t("faq.q4"), a: t("faq.a4") },
+            { q: t("faq.q5"), a: t("faq.a5") },
+            { q: t("faq.q6"), a: t("faq.a6") },
+            { q: t("faq.q7"), a: t("faq.a7") }
           ].map((item, i) => (
             <div key={i} className="glass-card overflow-hidden">
               <button
@@ -1891,10 +1870,10 @@ export default function Home() {
           <div className="relative">
             <div className="mb-4 sm:mb-6 sparkle"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" /></div>
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-              Give your child magic
+              {t("finalCta.title")}
             </h2>
             <p className="text-base sm:text-lg text-sky-100 mb-6 sm:mb-8 max-w-xl mx-auto">
-              The first story is waiting. Start the magical journey today.
+              {t("finalCta.subtitle")}
             </p>
 
             {/* Final CTA */}
@@ -1904,7 +1883,7 @@ export default function Home() {
               className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 whitespace-nowrap inline-block"
               strength={0.4}
             >
-              Start the Magic
+              {t("finalCta.button")}
             </MagneticLink>
           </div>
         </div>
@@ -1921,13 +1900,13 @@ export default function Home() {
               <span className="font-display font-bold text-gray-800">FairyTaleAI</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
-              <Link href="/policy" className="hover:text-blue-600 transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-blue-600 transition-colors">Terms of Service</Link>
-              <Link href="/offer" className="hover:text-blue-600 transition-colors">Public Offer</Link>
-              <a href="mailto:support@fairytaleaitech.com" className="hover:text-blue-600 transition-colors">Contact</a>
+              <Link href="/policy" className="hover:text-blue-600 transition-colors">{t("footer.privacy")}</Link>
+              <Link href="/terms" className="hover:text-blue-600 transition-colors">{t("footer.terms")}</Link>
+              <Link href="/offer" className="hover:text-blue-600 transition-colors">{t("footer.offer")}</Link>
+              <a href="mailto:support@fairytaleaitech.com" className="hover:text-blue-600 transition-colors">{t("footer.contact")}</a>
             </div>
             <p className="text-xs sm:text-sm text-gray-400">
-              © 2025 FairyTaleAI
+              {t("footer.copyright")}
             </p>
           </div>
         </div>
