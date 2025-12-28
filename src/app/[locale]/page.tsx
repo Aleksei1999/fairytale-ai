@@ -627,11 +627,12 @@ export default function Home() {
                 <span className="text-5xl sm:text-6xl md:text-7xl drop-shadow-lg">🏰</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-                FairyTaleAI — it&apos;s not just stories
+                {t("solution.title")}
               </h2>
               <p className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                It&apos;s a <span className="font-bold text-blue-600">comprehensive personality development system</span>.
-                We&apos;ve packaged methodologies from top child psychologists into a format kids absolutely love.
+                {t.rich("solution.subtitle", {
+                  highlight: (chunks) => <span className="font-bold text-blue-600">{chunks}</span>
+                })}
               </p>
             </div>
 
@@ -640,27 +641,31 @@ export default function Home() {
               {/* Feature 1 */}
               <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 text-center">
                 <div className="mb-3 flex justify-center"><img src="/images/icons/book.png" alt="Book" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">12-Month Curriculum</h3>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">{t("solution.feature1Title")}</h3>
                 <p className="text-gray-600 text-sm">
-                  From &quot;Understanding Emotions&quot; to &quot;Leadership&quot; and &quot;Financial Literacy&quot;
+                  {t("solution.feature1Text")}
                 </p>
               </div>
 
               {/* Feature 2 */}
               <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 sm:mt-8 text-center">
                 <div className="mb-3 flex justify-center"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">Personalization Magic</h3>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">{t("solution.feature2Title")}</h3>
                 <p className="text-gray-600 text-sm">
-                  Your child is the <span className="font-bold text-amber-600">Main Hero</span> of every story
+                  {t.rich("solution.feature2Text", {
+                    highlight: (chunks) => <span className="font-bold text-amber-600">{chunks}</span>
+                  })}
                 </p>
               </div>
 
               {/* Feature 3 */}
               <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 text-center">
                 <div className="mb-3 flex justify-center"><img src="/images/icons/brain.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">Scientific Approach</h3>
+                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">{t("solution.feature3Title")}</h3>
                 <p className="text-gray-600 text-sm">
-                  Based on <span className="font-semibold">CBT methods</span> that shape character
+                  {t.rich("solution.feature3Text", {
+                    highlight: (chunks) => <span className="font-semibold">{chunks}</span>
+                  })}
                 </p>
               </div>
             </div>
@@ -790,11 +795,11 @@ export default function Home() {
                         <img src="/images/icons/magic-wand.png" alt="" className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="text-white text-xs font-medium">Emma's Progress</p>
-                        <p className="text-slate-400 text-[10px]">Week 4 of Month 2</p>
+                        <p className="text-white text-xs font-medium">{t("partnership.progressTitle")}</p>
+                        <p className="text-slate-400 text-[10px]">{t("partnership.progressWeek")}</p>
                       </div>
                     </div>
-                    <div className="text-[10px] text-emerald-400 bg-emerald-400/20 px-2 py-0.5 rounded-full">● Live</div>
+                    <div className="text-[10px] text-emerald-400 bg-emerald-400/20 px-2 py-0.5 rounded-full">● {t("partnership.live")}</div>
                   </div>
 
                   {/* Circular Progress Charts */}
@@ -823,7 +828,7 @@ export default function Home() {
                           <span className="text-white text-xs sm:text-sm font-bold">75%</span>
                         </div>
                       </div>
-                      <p className="text-slate-300 text-[10px] sm:text-xs">Empathy</p>
+                      <p className="text-slate-300 text-[10px] sm:text-xs">{t("partnership.empathy")}</p>
                       <p className="text-pink-400 text-[10px] font-semibold">+15%</p>
                     </div>
 
@@ -851,7 +856,7 @@ export default function Home() {
                           <span className="text-white text-xs sm:text-sm font-bold">85%</span>
                         </div>
                       </div>
-                      <p className="text-slate-300 text-[10px] sm:text-xs">Confidence</p>
+                      <p className="text-slate-300 text-[10px] sm:text-xs">{t("partnership.confidence")}</p>
                       <p className="text-indigo-400 text-[10px] font-semibold">+20%</p>
                     </div>
 
@@ -879,7 +884,7 @@ export default function Home() {
                           <span className="text-white text-xs sm:text-sm font-bold">60%</span>
                         </div>
                       </div>
-                      <p className="text-slate-300 text-[10px] sm:text-xs">Social</p>
+                      <p className="text-slate-300 text-[10px] sm:text-xs">{t("partnership.social")}</p>
                       <p className="text-teal-400 text-[10px] font-semibold">+10%</p>
                     </div>
                   </div>
@@ -888,14 +893,14 @@ export default function Home() {
                   <div className="bg-slate-700/50 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-                      <p className="text-slate-300 text-[10px] uppercase tracking-wider">Currently Working On</p>
+                      <p className="text-slate-300 text-[10px] uppercase tracking-wider">{t("partnership.currentlyWorkingOn")}</p>
                     </div>
-                    <p className="text-white text-xs sm:text-sm font-medium">Taming Anger — "Breathe like a dragon" technique</p>
+                    <p className="text-white text-xs sm:text-sm font-medium">{t("partnership.currentTask")}</p>
                   </div>
                 </div>
 
                 <p className="text-sm text-indigo-600 font-medium mt-4">
-                  You always know exactly what we're working on right now.
+                  {t("partnership.dashboardNote")}
                 </p>
               </div>
 
@@ -905,10 +910,12 @@ export default function Home() {
                   <span className="text-2xl sm:text-3xl">💛</span>
                 </div>
                 <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-                  Foundation of Friendship
+                  {t("partnership.friendshipTitle")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base mb-5">
-                  Using our system as a reason to connect, you're building a <span className="font-semibold text-gray-900">bridge of trust</span>.
+                  {t.rich("partnership.friendshipText", {
+                    highlight: (chunks) => <span className="font-semibold text-gray-900">{chunks}</span>
+                  })}
                 </p>
 
                 {/* Visual representation */}
@@ -923,7 +930,9 @@ export default function Home() {
                     </div>
                   </div>
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    Your child learns to share experiences with you <span className="font-semibold">now</span>, so at 20 they come home not from obligation, but because <span className="text-amber-600 font-semibold">you're their best friend</span>.
+                    {t.rich("partnership.friendshipNote", {
+                      highlight: (chunks) => <span className="text-amber-600 font-semibold">{chunks}</span>
+                    })}
                   </p>
                 </div>
               </div>
@@ -937,13 +946,13 @@ export default function Home() {
         <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
             <span className="text-xl">🗺</span>
-            <span className="text-sm text-gray-600 font-medium">Based on SEL, CBT & Positive Discipline</span>
+            <span className="text-sm text-gray-600 font-medium">{t("program.badge")}</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            <AnimatedText text="The Hero's Grand Journey: " scrollTrigger type="fade" /><AnimatedText text="12 months that will change everything" className="gradient-text" scrollTrigger type="chars" />
+            <AnimatedText text={t("program.title1")} scrollTrigger type="fade" /><AnimatedText text={t("program.title2")} className="gradient-text" scrollTrigger type="chars" />
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            This isn't lessons — it's an exciting year-long quest. Your child lives through captivating stories and, without even realizing it, grows into a confident, self-aware Personality ready for the big world.
+            {t("program.subtitle")}
           </p>
         </div>
 
@@ -960,10 +969,10 @@ export default function Home() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">Months 1-3</span>
+                  <span className="text-xs font-medium text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">{t("program.block1.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">EQ Foundation</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">Me and My Emotions — giving your child a "remote control" for their feelings</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block1.title")}</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block1.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 0 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -978,44 +987,44 @@ export default function Home() {
                   {/* Goal statement */}
                   <div className="glass-card p-4 bg-amber-50/50 border border-amber-100">
                     <p className="text-sm text-gray-700">
-                      <span className="font-semibold">Why this matters:</span> Young children often misbehave not out of spite, but because their brain gets "flooded" with emotions they can't name. A tantrum is a cry for help.
+                      <span className="font-semibold">{t("program.block1.whyMatters")}</span> {t("program.block1.whyMattersText")}
                     </p>
                     <p className="text-sm text-gray-700 mt-2">
-                      <span className="font-semibold">Our Goal:</span> Give your child a "Remote Control" for their emotional state. We teach them to translate screaming into words and cope with anxiety without clinging to mom's skirt.
+                      <span className="font-semibold">{t("program.block1.ourGoal")}</span> {t("program.block1.ourGoalText")}
                     </p>
                   </div>
                   {/* Months */}
                   <div className="grid sm:grid-cols-3 gap-3">
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-amber-600 mb-2">Month 1</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Meeting Emotions</h4>
-                      <p className="text-xs text-gray-600 mb-2">The Hero learns to recognize Joy, Sadness, Anger, and Fear. They understand: "Feeling emotions is normal, but hitting others is not allowed."</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">SEL (Emotional Awareness)</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block1.month1Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block1.month1Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block1.month1Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-amber-600 mb-2">Month 2</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Taming Anger</h4>
-                      <p className="text-xs text-gray-600 mb-2">Self-control techniques for little ones. The Hero learns to "breathe like a little dragon" and take a pause to avoid throwing a tantrum in the store.</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Self-Regulation</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block1.month2Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block1.month2Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block1.month2Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-amber-600 mb-2">Month 3</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Conquering Fears</h4>
-                      <p className="text-xs text-gray-600 mb-2">Darkness, doctors, monsters. We replace the scary thought "It's dangerous there" with action: "I'll turn on my flashlight and check."</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">CBT (Cognitive Therapy)</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block1.month3Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block1.month3Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block1.month3Tag")}</span>
                     </div>
                   </div>
                   {/* Results */}
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block1.resultsTitle")}</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>Your child stops falling on the floor screaming. Instead, they come to you and say: "Mom, I'm really angry right now, let's hug."</span>
+                        <span>{t("program.block1.result1")}</span>
                       </div>
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>Night fears and anxiety about new things fade away.</span>
+                        <span>{t("program.block1.result2")}</span>
                       </div>
                     </div>
                   </div>
@@ -1036,10 +1045,10 @@ export default function Home() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">Months 4-6</span>
+                  <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">{t("program.block2.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Social Intelligence</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">Me and Others — empathy + healthy boundaries without aggression</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block2.title")}</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block2.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 1 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1053,42 +1062,42 @@ export default function Home() {
                   <div className="pt-5 space-y-4">
                     <div className="glass-card p-4 bg-blue-50/50 border border-blue-100">
                     <p className="text-sm text-gray-700">
-                      <span className="font-semibold">The Challenge:</span> How do you teach a child to stand up for themselves without raising an aggressor? How do you teach them to share without becoming a pushover for everyone?
+                      <span className="font-semibold">{t("program.block2.challenge")}</span> {t("program.block2.challengeText")}
                     </p>
                     <p className="text-sm text-gray-700 mt-2">
-                      <span className="font-semibold">Our Goal:</span> Develop empathy (kindness) while simultaneously building healthy personal boundaries. Your child learns to make friends in a healthy, balanced way.
+                      <span className="font-semibold">{t("program.block2.ourGoal")}</span> {t("program.block2.ourGoalText")}
                     </p>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-blue-600 mb-2">Month 4</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Personal Boundaries</h4>
-                      <p className="text-xs text-gray-600 mb-2">The ability to say a firm "No" to strangers and peers. Understanding: "My body and my toys — my rules."</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Safety & Boundaries</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block2.month4Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block2.month4Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block2.month4Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-blue-600 mb-2">Month 5</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Empathy & Kindness</h4>
-                      <p className="text-xs text-gray-600 mb-2">Prevention of childhood cruelty. The Hero learns to feel another's pain, show compassion, and care for those who are weaker.</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Social Awareness</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block2.month5Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block2.month5Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block2.month5Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-blue-600 mb-2">Month 6</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Conflict Resolution</h4>
-                      <p className="text-xs text-gray-600 mb-2">The art of sandbox diplomacy. How do you share a shovel without fighting? How do you apologize when you're wrong?</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Conflict Resolution</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block2.month6Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block2.month6Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block2.month6Tag")}</span>
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block2.resultsTitle")}</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>Your child is safe. They won't go off with a stranger and won't let themselves be bullied.</span>
+                        <span>{t("program.block2.result1")}</span>
                       </div>
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>They become the life of the party. Other kids are drawn to them because they know how to negotiate and empathize.</span>
+                        <span>{t("program.block2.result2")}</span>
                       </div>
                     </div>
                   </div>
@@ -1109,10 +1118,10 @@ export default function Home() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-0.5 rounded-full">Months 7-9</span>
+                  <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-0.5 rounded-full">{t("program.block3.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Discipline & Will</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">Me and My Actions — turning routines into games, building independence</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block3.title")}</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block3.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 2 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1126,42 +1135,42 @@ export default function Home() {
                   <div className="pt-5 space-y-4">
                     <div className="glass-card p-4 bg-green-50/50 border border-green-100">
                       <p className="text-sm text-gray-700">
-                        <span className="font-semibold">The Eternal Battle:</span> "Brush your teeth!", "Clean up your toys!", "Get dressed!" — this is exhausting and damages your relationship.
+                        <span className="font-semibold">{t("program.block3.battle")}</span> {t("program.block3.battleText")}
                     </p>
                     <p className="text-sm text-gray-700 mt-2">
-                      <span className="font-semibold">Our Goal:</span> Activate internal motivation. We use the Positive Discipline methodology, where routine becomes a game and independence becomes a source of pride.
+                      <span className="font-semibold">{t("program.block3.ourGoal")}</span> {t("program.block3.ourGoalText")}
                     </p>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-green-600 mb-2">Month 7</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Routine Without Tears</h4>
-                      <p className="text-xs text-gray-600 mb-2">We transform boring tasks (sleep, hygiene, cleaning) into Hero missions. The toothbrush is a sword that kills germs!</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Positive Discipline</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block3.month7Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block3.month7Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block3.month7Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-green-600 mb-2">Month 8</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">"I Can Do It Myself!"</h4>
-                      <p className="text-xs text-gray-600 mb-2">The Hero learns to dress themselves, tie shoelaces, and help around the house. Making mistakes isn't scary — not trying is what's scary.</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Independence Building</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block3.month8Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block3.month8Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block3.month8Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-green-600 mb-2">Month 9</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Patience & Persistence</h4>
-                      <p className="text-xs text-gray-600 mb-2">The hardest skill: the ability to wait for a reward (marshmallow test), sit in line, and finish what you started.</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Executive Functions</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block3.month9Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block3.month9Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block3.month9Tag")}</span>
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block3.resultsTitle")}</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>You stop being a "parrot" who repeats the same thing 100 times.</span>
+                        <span>{t("program.block3.result1")}</span>
                       </div>
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>Your child initiates cleaning themselves and feels proud of being "like a grown-up." Focus develops for school readiness.</span>
+                        <span>{t("program.block3.result2")}</span>
                       </div>
                     </div>
                   </div>
@@ -1182,10 +1191,10 @@ export default function Home() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full">Months 10-12</span>
+                  <span className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full">{t("program.block4.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">Leadership & Character</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">Me as a Person — Growth Mindset and confidence for the big world</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block4.title")}</h3>
+                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block4.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 3 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1199,42 +1208,42 @@ export default function Home() {
                   <div className="pt-5 space-y-4">
                     <div className="glass-card p-4 bg-purple-50/50 border border-purple-100">
                       <p className="text-sm text-gray-700">
-                        <span className="font-semibold">Preparation for the Big World:</span> School and life require not just knowledge, but inner strength.
+                        <span className="font-semibold">{t("program.block4.prep")}</span> {t("program.block4.prepText")}
                     </p>
                     <p className="text-sm text-gray-700 mt-2">
-                      <span className="font-semibold">Our Goal:</span> Form a Growth Mindset. Your child should know: "I can learn anything if I put in the effort." This is a vaccine against the failure complex.
+                      <span className="font-semibold">{t("program.block4.ourGoal")}</span> {t("program.block4.ourGoalText")}
                     </p>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-purple-600 mb-2">Month 10</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Growth Mindset</h4>
-                      <p className="text-xs text-gray-600 mb-2">The Hero falls but gets back up. We teach them to see failure not as "I'm stupid" but as experience: "I'll try again differently."</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Growth Mindset (Carol Dweck)</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block4.month10Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block4.month10Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block4.month10Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-purple-600 mb-2">Month 11</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Honesty & Responsibility</h4>
-                      <p className="text-xs text-gray-600 mb-2">Why lying doesn't pay off. The courage to admit a mistake is a trait of a strong leader, not a weak one.</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Moral Development</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block4.month11Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block4.month11Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block4.month11Tag")}</span>
                     </div>
                     <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
                       <div className="text-xs font-medium text-purple-600 mb-2">Month 12</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">Confidence & Gratitude</h4>
-                      <p className="text-xs text-gray-600 mb-2">The final assembly of personality. Discovering talents, developing a positive worldview, and setting goals for the future.</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Positive Psychology</span>
+                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block4.month12Title")}</h4>
+                      <p className="text-xs text-gray-600 mb-2">{t("program.block4.month12Text")}</p>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block4.month12Tag")}</span>
                     </div>
                   </div>
                   <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Block Results:</p>
+                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block4.resultsTitle")}</p>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>A Leader's core is formed. Your child isn't afraid to make mistakes, is honest with you, and confident in their abilities.</span>
+                        <span>{t("program.block4.result1")}</span>
                       </div>
                       <div className="flex items-start gap-2 text-sm text-green-700">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
-                        <span>School readiness achieved. They know how to listen, try hard, and believe in themselves.</span>
+                        <span>{t("program.block4.result2")}</span>
                       </div>
                     </div>
                   </div>
@@ -1250,10 +1259,12 @@ export default function Home() {
           <div className="glass-card-strong p-6 sm:p-8 text-center bg-gradient-to-r from-amber-50 via-purple-50 to-blue-50">
             <div className="mb-4"><img src="/images/icons/trophy.png" alt="" className="w-12 h-12 mx-auto" /></div>
             <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-              In 12 months, you won't recognize your child
+              {t("program.yearSummaryTitle")}
             </h3>
             <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
-              You'll see a small but <span className="font-semibold">conscious Personality</span> — someone interesting to talk to, easy to negotiate with, and not scary to let go into the big world.
+              {t.rich("program.yearSummaryText", {
+                highlight: (chunks) => <span className="font-semibold">{chunks}</span>
+              })}
             </p>
           </div>
         </div>
@@ -1264,13 +1275,15 @@ export default function Home() {
         <div className="text-center mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
             <img src="/images/icons/book.png" alt="" className="w-6 h-6" />
-            <span className="text-sm text-gray-600 font-medium">Curriculum</span>
+            <span className="text-sm text-gray-600 font-medium">{t("curriculum.badge")}</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            What will your child <span className="gradient-text">learn in a year</span>?
+            {t.rich("curriculum.title", {
+              highlight: (chunks) => <span className="gradient-text">{chunks}</span>
+            })}
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            A comprehensive program that covers all aspects of emotional and social development
+            {t("curriculum.subtitle")}
           </p>
         </div>
 
@@ -1282,10 +1295,10 @@ export default function Home() {
               <img src="/images/icons/mask.png" alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Emotional Intelligence
+              {t("curriculum.topic1Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              Recognize and manage their emotions effectively
+              {t("curriculum.topic1Text")}
             </p>
           </div>
 
@@ -1295,10 +1308,10 @@ export default function Home() {
               <span className="text-3xl sm:text-4xl">🛡️</span>
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Personal Boundaries
+              {t("curriculum.topic2Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              Say "No" and stand up for their opinion
+              {t("curriculum.topic2Text")}
             </p>
           </div>
 
@@ -1308,10 +1321,10 @@ export default function Home() {
               <span className="text-3xl sm:text-4xl">👫</span>
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Socialization
+              {t("curriculum.topic3Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              Make friends and resolve conflicts peacefully
+              {t("curriculum.topic3Text")}
             </p>
           </div>
 
@@ -1321,10 +1334,10 @@ export default function Home() {
               <img src="/images/icons/target.png" alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Goal Setting
+              {t("curriculum.topic4Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              Dream big and follow through without giving up
+              {t("curriculum.topic4Text")}
             </p>
           </div>
 
@@ -1334,10 +1347,10 @@ export default function Home() {
               <img src="/images/icons/lion.png" alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
             <h3 className="font-display font-bold text-gray-900 text-base sm:text-lg mb-2">
-              Overcoming Fears
+              {t("curriculum.topic5Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              Turn darkness, mistakes, new places into sources of strength
+              {t("curriculum.topic5Text")}
             </p>
           </div>
         </div>
@@ -1346,7 +1359,10 @@ export default function Home() {
         <div className="mt-10 sm:mt-12 max-w-3xl mx-auto">
           <div className="glass-card p-5 sm:p-6 text-center bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
             <p className="text-gray-700 text-sm sm:text-base">
-              <span className="font-bold text-gray-900">Each topic</span> is woven into engaging stories where your child is the hero. They don't just hear about these skills — they <span className="gradient-text font-bold">live them</span>.
+              {t.rich("curriculum.bottomNote", {
+                bold: (chunks) => <span className="font-bold text-gray-900">{chunks}</span>,
+                highlight: (chunks) => <span className="gradient-text font-bold">{chunks}</span>
+              })}
             </p>
           </div>
         </div>
@@ -1358,10 +1374,12 @@ export default function Home() {
           <div className="glass-card-strong p-6 sm:p-10 md:p-12">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Transform your child's <span className="gradient-text">future</span>
+                {t.rich("transform.title", {
+                  highlight: (chunks) => <span className="gradient-text">{chunks}</span>
+                })}
               </h2>
               <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-                By using FairyTaleAI consistently, you're giving your child the foundation for lifelong success
+                {t("transform.subtitle")}
               </p>
             </div>
 
@@ -1372,9 +1390,9 @@ export default function Home() {
                   🌿
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Healthy Emotional Development</h4>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit1Title")}</h4>
                   <p className="text-xs sm:text-sm text-gray-600">
-                    Increase your child's chances of a mentally healthy life with strong emotional foundations
+                    {t("transform.benefit1Text")}
                   </p>
                 </div>
               </div>
@@ -1385,9 +1403,9 @@ export default function Home() {
                   🌊
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Smooth Adaptation</h4>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit2Title")}</h4>
                   <p className="text-xs sm:text-sm text-gray-600">
-                    Your child will be well-adapted to growing up, handling life transitions with confidence
+                    {t("transform.benefit2Text")}
                   </p>
                 </div>
               </div>
@@ -1398,9 +1416,9 @@ export default function Home() {
                   🕊️
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Stress-Free Interactions</h4>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit3Title")}</h4>
                   <p className="text-xs sm:text-sm text-gray-600">
-                    Learn to interact with the world harmoniously, without unnecessary stress or conflict
+                    {t("transform.benefit3Text")}
                   </p>
                 </div>
               </div>
@@ -1411,9 +1429,9 @@ export default function Home() {
                   <img src="/images/icons/rocket.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Clear Advantages</h4>
+                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit4Title")}</h4>
                   <p className="text-xs sm:text-sm text-gray-600">
-                    Gain distinct advantages in social situations through developed emotional intelligence
+                    {t("transform.benefit4Text")}
                   </p>
                 </div>
               </div>
@@ -1422,23 +1440,23 @@ export default function Home() {
             {/* Stats bar */}
             <div className="grid grid-cols-3 gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50">
               <div className="text-center">
-                <p className="text-2xl sm:text-4xl font-bold gradient-text">180+</p>
-                <p className="text-xs sm:text-sm text-gray-600">Topics Covered</p>
+                <p className="text-2xl sm:text-4xl font-bold gradient-text">{t("transform.stat1Value")}</p>
+                <p className="text-xs sm:text-sm text-gray-600">{t("transform.stat1Label")}</p>
               </div>
               <div className="text-center border-x border-gray-200">
-                <p className="text-2xl sm:text-4xl font-bold gradient-text">52</p>
-                <p className="text-xs sm:text-sm text-gray-600">Weekly Cartoons</p>
+                <p className="text-2xl sm:text-4xl font-bold gradient-text">{t("transform.stat2Value")}</p>
+                <p className="text-xs sm:text-sm text-gray-600">{t("transform.stat2Label")}</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl sm:text-4xl font-bold gradient-text">12</p>
-                <p className="text-xs sm:text-sm text-gray-600">Growth Stages</p>
+                <p className="text-2xl sm:text-4xl font-bold gradient-text">{t("transform.stat3Value")}</p>
+                <p className="text-xs sm:text-sm text-gray-600">{t("transform.stat3Label")}</p>
               </div>
             </div>
 
             {/* Final CTA within block */}
             <div className="mt-8 text-center">
               <p className="text-gray-600 mb-4 text-sm sm:text-base">
-                Start building your child's emotional foundation today
+                {t("transform.ctaText")}
               </p>
               <MagneticLink
                 href="#pricing"
@@ -1446,7 +1464,7 @@ export default function Home() {
                 className="btn-glow px-8 py-4 text-white font-semibold text-base sm:text-lg inline-flex items-center gap-2"
                 strength={0.4}
               >
-                <span>Begin the Journey</span>
+                <span>{t("transform.ctaButton")}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -1460,10 +1478,12 @@ export default function Home() {
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Hear the <span className="gradient-text">quality</span>
+            {t.rich("demo.title", {
+              highlight: (chunks) => <span className="gradient-text">{chunks}</span>
+            })}
           </h2>
           <p className="text-gray-600 text-base sm:text-lg">
-            Listen to a sample story and see for yourself
+            {t("demo.subtitle")}
           </p>
         </div>
 
@@ -1475,11 +1495,11 @@ export default function Home() {
                 <div className="aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-100 via-sky-100 to-sky-100 flex items-center justify-center overflow-hidden">
                   <div className="text-center p-4 sm:p-6">
                     <div className="mb-3 sm:mb-4"><img src="/images/icons/sparkle.png" alt="" className="w-16 h-16 sm:w-24 sm:h-24 mx-auto" /></div>
-                    <p className="text-xs sm:text-sm text-gray-500">Oliver and the Brave Firefly</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{t("demo.storyTitle")}</p>
                   </div>
                 </div>
                 <p className="text-center text-xs text-gray-400 mt-2 sm:mt-3">
-                  Illustration created by AI automatically
+                  {t("demo.illustrationNote")}
                 </p>
               </div>
 
@@ -1488,7 +1508,7 @@ export default function Home() {
                 {/* Context */}
                 <div className="glass-card px-3 sm:px-4 py-2 inline-flex items-center gap-2 mb-4 sm:mb-6">
                   <img src="/images/icons/target.png" alt="" className="w-5 h-5" />
-                  <span className="text-xs sm:text-sm text-gray-600">Problem: <strong>Oliver (5 y.o.) is afraid of the dark</strong></span>
+                  <span className="text-xs sm:text-sm text-gray-600">{t("demo.problem")} <strong>{t("demo.problemText")}</strong></span>
                 </div>
 
                 {/* Audio player */}
@@ -1499,7 +1519,7 @@ export default function Home() {
                   {/* Voice label */}
                   <div className="flex items-center gap-2 mb-3 sm:mb-4">
                     <span className="py-2 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-medium bg-blue-500 text-white shadow-lg inline-flex items-center gap-1">
-                      <img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> Narrator
+                      <img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> {t("demo.narrator")}
                     </span>
                   </div>
 
@@ -1538,9 +1558,7 @@ export default function Home() {
                 {/* Story excerpt */}
                 <div className="glass-card p-3 sm:p-4">
                   <p className="text-gray-700 text-xs sm:text-sm italic leading-relaxed">
-                    "...The darkness isn't emptiness, Oliver. It's just a clean canvas where you can
-                    paint your dreams," whispered the Firefly. The boy closed his eyes and for the first time imagined
-                    not monsters, but a starship..."
+                    {t("demo.storyExcerpt")}
                   </p>
                 </div>
               </div>
@@ -1553,10 +1571,12 @@ export default function Home() {
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Safe content and proven <span className="gradient-text">methodology</span>
+            {t.rich("safety.title", {
+              highlight: (chunks) => <span className="gradient-text">{chunks}</span>
+            })}
           </h2>
           <p className="text-gray-600 text-base sm:text-lg">
-            Why thousands of parents trust us
+            {t("safety.subtitle")}
           </p>
         </div>
 
@@ -1567,10 +1587,10 @@ export default function Home() {
               <span className="text-2xl sm:text-3xl">🛡️</span>
             </div>
             <h3 className="font-display text-base sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              100% Kind content
+              {t("safety.trust1Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              AI never generates violence or scary content. Triple-layer filtering.
+              {t("safety.trust1Text")}
             </p>
           </div>
 
@@ -1580,10 +1600,10 @@ export default function Home() {
               <img src="/images/icons/brain.png" alt="" className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
             <h3 className="font-display text-base sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              CBT Methodology
+              {t("safety.trust2Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              We use cognitive-behavioral therapy scripts for gentle emotional work.
+              {t("safety.trust2Text")}
             </p>
           </div>
 
@@ -1593,10 +1613,10 @@ export default function Home() {
               <span className="text-2xl sm:text-3xl">👁️</span>
             </div>
             <h3 className="font-display text-base sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              You're always in control
+              {t("safety.trust3Title")}
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm">
-              Preview the story before showing your child. Edit the plot with one click.
+              {t("safety.trust3Text")}
             </p>
           </div>
         </div>
@@ -1610,12 +1630,12 @@ export default function Home() {
                   <span className="text-lg sm:text-xl">👩</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900 text-sm sm:text-base">Sarah, mom of Jake (4 y.o.)</p>
+                  <p className="font-semibold text-gray-900 text-sm sm:text-base">{t("safety.testimonial1Name")}</p>
                   <div className="flex text-yellow-400 text-xs sm:text-sm">★★★★★</div>
                 </div>
               </div>
               <p className="text-gray-600 text-xs sm:text-sm italic">
-                "My son stopped being afraid of the dark after the third story! Now he asks to turn off the light himself"
+                {t("safety.testimonial1Text")}
               </p>
             </div>
 
@@ -1625,12 +1645,12 @@ export default function Home() {
                   <span className="text-lg sm:text-xl">👨</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900 text-sm sm:text-base">Mike, dad of Sophie (6 y.o.)</p>
+                  <p className="font-semibold text-gray-900 text-sm sm:text-base">{t("safety.testimonial2Name")}</p>
                   <div className="flex text-yellow-400 text-xs sm:text-sm">★★★★★</div>
                 </div>
               </div>
               <p className="text-gray-600 text-xs sm:text-sm italic">
-                "Recorded my voice — now my daughter falls asleep to my stories, even when I'm 1000 miles away"
+                {t("safety.testimonial2Text")}
               </p>
             </div>
           </div>
