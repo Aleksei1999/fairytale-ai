@@ -1986,31 +1986,31 @@ export default function Home() {
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                 {selectedPlan === "week"
-                  ? "Free Trial"
+                  ? t("paymentModal.freeTrialTitle")
                   : selectedPlan === "yearly"
-                    ? "Yearly Legend"
-                    : "Monthly"}
+                    ? t("paymentModal.yearlyTitle")
+                    : t("paymentModal.monthlyTitle")}
               </h3>
               <p className="text-gray-500 text-sm mb-3">
                 {selectedPlan === "week"
-                  ? "Try free for 7 days — 3 stories"
+                  ? t("paymentModal.freeTrialSubtitle")
                   : selectedPlan === "yearly"
-                    ? "Full year access with bonuses"
-                    : "Full access, first month $8"}
+                    ? t("paymentModal.yearlySubtitle")
+                    : t("paymentModal.monthlySubtitle")}
               </p>
               <div className={`text-2xl sm:text-3xl font-bold ${
                 selectedPlan === "week" ? "text-green-600" : selectedPlan === "yearly" ? "text-amber-600" : "gradient-text"
               }`}>
                 {selectedPlan === "week" ? "$0" : selectedPlan === "yearly" ? "$189" : "$8"}
                 <span className="text-base sm:text-lg text-gray-500 font-normal">
-                  {selectedPlan === "week" ? "" : selectedPlan === "yearly" ? "/year" : "/first month"}
+                  {selectedPlan === "week" ? "" : selectedPlan === "yearly" ? t("paymentModal.perYear") : t("paymentModal.perFirstMonth")}
                 </span>
               </div>
               {selectedPlan === "monthly" && (
-                <p className="text-gray-500 text-sm mt-1">Then $29/month</p>
+                <p className="text-gray-500 text-sm mt-1">{t("paymentModal.thenMonthly")}</p>
               )}
               {selectedPlan === "yearly" && (
-                <p className="text-green-600 text-sm mt-1">Save $159 vs monthly</p>
+                <p className="text-green-600 text-sm mt-1">{t("paymentModal.saveYearly")}</p>
               )}
             </div>
 
@@ -2024,7 +2024,7 @@ export default function Home() {
                     : "bg-white/50 text-gray-600 hover:bg-white"
                 }`}
               >
-                Free Trial
+                {t("paymentModal.freeTrialBtn")}
               </button>
               <button
                 onClick={() => setSelectedPlan("monthly")}
@@ -2034,7 +2034,7 @@ export default function Home() {
                     : "bg-white/50 text-gray-600 hover:bg-white"
                 }`}
               >
-                Monthly
+                {t("paymentModal.monthlyBtn")}
               </button>
               <button
                 onClick={() => setSelectedPlan("yearly")}
@@ -2044,7 +2044,7 @@ export default function Home() {
                     : "bg-white/50 text-gray-600 hover:bg-white"
                 }`}
               >
-                Yearly
+                {t("paymentModal.yearlyBtn")}
               </button>
             </div>
 
@@ -2052,11 +2052,11 @@ export default function Home() {
             {!user?.email && (
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email for subscription
+                  {t("paymentModal.emailLabel")}
                 </label>
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder={t("paymentModal.emailPlaceholder")}
                   value={paymentEmail}
                   onChange={(e) => setPaymentEmail(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
@@ -2076,83 +2076,83 @@ export default function Home() {
               {selectedPlan === "week" && (
                 <>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Program access</span>
-                    <span className="font-medium">Week 1</span>
+                    <span className="text-gray-600">{t("paymentModal.programAccess")}</span>
+                    <span className="font-medium">{t("paymentModal.week1")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Stories (Text+Music)</span>
-                    <span className="text-green-600 font-medium">✓ 3 Stories</span>
+                    <span className="text-gray-600">{t("paymentModal.storiesLabel")}</span>
+                    <span className="text-green-600 font-medium">✓ {t("paymentModal.threeStories")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">AI Audio</span>
-                    <span className="text-gray-400">Not included</span>
+                    <span className="text-gray-600">{t("paymentModal.aiAudio")}</span>
+                    <span className="text-gray-400">{t("paymentModal.notIncluded")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">AI Cartoon</span>
-                    <span className="text-gray-400">Not included</span>
+                    <span className="text-gray-600">{t("paymentModal.aiCartoon")}</span>
+                    <span className="text-gray-400">{t("paymentModal.notIncluded")}</span>
                   </div>
                   <div className="flex justify-between py-2">
-                    <span className="text-gray-600">PDF Report</span>
-                    <span className="font-medium flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Weekly</span>
+                    <span className="text-gray-600">{t("paymentModal.pdfReport")}</span>
+                    <span className="font-medium flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> {t("paymentModal.weekly")}</span>
                   </div>
                 </>
               )}
               {selectedPlan === "monthly" && (
                 <>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Program access</span>
-                    <span className="font-medium">Full month</span>
+                    <span className="text-gray-600">{t("paymentModal.programAccess")}</span>
+                    <span className="font-medium">{t("paymentModal.fullMonth")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Stories (Text+Music)</span>
-                    <span className="text-green-600 font-medium">✓ Unlimited</span>
+                    <span className="text-gray-600">{t("paymentModal.storiesLabel")}</span>
+                    <span className="text-green-600 font-medium">✓ {t("paymentModal.unlimited")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">AI Audio</span>
-                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                    <span className="text-gray-600">{t("paymentModal.aiAudio")}</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("paymentModal.extraStars")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">AI Cartoon</span>
-                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                    <span className="text-gray-600">{t("paymentModal.aiCartoon")}</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("paymentModal.extraStars")}</span>
                   </div>
                   <div className="flex justify-between py-2">
-                    <span className="text-gray-600">PDF Report</span>
-                    <span className="font-medium flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> Monthly</span>
+                    <span className="text-gray-600">{t("paymentModal.pdfReport")}</span>
+                    <span className="font-medium flex items-center gap-1"><img src="/images/icons/chart.png" alt="" className="w-4 h-4" /> {t("paymentModal.monthly")}</span>
                   </div>
                 </>
               )}
               {selectedPlan === "yearly" && (
                 <>
                   <div className="flex justify-between py-2 border-b border-amber-100">
-                    <span className="text-gray-600">Program access</span>
-                    <span className="font-medium">All 12 months</span>
+                    <span className="text-gray-600">{t("paymentModal.programAccess")}</span>
+                    <span className="font-medium">{t("paymentModal.all12Months")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-amber-100">
-                    <span className="text-gray-600">Stories (Text+Music)</span>
-                    <span className="text-green-600 font-medium">✓ Unlimited</span>
+                    <span className="text-gray-600">{t("paymentModal.storiesLabel")}</span>
+                    <span className="text-green-600 font-medium">✓ {t("paymentModal.unlimited")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-amber-100">
-                    <span className="text-gray-600">AI Audio</span>
-                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                    <span className="text-gray-600">{t("paymentModal.aiAudio")}</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("paymentModal.extraStars")}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-amber-100">
-                    <span className="text-gray-600">AI Cartoon</span>
-                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> Extra Stars</span>
+                    <span className="text-gray-600">{t("paymentModal.aiCartoon")}</span>
+                    <span className="text-amber-600 font-medium flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("paymentModal.extraStars")}</span>
                   </div>
                   <div className="py-2 border-b border-amber-100">
-                    <span className="text-gray-600 block mb-2">Final Bonuses:</span>
+                    <span className="text-gray-600 block mb-2">{t("paymentModal.finalBonuses")}</span>
                     <div className="space-y-1 text-xs">
                       <div className="flex items-center gap-2 text-amber-700">
                         <img src="/images/icons/gift.png" alt="" className="w-4 h-4" />
-                        <span>Digital &quot;Hero Album&quot;</span>
+                        <span>{t("paymentModal.bonusAlbum")}</span>
                       </div>
                       <div className="flex items-center gap-2 text-amber-700">
                         <img src="/images/icons/movie.png" alt="" className="w-4 h-4" />
-                        <span>Personal Blockbuster</span>
+                        <span>{t("paymentModal.bonusMovie")}</span>
                       </div>
                       <div className="flex items-center gap-2 text-amber-700">
                         <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
-                        <span>Personality Passport</span>
+                        <span>{t("paymentModal.bonusPassport")}</span>
                       </div>
                     </div>
                   </div>
@@ -2176,19 +2176,19 @@ export default function Home() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Processing...
+                  {t("paymentModal.processing")}
                 </span>
               ) : (
                 selectedPlan === "week"
-                  ? "Start Free Trial"
+                  ? t("paymentModal.startFreeTrial")
                   : selectedPlan === "yearly"
-                    ? "Get Yearly — $189"
-                    : "Start for $8"
+                    ? t("paymentModal.getYearly")
+                    : t("paymentModal.startFor8")
               )}
             </button>
 
             <p className="text-center text-xs text-gray-400 mt-3">
-              {selectedPlan === "week" ? "No payment required" : "Cancel anytime"} • Secure
+              {selectedPlan === "week" ? t("paymentModal.noPaymentRequired") : t("paymentModal.cancelAnytime")} • {t("paymentModal.secure")}
             </p>
           </div>
         </div>
