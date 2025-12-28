@@ -536,14 +536,17 @@ export default function Home() {
             <div className="relative text-center mb-8 sm:mb-10">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-100 to-blue-100 px-4 py-2 rounded-full mb-4 border border-sky-200">
                 <span className="text-xl">⏰</span>
-                <span className="text-blue-700 text-sm font-medium">Critical Window</span>
+                <span className="text-blue-700 text-sm font-medium">{t("criticalWindow.badge")}</span>
               </div>
               <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                Why Is This Important <span className="gradient-text">Right Now</span>?
+                {t.rich("criticalWindow.title", {
+                  highlight: (chunks) => <span className="gradient-text">{chunks}</span>
+                })}
               </h3>
               <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-                Psychologists call ages 3-6 the <span className="font-bold text-gray-900">&quot;Programming Period&quot;</span>.
-                This isn&apos;t just childhood — it&apos;s the foundation of their entire future life.
+                {t.rich("criticalWindow.subtitle", {
+                  bold: (chunks) => <span className="font-bold text-gray-900">{chunks}</span>
+                })}
               </p>
             </div>
 
@@ -556,11 +559,14 @@ export default function Home() {
                 </div>
                 <div className="text-center sm:text-left">
                   <div className="inline-flex items-center gap-1 bg-sky-100 px-2 py-1 rounded-full mb-2">
-                    <span className="text-xs text-sky-700 font-medium">Harvard Research</span>
+                    <span className="text-xs text-sky-700 font-medium">{t("criticalWindow.fact1Badge")}</span>
                   </div>
-                  <h4 className="font-bold text-gray-900 text-lg mb-2">90% Brain Development</h4>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">{t("criticalWindow.fact1Title")}</h4>
                   <p className="text-gray-600 text-sm">
-                    By age 6, your child&apos;s brain is <span className="text-gray-900 font-semibold">90% formed</span>. Neural pathways for empathy, trust, and confidence are being built <span className="text-blue-600 font-semibold">right now</span>.
+                    {t.rich("criticalWindow.fact1Text", {
+                      bold: (chunks) => <span className="text-gray-900 font-semibold">{chunks}</span>,
+                      highlight: (chunks) => <span className="text-blue-600 font-semibold">{chunks}</span>
+                    })}
                   </p>
                 </div>
               </div>
@@ -572,11 +578,14 @@ export default function Home() {
                 </div>
                 <div className="text-center sm:text-left">
                   <div className="inline-flex items-center gap-1 bg-cyan-100 px-2 py-1 rounded-full mb-2">
-                    <span className="text-xs text-cyan-700 font-medium">Attachment Theory</span>
+                    <span className="text-xs text-cyan-700 font-medium">{t("criticalWindow.fact2Badge")}</span>
                   </div>
-                  <h4 className="font-bold text-gray-900 text-lg mb-2">Emotional Bond Window</h4>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">{t("criticalWindow.fact2Title")}</h4>
                   <p className="text-gray-600 text-sm">
-                    <span className="text-gray-900 font-semibold">Emotional closeness</span> with parents forms before age 7. If screens replace this contact, teenage years bring <span className="text-red-500 font-semibold">alienation</span>.
+                    {t.rich("criticalWindow.fact2Text", {
+                      bold: (chunks) => <span className="text-gray-900 font-semibold">{chunks}</span>,
+                      danger: (chunks) => <span className="text-red-500 font-semibold">{chunks}</span>
+                    })}
                   </p>
                 </div>
               </div>
@@ -588,11 +597,13 @@ export default function Home() {
                 </div>
                 <div className="text-center sm:text-left">
                   <div className="inline-flex items-center gap-1 bg-amber-100 px-2 py-1 rounded-full mb-2">
-                    <span className="text-xs text-amber-700 font-medium">The Hard Truth</span>
+                    <span className="text-xs text-amber-700 font-medium">{t("criticalWindow.fact3Badge")}</span>
                   </div>
-                  <h4 className="font-bold text-gray-900 text-lg mb-2">Tomorrow May Be Too Late</h4>
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">{t("criticalWindow.fact3Title")}</h4>
                   <p className="text-gray-600 text-sm">
-                    Today they quietly retreat to their room with a tablet. Miss this moment, and you&apos;ll wake up living with a <span className="text-red-500 font-semibold">stranger who doesn&apos;t trust you</span>.
+                    {t.rich("criticalWindow.fact3Text", {
+                      danger: (chunks) => <span className="text-red-500 font-semibold">{chunks}</span>
+                    })}
                   </p>
                 </div>
               </div>
@@ -601,7 +612,9 @@ export default function Home() {
             {/* CTA */}
             <div className="relative text-center">
               <p className="text-gray-700 text-base sm:text-lg font-medium mb-4">
-                Are you ready to risk this bond? Or will you act while the <span className="gradient-text font-bold">&quot;window of opportunity&quot;</span> is still open?
+                {t.rich("criticalWindow.ctaText", {
+                  highlight: (chunks) => <span className="gradient-text font-bold">{chunks}</span>
+                })}
               </p>
               <MagneticLink
                 href="#pricing"
@@ -609,7 +622,7 @@ export default function Home() {
                 className="btn-glow px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg inline-flex items-center gap-2"
                 strength={0.4}
               >
-                <span>Start Building the Bond</span>
+                <span>{t("criticalWindow.ctaButton")}</span>
                 <span className="text-xl">💙</span>
               </MagneticLink>
             </div>

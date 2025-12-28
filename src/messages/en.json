@@ -208,6 +208,22 @@
     "friendshipText": "Using our system as a reason to connect, you're building a <highlight>bridge of trust</highlight>.",
     "friendshipNote": "Your child learns to share experiences with you <highlight>now</highlight>, so at 20 they come home not from obligation, but because <highlight>you're their best friend</highlight>."
   },
+  "criticalWindow": {
+    "badge": "Critical Window",
+    "title": "Why Is This Important <highlight>Right Now</highlight>?",
+    "subtitle": "Psychologists call ages 3-6 the <bold>\"Programming Period\"</bold>. This isn't just childhood — it's the foundation of their entire future life.",
+    "fact1Badge": "Harvard Research",
+    "fact1Title": "90% Brain Development",
+    "fact1Text": "By age 6, your child's brain is <bold>90% formed</bold>. Neural pathways for empathy, trust, and confidence are being built <highlight>right now</highlight>.",
+    "fact2Badge": "Attachment Theory",
+    "fact2Title": "Emotional Bond Window",
+    "fact2Text": "<bold>Emotional closeness</bold> with parents forms before age 7. If screens replace this contact, teenage years bring <danger>alienation</danger>.",
+    "fact3Badge": "The Hard Truth",
+    "fact3Title": "Tomorrow May Be Too Late",
+    "fact3Text": "Today they quietly retreat to their room with a tablet. Miss this moment, and you'll wake up living with a <danger>stranger who doesn't trust you</danger>.",
+    "ctaText": "Are you ready to risk this bond? Or will you act while the <highlight>\"window of opportunity\"</highlight> is still open?",
+    "ctaButton": "Start Building the Bond"
+  },
   "solution": {
     "title": "FairyTaleAI — it's not just stories",
     "subtitle": "It's a <highlight>comprehensive personality development system</highlight>. We've packaged methodologies from top child psychologists into a format kids absolutely love.",
