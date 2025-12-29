@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -31,6 +32,7 @@ function getUtmParams() {
 }
 
 export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode = "signin" }: AuthModalProps) {
+  const t = useTranslations("authModal");
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">(initialMode);
   const [step, setStep] = useState<"auth" | "child-info">("auth");
   const [email, setEmail] = useState("");
@@ -91,7 +93,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
         if (!response.ok) {
           setError(data.error || "Something went wrong");
         } else {
-          setSuccess("Check your email for password reset link!");
+          setSuccess(t("checkEmail"));
         }
         return;
       }
@@ -174,29 +176,29 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                 <span className="text-2xl sm:text-3xl">👶</span>
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-                Tell us about your child
+                {t("childInfoTitle")}
               </h3>
               <p className="text-gray-600 text-sm">
-                We&apos;ll personalize every story with their name!
+                {t("childInfoSubtitle")}
               </p>
             </div>
 
             <div className="space-y-5">
               {/* Child Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">What is your child&apos;s name? *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("childNameLabel")}</label>
                 <input
                   type="text"
                   value={childInfo.name}
                   onChange={(e) => setChildInfo({ ...childInfo, name: e.target.value })}
-                  placeholder="Name"
+                  placeholder={t("childNamePlaceholder")}
                   className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
                 />
               </div>
 
               {/* Age */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">How old? *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("childAgeLabel")}</label>
                 <div className="flex gap-2 flex-wrap">
                   {["2", "3", "4", "5", "6", "7", "8", "9", "10+"].map((age) => (
                     <button
@@ -217,7 +219,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
 
               {/* Gender */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Child&apos;s gender *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("childGenderLabel")}</label>
                 <div className="flex gap-4">
                   <button
                     type="button"
@@ -229,7 +231,7 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                     }`}
                   >
                     <span className="text-2xl">👦</span>
-                    <span>Boy</span>
+                    <span>{t("boy")}</span>
                   </button>
                   <button
                     type="button"
@@ -241,18 +243,18 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                     }`}
                   >
                     <span className="text-2xl">👧</span>
-                    <span>Girl</span>
+                    <span>{t("girl")}</span>
                   </button>
                 </div>
               </div>
 
               {/* Interests */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Interests and hobbies (optional)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("interestsLabel")}</label>
                 <textarea
                   value={childInfo.interests}
                   onChange={(e) => setChildInfo({ ...childInfo, interests: e.target.value })}
-                  placeholder="For example: loves dinosaurs, plays soccer, watches Paw Patrol..."
+                  placeholder={t("interestsPlaceholder")}
                   rows={3}
                   className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80 resize-none"
                 />
@@ -273,14 +275,14 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                   !canProceedChildInfo ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                Continue to Registration
+                {t("continueToRegistration")}
               </button>
               <button
                 type="button"
                 onClick={onClose}
                 className="w-full py-2 text-gray-500 hover:text-gray-700 text-sm"
               >
-                Cancel
+                {t("cancel")}
               </button>
             </div>
           </>
@@ -295,14 +297,14 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
             <span className="text-2xl sm:text-3xl">✨</span>
           </div>
           <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-            {mode === "signin" ? "Welcome back!" : mode === "signup" ? "Create account" : "Reset password"}
+            {mode === "signin" ? t("welcomeBack") : mode === "signup" ? t("createAccount") : t("resetPassword")}
           </h3>
           <p className="text-gray-600 text-sm">
             {mode === "signin"
-              ? "Sign in to continue creating stories"
+              ? t("signinSubtitle")
               : mode === "signup"
-              ? "Join FairyTaleAI and start creating magic"
-              : "Enter your email to receive reset link"}
+              ? t("signupSubtitle")
+              : t("resetSubtitle")}
           </p>
         </div>
 
@@ -331,13 +333,13 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              <span className="font-medium text-gray-700">Continue with Google</span>
+              <span className="font-medium text-gray-700">{t("continueWithGoogle")}</span>
             </button>
 
             {/* Divider */}
             <div className="flex items-center gap-3 mb-4">
               <div className="flex-1 h-px bg-gray-200" />
-              <span className="text-sm text-gray-400">or</span>
+              <span className="text-sm text-gray-400">{t("or")}</span>
               <div className="flex-1 h-px bg-gray-200" />
             </div>
           </>
@@ -347,24 +349,24 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "signup" && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("nameLabel")}</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
+                placeholder={t("namePlaceholder")}
                 className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("emailLabel")}</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder={t("emailPlaceholder")}
               required
               className="w-full px-4 py-3 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-gray-700 bg-white/80"
             />
@@ -373,14 +375,14 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
           {mode !== "forgot" && (
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <label className="block text-sm font-medium text-gray-700">{t("passwordLabel")}</label>
                 {mode === "signin" && (
                   <button
                     type="button"
                     onClick={() => { setMode("forgot"); setError(""); setSuccess(""); }}
                     className="text-xs text-blue-600 hover:text-blue-700"
                   >
-                    Forgot password?
+                    {t("forgotPassword")}
                   </button>
                 )}
               </div>
@@ -419,10 +421,10 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
-                Processing...
+                {t("processing")}
               </span>
             ) : (
-              mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"
+              mode === "signin" ? t("signIn") : mode === "signup" ? t("createAccount") : t("sendResetLink")
             )}
           </button>
         </form>
@@ -431,12 +433,12 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
         <p className="text-center text-sm text-gray-600 mt-4">
           {mode === "signin" ? (
             <>
-              Don&apos;t have an account?{" "}
+              {t("noAccount")}{" "}
               <button
                 onClick={() => { setMode("signup"); setError(""); setSuccess(""); }}
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                Sign up
+                {t("signUp")}
               </button>
             </>
           ) : mode === "signup" ? (
@@ -445,25 +447,25 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
                 onClick={() => setStep("child-info")}
                 className="text-gray-500 hover:text-gray-700 mr-2"
               >
-                ← Back
+                {t("back")}
               </button>
               {" | "}
-              Already have an account?{" "}
+              {t("hasAccount")}{" "}
               <button
                 onClick={() => { setMode("signin"); setStep("auth"); setError(""); setSuccess(""); }}
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                Sign in
+                {t("signIn")}
               </button>
             </>
           ) : (
             <>
-              Remember your password?{" "}
+              {t("rememberPassword")}{" "}
               <button
                 onClick={() => { setMode("signin"); setError(""); setSuccess(""); }}
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                Sign in
+                {t("signIn")}
               </button>
             </>
           )}
