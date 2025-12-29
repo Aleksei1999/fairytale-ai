@@ -44,6 +44,8 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
+        {/* Facebook Domain Verification */}
+        <meta name="facebook-domain-verification" content="0ia05ruaqzinzigr03jpkzpykuzuxk" />
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-HYJRPS6YKK"></script>
         <script
