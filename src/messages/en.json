@@ -181,11 +181,11 @@
   },
   "partnership": {
     "badge": "Partnership",
-    "title1": "We don't replace you.",
-    "title2": "We become your",
-    "title3": "co-pilot",
-    "transparencyTitle": "Full Transparency",
-    "transparencyText": "In your dashboard you see not just \"time in app\", but <highlight>real skill growth</highlight>.",
+    "title1": "We give you the map.",
+    "title2": "You drive the",
+    "title3": "journey",
+    "transparencyTitle": "See the Invisible Growth",
+    "transparencyText": "Usually emotional growth is invisible. We make it tangible. Check the Parent Dashboard to see progress in Empathy, Resilience, and Confidence week by week. Don't just hope they're growing — KNOW it.",
     "progressTitle": "Emma's Progress",
     "progressWeek": "Week 4 of Month 2",
     "live": "Live",
@@ -205,9 +205,9 @@
     "currentlyWorkingOn": "Currently Working On",
     "currentTask": "Taming Anger — \"Breathe like a dragon\" technique",
     "dashboardNote": "You always know exactly what we're working on right now.",
-    "friendshipTitle": "Foundation of Friendship",
-    "friendshipText": "Using our system as a reason to connect, you're building a <highlight>bridge of trust</highlight>.",
-    "friendshipNote": "Your child learns to share experiences with you <highlight>now</highlight>, so at 20 they come home not from obligation, but because <highlight>you're their best friend</highlight>."
+    "friendshipTitle": "Your Voice Builds Bridges",
+    "friendshipText": "Screens build walls. Your voice builds bridges. By using our stories as an evening ritual, you create a \"safety net\" that ensures they come to YOU for advice when they're 20, not just when they're 5.",
+    "friendshipNote": "This bond you build now will last a lifetime."
   },
   "criticalWindow": {
     "badge": "Critical Window",
