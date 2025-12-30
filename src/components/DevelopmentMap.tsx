@@ -335,7 +335,7 @@ export function DevelopmentMap() {
             {selectedMonth.title}
           </h4>
           <p className="text-sm text-gray-600 mb-2">
-            <span className="font-medium text-gray-800">Metaphor:</span> {selectedMonth.metaphor}
+            <span className="font-medium text-gray-800">{t("metaphor")}</span> {selectedMonth.metaphor}
           </p>
           <p className="text-sm text-gray-600 italic">
             {selectedMonth.story_arc}
@@ -353,8 +353,8 @@ export function DevelopmentMap() {
             return (
               <div className="mt-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">Progress</span>
-                  <span className="text-sm text-gray-600">{completedCount} of {totalStories} stories</span>
+                  <span className="text-sm font-medium text-gray-700">{t("progress")}</span>
+                  <span className="text-sm text-gray-600">{completedCount} {t("ofStories", { total: totalStories })}</span>
                 </div>
                 <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                   <div
@@ -381,7 +381,7 @@ export function DevelopmentMap() {
                     : "bg-white/70 text-gray-700 hover:bg-white"
                 }`}
               >
-                Week {week.order_num}
+                {t("week")} {week.order_num}
                 {progress > 0 && progress < 100 && (
                   <span className="ml-2 text-xs opacity-75">{progress}%</span>
                 )}
@@ -396,7 +396,7 @@ export function DevelopmentMap() {
         {/* Selected Week Content */}
         <div className="bg-white/30 rounded-2xl p-5 mb-6">
           <h4 className="font-bold text-lg text-gray-900 mb-1">
-            Week {selectedWeek.order_num}: {selectedWeek.title}
+            {t("week")} {selectedWeek.order_num}: {selectedWeek.title}
           </h4>
           <p className="text-sm text-gray-600 mb-4">
             {selectedWeek.task}
@@ -405,7 +405,7 @@ export function DevelopmentMap() {
           {/* Stories Grid */}
           <div className="space-y-3">
             <p className="text-sm font-medium text-gray-700 flex items-center gap-2">
-              <span>📚</span> This Week&apos;s Stories (every other day):
+              <span>📚</span> {t("thisWeekStories")}
             </p>
             {selectedWeek.stories.map((story) => {
               const timeInfo = getTimeUntilUnlock(story, selectedWeek.stories, selectedWeek);
@@ -443,7 +443,7 @@ export function DevelopmentMap() {
                         <span className="text-lg">⏳</span>
                       ) : (
                         <>
-                          <span>Day</span>
+                          <span>{t("day")}</span>
                           <span className="text-lg">{story.day_in_week}</span>
                         </>
                       )}
@@ -463,24 +463,24 @@ export function DevelopmentMap() {
                     {isCompleted ? (
                       <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
                         <span>✓</span>
-                        <span>Done</span>
+                        <span>{t("done")}</span>
                       </div>
                     ) : isAvailable ? (
                       <Link
                         href={`/create?storyId=${story.id}`}
                         className={`px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r ${selectedBlock.color} text-white hover:opacity-90 shadow-md transition-all`}
                       >
-                        Create Story
+                        {t("createStory")}
                       </Link>
                     ) : hasTimer ? (
                       <div className="flex flex-col items-center text-amber-600 text-sm font-medium">
-                        <span className="text-xs text-amber-500">Available in</span>
+                        <span className="text-xs text-amber-500">{t("availableIn")}</span>
                         <span className="font-bold">{timeInfo.hoursLeft}h {timeInfo.minutesLeft}m</span>
                       </div>
                     ) : (
                       <div className="flex items-center gap-2 text-gray-400 text-sm">
                         <span>🔒</span>
-                        <span>Locked</span>
+                        <span>{t("locked")}</span>
                       </div>
                     )}
                   </div>
@@ -511,12 +511,12 @@ export function DevelopmentMap() {
                 </div>
                 <div className="flex-1">
                   <h4 className={`font-bold ${isUnlocked ? "text-purple-900" : "text-gray-600"}`}>
-                    Weekly Cartoon Reward!
+                    {t("weeklyCartoonReward")}
                   </h4>
                   <p className={`text-sm ${isUnlocked ? "text-purple-600" : "text-gray-500"}`}>
                     {isUnlocked
-                      ? "Congratulations! Your personalized cartoon is ready!"
-                      : `Complete all 3 stories to unlock (${weekProgress}% done)`
+                      ? t("congratsCartoonReady")
+                      : t("completeToUnlock", { percent: weekProgress })
                     }
                   </p>
                 </div>
@@ -529,7 +529,7 @@ export function DevelopmentMap() {
                       : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }`}
                 >
-                  {isUnlocked ? "🎬 Create Cartoon" : "🔒 Complete Week"}
+                  {isUnlocked ? `🎬 ${t("createCartoon")}` : `🔒 ${t("completeWeek")}`}
                 </button>
               </div>
             </div>
@@ -540,7 +540,7 @@ export function DevelopmentMap() {
       {/* Program Overview */}
       <div className="glass-card p-6">
         <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <span>📋</span> Program Overview
+          <span>📋</span> {t("programOverview")}
         </h4>
         <div className="grid sm:grid-cols-2 gap-4">
           {blocks.map((block) => (
@@ -558,9 +558,9 @@ export function DevelopmentMap() {
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl">{block.icon}</span>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">Block {block.order_num}: {block.title}</p>
+                  <p className="font-bold text-gray-900 text-sm">{t("block")} {block.order_num}: {block.title}</p>
                   <p className="text-xs text-gray-500">
-                    {block.months.length} months, {block.months.reduce((acc, m) => acc + m.weeks.length, 0)} weeks
+                    {block.months.length} {t("months").toLowerCase()}, {block.months.reduce((acc, m) => acc + m.weeks.length, 0)} {t("weeks")}
                   </p>
                 </div>
               </div>
@@ -568,7 +568,7 @@ export function DevelopmentMap() {
                 {block.months.map((month) => (
                   <li key={month.id} className="flex items-center gap-2">
                     <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                    Month {month.order_num}: {month.title}
+                    {t("month")} {month.order_num}: {month.title}
                   </li>
                 ))}
               </ul>
