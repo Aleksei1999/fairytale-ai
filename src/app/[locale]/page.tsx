@@ -1936,30 +1936,72 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== BLOCK 8: FINAL CTA ===== */}
+      {/* ===== BLOCK 11: FINAL CTA ===== */}
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
-        <div className="relative overflow-hidden rounded-3xl sm:rounded-[40px] bg-gradient-to-br from-sky-400 via-blue-500 to-blue-600 p-6 sm:p-12 md:p-16 text-center">
+        <div className="relative overflow-hidden rounded-3xl sm:rounded-[40px] bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 p-6 sm:p-12 md:p-16">
           <div className="absolute top-0 left-1/4 w-32 sm:w-64 h-32 sm:h-64 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-40 sm:w-80 h-40 sm:h-80 bg-sky-300/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-40 sm:w-80 h-40 sm:h-80 bg-emerald-300/20 rounded-full blur-3xl" />
 
           <div className="relative">
-            <div className="mb-4 sm:mb-6 sparkle"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" /></div>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-              {t("finalCta.title")}
-            </h2>
-            <p className="text-base sm:text-lg text-sky-100 mb-6 sm:mb-8 max-w-xl mx-auto">
-              {t("finalCta.subtitle")}
-            </p>
+            {/* Header */}
+            <div className="text-center mb-8 sm:mb-10">
+              <div className="mb-4 sm:mb-6 sparkle"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" /></div>
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+                {t.rich("finalCta.title", {
+                  highlight: (chunks) => <span className="text-yellow-300">{chunks}</span>
+                })}
+              </h2>
+              <p className="text-base sm:text-lg text-emerald-100 max-w-2xl mx-auto">
+                {t("finalCta.subtitle")}
+              </p>
+            </div>
 
-            {/* Final CTA */}
-            <MagneticLink
-              href="#pricing"
-              onClick={scrollToPricing}
-              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 whitespace-nowrap inline-block"
-              strength={0.4}
-            >
-              {t("finalCta.button")}
-            </MagneticLink>
+            {/* Feature grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto mb-8 sm:mb-10">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
+                <span className="text-2xl">✨</span>
+                <div>
+                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature1Title")}</h4>
+                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature1Text")}</p>
+                </div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
+                <span className="text-2xl">🧠</span>
+                <div>
+                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature2Title")}</h4>
+                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature2Text")}</p>
+                </div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
+                <span className="text-2xl">📈</span>
+                <div>
+                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature3Title")}</h4>
+                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature3Text")}</p>
+                </div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
+                <span className="text-2xl">🔓</span>
+                <div>
+                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature4Title")}</h4>
+                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature4Text")}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="text-center">
+              <MagneticLink
+                href="#pricing"
+                onClick={scrollToPricing}
+                className="bg-white text-emerald-600 px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 whitespace-nowrap inline-block"
+                strength={0.4}
+              >
+                {t("finalCta.button")}
+              </MagneticLink>
+              <p className="text-emerald-200 text-xs sm:text-sm mt-4">
+                {t("finalCta.disclaimer")}
+              </p>
+            </div>
           </div>
         </div>
       </section>

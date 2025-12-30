@@ -161,9 +161,18 @@
     "a7": "We recommend turning stories into a special evening ritual. Psychologists confirm: 20 minutes before sleep, a child's brain best absorbs information and forms new neural connections.\n\nYour ideal scenario:\n\n1. Create closeness: Lie down and hug your child. This is time when you belong only to each other.\n\n2. Choose Voice Magic: Want to read yourself? Turn on \"Text + Music\" mode. Tired? Turn on the professional narrator. Want magic? Upload a sample of your voice, and AI will narrate the story in your voice.\n\n3. Discuss the important stuff: Right after the story, the app will offer 3 questions. This short dialogue is more important than the cartoon itself — this is where emotional intelligence develops.\n\n4. Track growth: Every Friday, check your email. We'll send a detailed PDF report: what skills your Hero mastered this week."
   },
   "finalCta": {
-    "title": "Give your child magic",
-    "subtitle": "The first story is waiting. Start the magical journey today.",
-    "button": "Start the Magic"
+    "title": "Start your child's Hero Journey tonight. <highlight>On us.</highlight>",
+    "subtitle": "Experience 7 nights of connection and calm. See how personalized storytelling transforms behavior better than any lecture. If you don't feel the magic — you pay $0.",
+    "feature1Title": "Instant \"Digital Twin\"",
+    "feature1Text": "We create a magical avatar of your child to make them the main hero of the entire program.",
+    "feature2Title": "Full Therapeutic Library",
+    "feature2Text": "Unlock scripts designed for specific challenges: from Tantrums and Anxiety to Leadership.",
+    "feature3Title": "Weekly Growth Analytics",
+    "feature3Text": "Don't guess — know. Track their development in Empathy, Grit, and Focus through your professional Parent Dashboard.",
+    "feature4Title": "Unlimited Access",
+    "feature4Text": "Try all formats: Read yourself, use AI-audio, or watch the cartoon. Full freedom for 7 days.",
+    "button": "Start My 7-Day Free Trial",
+    "disclaimer": "Reminder sent 2 days before trial ends. Cancel anytime in 1 click."
   },
   "howItWorks": {
     "title1": "Your new evening ritual",
