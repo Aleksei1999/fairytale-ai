@@ -998,12 +998,12 @@ export default function Home() {
         <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-4">
             <span className="text-xl">🗺</span>
-            <span className="text-sm text-gray-600 font-medium">{t("program.badge")}</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{t("program.badge")}</span>
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
             <AnimatedText text={t("program.title1")} scrollTrigger type="fade" /><AnimatedText text={t("program.title2")} className="gradient-text" scrollTrigger type="chars" />
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
             {t("program.subtitle")}
           </p>
         </div>
@@ -1014,17 +1014,17 @@ export default function Home() {
           <div className="glass-card-strong overflow-hidden">
             <button
               onClick={() => setOpenProgramBlock(openProgramBlock === 0 ? null : 0)}
-              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
             >
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                 🟡
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">{t("program.block1.months")}</span>
+                  <span className="text-xs font-medium text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded-full">{t("program.block1.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block1.title")}</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block1.shortDesc")}</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t("program.block1.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">{t("program.block1.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 0 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1034,47 +1034,47 @@ export default function Home() {
             </button>
             <div className={`accordion-content ${openProgramBlock === 0 ? "open" : ""}`}>
               <div className="accordion-inner">
-                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100 dark:border-gray-700">
                 <div className="pt-5 space-y-4">
                   {/* Goal statement */}
-                  <div className="glass-card p-4 bg-amber-50/50 border border-amber-100">
-                    <p className="text-sm text-gray-700">
+                  <div className="glass-card p-4 bg-amber-50/50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
                       <span className="font-semibold">{t("program.block1.whyMatters")}</span> {t("program.block1.whyMattersText")}
                     </p>
-                    <p className="text-sm text-gray-700 mt-2">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
                       <span className="font-semibold">{t("program.block1.ourGoal")}</span> {t("program.block1.ourGoalText")}
                     </p>
                   </div>
                   {/* Months */}
                   <div className="grid sm:grid-cols-3 gap-3">
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-amber-600 mb-2">Month 1</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block1.month1Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block1.month1Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block1.month1Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-amber-600 dark:text-amber-400 mb-2">Month 1</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block1.month1Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block1.month1Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block1.month1Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-amber-600 mb-2">Month 2</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block1.month2Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block1.month2Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block1.month2Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-amber-600 dark:text-amber-400 mb-2">Month 2</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block1.month2Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block1.month2Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block1.month2Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-amber-600 mb-2">Month 3</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block1.month3Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block1.month3Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block1.month3Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-amber-600 dark:text-amber-400 mb-2">Month 3</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block1.month3Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block1.month3Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block1.month3Tag")}</span>
                     </div>
                   </div>
                   {/* Results */}
-                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block1.resultsTitle")}</p>
+                  <div className="glass-card p-4 bg-green-50/50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                    <p className="text-xs font-semibold text-green-800 dark:text-green-400 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block1.resultsTitle")}</p>
                     <div className="space-y-2">
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block1.result1")}</span>
                       </div>
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block1.result2")}</span>
                       </div>
@@ -1090,17 +1090,17 @@ export default function Home() {
           <div className="glass-card-strong overflow-hidden">
             <button
               onClick={() => setOpenProgramBlock(openProgramBlock === 1 ? null : 1)}
-              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
             >
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                 🔵
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">{t("program.block2.months")}</span>
+                  <span className="text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-2 py-0.5 rounded-full">{t("program.block2.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block2.title")}</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block2.shortDesc")}</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t("program.block2.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">{t("program.block2.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 1 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1110,44 +1110,44 @@ export default function Home() {
             </button>
             <div className={`accordion-content ${openProgramBlock === 1 ? "open" : ""}`}>
               <div className="accordion-inner">
-                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100 dark:border-gray-700">
                   <div className="pt-5 space-y-4">
-                    <div className="glass-card p-4 bg-blue-50/50 border border-blue-100">
-                    <p className="text-sm text-gray-700">
+                    <div className="glass-card p-4 bg-blue-50/50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
                       <span className="font-semibold">{t("program.block2.challenge")}</span> {t("program.block2.challengeText")}
                     </p>
-                    <p className="text-sm text-gray-700 mt-2">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
                       <span className="font-semibold">{t("program.block2.ourGoal")}</span> {t("program.block2.ourGoalText")}
                     </p>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-blue-600 mb-2">Month 4</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block2.month4Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block2.month4Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block2.month4Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">Month 4</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block2.month4Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block2.month4Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block2.month4Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-blue-600 mb-2">Month 5</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block2.month5Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block2.month5Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block2.month5Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">Month 5</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block2.month5Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block2.month5Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block2.month5Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-blue-600 mb-2">Month 6</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block2.month6Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block2.month6Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block2.month6Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">Month 6</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block2.month6Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block2.month6Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block2.month6Tag")}</span>
                     </div>
                   </div>
-                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block2.resultsTitle")}</p>
+                  <div className="glass-card p-4 bg-green-50/50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                    <p className="text-xs font-semibold text-green-800 dark:text-green-400 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block2.resultsTitle")}</p>
                     <div className="space-y-2">
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block2.result1")}</span>
                       </div>
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block2.result2")}</span>
                       </div>
@@ -1163,17 +1163,17 @@ export default function Home() {
           <div className="glass-card-strong overflow-hidden">
             <button
               onClick={() => setOpenProgramBlock(openProgramBlock === 2 ? null : 2)}
-              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
             >
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                 🟢
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-0.5 rounded-full">{t("program.block3.months")}</span>
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/50 px-2 py-0.5 rounded-full">{t("program.block3.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block3.title")}</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block3.shortDesc")}</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t("program.block3.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">{t("program.block3.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 2 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1183,44 +1183,44 @@ export default function Home() {
             </button>
             <div className={`accordion-content ${openProgramBlock === 2 ? "open" : ""}`}>
               <div className="accordion-inner">
-                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100 dark:border-gray-700">
                   <div className="pt-5 space-y-4">
-                    <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                      <p className="text-sm text-gray-700">
+                    <div className="glass-card p-4 bg-green-50/50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
                         <span className="font-semibold">{t("program.block3.battle")}</span> {t("program.block3.battleText")}
                     </p>
-                    <p className="text-sm text-gray-700 mt-2">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
                       <span className="font-semibold">{t("program.block3.ourGoal")}</span> {t("program.block3.ourGoalText")}
                     </p>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-green-600 mb-2">Month 7</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block3.month7Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block3.month7Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block3.month7Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-green-600 dark:text-green-400 mb-2">Month 7</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block3.month7Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block3.month7Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block3.month7Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-green-600 mb-2">Month 8</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block3.month8Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block3.month8Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block3.month8Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-green-600 dark:text-green-400 mb-2">Month 8</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block3.month8Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block3.month8Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block3.month8Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-green-600 mb-2">Month 9</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block3.month9Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block3.month9Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block3.month9Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-green-600 dark:text-green-400 mb-2">Month 9</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block3.month9Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block3.month9Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block3.month9Tag")}</span>
                     </div>
                   </div>
-                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block3.resultsTitle")}</p>
+                  <div className="glass-card p-4 bg-green-50/50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                    <p className="text-xs font-semibold text-green-800 dark:text-green-400 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block3.resultsTitle")}</p>
                     <div className="space-y-2">
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block3.result1")}</span>
                       </div>
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block3.result2")}</span>
                       </div>
@@ -1236,17 +1236,17 @@ export default function Home() {
           <div className="glass-card-strong overflow-hidden">
             <button
               onClick={() => setOpenProgramBlock(openProgramBlock === 3 ? null : 3)}
-              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 transition-colors"
+              className="w-full p-5 sm:p-6 flex items-center gap-4 text-left hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
             >
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                 🟣
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full">{t("program.block4.months")}</span>
+                  <span className="text-xs font-medium text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded-full">{t("program.block4.months")}</span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900">{t("program.block4.title")}</h3>
-                <p className="text-sm text-gray-600 hidden sm:block">{t("program.block4.shortDesc")}</p>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t("program.block4.title")}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">{t("program.block4.shortDesc")}</p>
               </div>
               <span className={`text-gray-400 accordion-arrow flex-shrink-0 ${openProgramBlock === 3 ? "open" : ""}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1256,44 +1256,44 @@ export default function Home() {
             </button>
             <div className={`accordion-content ${openProgramBlock === 3 ? "open" : ""}`}>
               <div className="accordion-inner">
-                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100">
+                <div className="px-5 sm:px-6 pb-6 border-t border-gray-100 dark:border-gray-700">
                   <div className="pt-5 space-y-4">
-                    <div className="glass-card p-4 bg-purple-50/50 border border-purple-100">
-                      <p className="text-sm text-gray-700">
+                    <div className="glass-card p-4 bg-purple-50/50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800">
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
                         <span className="font-semibold">{t("program.block4.prep")}</span> {t("program.block4.prepText")}
                     </p>
-                    <p className="text-sm text-gray-700 mt-2">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
                       <span className="font-semibold">{t("program.block4.ourGoal")}</span> {t("program.block4.ourGoalText")}
                     </p>
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-purple-600 mb-2">Month 10</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block4.month10Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block4.month10Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block4.month10Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-2">Month 10</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block4.month10Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block4.month10Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block4.month10Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-purple-600 mb-2">Month 11</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block4.month11Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block4.month11Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block4.month11Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-2">Month 11</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block4.month11Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block4.month11Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block4.month11Tag")}</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/70 border border-gray-100">
-                      <div className="text-xs font-medium text-purple-600 mb-2">Month 12</div>
-                      <h4 className="font-bold text-gray-900 text-sm mb-1">{t("program.block4.month12Title")}</h4>
-                      <p className="text-xs text-gray-600 mb-2">{t("program.block4.month12Text")}</p>
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t("program.block4.month12Tag")}</span>
+                    <div className="p-4 rounded-xl bg-white/70 dark:bg-gray-800/70 border border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-medium text-purple-600 dark:text-purple-400 mb-2">Month 12</div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm mb-1">{t("program.block4.month12Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{t("program.block4.month12Text")}</p>
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded-full">{t("program.block4.month12Tag")}</span>
                     </div>
                   </div>
-                  <div className="glass-card p-4 bg-green-50/50 border border-green-100">
-                    <p className="text-xs font-semibold text-green-800 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block4.resultsTitle")}</p>
+                  <div className="glass-card p-4 bg-green-50/50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                    <p className="text-xs font-semibold text-green-800 dark:text-green-400 mb-3 flex items-center gap-1"><img src="/images/icons/star.png" alt="" className="w-4 h-4" /> {t("program.block4.resultsTitle")}</p>
                     <div className="space-y-2">
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block4.result1")}</span>
                       </div>
-                      <div className="flex items-start gap-2 text-sm text-green-700">
+                      <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
                         <span className="flex-shrink-0 mt-0.5">✅</span>
                         <span>{t("program.block4.result2")}</span>
                       </div>
@@ -1308,12 +1308,12 @@ export default function Home() {
 
         {/* Year Summary */}
         <div className="max-w-4xl mx-auto mt-8 sm:mt-12">
-          <div className="glass-card-strong p-6 sm:p-8 text-center bg-gradient-to-r from-amber-50 via-purple-50 to-blue-50">
+          <div className="glass-card-strong p-6 sm:p-8 text-center bg-gradient-to-r from-amber-50 via-purple-50 to-blue-50 dark:from-amber-900/20 dark:via-purple-900/20 dark:to-blue-900/20">
             <div className="mb-4"><img src="/images/icons/trophy.png" alt="" className="w-12 h-12 mx-auto" /></div>
-            <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+            <h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
               {t("program.yearSummaryTitle")}
             </h3>
-            <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
               {t.rich("program.yearSummaryText", {
                 highlight: (chunks) => <span className="font-semibold">{chunks}</span>
               })}
