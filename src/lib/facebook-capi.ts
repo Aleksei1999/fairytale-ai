@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-const FB_PIXEL_ID = process.env.FB_PIXEL_ID || "2255330204944683";
+const FB_PIXEL_ID = process.env.FB_PIXEL_ID || "879325877922511";
 const FB_ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
 const FB_API_VERSION = "v18.0";
 
