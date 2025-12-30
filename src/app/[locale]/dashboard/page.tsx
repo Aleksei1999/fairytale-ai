@@ -141,14 +141,14 @@ export default function Dashboard() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
-        <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
+        <div className="animate-spin w-8 h-8 border-4 border-blue-500 dark:border-blue-400 border-t-transparent rounded-full"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 animate-fade-in-up">
         <div className="flex items-center justify-between">
@@ -156,11 +156,11 @@ export default function Dashboard() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
               <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
-            <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+            <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
           <Link
             href="/"
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
           >
             {t("backToHome")}
           </Link>
@@ -174,25 +174,25 @@ export default function Dashboard() {
           <div className="glass-card p-6 sm:p-8 mb-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                   {t("welcome")} {user?.user_metadata?.name || user?.email?.split("@")[0] || "Hero"}! 👋
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-400">
                   {t("manageStories")}
                 </p>
               </div>
               {/* Credits Display */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-purple-50 border border-white/50 shadow-lg">
+                <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-purple-50 dark:from-amber-900/30 dark:via-orange-900/30 dark:to-purple-900/30 border border-white/50 dark:border-white/10 shadow-lg">
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-purple-500 shadow-lg">
                     <img src="/images/icons/star.png" alt="" className="w-8 h-8" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">{t("totalCredits")}</p>
-                    <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-purple-600 bg-clip-text text-transparent">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">{t("totalCredits")}</p>
+                    <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-purple-600 dark:from-amber-400 dark:to-purple-400 bg-clip-text text-transparent">
                       {loadingCredits ? (
-                        <span className="inline-block w-12 h-8 bg-gray-200 rounded animate-pulse"></span>
+                        <span className="inline-block w-12 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
                       ) : (
                         <AnimatedCounter value={(credits ?? 0) + (cartoonCredits ?? 0)} duration={1200} />
                       )}
@@ -207,7 +207,7 @@ export default function Dashboard() {
           {freeTrialExpired && (
             <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 p-[2px]">
-                <div className="relative rounded-2xl bg-white p-6">
+                <div className="relative rounded-2xl bg-white dark:bg-[#242424] p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center flex-shrink-0">
@@ -216,8 +216,8 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg text-gray-900 mb-1">{t("freeTrialEnded")}</h3>
-                        <p className="text-gray-600 text-sm">
+                        <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">{t("freeTrialEnded")}</h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">
                           {t("freeTrialEndedText", { count: freeTrialStoriesUsed })}
                         </p>
                       </div>
@@ -238,7 +238,7 @@ export default function Dashboard() {
           {!hasActiveSubscription && !freeTrialExpired && !subscriptionType && (
             <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-[2px]">
-                <div className="relative rounded-2xl bg-white p-6">
+                <div className="relative rounded-2xl bg-white dark:bg-[#242424] p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
@@ -247,8 +247,8 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg text-gray-900 mb-1">{t("startFreeTrial")}</h3>
-                        <p className="text-gray-600 text-sm">
+                        <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">{t("startFreeTrial")}</h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">
                           {t("startFreeTrialText")}
                         </p>
                       </div>
@@ -268,7 +268,7 @@ export default function Dashboard() {
           {/* Active Subscription Info */}
           {hasActiveSubscription && subscriptionType && subscriptionType !== "free_trial" && (
             <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-              <div className="glass-card p-4 border-2 border-green-200 bg-green-50/50">
+              <div className="glass-card p-4 border-2 border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/20">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
                     <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,10 +276,10 @@ export default function Dashboard() {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">
                       {subscriptionType === "monthly" ? t("monthlySubscription") : t("yearlySubscription")} {t("subscriptionActive")}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       {t("validUntil")} {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
                     </p>
                   </div>
@@ -291,7 +291,7 @@ export default function Dashboard() {
           {/* Active Free Trial Info */}
           {hasActiveSubscription && subscriptionType === "free_trial" && (
             <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-              <div className="glass-card p-4 border-2 border-blue-200 bg-blue-50/50">
+              <div className="glass-card p-4 border-2 border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/20">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
@@ -300,8 +300,8 @@ export default function Dashboard() {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">{t("freeTrialActive")}</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">{t("freeTrialActive")}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {freeTrialStoriesUsed}/3 {t("storiesUsed")} • {t("expires")} {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
                       </p>
                     </div>
@@ -322,15 +322,15 @@ export default function Dashboard() {
             {/* Buy Cartoon Credits */}
             <Link
               href="/buy-cartoons"
-              className="glass-card p-6 hover:shadow-lg transition-shadow group border-2 border-purple-200 block"
+              className="glass-card p-6 hover:shadow-lg transition-shadow group border-2 border-purple-200 dark:border-purple-800 block"
             >
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <img src="/images/icons/movie.png" alt="" className="w-9 h-9" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-gray-900">{t("buyCartoons")}</h3>
-                  <p className="text-gray-600 text-sm">{t("buyCartoonsDesc")}</p>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">{t("buyCartoons")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">{t("buyCartoonsDesc")}</p>
                 </div>
               </div>
             </Link>
@@ -343,21 +343,21 @@ export default function Dashboard() {
 
           {/* Account Info */}
           <div className="glass-card p-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h2 className="font-bold text-lg text-gray-900 mb-4">{t("accountInfo")}</h2>
+            <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-4">{t("accountInfo")}</h2>
             <div className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">{t("email")}</span>
-                <span className="text-gray-900 font-medium">{user?.email || "—"}</span>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">{t("email")}</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">{user?.email || "—"}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">{t("totalCreditsLabel")}</span>
-                <span className="text-gray-900 font-medium">
+              <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">{t("totalCreditsLabel")}</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">
                   {loadingCredits ? t("loading") : `${(credits ?? 0) + (cartoonCredits ?? 0)} ${t("credits")}`}
                 </span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">{t("memberSince")}</span>
-                <span className="text-gray-900 font-medium">
+              <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">{t("memberSince")}</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">
                   {user?.created_at ? new Date(user.created_at).toLocaleDateString() : "—"}
                 </span>
               </div>
@@ -367,32 +367,32 @@ export default function Dashboard() {
           {/* Subscription Info */}
           {subscriptionType && (
             <div className="glass-card p-6 mt-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <h2 className="font-bold text-lg text-gray-900 mb-4">{t("subscription")}</h2>
+              <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-4">{t("subscription")}</h2>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-600">{t("currentPlan")}</span>
-                  <span className="text-gray-900 font-medium">
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">{t("currentPlan")}</span>
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">
                     {subscriptionType === "free_trial" ? t("freeTrial") :
                      subscriptionType === "monthly" ? t("monthlyPlan") :
                      subscriptionType === "yearly" ? t("yearlyPlan") : subscriptionType}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-600">{t("status")}</span>
-                  <span className={`font-medium ${hasActiveSubscription ? "text-green-600" : "text-red-600"}`}>
+                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">{t("status")}</span>
+                  <span className={`font-medium ${hasActiveSubscription ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                     {hasActiveSubscription ? t("active") : t("expired")}
                   </span>
                 </div>
                 {subscriptionUntil && (
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                    <span className="text-gray-600 dark:text-gray-400">
                       {hasActiveSubscription ? t("daysRemaining") : t("expiredOn")}
                     </span>
-                    <span className="text-gray-900 font-medium">
+                    <span className="text-gray-900 dark:text-gray-100 font-medium">
                       {hasActiveSubscription ? (
                         <>
                           {Math.max(0, Math.ceil((new Date(subscriptionUntil).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)))} {t("days")}
-                          <span className="text-gray-500 text-sm ml-2">
+                          <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
                             ({t("until")} {new Date(subscriptionUntil).toLocaleDateString()})
                           </span>
                         </>
@@ -408,7 +408,7 @@ export default function Dashboard() {
                       href="https://billing.lava.top"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
+                      className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -436,7 +436,7 @@ export default function Dashboard() {
           >
             <button
               onClick={() => setShowPaymentModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -449,10 +449,10 @@ export default function Dashboard() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                 </svg>
               </div>
-              <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
+              <h3 className="font-display text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 {freeTrialExpired || subscriptionType === "free_trial" ? t("upgradeYourPlan") : t("chooseYourPlan")}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 {freeTrialExpired ? t("continueCreating") : t("startCreating")}
               </p>
             </div>
@@ -464,23 +464,23 @@ export default function Dashboard() {
                 onClick={() => setSelectedPlan("monthly")}
                 className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                   selectedPlan === "monthly"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
+                    : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
                 }`}
               >
                 <div className="flex justify-between items-center">
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-gray-900">{t("monthly")}</p>
+                      <p className="font-bold text-gray-900 dark:text-gray-100">{t("monthly")}</p>
                       {freeTrialExpired && (
-                        <span className="px-2 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-full font-medium">{t("bestValue")}</span>
+                        <span className="px-2 py-0.5 text-xs bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full font-medium">{t("bestValue")}</span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600">{t("unlimitedStories")}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t("unlimitedStories")}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-bold text-gray-900">$8<span className="text-sm font-normal text-gray-500">/mo</span></p>
-                    <p className="text-xs text-gray-500">{t("thenPrice")}</p>
+                    <p className="text-xl font-bold text-gray-900 dark:text-gray-100">$8<span className="text-sm font-normal text-gray-500 dark:text-gray-400">/mo</span></p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{t("thenPrice")}</p>
                   </div>
                 </div>
               </button>
@@ -490,25 +490,25 @@ export default function Dashboard() {
                 onClick={() => setSelectedPlan("yearly")}
                 className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                   selectedPlan === "yearly"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
+                    : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
                 }`}
               >
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-bold text-gray-900">{t("yearly")}</p>
-                    <p className="text-sm text-gray-600">{t("unlimitedStories")}</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100">{t("yearly")}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t("unlimitedStories")}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-bold text-gray-900">$189<span className="text-sm font-normal text-gray-500">/yr</span></p>
-                    <p className="text-xs text-green-600 font-medium">{t("savePercent")}</p>
+                    <p className="text-xl font-bold text-gray-900 dark:text-gray-100">$189<span className="text-sm font-normal text-gray-500 dark:text-gray-400">/yr</span></p>
+                    <p className="text-xs text-green-600 dark:text-green-400 font-medium">{t("savePercent")}</p>
                   </div>
                 </div>
               </button>
             </div>
 
             {paymentError && (
-              <div className="p-3 rounded-xl bg-red-50 text-red-600 text-sm mb-4">
+              <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm mb-4">
                 {paymentError}
               </div>
             )}

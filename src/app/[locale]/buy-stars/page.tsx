@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { trackInitiateCheckout, trackViewContent } from "@/lib/facebook-pixel";
 
 const STAR_PACKAGES = [
   {
@@ -72,8 +73,30 @@ export default function BuyStars() {
     }
   }, [user?.email]);
 
+  // Track page view for Facebook Pixel
+  useEffect(() => {
+    if (user?.email) {
+      trackViewContent({
+        contentName: "Buy Stars Page",
+        contentCategory: "stars",
+      });
+    }
+  }, [user?.email]);
+
   const handlePurchase = async (packageId: string) => {
     if (!user?.email) return;
+
+    // Find the package to get price info
+    const pkg = STAR_PACKAGES.find(p => p.id === packageId);
+    if (pkg) {
+      // Track InitiateCheckout event
+      trackInitiateCheckout({
+        value: pkg.price,
+        currency: "USD",
+        contentName: `${pkg.stars} Stars Pack`,
+        contentCategory: "stars",
+      });
+    }
 
     setPaymentLoading(true);
     setSelectedPackage(packageId);
@@ -107,7 +130,7 @@ export default function BuyStars() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 animate-fade-in-up">
         <div className="flex items-center justify-between">
@@ -115,11 +138,11 @@ export default function BuyStars() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
               <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
-            <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+            <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
           >
             {t("backToDashboard")}
           </Link>
@@ -131,44 +154,44 @@ export default function BuyStars() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 border border-amber-200 dark:border-amber-700 mb-6">
               <img src="/images/icons/star.png" alt="" className="w-5 h-5" />
-              <span className="text-sm font-medium text-amber-700">
+              <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
                 {userStars !== null ? t("youHaveStars", { count: userStars }) : t("loading")}
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               {t("getMore")} <span className="gradient-text">{t("stars")}</span>
             </h1>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
               {t("starsUnlock")}
             </p>
           </div>
 
           {/* What stars do */}
           <div className="glass-card p-6 mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
               <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> {t("whatCanYouDo")}
             </h3>
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50/50 border border-blue-100">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50/50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800">
+                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center flex-shrink-0">
                   <img src="/images/icons/microphone.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">{t("aiVoiceNarration")}</p>
-                  <p className="text-sm text-gray-600">{t("aiVoiceDesc")}</p>
-                  <p className="text-sm font-semibold text-blue-600 mt-1">{t("starPerStory")}</p>
+                  <p className="font-medium text-gray-900 dark:text-gray-100">{t("aiVoiceNarration")}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t("aiVoiceDesc")}</p>
+                  <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">{t("starPerStory")}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-50/50 border border-purple-100">
-                <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-50/50 dark:bg-purple-900/30 border border-purple-100 dark:border-purple-800">
+                <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-800 flex items-center justify-center flex-shrink-0">
                   <img src="/images/icons/movie.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">{t("animatedCartoon")}</p>
-                  <p className="text-sm text-gray-600">{t("animatedCartoonDesc")}</p>
-                  <p className="text-sm font-semibold text-purple-600 mt-1">{t("starsPerCartoon")}</p>
+                  <p className="font-medium text-gray-900 dark:text-gray-100">{t("animatedCartoon")}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t("animatedCartoonDesc")}</p>
+                  <p className="text-sm font-semibold text-purple-600 dark:text-purple-400 mt-1">{t("starsPerCartoon")}</p>
                 </div>
               </div>
             </div>
@@ -194,15 +217,15 @@ export default function BuyStars() {
                   <div className="flex justify-center mb-2">
                     <img src={pkg.icon} alt="" className="w-12 h-12" />
                   </div>
-                  <h3 className="font-bold text-xl text-gray-900">
+                  <h3 className="font-bold text-xl text-gray-900 dark:text-gray-100">
                     {pkg.stars} {t("starsLabel")}
                   </h3>
-                  <p className="text-sm text-gray-500">{t(`${pkg.id}Desc`)}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{t(`${pkg.id}Desc`)}</p>
                 </div>
 
                 <div className="text-center mb-6">
-                  <div className="text-3xl font-bold text-gray-900">{pkg.priceDisplay}</div>
-                  <p className="text-sm text-gray-500">{pkg.pricePerStar} {t("perStar")}</p>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{pkg.priceDisplay}</div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{pkg.pricePerStar} {t("perStar")}</p>
                 </div>
 
                 <button
@@ -211,7 +234,7 @@ export default function BuyStars() {
                   className={`w-full py-3 rounded-xl font-semibold transition-all ${
                     pkg.popular
                       ? "bg-gradient-to-r from-amber-500 to-yellow-500 text-white hover:opacity-90"
-                      : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600"
                   } disabled:opacity-50`}
                 >
                   {paymentLoading && selectedPackage === pkg.id ? (
@@ -232,8 +255,8 @@ export default function BuyStars() {
 
           {/* Note */}
           <div className="glass-card p-6 text-center animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-            <p className="text-gray-600 text-sm">
-              <span className="font-semibold text-gray-900">{t("note")}</span> {t("starsNeverExpire")}
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{t("note")}</span> {t("starsNeverExpire")}
               {" "}{t("useAnytime")}
             </p>
           </div>

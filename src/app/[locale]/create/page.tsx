@@ -272,8 +272,8 @@ function CreatePageContent() {
   // Show loading while checking auth
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
-        <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
+        <div className="animate-spin w-8 h-8 border-4 border-blue-500 dark:border-blue-400 border-t-transparent rounded-full"></div>
       </div>
     );
   }
@@ -281,10 +281,10 @@ function CreatePageContent() {
   // No story ID provided
   if (!storyId) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">{t("noStorySelected")}</p>
-          <Link href="/dashboard" className="text-blue-600 hover:underline">
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{t("noStorySelected")}</p>
+          <Link href="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline">
             {t("goToDashboard")}
           </Link>
         </div>
@@ -295,15 +295,15 @@ function CreatePageContent() {
   // No subscription - show paywall
   if (hasSubscription === false) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
         <div className="glass-card p-8 max-w-md text-center">
           <div className="flex justify-center mb-4">
             <img src="/images/icons/crown.png" alt="" className="w-14 h-14" />
           </div>
-          <h2 className="font-display text-2xl font-bold text-gray-900 mb-3">
+          <h2 className="font-display text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
             {t("subscriptionRequired")}
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
             {t("subscriptionRequiredText")}
           </p>
           <Link
@@ -313,7 +313,7 @@ function CreatePageContent() {
             {t("viewPlans")}
           </Link>
           <div className="mt-4">
-            <Link href="/dashboard" className="text-gray-500 hover:text-gray-700 text-sm">
+            <Link href="/dashboard" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
               {t("backToDashboard")}
             </Link>
           </div>
@@ -323,12 +323,12 @@ function CreatePageContent() {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-10 w-64 h-64 bg-sky-200/30 rounded-full blur-3xl" />
-        <div className="absolute top-40 right-20 w-96 h-96 bg-sky-300/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-40 left-1/4 w-80 h-80 bg-sky-100/40 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-64 h-64 bg-sky-200/30 dark:bg-sky-900/20 rounded-full blur-3xl" />
+        <div className="absolute top-40 right-20 w-96 h-96 bg-sky-300/20 dark:bg-sky-800/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 left-1/4 w-80 h-80 bg-sky-100/40 dark:bg-sky-900/15 rounded-full blur-3xl" />
       </div>
 
       {/* Header - hidden on step 0 */}
@@ -339,7 +339,7 @@ function CreatePageContent() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
               <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
-            <span className="font-display text-xl font-bold text-gray-800">FairyTaleAI</span>
+            <span className="font-display text-xl font-bold text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
 
           {/* Progress indicator */}
@@ -352,13 +352,13 @@ function CreatePageContent() {
                       ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
                       : s < step
                       ? "bg-green-500 text-white"
-                      : "bg-gray-200 text-gray-400"
+                      : "bg-gray-200 dark:bg-gray-700 text-gray-400"
                   }`}
                 >
                   {s < step ? "✓" : s}
                 </div>
                 {s < 2 && (
-                  <div className={`w-8 h-1 mx-1 rounded ${s < step ? "bg-green-500" : "bg-gray-200"}`} />
+                  <div className={`w-8 h-1 mx-1 rounded ${s < step ? "bg-green-500" : "bg-gray-200 dark:bg-gray-700"}`} />
                 )}
               </div>
             ))}
@@ -366,13 +366,13 @@ function CreatePageContent() {
 
           <div className="flex items-center gap-4">
             {/* Stars balance */}
-            <div className="flex items-center gap-1 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
+            <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/30 px-3 py-1.5 rounded-full border border-amber-200 dark:border-amber-700">
               <img src="/images/icons/star.png" alt="" className="w-5 h-5" />
-              <span className="font-semibold text-amber-700">
+              <span className="font-semibold text-amber-700 dark:text-amber-300">
                 {loadingStars ? "..." : userStars}
               </span>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 dark:text-gray-400">
               {t("step")} {step} {t("of")} 2
             </div>
           </div>
@@ -392,46 +392,46 @@ function CreatePageContent() {
                     <span className="text-4xl">👋</span>
                   </div>
                 </div>
-                <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                   {t("welcomeTitle")}
                 </h1>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 dark:text-gray-400 text-lg">
                   {t("welcomeSubtitle")}
                 </p>
               </div>
 
               {/* Content */}
-              <div className="space-y-8 text-gray-700">
-                <p className="text-center text-gray-600">
+              <div className="space-y-8 text-gray-700 dark:text-gray-300">
+                <p className="text-center text-gray-600 dark:text-gray-400">
                   {t("welcomeText")}
                 </p>
 
                 {/* 3 Golden Rules */}
                 <div>
-                  <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
                     <span>🚀</span> {t("goldenRulesTitle")}
                   </h2>
 
                   <div className="space-y-4">
                     {/* Rule 1 */}
-                    <div className="bg-purple-50 rounded-2xl p-5 border border-purple-100">
-                      <h3 className="font-bold text-purple-800 mb-2 flex items-center gap-2">
+                    <div className="bg-purple-50 dark:bg-purple-900/30 rounded-2xl p-5 border border-purple-100 dark:border-purple-800">
+                      <h3 className="font-bold text-purple-800 dark:text-purple-300 mb-2 flex items-center gap-2">
                         <span>🌙</span> 1. {t("rule1Title")}
                       </h3>
-                      <p className="text-purple-700">
+                      <p className="text-purple-700 dark:text-purple-400">
                         {t("rule1Text")}
                       </p>
                     </div>
 
                     {/* Rule 2 */}
-                    <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
-                      <h3 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                    <div className="bg-blue-50 dark:bg-blue-900/30 rounded-2xl p-5 border border-blue-100 dark:border-blue-800">
+                      <h3 className="font-bold text-blue-800 dark:text-blue-300 mb-2 flex items-center gap-2">
                         <span>🐢</span> 2. {t("rule2Title")}
                       </h3>
-                      <p className="text-blue-700 mb-2">
+                      <p className="text-blue-700 dark:text-blue-400 mb-2">
                         {t("rule2Text")}
                       </p>
-                      <ul className="text-blue-600 text-sm space-y-1 ml-4">
+                      <ul className="text-blue-600 dark:text-blue-400 text-sm space-y-1 ml-4">
                         <li>• {t("rule2Point1")}</li>
                         <li>• {t("rule2Point2")}</li>
                         <li>• {t("rule2Point3")}</li>
@@ -439,14 +439,14 @@ function CreatePageContent() {
                     </div>
 
                     {/* Rule 3 */}
-                    <div className="bg-green-50 rounded-2xl p-5 border border-green-100">
-                      <h3 className="font-bold text-green-800 mb-2 flex items-center gap-2">
+                    <div className="bg-green-50 dark:bg-green-900/30 rounded-2xl p-5 border border-green-100 dark:border-green-800">
+                      <h3 className="font-bold text-green-800 dark:text-green-300 mb-2 flex items-center gap-2">
                         <span>🗣</span> 3. {t("rule3Title")}
                       </h3>
-                      <p className="text-green-700 mb-2">
+                      <p className="text-green-700 dark:text-green-400 mb-2">
                         {t("rule3Text")}
                       </p>
-                      <div className="bg-green-100/50 rounded-xl p-3 text-sm text-green-700 italic">
+                      <div className="bg-green-100/50 dark:bg-green-800/30 rounded-xl p-3 text-sm text-green-700 dark:text-green-400 italic">
                         {t("rule3Note")}
                       </div>
                     </div>
@@ -455,49 +455,49 @@ function CreatePageContent() {
 
                 {/* What Each Lesson Contains */}
                 <div>
-                  <h2 className="font-display text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
                     <span>🧩</span> {t("lessonContentsTitle")}
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-3">
-                    <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
-                      <div className="font-bold text-amber-800 mb-1">1. {t("parentIntro")}</div>
-                      <p className="text-amber-700 text-sm">{t("parentIntroDesc")}</p>
+                    <div className="bg-amber-50 dark:bg-amber-900/30 rounded-xl p-4 border border-amber-100 dark:border-amber-800">
+                      <div className="font-bold text-amber-800 dark:text-amber-300 mb-1">1. {t("parentIntro")}</div>
+                      <p className="text-amber-700 dark:text-amber-400 text-sm">{t("parentIntroDesc")}</p>
                     </div>
-                    <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
-                      <div className="font-bold text-pink-800 mb-1">2. {t("audioStory")}</div>
-                      <p className="text-pink-700 text-sm">{t("audioStoryDesc")}</p>
+                    <div className="bg-pink-50 dark:bg-pink-900/30 rounded-xl p-4 border border-pink-100 dark:border-pink-800">
+                      <div className="font-bold text-pink-800 dark:text-pink-300 mb-1">2. {t("audioStory")}</div>
+                      <p className="text-pink-700 dark:text-pink-400 text-sm">{t("audioStoryDesc")}</p>
                     </div>
-                    <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
-                      <div className="font-bold text-cyan-800 mb-1">3. {t("discussionQuestions")}</div>
-                      <p className="text-cyan-700 text-sm">{t("discussionQuestionsDesc")}</p>
+                    <div className="bg-cyan-50 dark:bg-cyan-900/30 rounded-xl p-4 border border-cyan-100 dark:border-cyan-800">
+                      <div className="font-bold text-cyan-800 dark:text-cyan-300 mb-1">3. {t("discussionQuestions")}</div>
+                      <p className="text-cyan-700 dark:text-cyan-400 text-sm">{t("discussionQuestionsDesc")}</p>
                     </div>
-                    <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
-                      <div className="font-bold text-violet-800 mb-1">4. {t("weeklyCartoon")}</div>
-                      <p className="text-violet-700 text-sm">{t("weeklyCartoonDesc")}</p>
+                    <div className="bg-violet-50 dark:bg-violet-900/30 rounded-xl p-4 border border-violet-100 dark:border-violet-800">
+                      <div className="font-bold text-violet-800 dark:text-violet-300 mb-1">4. {t("weeklyCartoon")}</div>
+                      <p className="text-violet-700 dark:text-violet-400 text-sm">{t("weeklyCartoonDesc")}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Why Kids Love It */}
-                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 border border-yellow-200">
-                  <h2 className="font-display text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-yellow-200 dark:border-yellow-800">
+                  <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
                     <span>✨</span> {t("whyLoveTitle")}
                   </h2>
-                  <p className="text-gray-700 mb-3">
+                  <p className="text-gray-700 dark:text-gray-300 mb-3">
                     {t("whyLoveSecret")}
                   </p>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-400">
                     {t("whyLoveText")}
                   </p>
-                  <p className="text-orange-600 font-medium mt-3">
+                  <p className="text-orange-600 dark:text-orange-400 font-medium mt-3">
                     {t("whyLoveEngagement")}
                   </p>
                 </div>
 
                 {/* Ready Section */}
                 <div className="text-center pt-4">
-                  <p className="text-gray-600 mb-2">{t("readyTitle")}</p>
-                  <p className="text-gray-500 mb-6">
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">{t("readyTitle")}</p>
+                  <p className="text-gray-500 dark:text-gray-500 mb-6">
                     {t("readyText")}
                   </p>
 
@@ -519,7 +519,7 @@ function CreatePageContent() {
 
             {/* Back to dashboard link */}
             <div className="mt-6 text-center">
-              <Link href="/dashboard" className="text-gray-500 hover:text-gray-700 text-sm">
+              <Link href="/dashboard" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
                 {t("backToDashboard")}
               </Link>
             </div>
@@ -533,10 +533,10 @@ function CreatePageContent() {
               <div className="flex justify-center mb-4">
                 <img src="/images/icons/heart.png" alt="" className="w-14 h-14" />
               </div>
-              <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 {t("childInfoTitle")}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 {t("childInfoSubtitle")}
               </p>
             </div>
@@ -544,22 +544,22 @@ function CreatePageContent() {
             {/* Story Preview */}
             {loadingStory ? (
               <div className="glass-card p-6 mb-6 text-center">
-                <div className="animate-spin w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
+                <div className="animate-spin w-6 h-6 border-2 border-blue-500 dark:border-blue-400 border-t-transparent rounded-full mx-auto"></div>
               </div>
             ) : programStory && (
-              <div className="glass-card p-6 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
+              <div className="glass-card p-6 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 border border-purple-200 dark:border-purple-800">
                 <div className="flex items-center gap-3 mb-2">
                   <img src="/images/icons/book.png" alt="" className="w-8 h-8" />
-                  <h3 className="font-bold text-gray-900">{programStory.title}</h3>
+                  <h3 className="font-bold text-gray-900 dark:text-gray-100">{programStory.title}</h3>
                 </div>
-                <p className="text-sm text-gray-600 italic">{programStory.plot}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 italic">{programStory.plot}</p>
               </div>
             )}
 
             <div className="glass-card-strong p-8 space-y-6">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t("childNameLabel")}
                 </label>
                 <input
@@ -567,13 +567,13 @@ function CreatePageContent() {
                   value={childInfo.name}
                   onChange={(e) => setChildInfo({ ...childInfo, name: e.target.value })}
                   placeholder={t("namePlaceholder")}
-                  className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none bg-white/80"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 dark:border-sky-800 focus:border-sky-400 dark:focus:border-sky-600 focus:outline-none bg-white/80 dark:bg-gray-800/80 dark:text-gray-100"
                 />
               </div>
 
               {/* Age */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t("childAgeLabel")}
                 </label>
                 <div className="flex gap-2 flex-wrap">
@@ -584,7 +584,7 @@ function CreatePageContent() {
                       className={`px-4 py-2 rounded-full font-medium transition-all ${
                         childInfo.age === age
                           ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
-                          : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
+                          : "bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 border border-sky-200 dark:border-sky-800"
                       }`}
                     >
                       {age}
@@ -595,7 +595,7 @@ function CreatePageContent() {
 
               {/* Gender */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t("childGenderLabel")}
                 </label>
                 <div className="flex gap-4">
@@ -604,7 +604,7 @@ function CreatePageContent() {
                     className={`flex-1 py-4 rounded-2xl font-medium transition-all flex items-center justify-center gap-2 ${
                       childInfo.gender === "boy"
                         ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
-                        : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
+                        : "bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 border border-sky-200 dark:border-sky-800"
                     }`}
                   >
                     <span className="text-2xl">👦</span>
@@ -615,7 +615,7 @@ function CreatePageContent() {
                     className={`flex-1 py-4 rounded-2xl font-medium transition-all flex items-center justify-center gap-2 ${
                       childInfo.gender === "girl"
                         ? "bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg"
-                        : "bg-white/80 text-gray-600 hover:bg-white border border-sky-200"
+                        : "bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 border border-sky-200 dark:border-sky-800"
                     }`}
                   >
                     <span className="text-2xl">👧</span>
@@ -626,7 +626,7 @@ function CreatePageContent() {
 
               {/* Interests */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t("interestsLabel")}
                 </label>
                 <textarea
@@ -634,7 +634,7 @@ function CreatePageContent() {
                   onChange={(e) => setChildInfo({ ...childInfo, interests: e.target.value })}
                   placeholder={t("interestsPlaceholder")}
                   rows={3}
-                  className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none bg-white/80 resize-none"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-sky-200 dark:border-sky-800 focus:border-sky-400 dark:focus:border-sky-600 focus:outline-none bg-white/80 dark:bg-gray-800/80 dark:text-gray-100 resize-none"
                 />
               </div>
             </div>
@@ -642,7 +642,7 @@ function CreatePageContent() {
             <div className="mt-8 flex justify-between">
               <Link
                 href="/dashboard"
-                className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
+                className="btn-secondary px-6 py-3 text-gray-700 dark:text-gray-300 font-medium inline-flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -670,10 +670,10 @@ function CreatePageContent() {
           <div className="max-w-3xl mx-auto animate-fade-in-up">
             <div className="text-center mb-8">
               <div className="mb-4 flex justify-center"><img src="/images/icons/book.png" alt="" className="w-14 h-14" /></div>
-              <h1 className="font-display text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 {programStory?.title || t("yourStory")}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 {t("personalizedFor")} {childInfo.name}
               </p>
             </div>
@@ -681,23 +681,23 @@ function CreatePageContent() {
             <div className="glass-card-strong p-8">
               {/* Parent Introduction - shown before story */}
               {programStory?.parent_intro && (
-                <div className="mb-6 glass-card p-6 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
+                <div className="mb-6 glass-card p-6 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 border border-amber-200 dark:border-amber-800">
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">ℹ️</span>
-                    <h3 className="font-bold text-lg text-amber-800">{t("forParents")}</h3>
+                    <h3 className="font-bold text-lg text-amber-800 dark:text-amber-300">{t("forParents")}</h3>
                   </div>
-                  <div className="text-amber-900 space-y-3">
+                  <div className="text-amber-900 dark:text-amber-200 space-y-3">
                     {programStory.parent_intro.split('**Tip before listening:**').map((part, index) => (
                       index === 0 ? (
                         <div key={index} className="whitespace-pre-line text-sm leading-relaxed">
                           {part.trim()}
                         </div>
                       ) : (
-                        <div key={index} className="bg-amber-100/70 rounded-xl p-4 border border-amber-200">
-                          <p className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                        <div key={index} className="bg-amber-100/70 dark:bg-amber-800/30 rounded-xl p-4 border border-amber-200 dark:border-amber-700">
+                          <p className="font-semibold text-amber-800 dark:text-amber-300 mb-2 flex items-center gap-2">
                             <span>💡</span> {t("tipBeforeListening")}
                           </p>
-                          <p className="text-amber-700 italic">{part.trim()}</p>
+                          <p className="text-amber-700 dark:text-amber-400 italic">{part.trim()}</p>
                         </div>
                       )
                     ))}
@@ -708,13 +708,13 @@ function CreatePageContent() {
               {/* Story Text */}
               <div className="glass-card p-6 mb-6 max-h-[60vh] overflow-y-auto">
                 {personalizedText ? (
-                  <p className="text-gray-800 leading-relaxed whitespace-pre-line text-lg">
+                  <p className="text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line text-lg">
                     {personalizedText}
                   </p>
                 ) : (
                   <div className="text-center py-8">
-                    <p className="text-amber-600 mb-2">{t("fullTextNotAvailable")}</p>
-                    <p className="text-gray-500 text-sm">
+                    <p className="text-amber-600 dark:text-amber-400 mb-2">{t("fullTextNotAvailable")}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">
                       {t("storyPreview")} {programStory?.plot}
                     </p>
                   </div>
@@ -724,26 +724,26 @@ function CreatePageContent() {
               {/* Parent Info Section */}
               {programStory && (
                 <details className="mb-6">
-                  <summary className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-700">
+                  <summary className="cursor-pointer text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
                     {t("forParentsGoals")}
                   </summary>
                   <div className="mt-4 space-y-3 text-sm">
                     {programStory.therapeutic_goal && (
-                      <div className="bg-purple-50 rounded-xl p-4">
-                        <p className="font-medium text-purple-800 mb-1">{t("therapeuticGoal")}</p>
-                        <p className="text-purple-700">{programStory.therapeutic_goal}</p>
+                      <div className="bg-purple-50 dark:bg-purple-900/30 rounded-xl p-4">
+                        <p className="font-medium text-purple-800 dark:text-purple-300 mb-1">{t("therapeuticGoal")}</p>
+                        <p className="text-purple-700 dark:text-purple-400">{programStory.therapeutic_goal}</p>
                       </div>
                     )}
                     {programStory.methodology && (
-                      <div className="bg-blue-50 rounded-xl p-4">
-                        <p className="font-medium text-blue-800 mb-1">{t("methodology")}</p>
-                        <p className="text-blue-700">{programStory.methodology}</p>
+                      <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-4">
+                        <p className="font-medium text-blue-800 dark:text-blue-300 mb-1">{t("methodology")}</p>
+                        <p className="text-blue-700 dark:text-blue-400">{programStory.methodology}</p>
                       </div>
                     )}
                     {programStory.why_important && (
-                      <div className="bg-green-50 rounded-xl p-4">
-                        <p className="font-medium text-green-800 mb-1">{t("whyMatters")}</p>
-                        <p className="text-green-700">{programStory.why_important}</p>
+                      <div className="bg-green-50 dark:bg-green-900/30 rounded-xl p-4">
+                        <p className="font-medium text-green-800 dark:text-green-300 mb-1">{t("whyMatters")}</p>
+                        <p className="text-green-700 dark:text-green-400">{programStory.why_important}</p>
                       </div>
                     )}
                   </div>
@@ -754,8 +754,8 @@ function CreatePageContent() {
               <div className="flex flex-col gap-4">
                 {/* Generation Status */}
                 {generationStatus && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
-                    <div className="flex items-center justify-center gap-2 text-blue-700">
+                  <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4 text-center">
+                    <div className="flex items-center justify-center gap-2 text-blue-700 dark:text-blue-300">
                       <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                       <span>{t("generatingAI")}</span>
                     </div>
@@ -769,7 +769,7 @@ function CreatePageContent() {
                     disabled={isNavigating || isGeneratingAudio}
                     className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
                       isNavigating || isGeneratingAudio
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        ? "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                         : "bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-lg hover:opacity-90"
                     }`}
                   >
@@ -795,7 +795,7 @@ function CreatePageContent() {
                     disabled={isGeneratingAudio || isNavigating || !personalizedText}
                     className={`flex-1 py-4 rounded-2xl font-semibold text-center transition-all inline-flex flex-col items-center justify-center gap-1 ${
                       isGeneratingAudio || isNavigating || !personalizedText
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        ? "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                         : "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg hover:opacity-90"
                     }`}
                   >
@@ -820,13 +820,13 @@ function CreatePageContent() {
 
                 {/* Not enough stars warning */}
                 {notEnoughStars && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
-                    <p className="text-amber-800 font-medium mb-2">
+                  <div className="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-center">
+                    <p className="text-amber-800 dark:text-amber-300 font-medium mb-2">
                       {t("notEnoughStars")} {userStars}{t("need")} {STAR_COST_AUDIO}.
                     </p>
                     <a
                       href="/#pricing"
-                      className="text-amber-600 underline hover:text-amber-700"
+                      className="text-amber-600 dark:text-amber-400 underline hover:text-amber-700 dark:hover:text-amber-300"
                     >
                       {t("getMoreStars")}
                     </a>
@@ -841,7 +841,7 @@ function CreatePageContent() {
               {skippedStep1 ? (
                 <Link
                   href="/dashboard"
-                  className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
+                  className="btn-secondary px-6 py-3 text-gray-700 dark:text-gray-300 font-medium inline-flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -851,7 +851,7 @@ function CreatePageContent() {
               ) : (
                 <button
                   onClick={() => setStep(1)}
-                  className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
+                  className="btn-secondary px-6 py-3 text-gray-700 dark:text-gray-300 font-medium inline-flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -861,7 +861,7 @@ function CreatePageContent() {
               )}
               <Link
                 href="/dashboard"
-                className="btn-secondary px-6 py-3 text-gray-700 font-medium inline-flex items-center gap-2"
+                className="btn-secondary px-6 py-3 text-gray-700 dark:text-gray-300 font-medium inline-flex items-center gap-2"
               >
                 <span>{t("backToDashboard")}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -481,18 +481,18 @@ export default function StoryPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
-        <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
+        <div className="animate-spin w-8 h-8 border-4 border-blue-500 dark:border-blue-400 border-t-transparent rounded-full"></div>
       </div>
     );
   }
 
   if (!story) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">{t("storyNotFound")}</p>
-          <Link href="/dashboard" className="text-blue-600 hover:underline">
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{t("storyNotFound")}</p>
+          <Link href="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline">
             {t("backToDashboard")}
           </Link>
         </div>
@@ -503,18 +503,18 @@ export default function StoryPage() {
   // Subscription required paywall
   if (hasSubscription === false) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
         <header className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
                 <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
               </div>
-              <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+              <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
             </Link>
             <Link
               href="/dashboard"
-              className="text-gray-600 hover:text-gray-800 transition-colors"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
             >
               {t("backToDashboard")}
             </Link>
@@ -527,10 +527,10 @@ export default function StoryPage() {
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-6">
                 <img src="/images/icons/crown.png" alt="" className="w-12 h-12" />
               </div>
-              <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
+              <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {t("subscriptionRequired")}
               </h1>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
                 {t("subscriptionRequiredText")}
               </p>
               <Link
@@ -541,7 +541,7 @@ export default function StoryPage() {
               </Link>
               <Link
                 href="/dashboard"
-                className="block text-gray-500 hover:text-gray-700 text-sm"
+                className="block text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm"
               >
                 {t("backToDashboard")}
               </Link>
@@ -555,18 +555,18 @@ export default function StoryPage() {
   // Story locked - not yet unlocked based on progress
   if (isStoryUnlocked === false) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
         <header className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
                 <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
               </div>
-              <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+              <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
             </Link>
             <Link
               href="/dashboard"
-              className="text-gray-600 hover:text-gray-800 transition-colors"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
             >
               {t("backToDashboard")}
             </Link>
@@ -576,13 +576,13 @@ export default function StoryPage() {
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-md mx-auto text-center">
             <div className="glass-card-strong p-8">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 flex items-center justify-center mx-auto mb-6">
                 <img src="/images/icons/crown.png" alt="" className="w-12 h-12 opacity-50" />
               </div>
-              <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
+              <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {t("storyLocked")}
               </h1>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
                 {t("storyLockedText")}
               </p>
               <Link
@@ -599,7 +599,7 @@ export default function StoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 animate-fade-in-up">
         <div className="flex items-center justify-between">
@@ -607,11 +607,11 @@ export default function StoryPage() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
               <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5" />
             </div>
-            <span className="font-display font-bold text-xl text-gray-800">FairyTaleAI</span>
+            <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
           >
             {t("backToDashboard")}
           </Link>
@@ -623,7 +623,7 @@ export default function StoryPage() {
         <div className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           {/* Breadcrumb */}
           {block && month && week && (
-            <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
+            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-6 flex-wrap">
               <span className={`px-2 py-1 rounded-full bg-gradient-to-r ${block.color} text-white text-xs`}>
                 {block.icon} {t("block")} {Math.ceil(month.order_num / 3)}
               </span>
@@ -632,29 +632,29 @@ export default function StoryPage() {
               <span>→</span>
               <span>{t("week")} {week.order_num}</span>
               <span>→</span>
-              <span className="font-medium text-gray-700">{t("day")} {story.day_in_week}</span>
+              <span className="font-medium text-gray-700 dark:text-gray-300">{t("day")} {story.day_in_week}</span>
             </div>
           )}
 
           {/* Progress Steps */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-              currentStep === "story" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
+              currentStep === "story" ? "bg-blue-500 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
             }`}>
               <img src="/images/icons/book.png" alt="" className="w-4 h-4" />
               <span className="text-sm font-medium">{t("story")}</span>
             </div>
-            <div className="w-8 h-0.5 bg-gray-300"></div>
+            <div className="w-8 h-0.5 bg-gray-300 dark:bg-gray-600"></div>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
               currentStep === "questions" ? "bg-blue-500 text-white" :
-              currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 text-gray-600"
+              currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
             }`}>
               <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
               <span className="text-sm font-medium">{t("questions")}</span>
             </div>
-            <div className="w-8 h-0.5 bg-gray-300"></div>
+            <div className="w-8 h-0.5 bg-gray-300 dark:bg-gray-600"></div>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-              currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 text-gray-600"
+              currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
             }`}>
               <span>✓</span>
               <span className="text-sm font-medium">{t("done")}</span>
@@ -669,22 +669,22 @@ export default function StoryPage() {
                 <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${block?.color || "from-blue-400 to-blue-600"} flex items-center justify-center mx-auto mb-4 shadow-lg`}>
                   <img src="/images/icons/book.png" alt="" className="w-12 h-12" />
                 </div>
-                <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                   {story.title}
                 </h1>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 dark:text-gray-400 text-sm">
                   {t("day")} {story.day_in_week} {t("of")} {t("week")} {week?.order_num}
                 </p>
               </div>
 
               {/* Audio Player - AI Voice with hidden background music, or just Background Music */}
               {storyMode === "ai-voice" && aiAudioBase64 ? (
-                <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
+                <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 border border-purple-200 dark:border-purple-800">
                   <div className="flex items-center gap-2 mb-3">
                     <img src="/images/icons/microphone.png" alt="" className="w-5 h-5" />
-                    <span className="text-sm font-medium text-purple-800">{t("aiNarration")}</span>
+                    <span className="text-sm font-medium text-purple-800 dark:text-purple-300">{t("aiNarration")}</span>
                     {musicUrl && (
-                      <span className="text-xs text-purple-500 ml-auto">{t("plusBackgroundMusic")}</span>
+                      <span className="text-xs text-purple-500 dark:text-purple-400 ml-auto">{t("plusBackgroundMusic")}</span>
                     )}
                   </div>
                   {/* AI Voice audio */}
@@ -746,7 +746,7 @@ export default function StoryPage() {
                       )}
                       {/* Progress bar */}
                       <div
-                        className="h-1.5 bg-purple-100 rounded-full overflow-hidden cursor-pointer"
+                        className="h-1.5 bg-purple-100 dark:bg-purple-800 rounded-full overflow-hidden cursor-pointer"
                         onClick={(e) => {
                           if (aiAudioRef.current && aiAudioDuration) {
                             const rect = e.currentTarget.getBoundingClientRect();
@@ -761,7 +761,7 @@ export default function StoryPage() {
                           style={{ width: aiAudioDuration ? `${(aiAudioProgress / aiAudioDuration) * 100}%` : "0%" }}
                         />
                       </div>
-                      <div className="flex justify-between text-xs text-purple-600 mt-1">
+                      <div className="flex justify-between text-xs text-purple-600 dark:text-purple-400 mt-1">
                         <span>{formatTime(aiAudioProgress)}</span>
                         <span>{formatTime(aiAudioDuration)}</span>
                       </div>
@@ -775,10 +775,10 @@ export default function StoryPage() {
                   `}</style>
                 </div>
               ) : (
-                <div className="glass-card p-4 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
+                <div className="glass-card p-4 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border border-green-200 dark:border-green-800">
                   <div className="flex items-center gap-2 mb-3">
                     <img src="/images/icons/moon.png" alt="" className="w-5 h-5" />
-                    <span className="text-sm font-medium text-green-800">
+                    <span className="text-sm font-medium text-green-800 dark:text-green-300">
                       {musicUrl ? t("generatedBackgroundMusic") : t("backgroundMusic")}
                     </span>
                   </div>
@@ -832,7 +832,7 @@ export default function StoryPage() {
                       )}
                       {/* Progress bar */}
                       <div
-                        className="h-1.5 bg-green-100 rounded-full overflow-hidden cursor-pointer"
+                        className="h-1.5 bg-green-100 dark:bg-green-800 rounded-full overflow-hidden cursor-pointer"
                         onClick={(e) => {
                           if (musicRef.current && musicDuration) {
                             const rect = e.currentTarget.getBoundingClientRect();
@@ -847,7 +847,7 @@ export default function StoryPage() {
                           style={{ width: musicDuration ? `${(musicProgress / musicDuration) * 100}%` : "0%" }}
                         />
                       </div>
-                      <div className="flex justify-between text-xs text-green-600 mt-1">
+                      <div className="flex justify-between text-xs text-green-600 dark:text-green-400 mt-1">
                         <span>{formatTime(musicProgress)}</span>
                         <span>{formatTime(musicDuration)}</span>
                       </div>
@@ -865,18 +865,18 @@ export default function StoryPage() {
               {/* Story Content */}
               <div className="prose prose-lg max-w-none mb-6">
                 {personalizedText ? (
-                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
+                  <div className="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                     {personalizedText}
                   </div>
                 ) : story.full_text ? (
-                  <div className="bg-white/50 rounded-2xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
+                  <div className="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                     {story.full_text.replace(/\{childName\}/g, childName)}
                   </div>
                 ) : (
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
-                    <p className="text-amber-800 font-medium mb-3">{t("storyPreview")}</p>
-                    <p className="text-gray-700 italic">{story.plot}</p>
-                    <p className="text-amber-600 text-sm mt-4">
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl p-6 border border-amber-200 dark:border-amber-800">
+                    <p className="text-amber-800 dark:text-amber-300 font-medium mb-3">{t("storyPreview")}</p>
+                    <p className="text-gray-700 dark:text-gray-300 italic">{story.plot}</p>
+                    <p className="text-amber-600 dark:text-amber-400 text-sm mt-4">
                       {t("fullTextSoon")}
                     </p>
                   </div>
@@ -885,26 +885,26 @@ export default function StoryPage() {
 
               {/* Therapeutic Info (collapsible) */}
               <details className="mb-8">
-                <summary className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-700">
+                <summary className="cursor-pointer text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
                   {t("forParentsGoals")}
                 </summary>
                 <div className="mt-4 space-y-3 text-sm">
                   {story.therapeutic_goal && (
-                    <div className="bg-purple-50 rounded-xl p-4">
-                      <p className="font-medium text-purple-800 mb-1">{t("therapeuticGoal")}</p>
-                      <p className="text-purple-700">{story.therapeutic_goal}</p>
+                    <div className="bg-purple-50 dark:bg-purple-900/30 rounded-xl p-4">
+                      <p className="font-medium text-purple-800 dark:text-purple-300 mb-1">{t("therapeuticGoal")}</p>
+                      <p className="text-purple-700 dark:text-purple-400">{story.therapeutic_goal}</p>
                     </div>
                   )}
                   {story.methodology && (
-                    <div className="bg-blue-50 rounded-xl p-4">
-                      <p className="font-medium text-blue-800 mb-1">{t("methodology")}</p>
-                      <p className="text-blue-700">{story.methodology}</p>
+                    <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-4">
+                      <p className="font-medium text-blue-800 dark:text-blue-300 mb-1">{t("methodology")}</p>
+                      <p className="text-blue-700 dark:text-blue-400">{story.methodology}</p>
                     </div>
                   )}
                   {story.why_important && (
-                    <div className="bg-green-50 rounded-xl p-4">
-                      <p className="font-medium text-green-800 mb-1">{t("whyMatters")}</p>
-                      <p className="text-green-700">{story.why_important}</p>
+                    <div className="bg-green-50 dark:bg-green-900/30 rounded-xl p-4">
+                      <p className="font-medium text-green-800 dark:text-green-300 mb-1">{t("whyMatters")}</p>
+                      <p className="text-green-700 dark:text-green-400">{story.why_important}</p>
                     </div>
                   )}
                 </div>
@@ -925,7 +925,7 @@ export default function StoryPage() {
             <div className="glass-card-strong p-6 sm:p-8">
               {/* Question Progress */}
               <div className="flex items-center justify-between mb-6">
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500 dark:text-gray-400">
                   {t("question")} {currentQuestionIndex + 1} {t("of")} {questions.length}
                 </span>
                 <div className="flex gap-1">
@@ -937,7 +937,7 @@ export default function StoryPage() {
                           ? "bg-green-500"
                           : idx === currentQuestionIndex
                           ? "bg-blue-500"
-                          : "bg-gray-300"
+                          : "bg-gray-300 dark:bg-gray-600"
                       }`}
                     />
                   ))}
@@ -949,21 +949,21 @@ export default function StoryPage() {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-3xl">{getQuestionTypeIcon(questions[currentQuestionIndex].question_type)}</span>
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    questions[currentQuestionIndex].question_type === "understanding" ? "bg-purple-100 text-purple-700" :
-                    questions[currentQuestionIndex].question_type === "feeling" ? "bg-pink-100 text-pink-700" :
-                    "bg-green-100 text-green-700"
+                    questions[currentQuestionIndex].question_type === "understanding" ? "bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300" :
+                    questions[currentQuestionIndex].question_type === "feeling" ? "bg-pink-100 dark:bg-pink-900/50 text-pink-700 dark:text-pink-300" :
+                    "bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300"
                   }`}>
                     {getQuestionTypeLabel(questions[currentQuestionIndex].question_type)}
                   </span>
                 </div>
 
-                <h2 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+                <h2 className="font-display text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                   {questions[currentQuestionIndex].question_text}
                 </h2>
 
                 {questions[currentQuestionIndex].hint && (
-                  <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
-                    <p className="text-sm text-amber-800">
+                  <div className="bg-amber-50 dark:bg-amber-900/30 rounded-xl p-4 border border-amber-200 dark:border-amber-800">
+                    <p className="text-sm text-amber-800 dark:text-amber-300">
                       <span className="font-medium">{t("hintForParents")}</span> {questions[currentQuestionIndex].hint}
                     </p>
                   </div>
@@ -971,8 +971,8 @@ export default function StoryPage() {
               </div>
 
               {/* Discussion prompt */}
-              <div className="bg-blue-50 rounded-xl p-4 mb-6 text-center">
-                <p className="text-blue-800">
+              <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-4 mb-6 text-center">
+                <p className="text-blue-800 dark:text-blue-300">
                   {t("discussPrompt")}
                 </p>
               </div>
@@ -987,7 +987,7 @@ export default function StoryPage() {
                       setCurrentStep("story");
                     }
                   }}
-                  className="flex-1 py-3 rounded-xl border-2 border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   {t("back")}
                 </button>
@@ -1008,23 +1008,23 @@ export default function StoryPage() {
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto mb-6 shadow-lg">
                 <img src="/images/icons/trophy.png" alt="" className="w-14 h-14" />
               </div>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {t("storyCompleted")}
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 dark:text-gray-400 mb-8">
                 {t("completedText")}
               </p>
 
               {/* Completion Stats */}
-              <div className="bg-green-50 rounded-2xl p-6 mb-8">
+              <div className="bg-green-50 dark:bg-green-900/30 rounded-2xl p-6 mb-8">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-green-600">{questions.length}</p>
-                    <p className="text-sm text-green-700">{t("questionsDiscussed")}</p>
+                    <p className="text-3xl font-bold text-green-600 dark:text-green-400">{questions.length}</p>
+                    <p className="text-sm text-green-700 dark:text-green-400">{t("questionsDiscussed")}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-green-600">{t("day")} {story.day_in_week}</p>
-                    <p className="text-sm text-green-700">{t("completed")}</p>
+                    <p className="text-3xl font-bold text-green-600 dark:text-green-400">{t("day")} {story.day_in_week}</p>
+                    <p className="text-sm text-green-700 dark:text-green-400">{t("completed")}</p>
                   </div>
                 </div>
               </div>

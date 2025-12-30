@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function OfferPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-sky-50">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-sky-50 dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-[#242424]">
       {/* Header */}
       <header className="fixed top-4 left-4 right-4 z-50">
         <nav className="glass-card px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between max-w-6xl mx-auto">
@@ -12,9 +12,9 @@ export default function OfferPage() {
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg">
               <img src="/images/icons/magic-wand.png" alt="" className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <span className="font-display text-lg sm:text-xl font-bold text-gray-800">FairyTaleAI</span>
+            <span className="font-display text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
-          <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+          <Link href="/" className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
             ← Back to Home
           </Link>
         </nav>
@@ -23,11 +23,11 @@ export default function OfferPage() {
       {/* Content */}
       <main className="pt-28 pb-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Public Offer (User Agreement)</h1>
-          <h2 className="text-xl text-gray-700 mb-4">FairyTale AI Tech</h2>
-          <p className="text-gray-600 mb-8">Last Updated: December 25, 2025</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">Public Offer (User Agreement)</h1>
+          <h2 className="text-xl text-gray-700 dark:text-gray-300 mb-4">FairyTale AI Tech</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">Last Updated: December 25, 2025</p>
 
-          <div className="glass-card p-6 sm:p-8 space-y-6 text-gray-700">
+          <div className="glass-card p-6 sm:p-8 space-y-6 text-gray-700 dark:text-gray-300">
             <p>
               This document is an official proposal (public offer) from FairyTale AI Tech (hereinafter referred to as
               &quot;Service Provider&quot; or &quot;Platform&quot;), addressed to any individual (hereinafter referred to as &quot;User&quot;),
@@ -39,7 +39,7 @@ export default function OfferPage() {
             </p>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">1. Subject of the Agreement</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">1. Subject of the Agreement</h2>
               <p className="mb-2">
                 <strong>1.1.</strong> The Service Provider grants the User access to software (SaaS) powered by Artificial
                 Intelligence (AI) that enables the generation of personalized children&apos;s fairy tales, images, and audio
@@ -51,7 +51,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">2. Account and Security</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">2. Account and Security</h2>
               <p className="mb-2">
                 <strong>2.1.</strong> To use the service, the User must complete the registration process.
               </p>
@@ -66,7 +66,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">3. Subscription and Payment Terms</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">3. Subscription and Payment Terms</h2>
               <p className="mb-2">
                 <strong>3.1.</strong> Access to content generation is provided on a subscription basis or through one-time package purchases.
               </p>
@@ -89,7 +89,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">4. Intellectual Property</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">4. Intellectual Property</h2>
               <p className="mb-2">
                 <strong>4.1.</strong> <strong>Platform Content:</strong> The website design, logo, software code, and algorithms
                 belong to the Service Provider.
@@ -104,7 +104,7 @@ export default function OfferPage() {
                 <li>Commercial use of generated fairy tales (selling books, audio recordings) requires a separate agreement
                 or selection of an appropriate business tariff (if available).</li>
               </ul>
-              <p className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-800">
+              <p className="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-lg p-3 text-amber-800 dark:text-amber-300">
                 <strong>4.3. AI Disclaimer:</strong> The User acknowledges that the content is created by Artificial Intelligence.
                 Due to the specifics of copyright legislation in different countries, AI-generated content may not be protected
                 by copyright as a unique work.
@@ -112,7 +112,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">5. Disclaimer of Liability (Important Section)</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">5. Disclaimer of Liability (Important Section)</h2>
               <p className="mb-2">
                 <strong>5.1.</strong> <strong>Therapeutic Nature:</strong> Fairy tales generated by the Platform are for
                 entertainment and general developmental purposes. The Platform&apos;s services are not medical, psychological,
@@ -135,7 +135,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">6. User Content and Rules of Conduct</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">6. User Content and Rules of Conduct</h2>
               <p className="mb-2">
                 <strong>6.1.</strong> When entering data for fairy tale generation (names, plots), it is prohibited to use:
               </p>
@@ -149,7 +149,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">7. Term and Termination</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">7. Term and Termination</h2>
               <p className="mb-2">
                 <strong>7.1.</strong> The agreement comes into force upon acceptance of the Offer and remains valid until
                 the User&apos;s account is deleted by the User or the Service Provider.
@@ -160,7 +160,7 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">8. Dispute Resolution and Applicable Law</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">8. Dispute Resolution and Applicable Law</h2>
               <p className="mb-2">
                 <strong>8.1.</strong> All disputes are resolved through negotiations via support service.
               </p>
@@ -171,16 +171,16 @@ export default function OfferPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-3">9. Service Provider Details</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">9. Service Provider Details</h2>
               <ul className="list-none space-y-1">
                 <li><strong>Company Name:</strong> FairyTale AI Tech</li>
                 <li><strong>Contact Email:</strong>{" "}
-                  <a href="mailto:support@fairytaleaitech.com" className="text-blue-600 hover:underline">
+                  <a href="mailto:support@fairytaleaitech.com" className="text-blue-600 dark:text-blue-400 hover:underline">
                     support@fairytaleaitech.com
                   </a>
                 </li>
                 <li><strong>Website:</strong>{" "}
-                  <a href="https://www.fairytaleaitech.com/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.fairytaleaitech.com/" className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">
                     https://www.fairytaleaitech.com/
                   </a>
                 </li>
@@ -191,8 +191,8 @@ export default function OfferPage() {
       </main>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-gray-100">
-        <div className="max-w-6xl mx-auto text-center text-sm text-gray-500">
+      <footer className="py-8 px-4 border-t border-gray-100 dark:border-gray-800">
+        <div className="max-w-6xl mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
           <p>&copy; 2025 FairyTaleAI. All rights reserved.</p>
         </div>
       </footer>
