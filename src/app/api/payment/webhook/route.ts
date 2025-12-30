@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { trackPurchase, trackStartTrial, trackSubscribe } from "@/lib/facebook-capi";
 
 interface WebhookPayload {
   eventType:
@@ -311,6 +312,69 @@ async function handlePaymentSuccess(payload: WebhookPayload) {
     console.error("Error saving payment:", paymentError);
   } else {
     console.log(`Payment ${contractId} saved successfully`);
+  }
+
+  // Send Facebook Conversions API events
+  try {
+    const fbEventParams = {
+      email: buyer.email,
+      value: amount,
+      currency: currency,
+      orderId: contractId,
+      userId: userId || undefined,
+    };
+
+    // Track different events based on payment type
+    if (paymentResult.type === "free_trial") {
+      // Free trial started
+      await trackStartTrial({
+        email: buyer.email,
+        value: 0,
+        currency: currency,
+        userId: userId || undefined,
+      });
+      console.log(`Facebook CAPI: StartTrial sent for ${buyer.email}`);
+    } else if (paymentResult.type === "subscription") {
+      // Subscription purchase
+      const predictedLtv = paymentResult.subscriptionType === "yearly"
+        ? 189
+        : 29 * 6; // Assume 6 months average for monthly
+
+      await trackSubscribe({
+        email: buyer.email,
+        value: amount,
+        currency: currency,
+        predictedLtv: predictedLtv,
+        userId: userId || undefined,
+      });
+
+      // Also send Purchase event for revenue tracking
+      await trackPurchase({
+        ...fbEventParams,
+        contentName: paymentResult.subscriptionType === "yearly" ? "Yearly Subscription" : "Monthly Subscription",
+        contentCategory: "subscription",
+      });
+      console.log(`Facebook CAPI: Subscribe + Purchase sent for ${buyer.email}`);
+    } else if (paymentResult.type === "stars") {
+      // Star pack purchase
+      await trackPurchase({
+        ...fbEventParams,
+        contentName: `${paymentResult.stars} Stars Pack`,
+        contentCategory: "stars",
+      });
+      console.log(`Facebook CAPI: Purchase (stars) sent for ${buyer.email}`);
+    } else if (paymentResult.type === "cartoon") {
+      // Cartoon credits purchase
+      await trackPurchase({
+        ...fbEventParams,
+        contentName: `${paymentResult.cartoonCredits} Cartoon Credits`,
+        contentCategory: "cartoon",
+      });
+      console.log(`Facebook CAPI: Purchase (cartoon) sent for ${buyer.email}`);
+    }
+  } catch (fbError) {
+    // Don't fail the webhook if Facebook tracking fails
+    console.error("Facebook CAPI error (non-fatal):", fbError);
   }
 }
 

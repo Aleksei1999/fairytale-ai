@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { trackCompleteRegistration, trackLead } from "@/lib/facebook-pixel";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -124,6 +125,15 @@ export function AuthModal({ isOpen, onClose, onSuccess, redirectUrl, initialMode
       if (!response.ok) {
         setError(data.error || "Something went wrong");
       } else {
+        // Track registration event for Facebook Pixel
+        if (mode === "signup") {
+          trackCompleteRegistration();
+          trackLead({
+            contentName: "User Registration",
+            contentCategory: "signup",
+          });
+        }
+
         // Both signin and signup redirect to dashboard
         onClose();
         if (onSuccess) {
