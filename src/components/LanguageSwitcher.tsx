@@ -27,11 +27,11 @@ export function LanguageSwitcher() {
     setIsOpen(false);
   };
 
-  // Flag emojis
-  const flags: Record<Locale, string> = {
-    ru: '🇷🇺',
+  // Flag emojis (только активные локали)
+  const flags: Record<string, string> = {
     en: '🇬🇧',
-    kk: '🇰🇿',
+    // ru: '🇷🇺',  // отложено
+    // kk: '🇰🇿',  // отложено
   };
 
   return (
