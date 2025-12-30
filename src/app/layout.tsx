@@ -1,16 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito, Comfortaa } from "next/font/google";
+import { DM_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 
-const nunito = Nunito({
-  variable: "--font-nunito",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800"],
+// "Мягкая Экспертность" - Friendly Expert style
+// DM Sans for both headings and body - popular in Wellness/Health startups
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const comfortaa = Comfortaa({
-  variable: "--font-comfortaa",
-  subsets: ["latin", "cyrillic"],
+// Manrope as alternative body font (optional)
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
@@ -104,7 +107,7 @@ export default function RootLayout({
           </div>
         </noscript>
       </head>
-      <body className={`${nunito.variable} ${comfortaa.variable} font-sans antialiased`}>
+      <body className={`${dmSans.variable} ${manrope.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>
