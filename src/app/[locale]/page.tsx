@@ -692,7 +692,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              <AnimatedLine text={t("howItWorks.title1")} scrollTrigger /> <AnimatedLine text={t("howItWorks.title2")} className="gradient-text" scrollTrigger /> <AnimatedLine text={t("howItWorks.title3")} scrollTrigger />
+              <AnimatedLine text={t("howItWorks.title1")} scrollTrigger /> <AnimatedLine text={t("howItWorks.title2")} className="gradient-text" scrollTrigger />
             </h2>
             <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
               {t("howItWorks.subtitle")}
@@ -701,67 +701,71 @@ export default function Home() {
 
           <div className="max-w-5xl mx-auto">
             <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-              {/* Step 1: Create Avatar */}
+              {/* Step 1: Create Hero Profile */}
               <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300">
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   1
                 </div>
-                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 mt-3 sm:mt-4">🧑‍🎨</div>
+                {/* Image placeholder for step 1 */}
+                <div className="w-full h-32 sm:h-40 bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl mb-4 mt-4 flex items-center justify-center overflow-hidden">
+                  <img src="/images/steps/step1-profile.png" alt="Create Hero Profile" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = '<span class="text-5xl">👤</span>'; }} />
+                </div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {t("howItWorks.step1Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  {t.rich("howItWorks.step1Text", {
-                    highlight: (chunks) => <span className="font-semibold text-violet-600">{chunks}</span>
-                  })}
+                  {t("howItWorks.step1Text")}
                 </p>
               </div>
 
-              {/* Step 2: Get Weekly Story */}
+              {/* Step 2: Get Weekly Script */}
               <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300">
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   2
                 </div>
-                <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/book.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
+                {/* Image placeholder for step 2 */}
+                <div className="w-full h-32 sm:h-40 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl mb-4 mt-4 flex items-center justify-center overflow-hidden">
+                  <img src="/images/steps/step2-script.png" alt="Get Weekly Script" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = '<span class="text-5xl">📜</span>'; }} />
+                </div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {t("howItWorks.step2Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  {t.rich("howItWorks.step2Text", {
-                    highlight: (chunks) => <span className="font-semibold text-amber-600">{chunks}</span>
-                  })}
+                  {t("howItWorks.step2Text")}
                 </p>
               </div>
 
-              {/* Step 3: Choose Format */}
+              {/* Step 3: Read & Connect Screen-Free */}
               <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300">
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   3
                 </div>
-                <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/mask.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
+                {/* Image placeholder for step 3 */}
+                <div className="w-full h-32 sm:h-40 bg-gradient-to-br from-sky-100 to-blue-100 rounded-xl mb-4 mt-4 flex items-center justify-center overflow-hidden">
+                  <img src="/images/steps/step3-reading.png" alt="Read & Connect" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = '<span class="text-5xl">📖</span>'; }} />
+                </div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {t("howItWorks.step3Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  {t.rich("howItWorks.step3Text", {
-                    highlight: (chunks) => <span className="font-semibold text-sky-600">{chunks}</span>
-                  })}
+                  {t("howItWorks.step3Text")}
                 </p>
               </div>
 
-              {/* Step 4: Track Progress */}
+              {/* Step 4: Watch the Transformation */}
               <div className="glass-card-strong p-6 sm:p-8 relative group hover:shadow-xl transition-all duration-300 border-2 border-emerald-200">
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                   4
                 </div>
-                <div className="mb-3 sm:mb-4 mt-3 sm:mt-4"><img src="/images/icons/chart.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
+                {/* Image placeholder for step 4 */}
+                <div className="w-full h-32 sm:h-40 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl mb-4 mt-4 flex items-center justify-center overflow-hidden">
+                  <img src="/images/steps/step4-dashboard.png" alt="Watch Transformation" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = '<span class="text-5xl">📊</span>'; }} />
+                </div>
                 <h3 className="font-display text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {t("howItWorks.step4Title")}
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  {t.rich("howItWorks.step4Text", {
-                    highlight: (chunks) => <span className="font-semibold text-emerald-600">{chunks}</span>
-                  })}
+                  {t("howItWorks.step4Text")}
                 </p>
               </div>
             </div>
