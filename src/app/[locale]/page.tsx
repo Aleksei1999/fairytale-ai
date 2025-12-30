@@ -1712,8 +1712,87 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== BLOCK 6: PRICING ===== */}
+      {/* ===== BLOCK 6: HERO JOURNEY CTA ===== */}
       <section id="pricing" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
+        <div className="max-w-4xl mx-auto">
+          {/* Main CTA Card */}
+          <div className="glass-card-strong p-8 sm:p-12 text-center relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-5">
+              <div className="absolute top-10 left-10 text-8xl">✨</div>
+              <div className="absolute bottom-10 right-10 text-8xl">🌟</div>
+            </div>
+
+            <div className="relative z-10">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                {t.rich("finalCta.title", {
+                  highlight: (chunks) => <span className="gradient-text">{chunks}</span>
+                })}
+              </h2>
+              <p className="text-gray-600 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+                {t("finalCta.subtitle")}
+              </p>
+
+              {/* Feature Grid */}
+              <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
+                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">🪄</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature1Title")}</h4>
+                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature1Text")}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">📚</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature2Title")}</h4>
+                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature2Text")}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">📊</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature3Title")}</h4>
+                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature3Text")}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">🎁</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature4Title")}</h4>
+                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature4Text")}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <MagneticButton
+                onClick={() => openPaymentModal("week")}
+                className="btn-glow px-8 sm:px-12 py-4 text-white font-bold text-base sm:text-lg inline-block"
+                strength={0.3}
+              >
+                {t("finalCta.button")}
+              </MagneticButton>
+
+              {/* Disclaimer */}
+              <p className="text-xs text-gray-500 mt-4">
+                {t("finalCta.disclaimer")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== OLD BLOCK 6: PRICING (SAVED) =====
+      <section id="pricing-old" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             <AnimatedWords text={t("pricing.title1")} scrollTrigger /> <AnimatedText text={t("pricing.title2")} className="gradient-text" scrollTrigger />
@@ -1724,7 +1803,6 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {/* FREE TRIAL - Test Drive */}
           <div className="glass-card p-5 sm:p-6">
             <div className="text-center mb-4 sm:mb-6">
               <div className="mb-2"><img src="/images/icons/magic-wand.png" alt="" className="w-10 h-10 mx-auto" /></div>
@@ -1774,7 +1852,6 @@ export default function Home() {
             </MagneticButton>
           </div>
 
-          {/* MONTHLY - Basic */}
           <div className="glass-card-strong p-5 sm:p-6 relative border-2 border-sky-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
               {t("pricing.monthly.popular")}
@@ -1828,7 +1905,6 @@ export default function Home() {
             <p className="text-center text-xs text-gray-400 mt-2">{t("pricing.monthly.firstMonth")}</p>
           </div>
 
-          {/* YEARLY LEGEND */}
           <div className="glass-card-strong p-5 sm:p-6 relative bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
               {t("pricing.yearly.bestValue")}
@@ -1888,11 +1964,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Price comparison */}
         <p className="text-center text-gray-500 text-xs sm:text-sm mt-6 sm:mt-8">
           All plans include full methodology based on SEL, CBT & Positive Discipline
         </p>
       </section>
+      ===== END OLD PRICING BLOCK ===== */}
 
       {/* ===== BLOCK 7: FAQ ===== */}
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
