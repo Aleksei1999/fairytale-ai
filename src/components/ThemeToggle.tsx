@@ -42,7 +42,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all text-sm group"
+      className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all text-sm group text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
       aria-label={isDark ? "Switch to Day mode" : "Switch to Night mode"}
       title={isDark ? "Switch to Day mode" : "Switch to Night mode"}
     >
