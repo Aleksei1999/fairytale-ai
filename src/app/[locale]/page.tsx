@@ -1545,11 +1545,12 @@ export default function Home() {
               {/* Left: Illustration and context */}
               <div className="relative">
                 {/* Story illustration */}
-                <div className="aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-indigo-100 via-purple-50 to-sky-100 flex items-center justify-center overflow-hidden mb-4">
-                  <div className="text-center p-4 sm:p-6">
-                    <div className="mb-3 sm:mb-4"><img src="/images/icons/sparkle.png" alt="" className="w-16 h-16 sm:w-24 sm:h-24 mx-auto" /></div>
-                    <p className="text-sm sm:text-base font-semibold text-gray-700">{t("demo.storyTitle")}</p>
-                  </div>
+                <div className="aspect-square rounded-2xl sm:rounded-3xl overflow-hidden mb-4">
+                  <img
+                    src="/images/hero-magic.png"
+                    alt="Child experiencing the magic of storytelling"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <p className="text-center text-xs text-gray-400 mb-4">
                   {t("demo.illustrationNote")}
