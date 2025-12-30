@@ -1751,11 +1751,11 @@ export default function Home() {
       {/* ===== BLOCK 6: HERO JOURNEY CTA ===== */}
       <section id="pricing" className="relative z-10 py-12 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto pt-6">
             {/* Main CTA Card - styled as premium pricing card */}
-            <div className="relative rounded-3xl p-8 sm:p-12 text-center overflow-hidden bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-900/40 dark:via-yellow-900/30 dark:to-orange-900/40 border-2 border-amber-400 dark:border-amber-500 shadow-2xl">
+            <div className="relative rounded-3xl p-8 sm:p-12 text-center bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-900/40 dark:via-yellow-900/30 dark:to-orange-900/40 border-2 border-amber-400 dark:border-amber-500 shadow-2xl">
               {/* Popular badge */}
-              <div className="absolute -top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg z-20">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg z-20">
                 🎁 7 Days FREE
               </div>
 
