@@ -671,15 +671,20 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center">
             {/* Main headline */}
             <div className="mb-8 sm:mb-12">
-              <div className="inline-block mb-4">
-                <span className="text-5xl sm:text-6xl md:text-7xl drop-shadow-lg">🏰</span>
+              <div className="w-full max-w-2xl mx-auto mb-6 sm:mb-8">
+                <div className="aspect-video rounded-2xl bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100 dark:from-purple-900/30 dark:via-blue-900/30 dark:to-indigo-900/30 border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center">
+                  <div className="text-center p-4">
+                    <span className="text-4xl sm:text-5xl mb-2 block">🖼️</span>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">Hero image placeholder</p>
+                  </div>
+                </div>
               </div>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
                 {t("solution.title")}
               </h2>
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
                 {t.rich("solution.subtitle", {
-                  highlight: (chunks) => <span className="font-bold text-blue-600">{chunks}</span>
+                  highlight: (chunks) => <span className="font-bold text-blue-600 dark:text-blue-400">{chunks}</span>
                 })}
               </p>
             </div>
@@ -689,8 +694,8 @@ export default function Home() {
               {/* Feature 1 */}
               <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 text-center">
                 <div className="mb-3 flex justify-center"><img src="/images/icons/book.png" alt="Book" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">{t("solution.feature1Title")}</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-2">{t("solution.feature1Title")}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   {t("solution.feature1Text")}
                 </p>
               </div>
@@ -698,10 +703,10 @@ export default function Home() {
               {/* Feature 2 */}
               <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 sm:mt-8 text-center">
                 <div className="mb-3 flex justify-center"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">{t("solution.feature2Title")}</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-2">{t("solution.feature2Title")}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   {t.rich("solution.feature2Text", {
-                    highlight: (chunks) => <span className="font-bold text-amber-600">{chunks}</span>
+                    highlight: (chunks) => <span className="font-bold text-amber-600 dark:text-amber-400">{chunks}</span>
                   })}
                 </p>
               </div>
@@ -709,8 +714,8 @@ export default function Home() {
               {/* Feature 3 */}
               <div className="glass-card p-5 sm:p-6 transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 text-center">
                 <div className="mb-3 flex justify-center"><img src="/images/icons/brain.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14" /></div>
-                <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2">{t("solution.feature3Title")}</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base sm:text-lg mb-2">{t("solution.feature3Title")}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   {t.rich("solution.feature3Text", {
                     highlight: (chunks) => <span className="font-semibold">{chunks}</span>
                   })}
@@ -972,18 +977,15 @@ export default function Home() {
 
                 {/* Visual representation */}
                 <div className="glass-card p-5 text-center">
-                  <div className="flex items-center justify-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-3xl shadow-md">
-                      👧
-                    </div>
-                    <div className="text-3xl text-amber-400">💛</div>
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-3xl shadow-md">
-                      👩
+                  <div className="aspect-video rounded-xl bg-gradient-to-br from-amber-100 via-orange-50 to-amber-100 dark:from-amber-900/30 dark:via-orange-900/20 dark:to-amber-900/30 border-2 border-dashed border-amber-300 dark:border-amber-700 flex items-center justify-center mb-4">
+                    <div className="text-center p-4">
+                      <span className="text-3xl sm:text-4xl mb-2 block">🖼️</span>
+                      <p className="text-amber-600 dark:text-amber-400 text-xs">Image placeholder</p>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                     {t.rich("partnership.friendshipNote", {
-                      highlight: (chunks) => <span className="text-amber-600 font-semibold">{chunks}</span>
+                      highlight: (chunks) => <span className="text-amber-600 dark:text-amber-400 font-semibold">{chunks}</span>
                     })}
                   </p>
                 </div>
@@ -1749,59 +1751,64 @@ export default function Home() {
       {/* ===== BLOCK 6: HERO JOURNEY CTA ===== */}
       <section id="pricing" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="max-w-4xl mx-auto">
-          {/* Main CTA Card */}
-          <div className="glass-card-strong p-8 sm:p-12 text-center relative overflow-hidden">
+          {/* Main CTA Card - styled as premium pricing card */}
+          <div className="glass-card-strong p-8 sm:p-12 text-center relative overflow-hidden border-2 border-amber-400 dark:border-amber-500 shadow-2xl shadow-amber-200/50 dark:shadow-amber-900/30">
+            {/* Popular badge */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+              🎁 7 Days FREE
+            </div>
+
             {/* Background decoration */}
             <div className="absolute top-0 left-0 w-full h-full opacity-5">
               <div className="absolute top-10 left-10 text-8xl">✨</div>
               <div className="absolute bottom-10 right-10 text-8xl">🌟</div>
             </div>
 
-            <div className="relative z-10">
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="relative z-10 mt-4">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {t.rich("finalCta.title", {
                   highlight: (chunks) => <span className="gradient-text">{chunks}</span>
                 })}
               </h2>
-              <p className="text-gray-600 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
                 {t("finalCta.subtitle")}
               </p>
 
               {/* Feature Grid */}
               <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
-                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">🪄</span>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature1Title")}</h4>
-                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature1Text")}</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature1Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature1Text")}</p>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">📚</span>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature2Title")}</h4>
-                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature2Text")}</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature2Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature2Text")}</p>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">📊</span>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature3Title")}</h4>
-                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature3Text")}</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature3Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature3Text")}</p>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white/60 rounded-2xl p-4 border border-white/80">
+                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">🎁</span>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{t("finalCta.feature4Title")}</h4>
-                      <p className="text-xs text-gray-600 mt-1">{t("finalCta.feature4Text")}</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature4Title")}</h4>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature4Text")}</p>
                     </div>
                   </div>
                 </div>
@@ -1817,7 +1824,7 @@ export default function Home() {
               </MagneticButton>
 
               {/* Disclaimer */}
-              <p className="text-xs text-gray-500 mt-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
                 {t("finalCta.disclaimer")}
               </p>
             </div>
