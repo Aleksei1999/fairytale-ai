@@ -1425,64 +1425,64 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="glass-card-strong p-6 sm:p-10 md:p-12">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
                 {t.rich("transform.title", {
                   highlight: (chunks) => <span className="gradient-text">{chunks}</span>
                 })}
               </h2>
-              <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
                 {t("transform.subtitle")}
               </p>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10">
               {/* Benefit 1 */}
-              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100">
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border border-green-100 dark:border-green-800">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
                   🌿
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit1Title")}</h4>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                  <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1 text-sm sm:text-base">{t("transform.benefit1Title")}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {t("transform.benefit1Text")}
                   </p>
                 </div>
               </div>
 
               {/* Benefit 2 */}
-              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100">
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 border border-blue-100 dark:border-blue-800">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
                   🌊
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit2Title")}</h4>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                  <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1 text-sm sm:text-base">{t("transform.benefit2Title")}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {t("transform.benefit2Text")}
                   </p>
                 </div>
               </div>
 
               {/* Benefit 3 */}
-              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-100">
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/30 dark:to-violet-900/30 border border-purple-100 dark:border-purple-800">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center text-2xl flex-shrink-0 shadow-lg">
                   🕊️
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit3Title")}</h4>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                  <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1 text-sm sm:text-base">{t("transform.benefit3Title")}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {t("transform.benefit3Text")}
                   </p>
                 </div>
               </div>
 
               {/* Benefit 4 */}
-              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-100">
+              <div className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-100 dark:border-amber-800">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center flex-shrink-0 shadow-lg">
                   <img src="/images/icons/rocket.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">{t("transform.benefit4Title")}</h4>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                  <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1 text-sm sm:text-base">{t("transform.benefit4Title")}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {t("transform.benefit4Text")}
                   </p>
                 </div>
@@ -1490,24 +1490,24 @@ export default function Home() {
             </div>
 
             {/* Stats bar */}
-            <div className="grid grid-cols-3 gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50">
+            <div className="grid grid-cols-3 gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50 dark:from-sky-900/30 dark:via-blue-900/30 dark:to-indigo-900/30">
               <div className="text-center">
                 <p className="text-2xl sm:text-4xl font-bold gradient-text">{t("transform.stat1Value")}</p>
-                <p className="text-xs sm:text-sm text-gray-600">{t("transform.stat1Label")}</p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{t("transform.stat1Label")}</p>
               </div>
-              <div className="text-center border-x border-gray-200">
+              <div className="text-center border-x border-gray-200 dark:border-gray-700">
                 <p className="text-2xl sm:text-4xl font-bold gradient-text">{t("transform.stat2Value")}</p>
-                <p className="text-xs sm:text-sm text-gray-600">{t("transform.stat2Label")}</p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{t("transform.stat2Label")}</p>
               </div>
               <div className="text-center">
                 <p className="text-2xl sm:text-4xl font-bold gradient-text">{t("transform.stat3Value")}</p>
-                <p className="text-xs sm:text-sm text-gray-600">{t("transform.stat3Label")}</p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{t("transform.stat3Label")}</p>
               </div>
             </div>
 
             {/* Final CTA within block */}
             <div className="mt-8 text-center">
-              <p className="text-gray-600 mb-4 text-sm sm:text-base">
+              <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm sm:text-base">
                 {t("transform.ctaText")}
               </p>
               <MagneticLink
