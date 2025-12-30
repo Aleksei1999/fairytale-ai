@@ -10,6 +10,7 @@ import { OnboardingModal } from "@/components/OnboardingModal";
 import { useScrollAnimations } from "@/components/ScrollAnimations";
 import { MagneticLink, MagneticButton } from "@/components/MagneticButton";
 import { AnimatedText, AnimatedWords, AnimatedLine } from "@/components/AnimatedText";
+import { ThemeToggle } from "@/components/ThemeToggle";
 // import { LanguageSwitcher } from "@/components/LanguageSwitcher"; // временно отключено
 
 export default function Home() {
@@ -335,6 +336,10 @@ export default function Home() {
                 </MagneticButton>
               )
             )}
+            {/* Day/Night toggle */}
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -365,6 +370,11 @@ export default function Home() {
             <a href="#pricing" onClick={(e) => { setMobileMenuOpen(false); scrollToPricing(e); }} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
               {t("nav.pricing")}
             </a>
+            {/* Day/Night toggle for mobile */}
+            <div className="py-2 px-4 flex items-center justify-between">
+              <span className="text-sm text-gray-600">Night Mode</span>
+              <ThemeToggle />
+            </div>
             {/* Language switcher - временно отключено */}
             {/* <div className="py-2 px-4">
               <LanguageSwitcher />
