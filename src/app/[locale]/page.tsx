@@ -672,12 +672,11 @@ export default function Home() {
             {/* Main headline */}
             <div className="mb-8 sm:mb-12">
               <div className="w-full max-w-2xl mx-auto mb-6 sm:mb-8">
-                <div className="aspect-video rounded-2xl bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100 dark:from-purple-900/30 dark:via-blue-900/30 dark:to-indigo-900/30 border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center">
-                  <div className="text-center p-4">
-                    <span className="text-4xl sm:text-5xl mb-2 block">🖼️</span>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">Hero image placeholder</p>
-                  </div>
-                </div>
+                <img
+                  src="/images/hero-solution.png"
+                  alt="Mother reading bedtime story to child"
+                  className="w-full rounded-2xl shadow-2xl"
+                />
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
                 {t("solution.title")}
@@ -977,12 +976,11 @@ export default function Home() {
 
                 {/* Visual representation */}
                 <div className="glass-card p-5 text-center">
-                  <div className="aspect-video rounded-xl bg-gradient-to-br from-amber-100 via-orange-50 to-amber-100 dark:from-amber-900/30 dark:via-orange-900/20 dark:to-amber-900/30 border-2 border-dashed border-amber-300 dark:border-amber-700 flex items-center justify-center mb-4">
-                    <div className="text-center p-4">
-                      <span className="text-3xl sm:text-4xl mb-2 block">🖼️</span>
-                      <p className="text-amber-600 dark:text-amber-400 text-xs">Image placeholder</p>
-                    </div>
-                  </div>
+                  <img
+                    src="/images/hero-partnership.png"
+                    alt="Mother and child bonding moment"
+                    className="w-full rounded-xl shadow-lg mb-4"
+                  />
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                     {t.rich("partnership.friendshipNote", {
                       highlight: (chunks) => <span className="text-amber-600 dark:text-amber-400 font-semibold">{chunks}</span>
