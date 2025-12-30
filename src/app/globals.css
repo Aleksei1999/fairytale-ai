@@ -460,6 +460,24 @@ main, section {
   background-color: rgba(42, 42, 42, 0.8) !important;
 }
 
+/* Dark mode for step cards with colored backgrounds */
+.dark .from-violet-100, .dark .to-purple-100,
+.dark .from-amber-100, .dark .to-orange-100,
+.dark .from-sky-100, .dark .to-blue-100,
+.dark .from-emerald-100, .dark .to-teal-100 {
+  --tw-gradient-from: #2a2a3a !important;
+  --tw-gradient-to: #2d2d3d !important;
+}
+
+/* Dark mode border colors */
+.dark .border-emerald-200 {
+  border-color: rgba(52, 211, 153, 0.3) !important;
+}
+
+.dark .border-gray-100, .dark .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

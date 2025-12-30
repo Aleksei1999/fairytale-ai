@@ -722,7 +722,7 @@ export default function Home() {
       </section>
 
       {/* ===== BLOCK: HOW FAIRYTALE AI WORKS ===== */}
-      <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-amber-50/30 to-white">
+      <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-amber-50/30 to-white dark:from-[#1a1a1a] dark:via-[#1f1f1f] dark:to-[#1a1a1a]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
@@ -808,7 +808,7 @@ export default function Home() {
       </section>
 
       {/* ===== BLOCK: PARENT VALUE (Partnership with Parent) ===== */}
-      <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-indigo-50/30 to-white">
+      <section className="relative z-10 py-16 sm:py-24 bg-gradient-to-b from-white via-indigo-50/30 to-white dark:from-[#1a1a1a] dark:via-[#1f1f1f] dark:to-[#1a1a1a]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
