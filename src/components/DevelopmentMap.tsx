@@ -254,10 +254,10 @@ export function DevelopmentMap() {
       {/* Header */}
       <div className="glass-card p-6">
         <div className="mb-4">
-          <h2 className="font-display text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
             <span>🗺️</span> {t("title")}
           </h2>
-          <p className="text-gray-600 text-sm mt-1">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
             {t("subtitle")}
           </p>
         </div>
@@ -275,7 +275,7 @@ export function DevelopmentMap() {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 selectedBlock.id === block.id
                   ? `bg-gradient-to-r ${block.color} text-white shadow-lg`
-                  : "bg-white/50 text-gray-700 hover:bg-white"
+                  : "bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700"
               }`}
               strength={0.4}
             >
@@ -299,11 +299,11 @@ export function DevelopmentMap() {
                 {t("months")} {selectedBlock.months[0]?.order_num}-{selectedBlock.months[selectedBlock.months.length - 1]?.order_num}
               </span>
             </div>
-            <h3 className="font-display text-2xl font-bold text-gray-900">
+            <h3 className="font-display text-2xl font-bold text-gray-900 dark:text-gray-100">
               {selectedBlock.title}
             </h3>
-            <p className="text-gray-600">{selectedBlock.subtitle}</p>
-            <p className="text-sm text-gray-500 mt-2 italic">
+            <p className="text-gray-600 dark:text-gray-400">{selectedBlock.subtitle}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">
               {selectedBlock.goal}
             </p>
           </div>
@@ -320,8 +320,8 @@ export function DevelopmentMap() {
               }}
               className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 selectedMonth.id === month.id
-                  ? "bg-gray-900 text-white shadow-lg"
-                  : "bg-white/70 text-gray-700 hover:bg-white"
+                  ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 shadow-lg"
+                  : "bg-white/70 dark:bg-gray-700/70 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700"
               }`}
             >
               {t("month")} {month.order_num}
@@ -330,14 +330,14 @@ export function DevelopmentMap() {
         </div>
 
         {/* Selected Month Info */}
-        <div className="bg-white/50 rounded-2xl p-5 mb-4">
-          <h4 className="font-bold text-lg text-gray-900 mb-2">
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-5 mb-4">
+          <h4 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-2">
             {selectedMonth.title}
           </h4>
-          <p className="text-sm text-gray-600 mb-2">
-            <span className="font-medium text-gray-800">{t("metaphor")}</span> {selectedMonth.metaphor}
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            <span className="font-medium text-gray-800 dark:text-gray-200">{t("metaphor")}</span> {selectedMonth.metaphor}
           </p>
-          <p className="text-sm text-gray-600 italic">
+          <p className="text-sm text-gray-600 dark:text-gray-400 italic">
             {selectedMonth.story_arc}
           </p>
 
@@ -353,10 +353,10 @@ export function DevelopmentMap() {
             return (
               <div className="mt-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">{t("progress")}</span>
-                  <span className="text-sm text-gray-600">{completedCount} {t("ofStories", { total: totalStories })}</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t("progress")}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{completedCount} {t("ofStories", { total: totalStories })}</span>
                 </div>
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full bg-gradient-to-r ${selectedBlock.color} transition-all duration-500`}
                     style={{ width: `${progressPercent}%` }}
@@ -378,7 +378,7 @@ export function DevelopmentMap() {
                 className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all relative ${
                   selectedWeek?.id === week.id
                     ? `bg-gradient-to-r ${selectedBlock.color} text-white shadow-lg`
-                    : "bg-white/70 text-gray-700 hover:bg-white"
+                    : "bg-white/70 dark:bg-gray-700/70 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700"
                 }`}
               >
                 {t("week")} {week.order_num}
@@ -394,17 +394,17 @@ export function DevelopmentMap() {
         </div>
 
         {/* Selected Week Content */}
-        <div className="bg-white/30 rounded-2xl p-5 mb-6">
-          <h4 className="font-bold text-lg text-gray-900 mb-1">
+        <div className="bg-white/30 dark:bg-gray-800/30 rounded-2xl p-5 mb-6">
+          <h4 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">
             {t("week")} {selectedWeek.order_num}: {selectedWeek.title}
           </h4>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
             {selectedWeek.task}
           </p>
 
           {/* Stories Grid */}
           <div className="space-y-3">
-            <p className="text-sm font-medium text-gray-700 flex items-center gap-2">
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <span>📚</span> {t("thisWeekStories")}
             </p>
             {selectedWeek.stories.map((story) => {
@@ -418,12 +418,12 @@ export function DevelopmentMap() {
                   key={story.id}
                   className={`p-4 rounded-xl border-2 transition-all ${
                     isCompleted
-                      ? "bg-green-50 border-green-300"
+                      ? "bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-700"
                       : isAvailable
-                      ? "bg-white border-green-200 hover:border-green-300"
+                      ? "bg-white dark:bg-gray-800 border-green-200 dark:border-green-800 hover:border-green-300 dark:hover:border-green-700"
                       : hasTimer
-                      ? "bg-amber-50 border-amber-200"
-                      : "bg-gray-50 border-gray-200 opacity-60"
+                      ? "bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-700"
+                      : "bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 opacity-60"
                   }`}
                 >
                   <div className="flex items-center gap-4">
@@ -435,7 +435,7 @@ export function DevelopmentMap() {
                         ? `bg-gradient-to-br ${selectedBlock.color} text-white shadow-md`
                         : hasTimer
                         ? "bg-amber-400 text-white shadow-md"
-                        : "bg-gray-200 text-gray-500"
+                        : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                     }`}>
                       {isCompleted ? (
                         <span className="text-xl">✓</span>
@@ -451,17 +451,17 @@ export function DevelopmentMap() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h5 className={`font-semibold ${isAvailable || isCompleted ? "text-gray-900" : hasTimer ? "text-amber-800" : "text-gray-500"}`}>
+                      <h5 className={`font-semibold ${isAvailable || isCompleted ? "text-gray-900 dark:text-gray-100" : hasTimer ? "text-amber-800 dark:text-amber-300" : "text-gray-500 dark:text-gray-400"}`}>
                         {story.title}
                       </h5>
-                      <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
                         {story.plot}
                       </p>
                     </div>
 
                     {/* Action */}
                     {isCompleted ? (
-                      <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
+                      <div className="flex items-center gap-2 text-green-600 dark:text-green-400 text-sm font-medium">
                         <span>✓</span>
                         <span>{t("done")}</span>
                       </div>
@@ -473,12 +473,12 @@ export function DevelopmentMap() {
                         {t("createStory")}
                       </Link>
                     ) : hasTimer ? (
-                      <div className="flex flex-col items-center text-amber-600 text-sm font-medium">
-                        <span className="text-xs text-amber-500">{t("availableIn")}</span>
+                      <div className="flex flex-col items-center text-amber-600 dark:text-amber-400 text-sm font-medium">
+                        <span className="text-xs text-amber-500 dark:text-amber-500">{t("availableIn")}</span>
                         <span className="font-bold">{timeInfo.hoursLeft}h {timeInfo.minutesLeft}m</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 text-gray-400 text-sm">
+                      <div className="flex items-center gap-2 text-gray-400 dark:text-gray-500 text-sm">
                         <span>🔒</span>
                         <span>{t("locked")}</span>
                       </div>
@@ -498,22 +498,22 @@ export function DevelopmentMap() {
           return (
             <div className={`p-4 rounded-2xl border-2 ${
               isUnlocked
-                ? "bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 border-purple-300"
-                : "bg-gradient-to-r from-purple-50 via-pink-50 to-purple-50 border-purple-200"
+                ? "bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-purple-900/40 border-purple-300 dark:border-purple-700"
+                : "bg-gradient-to-r from-purple-50 via-pink-50 to-purple-50 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-purple-900/20 border-purple-200 dark:border-purple-800"
             }`}>
               <div className="flex items-center gap-4">
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl shadow-lg flex-shrink-0 ${
                   isUnlocked
                     ? "bg-gradient-to-br from-purple-500 to-pink-500"
-                    : "bg-gray-300"
+                    : "bg-gray-300 dark:bg-gray-700"
                 }`}>
                   🎬
                 </div>
                 <div className="flex-1">
-                  <h4 className={`font-bold ${isUnlocked ? "text-purple-900" : "text-gray-600"}`}>
+                  <h4 className={`font-bold ${isUnlocked ? "text-purple-900 dark:text-purple-200" : "text-gray-600 dark:text-gray-400"}`}>
                     {t("weeklyCartoonReward")}
                   </h4>
-                  <p className={`text-sm ${isUnlocked ? "text-purple-600" : "text-gray-500"}`}>
+                  <p className={`text-sm ${isUnlocked ? "text-purple-600 dark:text-purple-400" : "text-gray-500 dark:text-gray-400"}`}>
                     {isUnlocked
                       ? t("congratsCartoonReady")
                       : t("completeToUnlock", { percent: weekProgress })
@@ -526,7 +526,7 @@ export function DevelopmentMap() {
                   className={`px-4 py-3 rounded-xl font-bold text-sm transition-all ${
                     isUnlocked
                       ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90 shadow-lg"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                   }`}
                 >
                   {isUnlocked ? `🎬 ${t("createCartoon")}` : `🔒 ${t("completeWeek")}`}
@@ -539,7 +539,7 @@ export function DevelopmentMap() {
 
       {/* Program Overview */}
       <div className="glass-card p-6">
-        <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
           <span>📋</span> {t("programOverview")}
         </h4>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -552,22 +552,22 @@ export function DevelopmentMap() {
                 setSelectedWeek(block.months[0]?.weeks[0] || null);
               }}
               className={`p-4 rounded-xl border-2 cursor-pointer transition-all hover:shadow-md ${
-                selectedBlock.id === block.id ? "border-gray-300 bg-white" : "border-gray-100 bg-white/50"
+                selectedBlock.id === block.id ? "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800" : "border-gray-100 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50"
               }`}
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl">{block.icon}</span>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">{t("block")} {block.order_num}: {block.title}</p>
-                  <p className="text-xs text-gray-500">
+                  <p className="font-bold text-gray-900 dark:text-gray-100 text-sm">{t("block")} {block.order_num}: {block.title}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {block.months.length} {t("months").toLowerCase()}, {block.months.reduce((acc, m) => acc + m.weeks.length, 0)} {t("weeks")}
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1 text-xs text-gray-600">
+              <ul className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
                 {block.months.map((month) => (
                   <li key={month.id} className="flex items-center gap-2">
-                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                    <span className="w-1 h-1 rounded-full bg-gray-400 dark:bg-gray-500"></span>
                     {t("month")} {month.order_num}: {month.title}
                   </li>
                 ))}
