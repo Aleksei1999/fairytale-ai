@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/components/AuthProvider";
 import { AuthModal } from "@/components/AuthModal";
+import { OnboardingModal } from "@/components/OnboardingModal";
 import { useScrollAnimations } from "@/components/ScrollAnimations";
 import { MagneticLink, MagneticButton } from "@/components/MagneticButton";
 import { AnimatedText, AnimatedWords, AnimatedLine } from "@/components/AnimatedText";
@@ -31,6 +32,8 @@ export default function Home() {
   const [audioProgress, setAudioProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [navigatingToDashboard, setNavigatingToDashboard] = useState(false);
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [pendingChildInfo, setPendingChildInfo] = useState<{name: string; age: string; gender: "boy" | "girl" | ""; interests: string} | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Initialize GSAP scroll animations
@@ -95,13 +98,11 @@ export default function Home() {
   };
 
   const openPaymentModal = (plan: "week" | "monthly" | "yearly") => {
-    // Free Trial (week) = just registration, no payment
+    // Free Trial (week) = first show onboarding, then registration
     if (plan === "week") {
       if (!user) {
-        // Not authorized - show auth modal (signup mode), after registration they get free trial automatically
-        setPendingPaymentPlan(null); // Don't save plan - no payment needed
-        setAuthModalMode("signup");
-        setShowAuthModal(true);
+        // Not authorized - show onboarding modal first to collect child info
+        setShowOnboardingModal(true);
       } else {
         // Already authorized - redirect to dashboard (they already have or had trial)
         window.location.href = "/dashboard";
@@ -129,16 +130,39 @@ export default function Home() {
   };
 
   const handleAuthSuccess = () => {
-    // After successful auth, save pending plan to localStorage and reload
+    // After successful auth, save pending plan and child info to localStorage and reload
     if (pendingPaymentPlan) {
       localStorage.setItem("pendingPaymentPlan", pendingPaymentPlan);
       setTimeout(() => {
         window.location.reload();
       }, 500);
     } else {
+      // Save child info if available
+      if (pendingChildInfo) {
+        localStorage.setItem("pendingChildInfo", JSON.stringify(pendingChildInfo));
+      }
       // No pending payment - redirect to dashboard
       window.location.href = "/dashboard";
     }
+  };
+
+  // Handle onboarding completion - save child info and show auth modal
+  const handleOnboardingComplete = (childInfo: {name: string; age: string; gender: "boy" | "girl" | ""; interests: string}) => {
+    setPendingChildInfo(childInfo);
+    localStorage.setItem("pendingChildInfo", JSON.stringify(childInfo));
+    setShowOnboardingModal(false);
+    // Now show auth modal for registration
+    setPendingPaymentPlan(null);
+    setAuthModalMode("signup");
+    setShowAuthModal(true);
+  };
+
+  // Handle onboarding skip - just show auth modal
+  const handleOnboardingSkip = () => {
+    setShowOnboardingModal(false);
+    setPendingPaymentPlan(null);
+    setAuthModalMode("signup");
+    setShowAuthModal(true);
   };
 
   // Check for pending payment on mount (after auth redirect)
@@ -2012,76 +2036,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== BLOCK 11: FINAL CTA ===== */}
-      <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
-        <div className="relative overflow-hidden rounded-3xl sm:rounded-[40px] bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 p-6 sm:p-12 md:p-16">
-          <div className="absolute top-0 left-1/4 w-32 sm:w-64 h-32 sm:h-64 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-40 sm:w-80 h-40 sm:h-80 bg-emerald-300/20 rounded-full blur-3xl" />
-
-          <div className="relative">
-            {/* Header */}
-            <div className="text-center mb-8 sm:mb-10">
-              <div className="mb-4 sm:mb-6 sparkle"><img src="/images/icons/magic-wand.png" alt="" className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" /></div>
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-                {t.rich("finalCta.title", {
-                  highlight: (chunks) => <span className="text-yellow-300">{chunks}</span>
-                })}
-              </h2>
-              <p className="text-base sm:text-lg text-emerald-100 max-w-2xl mx-auto">
-                {t("finalCta.subtitle")}
-              </p>
-            </div>
-
-            {/* Feature grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto mb-8 sm:mb-10">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
-                <span className="text-2xl">✨</span>
-                <div>
-                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature1Title")}</h4>
-                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature1Text")}</p>
-                </div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
-                <span className="text-2xl">🧠</span>
-                <div>
-                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature2Title")}</h4>
-                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature2Text")}</p>
-                </div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
-                <span className="text-2xl">📈</span>
-                <div>
-                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature3Title")}</h4>
-                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature3Text")}</p>
-                </div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
-                <span className="text-2xl">🔓</span>
-                <div>
-                  <h4 className="font-bold text-white text-sm sm:text-base">{t("finalCta.feature4Title")}</h4>
-                  <p className="text-emerald-100 text-xs sm:text-sm">{t("finalCta.feature4Text")}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Button */}
-            <div className="text-center">
-              <MagneticLink
-                href="#pricing"
-                onClick={scrollToPricing}
-                className="bg-white text-emerald-600 px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 whitespace-nowrap inline-block"
-                strength={0.4}
-              >
-                {t("finalCta.button")}
-              </MagneticLink>
-              <p className="text-emerald-200 text-xs sm:text-sm mt-4">
-                {t("finalCta.disclaimer")}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===== FOOTER ===== */}
       <footer className="relative z-10 container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="glass-card p-4 sm:p-8">
@@ -2353,6 +2307,13 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Onboarding Modal */}
+      <OnboardingModal
+        isOpen={showOnboardingModal}
+        onComplete={handleOnboardingComplete}
+        onSkip={handleOnboardingSkip}
+      />
 
       {/* Auth Modal */}
       <AuthModal
