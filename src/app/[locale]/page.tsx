@@ -1749,84 +1749,86 @@ export default function Home() {
       </section>
 
       {/* ===== BLOCK 6: HERO JOURNEY CTA ===== */}
-      <section id="pricing" className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
-        <div className="max-w-4xl mx-auto">
-          {/* Main CTA Card - styled as premium pricing card */}
-          <div className="glass-card-strong p-8 sm:p-12 text-center relative overflow-hidden border-2 border-amber-400 dark:border-amber-500 shadow-2xl shadow-amber-200/50 dark:shadow-amber-900/30">
-            {/* Popular badge */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-              🎁 7 Days FREE
-            </div>
-
-            {/* Background decoration */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-5">
-              <div className="absolute top-10 left-10 text-8xl">✨</div>
-              <div className="absolute bottom-10 right-10 text-8xl">🌟</div>
-            </div>
-
-            <div className="relative z-10 mt-4">
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                {t.rich("finalCta.title", {
-                  highlight: (chunks) => <span className="gradient-text">{chunks}</span>
-                })}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
-                {t("finalCta.subtitle")}
-              </p>
-
-              {/* Feature Grid */}
-              <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
-                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">🪄</span>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature1Title")}</h4>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature1Text")}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">📚</span>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature2Title")}</h4>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature2Text")}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">📊</span>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature3Title")}</h4>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature3Text")}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white/60 dark:bg-gray-800/60 rounded-2xl p-4 border border-white/80 dark:border-gray-700">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">🎁</span>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature4Title")}</h4>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature4Text")}</p>
-                    </div>
-                  </div>
-                </div>
+      <section id="pricing" className="relative z-10 py-12 sm:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            {/* Main CTA Card - styled as premium pricing card */}
+            <div className="relative rounded-3xl p-8 sm:p-12 text-center overflow-hidden bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-900/40 dark:via-yellow-900/30 dark:to-orange-900/40 border-2 border-amber-400 dark:border-amber-500 shadow-2xl">
+              {/* Popular badge */}
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg z-20">
+                🎁 7 Days FREE
               </div>
 
-              {/* CTA Button */}
-              <MagneticButton
-                onClick={() => openPaymentModal("week")}
-                className="btn-glow px-8 sm:px-12 py-4 text-white font-bold text-base sm:text-lg inline-block"
-                strength={0.3}
-              >
-                {t("finalCta.button")}
-              </MagneticButton>
+              {/* Background decoration */}
+              <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <div className="absolute top-10 left-10 text-8xl">✨</div>
+                <div className="absolute bottom-10 right-10 text-8xl">🌟</div>
+              </div>
 
-              {/* Disclaimer */}
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
-                {t("finalCta.disclaimer")}
-              </p>
+              <div className="relative z-10 pt-4">
+                <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  {t.rich("finalCta.title", {
+                    highlight: (chunks) => <span className="text-amber-600 dark:text-amber-400">{chunks}</span>
+                  })}
+                </h2>
+                <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+                  {t("finalCta.subtitle")}
+                </p>
+
+                {/* Feature Grid */}
+                <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
+                  <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4 border border-amber-200 dark:border-amber-800 shadow-sm">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">🪄</span>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature1Title")}</h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature1Text")}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4 border border-amber-200 dark:border-amber-800 shadow-sm">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">📚</span>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature2Title")}</h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature2Text")}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4 border border-amber-200 dark:border-amber-800 shadow-sm">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">📊</span>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature3Title")}</h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature3Text")}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4 border border-amber-200 dark:border-amber-800 shadow-sm">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">🎁</span>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{t("finalCta.feature4Title")}</h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{t("finalCta.feature4Text")}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <MagneticButton
+                  onClick={() => openPaymentModal("week")}
+                  className="btn-glow px-8 sm:px-12 py-4 text-white font-bold text-base sm:text-lg inline-block"
+                  strength={0.3}
+                >
+                  {t("finalCta.button")}
+                </MagneticButton>
+
+                {/* Disclaimer */}
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
+                  {t("finalCta.disclaimer")}
+                </p>
+              </div>
             </div>
           </div>
         </div>
