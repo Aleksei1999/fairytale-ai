@@ -337,9 +337,7 @@ export default function Home() {
               )
             )}
             {/* Day/Night toggle */}
-            <div className="hidden sm:block">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -370,11 +368,6 @@ export default function Home() {
             <a href="#pricing" onClick={(e) => { setMobileMenuOpen(false); scrollToPricing(e); }} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
               {t("nav.pricing")}
             </a>
-            {/* Day/Night toggle for mobile */}
-            <div className="py-2 px-4 flex items-center justify-between">
-              <span className="text-sm text-gray-600">Night Mode</span>
-              <ThemeToggle />
-            </div>
             {/* Language switcher - временно отключено */}
             {/* <div className="py-2 px-4">
               <LanguageSwitcher />
