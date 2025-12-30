@@ -1492,7 +1492,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== BLOCK 4: DEMO ===== */}
+      {/* ===== BLOCK 9: DEMO ===== */}
       <section className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-24">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
@@ -1500,84 +1500,121 @@ export default function Home() {
               highlight: (chunks) => <span className="gradient-text">{chunks}</span>
             })}
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg">
+          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             {t("demo.subtitle")}
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="glass-card-strong p-4 sm:p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
-              {/* Left: Illustration - hidden on small mobile */}
-              <div className="relative hidden sm:block">
-                <div className="aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-100 via-sky-100 to-sky-100 flex items-center justify-center overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-start">
+              {/* Left: Illustration and context */}
+              <div className="relative">
+                {/* Story illustration */}
+                <div className="aspect-square rounded-2xl sm:rounded-3xl bg-gradient-to-br from-indigo-100 via-purple-50 to-sky-100 flex items-center justify-center overflow-hidden mb-4">
                   <div className="text-center p-4 sm:p-6">
                     <div className="mb-3 sm:mb-4"><img src="/images/icons/sparkle.png" alt="" className="w-16 h-16 sm:w-24 sm:h-24 mx-auto" /></div>
-                    <p className="text-xs sm:text-sm text-gray-500">{t("demo.storyTitle")}</p>
+                    <p className="text-sm sm:text-base font-semibold text-gray-700">{t("demo.storyTitle")}</p>
                   </div>
                 </div>
-                <p className="text-center text-xs text-gray-400 mt-2 sm:mt-3">
+                <p className="text-center text-xs text-gray-400 mb-4">
                   {t("demo.illustrationNote")}
                 </p>
+
+                {/* Case study context */}
+                <div className="glass-card p-4 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold text-sm">⚡</span>
+                    <div>
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">{t("demo.challenge")}</span>
+                      <p className="text-sm font-medium text-gray-800">{t("demo.challengeText")}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold text-sm">🎯</span>
+                    <div>
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">{t("demo.therapeuticGoal")}</span>
+                      <p className="text-sm font-medium text-gray-800">{t("demo.therapeuticGoalText")}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Right: Player and text */}
               <div>
-                {/* Context */}
-                <div className="glass-card px-3 sm:px-4 py-2 inline-flex items-center gap-2 mb-4 sm:mb-6">
-                  <img src="/images/icons/target.png" alt="" className="w-5 h-5" />
-                  <span className="text-xs sm:text-sm text-gray-600">{t("demo.problem")} <strong>{t("demo.problemText")}</strong></span>
-                </div>
-
-                {/* Audio player */}
-                <div className="glass-card p-4 sm:p-6 mb-4 sm:mb-6">
+                {/* Audio player - premium design */}
+                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-5 sm:p-6 mb-5 shadow-2xl">
                   {/* Hidden audio element */}
                   <audio ref={audioRef} src="/audio/dictor.MP3" preload="metadata" />
 
-                  {/* Voice label */}
-                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                    <span className="py-2 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-medium bg-blue-500 text-white shadow-lg inline-flex items-center gap-1">
-                      <img src="/images/icons/microphone.png" alt="" className="w-4 h-4" /> {t("demo.narrator")}
+                  {/* Voice label - premium */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="py-2 px-4 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg inline-flex items-center gap-2">
+                      <span className="text-lg">🎙️</span> {t("demo.listenButton")}
                     </span>
+                    <div className="text-[10px] text-emerald-400 bg-emerald-400/20 px-2 py-0.5 rounded-full">● LIVE</div>
                   </div>
 
                   {/* Play button and progress */}
-                  <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="flex items-center gap-3 sm:gap-4 mb-3">
                     <button
                       onClick={togglePlay}
-                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform flex-shrink-0"
+                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform flex-shrink-0"
                     >
                       {isPlaying ? (
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                         </svg>
                       ) : (
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 sm:w-7 sm:h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                       )}
                     </button>
                     <div className="flex-1 min-w-0">
                       {/* Progress bar */}
-                      <div className="h-2 bg-sky-100 rounded-full overflow-hidden">
+                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-sky-400 to-blue-600 transition-all"
+                          className="h-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all"
                           style={{ width: audioDuration ? `${(audioProgress / audioDuration) * 100}%` : "0%" }}
                         />
                       </div>
-                      <div className="flex justify-between text-xs text-gray-400 mt-1">
+                      <div className="flex justify-between text-xs text-slate-400 mt-1">
                         <span>{formatTime(audioProgress)}</span>
                         <span>{formatTime(audioDuration || 0)}</span>
                       </div>
                     </div>
                   </div>
+
+                  {/* Subtext about voice cloning */}
+                  <p className="text-xs text-slate-400 italic text-center">
+                    {t("demo.listenSubtext")}
+                  </p>
                 </div>
 
-                {/* Story excerpt */}
-                <div className="glass-card p-3 sm:p-4">
-                  <p className="text-gray-700 text-xs sm:text-sm italic leading-relaxed">
+                {/* Story excerpt - premium card */}
+                <div className="glass-card p-4 sm:p-5 mb-5 border-l-4 border-indigo-400">
+                  <p className="text-gray-700 text-sm sm:text-base italic leading-relaxed whitespace-pre-line">
                     {t("demo.storyExcerpt")}
                   </p>
+                </div>
+
+                {/* Feature cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="glass-card p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">✨</span>
+                      <h4 className="font-semibold text-gray-900 text-sm">{t("demo.feature1Title")}</h4>
+                    </div>
+                    <p className="text-xs text-gray-600">{t("demo.feature1Text")}</p>
+                  </div>
+                  <div className="glass-card p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">😴</span>
+                      <h4 className="font-semibold text-gray-900 text-sm">{t("demo.feature2Title")}</h4>
+                    </div>
+                    <p className="text-xs text-gray-600">{t("demo.feature2Text")}</p>
+                  </div>
                 </div>
               </div>
             </div>

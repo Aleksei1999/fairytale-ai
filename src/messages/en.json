@@ -364,14 +364,21 @@
     "ctaButton": "Start the Transformation"
   },
   "demo": {
-    "title": "Hear the <highlight>quality</highlight>",
-    "subtitle": "Listen to a sample story and see for yourself",
+    "title": "Experience the magic <highlight>before you buy</highlight>",
+    "subtitle": "See how we turn an ordinary fear into a therapeutic adventure. Read the script yourself or listen to how our platform clones a parent's voice.",
     "storyTitle": "Oliver and the Brave Firefly",
     "illustrationNote": "Illustration created by AI automatically",
-    "problem": "Problem:",
-    "problemText": "Oliver (5 y.o.) is afraid of the dark",
-    "narrator": "Narrator",
-    "storyExcerpt": "\"...The darkness isn't emptiness, Oliver. It's just a clean canvas where you can paint your dreams,\" whispered the Firefly. The boy closed his eyes and for the first time imagined not monsters, but a starship...\""
+    "challenge": "Challenge:",
+    "challengeText": "Oliver (5) is afraid of the dark",
+    "therapeuticGoal": "Therapeutic Goal:",
+    "therapeuticGoalText": "Reframing fear into curiosity (CBT Technique)",
+    "listenButton": "Listen to \"Dad's AI Voice\"",
+    "listenSubtext": "We can clone YOUR voice so you're always there, even when you're away.",
+    "storyExcerpt": "\"...Darkness isn't empty, Oliver. It's just a blank canvas for your dreams,\" whispered the Firefly. \"Close your eyes. Can you see the stars now?\"\n\nOliver closed his eyes and, for the first time, saw a spaceship instead of a monster.",
+    "feature1Title": "Pixar-Quality Storytelling",
+    "feature1Text": "We don't generate robotic text. Our engines are fine-tuned by creative writers to guarantee emotional depth, humor, and heart in every line.",
+    "feature2Title": "The \"Tired Parent\" Backup",
+    "feature2Text": "Too exhausted to read tonight? Use your Personal Voice Clone. Your child hears YOUR soothing voice while you rest beside them."
   },
   "safety": {
     "title": "Safe content and proven <highlight>methodology</highlight>",
