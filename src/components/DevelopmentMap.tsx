@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { MagneticButton } from "@/components/MagneticButton";
+import { useTranslations } from "next-intl";
 
 interface Story {
   id: number;
@@ -44,6 +45,7 @@ interface Block {
 
 export function DevelopmentMap() {
   const router = useRouter();
+  const t = useTranslations("developmentMap");
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<Month | null>(null);
@@ -242,7 +244,7 @@ export function DevelopmentMap() {
   if (!selectedBlock || !selectedMonth || !selectedWeek) {
     return (
       <div className="text-center py-12 text-gray-500">
-        Program data not available
+        {t("programNotAvailable")}
       </div>
     );
   }
@@ -253,10 +255,10 @@ export function DevelopmentMap() {
       <div className="glass-card p-6">
         <div className="mb-4">
           <h2 className="font-display text-xl font-bold text-gray-900 flex items-center gap-2">
-            <span>🗺️</span> The Hero&apos;s Grand Journey
+            <span>🗺️</span> {t("title")}
           </h2>
           <p className="text-gray-600 text-sm mt-1">
-            12 months, 48 weeks, 144 stories. 3 stories per week (every other day).
+            {t("subtitle")}
           </p>
         </div>
 
@@ -278,7 +280,7 @@ export function DevelopmentMap() {
               strength={0.4}
             >
               <span className="mr-1">{block.icon}</span>
-              Block {block.order_num}
+              {t("block")} {block.order_num}
             </MagneticButton>
           ))}
         </div>
@@ -294,7 +296,7 @@ export function DevelopmentMap() {
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className={`text-xs font-medium px-2 py-0.5 rounded-full bg-gradient-to-r ${selectedBlock.color} text-white`}>
-                Months {selectedBlock.months[0]?.order_num}-{selectedBlock.months[selectedBlock.months.length - 1]?.order_num}
+                {t("months")} {selectedBlock.months[0]?.order_num}-{selectedBlock.months[selectedBlock.months.length - 1]?.order_num}
               </span>
             </div>
             <h3 className="font-display text-2xl font-bold text-gray-900">
@@ -322,7 +324,7 @@ export function DevelopmentMap() {
                   : "bg-white/70 text-gray-700 hover:bg-white"
               }`}
             >
-              Month {month.order_num}
+              {t("month")} {month.order_num}
             </button>
           ))}
         </div>

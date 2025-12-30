@@ -9,7 +9,7 @@ import { AuthModal } from "@/components/AuthModal";
 import { useScrollAnimations } from "@/components/ScrollAnimations";
 import { MagneticLink, MagneticButton } from "@/components/MagneticButton";
 import { AnimatedText, AnimatedWords, AnimatedLine } from "@/components/AnimatedText";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+// import { LanguageSwitcher } from "@/components/LanguageSwitcher"; // временно отключено
 
 export default function Home() {
   const router = useRouter();
@@ -248,8 +248,8 @@ export default function Home() {
             <a href="#pricing" onClick={scrollToPricing} className="text-gray-600 hover:text-blue-600 transition-colors hidden md:block">
               {t("nav.pricing")}
             </a>
-            {/* Language switcher */}
-            <LanguageSwitcher />
+            {/* Language switcher - временно отключено */}
+            {/* <LanguageSwitcher /> */}
             {/* Auth button */}
             {!authLoading && (
               user ? (
@@ -341,9 +341,10 @@ export default function Home() {
             <a href="#pricing" onClick={(e) => { setMobileMenuOpen(false); scrollToPricing(e); }} className="text-gray-700 py-2 px-4 rounded-xl hover:bg-white/50 transition-colors">
               {t("nav.pricing")}
             </a>
-            <div className="py-2 px-4">
+            {/* Language switcher - временно отключено */}
+            {/* <div className="py-2 px-4">
               <LanguageSwitcher />
-            </div>
+            </div> */}
             {user ? (
               <div className="pt-2 border-t border-gray-200 space-y-3">
                 <div className="flex items-center gap-3">

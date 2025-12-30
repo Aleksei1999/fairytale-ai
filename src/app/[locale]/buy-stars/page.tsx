@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const STAR_PACKAGES = [
   {
@@ -41,6 +42,7 @@ const STAR_PACKAGES = [
 export default function BuyStars() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const t = useTranslations("buyStarsPage");
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [userStars, setUserStars] = useState<number | null>(null);
@@ -90,10 +92,10 @@ export default function BuyStars() {
       if (data.success && data.paymentUrl) {
         window.location.href = data.paymentUrl;
       } else {
-        alert(data.error || "Payment error");
+        alert(data.error || t("paymentError"));
       }
     } catch {
-      alert("Connection error");
+      alert(t("connectionError"));
     } finally {
       setPaymentLoading(false);
       setSelectedPackage(null);
@@ -119,7 +121,7 @@ export default function BuyStars() {
             href="/dashboard"
             className="text-gray-600 hover:text-gray-800 transition-colors"
           >
-            ← Back to Dashboard
+            {t("backToDashboard")}
           </Link>
         </div>
       </header>
@@ -132,21 +134,21 @@ export default function BuyStars() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-200 mb-6">
               <img src="/images/icons/star.png" alt="" className="w-5 h-5" />
               <span className="text-sm font-medium text-amber-700">
-                {userStars !== null ? `You have ${userStars} stars` : "Loading..."}
+                {userStars !== null ? t("youHaveStars", { count: userStars }) : t("loading")}
               </span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Get More <span className="gradient-text">Stars</span>
+              {t("getMore")} <span className="gradient-text">{t("stars")}</span>
             </h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Stars unlock AI voice narration and cartoon generation for your fairy tales
+              {t("starsUnlock")}
             </p>
           </div>
 
           {/* What stars do */}
           <div className="glass-card p-6 mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
-              <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> What can you do with stars?
+              <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> {t("whatCanYouDo")}
             </h3>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50/50 border border-blue-100">
@@ -154,9 +156,9 @@ export default function BuyStars() {
                   <img src="/images/icons/microphone.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">AI Voice Narration</p>
-                  <p className="text-sm text-gray-600">Professional narrator reads your story</p>
-                  <p className="text-sm font-semibold text-blue-600 mt-1">1 star per story</p>
+                  <p className="font-medium text-gray-900">{t("aiVoiceNarration")}</p>
+                  <p className="text-sm text-gray-600">{t("aiVoiceDesc")}</p>
+                  <p className="text-sm font-semibold text-blue-600 mt-1">{t("starPerStory")}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-50/50 border border-purple-100">
@@ -164,9 +166,9 @@ export default function BuyStars() {
                   <img src="/images/icons/movie.png" alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Animated Cartoon</p>
-                  <p className="text-sm text-gray-600">Turn your story into a video</p>
-                  <p className="text-sm font-semibold text-purple-600 mt-1">5 stars per cartoon</p>
+                  <p className="font-medium text-gray-900">{t("animatedCartoon")}</p>
+                  <p className="text-sm text-gray-600">{t("animatedCartoonDesc")}</p>
+                  <p className="text-sm font-semibold text-purple-600 mt-1">{t("starsPerCartoon")}</p>
                 </div>
               </div>
             </div>
@@ -184,7 +186,7 @@ export default function BuyStars() {
               >
                 {pkg.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-xs font-semibold">
-                    Most Popular
+                    {t("mostPopular")}
                   </div>
                 )}
 
@@ -193,14 +195,14 @@ export default function BuyStars() {
                     <img src={pkg.icon} alt="" className="w-12 h-12" />
                   </div>
                   <h3 className="font-bold text-xl text-gray-900">
-                    {pkg.stars} Stars
+                    {pkg.stars} {t("starsLabel")}
                   </h3>
-                  <p className="text-sm text-gray-500">{pkg.description}</p>
+                  <p className="text-sm text-gray-500">{t(`${pkg.id}Desc`)}</p>
                 </div>
 
                 <div className="text-center mb-6">
                   <div className="text-3xl font-bold text-gray-900">{pkg.priceDisplay}</div>
-                  <p className="text-sm text-gray-500">{pkg.pricePerStar} per star</p>
+                  <p className="text-sm text-gray-500">{pkg.pricePerStar} {t("perStar")}</p>
                 </div>
 
                 <button
@@ -218,10 +220,10 @@ export default function BuyStars() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Processing...
+                      {t("processing")}
                     </span>
                   ) : (
-                    "Buy Now"
+                    t("buyNow")
                   )}
                 </button>
               </div>
@@ -231,8 +233,8 @@ export default function BuyStars() {
           {/* Note */}
           <div className="glass-card p-6 text-center animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             <p className="text-gray-600 text-sm">
-              <span className="font-semibold text-gray-900">Note:</span> Stars never expire!
-              Use them anytime for AI voice narration or cartoon generation.
+              <span className="font-semibold text-gray-900">{t("note")}</span> {t("starsNeverExpire")}
+              {" "}{t("useAnytime")}
             </p>
           </div>
         </div>

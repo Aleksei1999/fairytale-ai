@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/AuthProvider";
+import { useTranslations } from "next-intl";
 
 interface Question {
   id: number;
@@ -51,6 +52,7 @@ export default function StoryPage() {
   const params = useParams();
   const router = useRouter();
   const { user } = useAuth();
+  const t = useTranslations("storyPage");
   const storyId = Number(params.id);
 
   const [story, setStory] = useState<Story | null>(null);
@@ -453,13 +455,13 @@ export default function StoryPage() {
 
   function getQuestionTypeLabel(type: string): string {
     const labels: Record<string, string> = {
-      understanding: "Understanding",
-      feeling: "Feeling",
-      practice: "Practice",
-      rule: "Rule",
-      ritual: "Ritual",
-      situation: "Situation",
-      conclusion: "Conclusion",
+      understanding: t("understanding"),
+      feeling: t("feeling"),
+      practice: t("practice"),
+      rule: t("rule"),
+      ritual: t("ritual"),
+      situation: t("situation"),
+      conclusion: t("conclusion"),
     };
     return labels[type] || type;
   }
@@ -489,9 +491,9 @@ export default function StoryPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">Story not found</p>
+          <p className="text-gray-600 mb-4">{t("storyNotFound")}</p>
           <Link href="/dashboard" className="text-blue-600 hover:underline">
-            Back to Dashboard
+            {t("backToDashboard")}
           </Link>
         </div>
       </div>
@@ -514,7 +516,7 @@ export default function StoryPage() {
               href="/dashboard"
               className="text-gray-600 hover:text-gray-800 transition-colors"
             >
-              ← Back to Dashboard
+              {t("backToDashboard")}
             </Link>
           </div>
         </header>
@@ -526,22 +528,22 @@ export default function StoryPage() {
                 <img src="/images/icons/crown.png" alt="" className="w-12 h-12" />
               </div>
               <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
-                Subscription Required
+                {t("subscriptionRequired")}
               </h1>
               <p className="text-gray-600 mb-6">
-                To access stories and the full program, you need an active subscription.
+                {t("subscriptionRequiredText")}
               </p>
               <Link
                 href="/#pricing"
                 className="block w-full btn-glow py-3 text-center font-semibold text-white mb-3"
               >
-                View Subscription Plans
+                {t("viewSubscriptionPlans")}
               </Link>
               <Link
                 href="/dashboard"
                 className="block text-gray-500 hover:text-gray-700 text-sm"
               >
-                Back to Dashboard
+                {t("backToDashboard")}
               </Link>
             </div>
           </div>
@@ -566,7 +568,7 @@ export default function StoryPage() {
               href="/dashboard"
               className="text-gray-600 hover:text-gray-800 transition-colors"
             >
-              ← Back to Dashboard
+              {t("backToDashboard")}
             </Link>
           </div>
         </header>
@@ -578,16 +580,16 @@ export default function StoryPage() {
                 <img src="/images/icons/crown.png" alt="" className="w-12 h-12 opacity-50" />
               </div>
               <h1 className="font-display text-2xl font-bold text-gray-900 mb-4">
-                Story Locked
+                {t("storyLocked")}
               </h1>
               <p className="text-gray-600 mb-6">
-                This story is not yet available. Complete the previous stories to unlock it.
+                {t("storyLockedText")}
               </p>
               <Link
                 href="/dashboard"
                 className="block w-full btn-glow py-3 text-center font-semibold text-white"
               >
-                Back to Dashboard
+                {t("backToDashboard")}
               </Link>
             </div>
           </div>
@@ -611,7 +613,7 @@ export default function StoryPage() {
             href="/dashboard"
             className="text-gray-600 hover:text-gray-800 transition-colors"
           >
-            ← Back to Dashboard
+            {t("backToDashboard")}
           </Link>
         </div>
       </header>
@@ -623,14 +625,14 @@ export default function StoryPage() {
           {block && month && week && (
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
               <span className={`px-2 py-1 rounded-full bg-gradient-to-r ${block.color} text-white text-xs`}>
-                {block.icon} Block {Math.ceil(month.order_num / 3)}
+                {block.icon} {t("block")} {Math.ceil(month.order_num / 3)}
               </span>
               <span>→</span>
-              <span>Month {month.order_num}: {month.title}</span>
+              <span>{t("month")} {month.order_num}: {month.title}</span>
               <span>→</span>
-              <span>Week {week.order_num}</span>
+              <span>{t("week")} {week.order_num}</span>
               <span>→</span>
-              <span className="font-medium text-gray-700">Day {story.day_in_week}</span>
+              <span className="font-medium text-gray-700">{t("day")} {story.day_in_week}</span>
             </div>
           )}
 
@@ -640,7 +642,7 @@ export default function StoryPage() {
               currentStep === "story" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
             }`}>
               <img src="/images/icons/book.png" alt="" className="w-4 h-4" />
-              <span className="text-sm font-medium">Story</span>
+              <span className="text-sm font-medium">{t("story")}</span>
             </div>
             <div className="w-8 h-0.5 bg-gray-300"></div>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
@@ -648,14 +650,14 @@ export default function StoryPage() {
               currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 text-gray-600"
             }`}>
               <img src="/images/icons/brain.png" alt="" className="w-4 h-4" />
-              <span className="text-sm font-medium">Questions</span>
+              <span className="text-sm font-medium">{t("questions")}</span>
             </div>
             <div className="w-8 h-0.5 bg-gray-300"></div>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
               currentStep === "complete" ? "bg-green-500 text-white" : "bg-gray-200 text-gray-600"
             }`}>
               <span>✓</span>
-              <span className="text-sm font-medium">Done</span>
+              <span className="text-sm font-medium">{t("done")}</span>
             </div>
           </div>
 
@@ -671,7 +673,7 @@ export default function StoryPage() {
                   {story.title}
                 </h1>
                 <p className="text-gray-500 text-sm">
-                  Day {story.day_in_week} of Week {week?.order_num}
+                  {t("day")} {story.day_in_week} {t("of")} {t("week")} {week?.order_num}
                 </p>
               </div>
 
@@ -680,9 +682,9 @@ export default function StoryPage() {
                 <div className="glass-card p-4 mb-6 bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200">
                   <div className="flex items-center gap-2 mb-3">
                     <img src="/images/icons/microphone.png" alt="" className="w-5 h-5" />
-                    <span className="text-sm font-medium text-purple-800">AI Narration</span>
+                    <span className="text-sm font-medium text-purple-800">{t("aiNarration")}</span>
                     {musicUrl && (
-                      <span className="text-xs text-purple-500 ml-auto">+ background music</span>
+                      <span className="text-xs text-purple-500 ml-auto">{t("plusBackgroundMusic")}</span>
                     )}
                   </div>
                   {/* AI Voice audio */}
@@ -777,7 +779,7 @@ export default function StoryPage() {
                   <div className="flex items-center gap-2 mb-3">
                     <img src="/images/icons/moon.png" alt="" className="w-5 h-5" />
                     <span className="text-sm font-medium text-green-800">
-                      {musicUrl ? "Generated Background Music" : "Background Music"}
+                      {musicUrl ? t("generatedBackgroundMusic") : t("backgroundMusic")}
                     </span>
                   </div>
                   <audio
@@ -872,10 +874,10 @@ export default function StoryPage() {
                   </div>
                 ) : (
                   <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
-                    <p className="text-amber-800 font-medium mb-3">Story Preview:</p>
+                    <p className="text-amber-800 font-medium mb-3">{t("storyPreview")}</p>
                     <p className="text-gray-700 italic">{story.plot}</p>
                     <p className="text-amber-600 text-sm mt-4">
-                      Full story text will be available soon!
+                      {t("fullTextSoon")}
                     </p>
                   </div>
                 )}
@@ -884,24 +886,24 @@ export default function StoryPage() {
               {/* Therapeutic Info (collapsible) */}
               <details className="mb-8">
                 <summary className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-700">
-                  For Parents: Learning Goals
+                  {t("forParentsGoals")}
                 </summary>
                 <div className="mt-4 space-y-3 text-sm">
                   {story.therapeutic_goal && (
                     <div className="bg-purple-50 rounded-xl p-4">
-                      <p className="font-medium text-purple-800 mb-1">Therapeutic Goal:</p>
+                      <p className="font-medium text-purple-800 mb-1">{t("therapeuticGoal")}</p>
                       <p className="text-purple-700">{story.therapeutic_goal}</p>
                     </div>
                   )}
                   {story.methodology && (
                     <div className="bg-blue-50 rounded-xl p-4">
-                      <p className="font-medium text-blue-800 mb-1">Methodology:</p>
+                      <p className="font-medium text-blue-800 mb-1">{t("methodology")}</p>
                       <p className="text-blue-700">{story.methodology}</p>
                     </div>
                   )}
                   {story.why_important && (
                     <div className="bg-green-50 rounded-xl p-4">
-                      <p className="font-medium text-green-800 mb-1">Why It Matters:</p>
+                      <p className="font-medium text-green-800 mb-1">{t("whyMatters")}</p>
                       <p className="text-green-700">{story.why_important}</p>
                     </div>
                   )}
@@ -913,7 +915,7 @@ export default function StoryPage() {
                 onClick={() => setCurrentStep("questions")}
                 className="w-full btn-glow py-4 text-center font-semibold text-white text-lg"
               >
-                Continue to Discussion Questions →
+                {t("continueToQuestions")}
               </button>
             </div>
           )}
@@ -924,7 +926,7 @@ export default function StoryPage() {
               {/* Question Progress */}
               <div className="flex items-center justify-between mb-6">
                 <span className="text-sm text-gray-500">
-                  Question {currentQuestionIndex + 1} of {questions.length}
+                  {t("question")} {currentQuestionIndex + 1} {t("of")} {questions.length}
                 </span>
                 <div className="flex gap-1">
                   {questions.map((_, idx) => (
@@ -962,7 +964,7 @@ export default function StoryPage() {
                 {questions[currentQuestionIndex].hint && (
                   <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
                     <p className="text-sm text-amber-800">
-                      <span className="font-medium">Hint for parents:</span> {questions[currentQuestionIndex].hint}
+                      <span className="font-medium">{t("hintForParents")}</span> {questions[currentQuestionIndex].hint}
                     </p>
                   </div>
                 )}
@@ -971,7 +973,7 @@ export default function StoryPage() {
               {/* Discussion prompt */}
               <div className="bg-blue-50 rounded-xl p-4 mb-6 text-center">
                 <p className="text-blue-800">
-                  Discuss this question with your child, then tap "We Discussed It" to continue.
+                  {t("discussPrompt")}
                 </p>
               </div>
 
@@ -987,14 +989,14 @@ export default function StoryPage() {
                   }}
                   className="flex-1 py-3 rounded-xl border-2 border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
                 >
-                  ← Back
+                  {t("back")}
                 </button>
                 <button
                   onClick={handleQuestionAnswered}
                   disabled={saving}
                   className="flex-1 btn-glow py-3 text-center font-semibold text-white disabled:opacity-50"
                 >
-                  {saving ? "Saving..." : "We Discussed It ✓"}
+                  {saving ? t("saving") : t("weDiscussedIt")}
                 </button>
               </div>
             </div>
@@ -1007,11 +1009,10 @@ export default function StoryPage() {
                 <img src="/images/icons/trophy.png" alt="" className="w-14 h-14" />
               </div>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                Story Completed!
+                {t("storyCompleted")}
               </h2>
               <p className="text-gray-600 mb-8">
-                Great job! You and your child have completed "{story.title}".
-                The next story will be available soon.
+                {t("completedText")}
               </p>
 
               {/* Completion Stats */}
@@ -1019,11 +1020,11 @@ export default function StoryPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
                     <p className="text-3xl font-bold text-green-600">{questions.length}</p>
-                    <p className="text-sm text-green-700">Questions Discussed</p>
+                    <p className="text-sm text-green-700">{t("questionsDiscussed")}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-green-600">Day {story.day_in_week}</p>
-                    <p className="text-sm text-green-700">Completed</p>
+                    <p className="text-3xl font-bold text-green-600">{t("day")} {story.day_in_week}</p>
+                    <p className="text-sm text-green-700">{t("completed")}</p>
                   </div>
                 </div>
               </div>
@@ -1032,7 +1033,7 @@ export default function StoryPage() {
                 href="/dashboard"
                 className="inline-block btn-glow px-8 py-3 font-semibold text-white"
               >
-                Back to Dashboard
+                {t("backToDashboard")}
               </Link>
             </div>
           )}

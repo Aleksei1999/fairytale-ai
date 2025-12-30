@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type Gender = "boy" | "girl";
 
@@ -36,6 +37,7 @@ function CreateCartoonContent() {
   const searchParams = useSearchParams();
   const weekId = searchParams.get("weekId");
   const { user, loading: authLoading } = useAuth();
+  const t = useTranslations("createCartoonPage");
 
   const [character, setCharacter] = useState<CharacterOptions>({
     gender: "boy",
@@ -79,7 +81,7 @@ function CreateCartoonContent() {
     if (!user?.email) return;
 
     if (!isAdmin && credits !== null && credits < 1) {
-      setError("You need credits to generate a character. Please purchase credits first.");
+      setError(t("needCreditsError"));
       return;
     }
 
@@ -102,11 +104,11 @@ function CreateCartoonContent() {
         setGeneratedImage(data.imageUrl);
         setCredits((prev) => (prev !== null ? prev - 1 : null));
       } else {
-        setError(data.error || "Failed to generate character");
+        setError(data.error || t("failedToGenerate"));
       }
     } catch (err) {
       console.error("Generation error:", err);
-      setError("Connection error. Please try again.");
+      setError(t("connectionError"));
     } finally {
       setIsGenerating(false);
     }
@@ -139,7 +141,7 @@ function CreateCartoonContent() {
             href="/dashboard"
             className="text-gray-600 hover:text-gray-800 transition-colors"
           >
-            ← Back to Dashboard
+            {t("backToDashboard")}
           </Link>
         </div>
       </header>
@@ -153,15 +155,15 @@ function CreateCartoonContent() {
               <img src="/images/icons/movie.png" alt="" className="w-12 h-12" />
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-              Create Your Character
+              {t("createYourCharacter")}
             </h1>
             <p className="text-gray-600 max-w-md mx-auto">
-              Design your unique Disney-style 3D character for your personalized cartoon!
+              {t("designDescription")}
             </p>
             {credits !== null && (
               <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700">
                 <img src="/images/icons/star.png" alt="" className="w-4 h-4" />
-                <span className="font-medium">{credits} credit{credits !== 1 ? "s" : ""} available</span>
+                <span className="font-medium">{credits === 1 ? t("creditAvailable", { count: credits }) : t("creditsAvailable", { count: credits })}</span>
               </div>
             )}
           </div>
@@ -170,13 +172,13 @@ function CreateCartoonContent() {
             {/* Customization Panel */}
             <div className="glass-card-strong p-6 sm:p-8">
               <h2 className="font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
-                <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> Customize Character
+                <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> {t("customizeCharacter")}
               </h2>
 
               {/* Gender Selection */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Character Type
+                  {t("characterType")}
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
@@ -189,7 +191,7 @@ function CreateCartoonContent() {
                   >
                     <span className="text-4xl">👦</span>
                     <span className={`font-medium ${character.gender === "boy" ? "text-blue-700" : "text-gray-700"}`}>
-                      Boy
+                      {t("boy")}
                     </span>
                   </button>
                   <button
@@ -202,7 +204,7 @@ function CreateCartoonContent() {
                   >
                     <span className="text-4xl">👧</span>
                     <span className={`font-medium ${character.gender === "girl" ? "text-pink-700" : "text-gray-700"}`}>
-                      Girl
+                      {t("girl")}
                     </span>
                   </button>
                 </div>
@@ -211,7 +213,7 @@ function CreateCartoonContent() {
               {/* Hair Color */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Hair Color
+                  {t("hairColor")}
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {hairColors.map((hair) => (
@@ -228,7 +230,7 @@ function CreateCartoonContent() {
                         className="w-8 h-8 rounded-full shadow-inner border border-gray-200"
                         style={{ backgroundColor: hair.color }}
                       />
-                      <span className="text-xs font-medium text-gray-600">{hair.name}</span>
+                      <span className="text-xs font-medium text-gray-600">{t(hair.id)}</span>
                     </button>
                   ))}
                 </div>
@@ -237,7 +239,7 @@ function CreateCartoonContent() {
               {/* Eye Color */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Eye Color
+                  {t("eyeColor")}
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {eyeColors.map((eye) => (
@@ -254,7 +256,7 @@ function CreateCartoonContent() {
                         className="w-8 h-8 rounded-full shadow-inner border border-gray-200"
                         style={{ backgroundColor: eye.color }}
                       />
-                      <span className="text-xs font-medium text-gray-600">{eye.name}</span>
+                      <span className="text-xs font-medium text-gray-600">{t(eye.id)}</span>
                     </button>
                   ))}
                 </div>
@@ -263,7 +265,7 @@ function CreateCartoonContent() {
               {/* Skin Color */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Skin Tone
+                  {t("skinTone")}
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {skinColors.map((skin) => (
@@ -280,7 +282,7 @@ function CreateCartoonContent() {
                         className="w-8 h-8 rounded-full shadow-inner border border-gray-200"
                         style={{ backgroundColor: skin.color }}
                       />
-                      <span className="text-xs font-medium text-gray-600">{skin.name}</span>
+                      <span className="text-xs font-medium text-gray-600">{t(skin.id)}</span>
                     </button>
                   ))}
                 </div>
@@ -290,7 +292,7 @@ function CreateCartoonContent() {
             {/* Preview Panel */}
             <div className="glass-card-strong p-6 sm:p-8">
               <h2 className="font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
-                <img src="/images/icons/target.png" alt="" className="w-5 h-5" /> Preview
+                <img src="/images/icons/target.png" alt="" className="w-5 h-5" /> {t("preview")}
               </h2>
 
               {/* Character Preview */}
@@ -312,25 +314,25 @@ function CreateCartoonContent() {
                           className="w-4 h-4 rounded-full border border-gray-300"
                           style={{ backgroundColor: selectedHair?.color }}
                         />
-                        <span>{selectedHair?.name} hair</span>
+                        <span>{selectedHair?.id ? t(selectedHair.id) : ""} {t("hair")}</span>
                       </div>
                       <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
                         <div
                           className="w-4 h-4 rounded-full border border-gray-300"
                           style={{ backgroundColor: selectedEyes?.color }}
                         />
-                        <span>{selectedEyes?.name} eyes</span>
+                        <span>{selectedEyes?.id ? t(selectedEyes.id) : ""} {t("eyes")}</span>
                       </div>
                       <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
                         <div
                           className="w-4 h-4 rounded-full border border-gray-300"
                           style={{ backgroundColor: selectedSkin?.color }}
                         />
-                        <span>{selectedSkin?.name} skin</span>
+                        <span>{selectedSkin?.id ? t(selectedSkin.id) : ""} {t("skin")}</span>
                       </div>
                     </div>
                     <p className="text-gray-400 text-sm mt-4">
-                      Click &quot;Generate Character&quot; to create your 3D avatar
+                      {t("generatePrompt")}
                     </p>
                   </div>
                 )}
@@ -355,17 +357,17 @@ function CreateCartoonContent() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Creating Avatar...
+                    {t("creatingAvatar")}
                   </span>
                 ) : generatedImage ? (
                   <span className="flex items-center justify-center gap-2">
-                    ✓ Avatar Created
+                    ✓ {t("avatarCreated")}
                   </span>
                 ) : !isAdmin && credits !== null && credits < 1 ? (
-                  "No Credits Available"
+                  t("noCreditsAvailable")
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> Create Avatar
+                    <img src="/images/icons/sparkle.png" alt="" className="w-5 h-5" /> {t("createAvatar")}
                   </span>
                 )}
               </button>
@@ -374,7 +376,7 @@ function CreateCartoonContent() {
               <button
                 onClick={() => {
                   // TODO: Navigate to cartoon generation or trigger cartoon creation
-                  alert("Cartoon generation coming soon!");
+                  alert(t("comingSoon"));
                 }}
                 disabled={!generatedImage}
                 className={`w-full py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl ${
@@ -385,13 +387,13 @@ function CreateCartoonContent() {
               >
                 <span className="flex items-center justify-center gap-2">
                   <img src="/images/icons/movie.png" alt="" className={`w-5 h-5 ${!generatedImage ? "opacity-50" : ""}`} />
-                  Generate Character
+                  {t("generateCharacter")}
                 </span>
               </button>
 
               {!generatedImage && (
                 <p className="text-xs text-gray-500 text-center mt-2">
-                  Create an avatar first to generate your character
+                  {t("createAvatarFirst")}
                 </p>
               )}
 
@@ -400,7 +402,7 @@ function CreateCartoonContent() {
                   href="/dashboard"
                   className="mt-4 block w-full py-3 rounded-xl font-medium text-center text-purple-600 bg-purple-100 hover:bg-purple-200 transition-colors"
                 >
-                  Buy Credits
+                  {t("buyCredits")}
                 </Link>
               )}
             </div>

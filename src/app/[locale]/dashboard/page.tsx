@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { DevelopmentMap } from "@/components/DevelopmentMap";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 // Animated counter component
 function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?: number }) {
@@ -45,6 +46,7 @@ function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?:
 export default function Dashboard() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const t = useTranslations("dashboardPage");
   const [credits, setCredits] = useState<number | null>(null);
   const [cartoonCredits, setCartoonCredits] = useState<number | null>(null);
   const [loadingCredits, setLoadingCredits] = useState(true);
@@ -160,7 +162,7 @@ export default function Dashboard() {
             href="/"
             className="text-gray-600 hover:text-gray-800 transition-colors"
           >
-            ← Back to Home
+            {t("backToHome")}
           </Link>
         </div>
       </header>
@@ -173,10 +175,10 @@ export default function Dashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                  Welcome, {user?.user_metadata?.name || user?.email?.split("@")[0] || "Hero"}! 👋
+                  {t("welcome")} {user?.user_metadata?.name || user?.email?.split("@")[0] || "Hero"}! 👋
                 </h1>
                 <p className="text-gray-600">
-                  Manage your stories and account here.
+                  {t("manageStories")}
                 </p>
               </div>
               {/* Credits Display */}
@@ -187,7 +189,7 @@ export default function Dashboard() {
                     <img src="/images/icons/star.png" alt="" className="w-8 h-8" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Credits</p>
+                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">{t("totalCredits")}</p>
                     <p className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-purple-600 bg-clip-text text-transparent">
                       {loadingCredits ? (
                         <span className="inline-block w-12 h-8 bg-gray-200 rounded animate-pulse"></span>
@@ -214,9 +216,9 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg text-gray-900 mb-1">Your Free Trial Has Ended</h3>
+                        <h3 className="font-bold text-lg text-gray-900 mb-1">{t("freeTrialEnded")}</h3>
                         <p className="text-gray-600 text-sm">
-                          You created {freeTrialStoriesUsed} stories during your trial. Subscribe now to continue creating unlimited magical stories!
+                          {t("freeTrialEndedText", { count: freeTrialStoriesUsed })}
                         </p>
                       </div>
                     </div>
@@ -224,7 +226,7 @@ export default function Dashboard() {
                       onClick={() => setShowPaymentModal(true)}
                       className="flex-shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:scale-105 transition-all"
                     >
-                      Subscribe for $8/mo
+                      {t("subscribeFor8")}
                     </button>
                   </div>
                 </div>
@@ -245,9 +247,9 @@ export default function Dashboard() {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg text-gray-900 mb-1">Start Your Free Trial</h3>
+                        <h3 className="font-bold text-lg text-gray-900 mb-1">{t("startFreeTrial")}</h3>
                         <p className="text-gray-600 text-sm">
-                          Try FairyTaleAI free for 7 days! Create up to 3 personalized stories for your child.
+                          {t("startFreeTrialText")}
                         </p>
                       </div>
                     </div>
@@ -255,7 +257,7 @@ export default function Dashboard() {
                       onClick={() => setShowPaymentModal(true)}
                       className="flex-shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold hover:shadow-lg hover:scale-105 transition-all"
                     >
-                      Start Free Trial
+                      {t("startFreeTrialBtn")}
                     </button>
                   </div>
                 </div>
@@ -275,10 +277,10 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">
-                      {subscriptionType === "monthly" ? "Monthly" : "Yearly"} Subscription Active
+                      {subscriptionType === "monthly" ? t("monthlySubscription") : t("yearlySubscription")} {t("subscriptionActive")}
                     </p>
                     <p className="text-sm text-gray-600">
-                      Valid until {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
+                      {t("validUntil")} {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
                     </p>
                   </div>
                 </div>
@@ -298,9 +300,9 @@ export default function Dashboard() {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">Free Trial Active</p>
+                      <p className="font-semibold text-gray-900">{t("freeTrialActive")}</p>
                       <p className="text-sm text-gray-600">
-                        {freeTrialStoriesUsed}/3 stories used • Expires {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
+                        {freeTrialStoriesUsed}/3 {t("storiesUsed")} • {t("expires")} {subscriptionUntil ? new Date(subscriptionUntil).toLocaleDateString() : "—"}
                       </p>
                     </div>
                   </div>
@@ -308,7 +310,7 @@ export default function Dashboard() {
                     onClick={() => setShowPaymentModal(true)}
                     className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:shadow-lg transition-all"
                   >
-                    Upgrade
+                    {t("upgrade")}
                   </button>
                 </div>
               </div>
@@ -327,8 +329,8 @@ export default function Dashboard() {
                   <img src="/images/icons/movie.png" alt="" className="w-9 h-9" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-gray-900">Buy Cartoons</h3>
-                  <p className="text-gray-600 text-sm">Turn stories into animated videos</p>
+                  <h3 className="font-bold text-lg text-gray-900">{t("buyCartoons")}</h3>
+                  <p className="text-gray-600 text-sm">{t("buyCartoonsDesc")}</p>
                 </div>
               </div>
             </Link>
@@ -341,20 +343,20 @@ export default function Dashboard() {
 
           {/* Account Info */}
           <div className="glass-card p-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h2 className="font-bold text-lg text-gray-900 mb-4">Account Info</h2>
+            <h2 className="font-bold text-lg text-gray-900 mb-4">{t("accountInfo")}</h2>
             <div className="space-y-3">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Email</span>
+                <span className="text-gray-600">{t("email")}</span>
                 <span className="text-gray-900 font-medium">{user?.email || "—"}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Total Credits</span>
+                <span className="text-gray-600">{t("totalCreditsLabel")}</span>
                 <span className="text-gray-900 font-medium">
-                  {loadingCredits ? "Loading..." : `${(credits ?? 0) + (cartoonCredits ?? 0)} credits`}
+                  {loadingCredits ? t("loading") : `${(credits ?? 0) + (cartoonCredits ?? 0)} ${t("credits")}`}
                 </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="text-gray-600">Member since</span>
+                <span className="text-gray-600">{t("memberSince")}</span>
                 <span className="text-gray-900 font-medium">
                   {user?.created_at ? new Date(user.created_at).toLocaleDateString() : "—"}
                 </span>
@@ -365,33 +367,33 @@ export default function Dashboard() {
           {/* Subscription Info */}
           {subscriptionType && (
             <div className="glass-card p-6 mt-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <h2 className="font-bold text-lg text-gray-900 mb-4">Subscription</h2>
+              <h2 className="font-bold text-lg text-gray-900 mb-4">{t("subscription")}</h2>
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-600">Current Plan</span>
+                  <span className="text-gray-600">{t("currentPlan")}</span>
                   <span className="text-gray-900 font-medium">
-                    {subscriptionType === "free_trial" ? "Free Trial" :
-                     subscriptionType === "monthly" ? "Monthly ($29/mo)" :
-                     subscriptionType === "yearly" ? "Yearly ($189/yr)" : subscriptionType}
+                    {subscriptionType === "free_trial" ? t("freeTrial") :
+                     subscriptionType === "monthly" ? t("monthlyPlan") :
+                     subscriptionType === "yearly" ? t("yearlyPlan") : subscriptionType}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-600">Status</span>
+                  <span className="text-gray-600">{t("status")}</span>
                   <span className={`font-medium ${hasActiveSubscription ? "text-green-600" : "text-red-600"}`}>
-                    {hasActiveSubscription ? "Active" : "Expired"}
+                    {hasActiveSubscription ? t("active") : t("expired")}
                   </span>
                 </div>
                 {subscriptionUntil && (
                   <div className="flex justify-between items-center py-2 border-b border-gray-100">
                     <span className="text-gray-600">
-                      {hasActiveSubscription ? "Days Remaining" : "Expired On"}
+                      {hasActiveSubscription ? t("daysRemaining") : t("expiredOn")}
                     </span>
                     <span className="text-gray-900 font-medium">
                       {hasActiveSubscription ? (
                         <>
-                          {Math.max(0, Math.ceil((new Date(subscriptionUntil).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)))} days
+                          {Math.max(0, Math.ceil((new Date(subscriptionUntil).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)))} {t("days")}
                           <span className="text-gray-500 text-sm ml-2">
-                            (until {new Date(subscriptionUntil).toLocaleDateString()})
+                            ({t("until")} {new Date(subscriptionUntil).toLocaleDateString()})
                           </span>
                         </>
                       ) : (
@@ -411,7 +413,7 @@ export default function Dashboard() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
-                      Cancel Subscription
+                      {t("cancelSubscription")}
                     </a>
                   </div>
                 )}
@@ -448,10 +450,10 @@ export default function Dashboard() {
                 </svg>
               </div>
               <h3 className="font-display text-2xl font-bold text-gray-900 mb-2">
-                {freeTrialExpired || subscriptionType === "free_trial" ? "Upgrade Your Plan" : "Choose Your Plan"}
+                {freeTrialExpired || subscriptionType === "free_trial" ? t("upgradeYourPlan") : t("chooseYourPlan")}
               </h3>
               <p className="text-gray-600">
-                {freeTrialExpired ? "Continue creating magical stories for your child" : "Start creating personalized stories"}
+                {freeTrialExpired ? t("continueCreating") : t("startCreating")}
               </p>
             </div>
 
@@ -469,16 +471,16 @@ export default function Dashboard() {
                 <div className="flex justify-between items-center">
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-gray-900">Monthly</p>
+                      <p className="font-bold text-gray-900">{t("monthly")}</p>
                       {freeTrialExpired && (
-                        <span className="px-2 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-full font-medium">Best value</span>
+                        <span className="px-2 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-full font-medium">{t("bestValue")}</span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600">Unlimited stories + AI audio</p>
+                    <p className="text-sm text-gray-600">{t("unlimitedStories")}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-xl font-bold text-gray-900">$8<span className="text-sm font-normal text-gray-500">/mo</span></p>
-                    <p className="text-xs text-gray-500">then $29/mo</p>
+                    <p className="text-xs text-gray-500">{t("thenPrice")}</p>
                   </div>
                 </div>
               </button>
@@ -494,12 +496,12 @@ export default function Dashboard() {
               >
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="font-bold text-gray-900">Yearly</p>
-                    <p className="text-sm text-gray-600">Unlimited stories + AI audio</p>
+                    <p className="font-bold text-gray-900">{t("yearly")}</p>
+                    <p className="text-sm text-gray-600">{t("unlimitedStories")}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-xl font-bold text-gray-900">$189<span className="text-sm font-normal text-gray-500">/yr</span></p>
-                    <p className="text-xs text-green-600 font-medium">Save 46%</p>
+                    <p className="text-xs text-green-600 font-medium">{t("savePercent")}</p>
                   </div>
                 </div>
               </button>
@@ -522,10 +524,10 @@ export default function Dashboard() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Processing...
+                  {t("processing")}
                 </span>
               ) : (
-                "Subscribe Now"
+                t("subscribeNow")
               )}
             </button>
           </div>
