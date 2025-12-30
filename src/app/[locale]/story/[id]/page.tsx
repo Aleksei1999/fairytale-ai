@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/AuthProvider";
 import { useTranslations } from "next-intl";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface Question {
   id: number;
@@ -512,12 +513,15 @@ export default function StoryPage() {
               </div>
               <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
             </Link>
-            <Link
-              href="/dashboard"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-            >
-              {t("backToDashboard")}
-            </Link>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <Link
+                href="/dashboard"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+              >
+                {t("backToDashboard")}
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -564,12 +568,15 @@ export default function StoryPage() {
               </div>
               <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
             </Link>
-            <Link
-              href="/dashboard"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-            >
-              {t("backToDashboard")}
-            </Link>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <Link
+                href="/dashboard"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+              >
+                {t("backToDashboard")}
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -609,12 +616,15 @@ export default function StoryPage() {
             </div>
             <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
-          <Link
-            href="/dashboard"
-            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-          >
-            {t("backToDashboard")}
-          </Link>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <Link
+              href="/dashboard"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+            >
+              {t("backToDashboard")}
+            </Link>
+          </div>
         </div>
       </header>
 

@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
 import { useTranslations } from "next-intl";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 type Step = 0 | 1 | 2;
 
@@ -372,6 +373,7 @@ function CreatePageContent() {
                 {loadingStars ? "..." : userStars}
               </span>
             </div>
+            <ThemeToggle />
             <div className="text-sm text-gray-500 dark:text-gray-400">
               {t("step")} {step} {t("of")} 2
             </div>

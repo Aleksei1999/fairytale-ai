@@ -7,6 +7,7 @@ import { DevelopmentMap } from "@/components/DevelopmentMap";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 // Animated counter component
 function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?: number }) {
@@ -158,12 +159,15 @@ export default function Dashboard() {
             </div>
             <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
-          <Link
-            href="/"
-            className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-          >
-            {t("backToHome")}
-          </Link>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <Link
+              href="/"
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+            >
+              {t("backToHome")}
+            </Link>
+          </div>
         </div>
       </header>
 

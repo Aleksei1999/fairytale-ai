@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { trackInitiateCheckout, trackViewContent } from "@/lib/facebook-pixel";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const STAR_PACKAGES = [
   {
@@ -140,12 +141,15 @@ export default function BuyStars() {
             </div>
             <span className="font-display font-bold text-xl text-gray-800 dark:text-gray-200">FairyTaleAI</span>
           </Link>
-          <Link
-            href="/dashboard"
-            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-          >
-            {t("backToDashboard")}
-          </Link>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <Link
+              href="/dashboard"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+            >
+              {t("backToDashboard")}
+            </Link>
+          </div>
         </div>
       </header>
 
